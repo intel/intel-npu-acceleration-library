@@ -132,7 +132,7 @@ def test_fusion(model_name, hidden_size, intermediate_size, batch, bias):
 @pytest.mark.parametrize("bias", [True, False])
 def test_model(model_name, hidden_size, intermediate_size, sequence_length, bias):
 
-    if model_name == "GemmaMLP":
+    if model_name == "GemmaModel":
         pytest.skip("Cannot fetch model from github action")
 
     with torch.no_grad():
