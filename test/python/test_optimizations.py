@@ -68,7 +68,7 @@ def get_model(model_name, hidden_size, intermediate_size, bias):
 
         return LlamaMLP(conf)
     elif model_name == "GemmaMLP":
-        conf = GemmaConfig.from_pretrained("google/gemma-2b-it")
+        conf = GemmaConfig()
         conf.num_hidden_layers = 1
         conf.hidden_size = hidden_size
         conf.head_dim = conf.hidden_size // conf.num_attention_heads
@@ -83,7 +83,7 @@ def get_model(model_name, hidden_size, intermediate_size, bias):
 
         return LlamaModel(conf)
     elif model_name == "GemmaModel":
-        conf = GemmaConfig.from_pretrained("google/gemma-2b-it")
+        conf = GemmaConfig()
         conf.num_hidden_layers = 1
         conf.hidden_size = hidden_size
         conf.head_dim = conf.hidden_size // conf.num_attention_heads

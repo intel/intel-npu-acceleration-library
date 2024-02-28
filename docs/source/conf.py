@@ -30,7 +30,6 @@ extensions = [
     # 'sphinx.ext.autodoc',
     "sphinx.ext.napoleon",
     "breathe",
-    "sphinx_rtd_theme",
     "myst_parser",
 ]
 
