@@ -1,0 +1,9 @@
+INPUT = ../include/intel_npu_acceleration_library
+FILE_PATTERNS = *.cpp *.h
+GENERATE_HTML = NO
+GENERATE_LATEX = NO
+GENERATE_XML = YES # Important for Breathe
+FULL_PATH_NAMES = NO
+ENABLE_PREPROCESSING = YES
+MACRO_EXPANSION = YES
+EXPAND_ONLY_PREDEF = YES

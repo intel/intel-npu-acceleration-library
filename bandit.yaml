@@ -1,0 +1,2 @@
+exclude_dirs: ['test', 'docs', '.githooks', 'script', 'examples']
+skips: []

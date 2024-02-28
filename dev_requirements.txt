@@ -1,0 +1,12 @@
+pytest
+pytest-xdist
+pytest-cov
+scikit-learn
+pre-commit; sys_platform == 'darwin'
+sphinx
+breathe
+sphinx-book-theme
+myst-parser
+ghp-import
+pyroma
+mypy

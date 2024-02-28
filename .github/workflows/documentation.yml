@@ -1,0 +1,26 @@
+name: Documentation
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+    - main
+
+jobs:
+  build:
+    runs-on: [linux]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+    - name: Install packet
+      run: |
+        sudo apt-get install -y doxygen
+        python -m pip install --upgrade pip
+        pip install .[dev]
+    - name: Run tests
+      run: |
+        cd docs
+        python build_doc.py gh-deploy

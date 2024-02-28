@@ -1,0 +1,61 @@
+#
+# Copyright (C) 2022 Intel Corporation
+# SPDX-License-Identifier: Apache 2.0
+#
+
+default_install_hook_types: [pre-commit, commit-msg]
+repos:
+- repo: local
+  hooks:
+    - id: check-license
+      name: Check license
+      entry: ./.githooks/check-license.py
+      language: python
+      stages: [commit]
+
+- repo: https://github.com/pre-commit/mirrors-clang-format
+  rev: v10.0.1
+  hooks:
+    - id: clang-format
+- repo: https://github.com/psf/black
+  rev: 22.6.0
+  hooks:
+    - id: black
+- repo: https://github.com/PyCQA/bandit
+  rev: 1.7.7
+  hooks:
+    - id: bandit
+      args: ["-c", "bandit.yaml"]
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.1.0
+  hooks:
+    - id: check-merge-conflict
+    - id: check-json
+    - id: check-executables-have-shebangs
+    - id: check-symlinks
+    - id: debug-statements
+    - id: mixed-line-ending
+    - id: trailing-whitespace
+-   repo: https://github.com/PyCQA/flake8
+    rev: 6.1.0
+    hooks:
+    -   id: flake8
+        additional_dependencies: [
+            'flake8-blind-except',
+            'flake8-docstrings',
+            'flake8-bugbear',
+            'flake8-comprehensions',
+            'flake8-docstrings-complete',
+            'flake8-implicit-str-concat',
+            'pydocstyle>=5.0.0',
+        ]
+        exclude: docs/.*|setup.py|test/.*|script/.*|examples/.*
+-   repo: https://github.com/regebro/pyroma
+    rev: "4.2"
+    hooks:
+    -   id: pyroma
+-   repo: https://github.com/pre-commit/mirrors-mypy
+    rev: 'v1.8.0'
+    hooks:
+    -   id: mypy
+        exclude: 'docs|script|test|venv'

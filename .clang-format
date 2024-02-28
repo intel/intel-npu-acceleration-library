@@ -1,0 +1,30 @@
+BasedOnStyle: Google
+
+Language: Cpp
+Standard: Cpp11
+
+AccessModifierOffset: -4
+AlignAfterOpenBracket: Align
+AllowAllArgumentsOnNextLine: false
+AllowAllConstructorInitializersOnNextLine: true
+AllowShortBlocksOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLambdasOnASingleLine: Empty
+AllowShortLoopsOnASingleLine: false
+AlwaysBreakBeforeMultilineStrings: false
+BreakInheritanceList:  AfterColon
+ColumnLimit: 120
+ConstructorInitializerIndentWidth: 8
+ContinuationIndentWidth: 8
+DerivePointerAlignment: false
+FixNamespaceComments: true
+IncludeBlocks: Preserve
+IndentCaseLabels: false
+IndentWidth: 4
+PointerAlignment: Left
+SpaceBeforeCpp11BracedList: false
+SpaceBeforeCtorInitializerColon: false
+UseTab: Never
+StatementMacros: ['CASE', 'HW_OPS_CASE']
