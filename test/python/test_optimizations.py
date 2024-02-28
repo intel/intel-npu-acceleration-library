@@ -68,7 +68,7 @@ def get_model(model_name, hidden_size, intermediate_size, bias):
 
         return LlamaMLP(conf)
     elif model_name == "GemmaMLP":
-        conf = GemmaConfig.from_pretrained("google/gemma-2b-it")
+        conf = GemmaConfig()
         conf.num_hidden_layers = 1
         conf.hidden_size = hidden_size
         conf.head_dim = conf.hidden_size // conf.num_attention_heads
@@ -83,7 +83,7 @@ def get_model(model_name, hidden_size, intermediate_size, bias):
 
         return LlamaModel(conf)
     elif model_name == "GemmaModel":
-        conf = GemmaConfig.from_pretrained("google/gemma-2b-it")
+        conf = GemmaConfig()
         conf.num_hidden_layers = 1
         conf.hidden_size = hidden_size
         conf.head_dim = conf.hidden_size // conf.num_attention_heads
@@ -110,9 +110,6 @@ def get_model(model_name, hidden_size, intermediate_size, bias):
 @pytest.mark.parametrize("bias", [True, False])
 def test_fusion(model_name, hidden_size, intermediate_size, batch, bias):
 
-    if model_name == "GemmaMLP":
-        pytest.skip("Cannot fetch model from github action")
-
     model = get_model(model_name, hidden_size, intermediate_size, bias)
     example_input = torch.rand((batch, hidden_size)) - 0.5
 
@@ -131,9 +128,6 @@ def test_fusion(model_name, hidden_size, intermediate_size, batch, bias):
 @pytest.mark.parametrize("sequence_length", [1, 128])
 @pytest.mark.parametrize("bias", [True, False])
 def test_model(model_name, hidden_size, intermediate_size, sequence_length, bias):
-
-    if model_name == "GemmaModel":
-        pytest.skip("Cannot fetch model from github action")
 
     with torch.no_grad():
         model = get_model(model_name, hidden_size, intermediate_size, bias).eval()
