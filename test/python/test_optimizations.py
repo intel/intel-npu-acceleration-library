@@ -110,6 +110,9 @@ def get_model(model_name, hidden_size, intermediate_size, bias):
 @pytest.mark.parametrize("bias", [True, False])
 def test_fusion(model_name, hidden_size, intermediate_size, batch, bias):
 
+    if model_name == "GemmaMLP":
+        pytest.skip("Cannot fetch model from github action")
+
     model = get_model(model_name, hidden_size, intermediate_size, bias)
     example_input = torch.rand((batch, hidden_size)) - 0.5
 
