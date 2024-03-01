@@ -1,0 +1,1478 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>C++ API Reference &#8212; Intel® NPU Acceleration Library  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'cpp_reference';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="intel_npu_acceleration_library.nn package" href="python/intel_npu_acceleration_library.nn.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Intel® NPU Acceleration Library  documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Library overview:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="npu.html">NPU overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Basic usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Advanced Setup</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Applications:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="llm.html">Large Language models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="llm_performance.html">Decoding LLM performance</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Developements guide:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Developer Guide</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="python/intel_npu_acceleration_library.html">Python API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="python/intel_npu_acceleration_library.backend.html">intel_npu_acceleration_library.backend package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/intel_npu_acceleration_library.nn.html">intel_npu_acceleration_library.nn package</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">C++ API Reference</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/cpp_reference.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>C++ API Reference</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactoryE"><code class="docutils literal notranslate"><span class="pre">ModelFactory</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory12ModelFactoryENSt6stringE6size_t6size_t6size_tb"><code class="docutils literal notranslate"><span class="pre">ModelFactory::ModelFactory()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory9parameterE6size_t6size_tN2ov7element6Type_tE"><code class="docutils literal notranslate"><span class="pre">ModelFactory::parameter()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory6matmulEPN2ov2op2OpERPN2ov2op2OpEbb"><code class="docutils literal notranslate"><span class="pre">ModelFactory::matmul()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory4geluEPN2ov2op2OpE"><code class="docutils literal notranslate"><span class="pre">ModelFactory::gelu()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory5swishEPN2ov2op2OpE"><code class="docutils literal notranslate"><span class="pre">ModelFactory::swish()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory7softmaxEPN2ov2op2OpE"><code class="docutils literal notranslate"><span class="pre">ModelFactory::softmax()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory15convert_to_fp16EPN2ov2op2OpE"><code class="docutils literal notranslate"><span class="pre">ModelFactory::convert_to_fp16()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory11eltwise_addEPN2ov2op2OpERPN2ov2op2OpE"><code class="docutils literal notranslate"><span class="pre">ModelFactory::eltwise_add()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory11eltwise_mulEPN2ov2op2OpERPN2ov2op2OpE"><code class="docutils literal notranslate"><span class="pre">ModelFactory::eltwise_mul()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory11eltwise_divEPN2ov2op2OpERPN2ov2op2OpE"><code class="docutils literal notranslate"><span class="pre">ModelFactory::eltwise_div()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory7compileEPN2ov2op2OpE"><code class="docutils literal notranslate"><span class="pre">ModelFactory::compile()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory10parametersE"><code class="docutils literal notranslate"><span class="pre">ModelFactory::parameters</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory10operationsE"><code class="docutils literal notranslate"><span class="pre">ModelFactory::operations</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModelE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel16OVInferenceModelENSt6stringE6size_t6size_t6size_tb"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::OVInferenceModel()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModelD0Ev"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::~OVInferenceModel()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel17saveCompiledModelERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::saveCompiledModel()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel9saveModelERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::saveModel()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel3runEv"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::run()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel14setActivationsE8half_ptr8half_ptr"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::setActivations()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel10setWeightsENSt6vectorINSt10shared_ptrI9ParameterEEEERNSt11atomic_boolE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::setWeights()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel1XE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::X</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel3OutE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::Out</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel9wt_threadE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::wt_thread</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel13compile_modelENSt6stringE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::compile_model()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel15create_ov_modelEv"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::create_ov_model()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel5modelE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::model</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel3inCE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::inC</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel4outCE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::outC</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel5batchE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::batch</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel6deviceE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::device</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel7profileE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::profile</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel4coreE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::core</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel14compiled_modelE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::compiled_model</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel13infer_requestE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::infer_request</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel6mutex_E"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::mutex_</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library9ParameterE"><code class="docutils literal notranslate"><span class="pre">Parameter</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library9Parameter9ParameterE5Shape"><code class="docutils literal notranslate"><span class="pre">Parameter::Parameter()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library9Parameter9ParameterE8half_ptr5Shape"><code class="docutils literal notranslate"><span class="pre">Parameter::Parameter()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library9Parameter9ParameterEP6int8_t5Shape"><code class="docutils literal notranslate"><span class="pre">Parameter::Parameter()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4NK30intel_npu_acceleration_library9Parameter8get_sizeEv"><code class="docutils literal notranslate"><span class="pre">Parameter::get_size()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library9Parameter8set_dataEPv6size_t"><code class="docutils literal notranslate"><span class="pre">Parameter::set_data()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library9ParameterD0Ev"><code class="docutils literal notranslate"><span class="pre">Parameter::~Parameter()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library9Parameter5shapeE"><code class="docutils literal notranslate"><span class="pre">Parameter::shape</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library9Parameter4dataE"><code class="docutils literal notranslate"><span class="pre">Parameter::data</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library9Parameter9quantizedE"><code class="docutils literal notranslate"><span class="pre">Parameter::quantized</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library10ParametersE"><code class="docutils literal notranslate"><span class="pre">Parameters</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library10Parameters13add_parameterE8half_ptr5Shape"><code class="docutils literal notranslate"><span class="pre">Parameters::add_parameter()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library10Parameters13add_parameterEP6int8_t8half_ptr5Shape"><code class="docutils literal notranslate"><span class="pre">Parameters::add_parameter()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library10Parameters13add_parameterEP6int8_tPf5Shape"><code class="docutils literal notranslate"><span class="pre">Parameters::add_parameter()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library10Parameters14get_parametersEv"><code class="docutils literal notranslate"><span class="pre">Parameters::get_parameters()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library10Parameters10parametersE"><code class="docutils literal notranslate"><span class="pre">Parameters::parameters</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library23ParameterWithConversionE"><code class="docutils literal notranslate"><span class="pre">ParameterWithConversion</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library23ParameterWithConversion23ParameterWithConversionEP6int8_tPf5Shape"><code class="docutils literal notranslate"><span class="pre">ParameterWithConversion::ParameterWithConversion()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library23ParameterWithConversion8set_dataEPv6size_t"><code class="docutils literal notranslate"><span class="pre">ParameterWithConversion::set_data()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library23ParameterWithConversion4dataE"><code class="docutils literal notranslate"><span class="pre">ParameterWithConversion::data</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library23ParameterWithConversion5scaleE"><code class="docutils literal notranslate"><span class="pre">ParameterWithConversion::scale</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library5ShapeE"><code class="docutils literal notranslate"><span class="pre">Shape</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library5Shape5ShapeENSt16initializer_listI6size_tEE"><code class="docutils literal notranslate"><span class="pre">Shape::Shape()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library5ShapeixEi"><code class="docutils literal notranslate"><span class="pre">Shape::operator[]()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4NK30intel_npu_acceleration_library5Shape8get_sizeEv"><code class="docutils literal notranslate"><span class="pre">Shape::get_size()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library5Shape10dimensionsE"><code class="docutils literal notranslate"><span class="pre">Shape::dimensions</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv430intel_npu_acceleration_library"><code class="docutils literal notranslate"><span class="pre">intel_npu_acceleration_library</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library15_isNPUAvailableERN2ov4CoreE"><code class="docutils literal notranslate"><span class="pre">intel_npu_acceleration_library::_isNPUAvailable()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library14vector_to_fp16EPK6int8_tf8half_ptr6size_t"><code class="docutils literal notranslate"><span class="pre">intel_npu_acceleration_library::vector_to_fp16()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library20array_to_fp16_workerEPK6int8_tPf8half_ptr6size_t6size_t"><code class="docutils literal notranslate"><span class="pre">intel_npu_acceleration_library::array_to_fp16_worker()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library7to_fp16EPK6int8_tPf8half_ptr6size_t6size_tj"><code class="docutils literal notranslate"><span class="pre">intel_npu_acceleration_library::to_fp16()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library17npu_compiler_typeE"><code class="docutils literal notranslate"><span class="pre">intel_npu_acceleration_library::npu_compiler_type</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library14npu_parametersE"><code class="docutils literal notranslate"><span class="pre">intel_npu_acceleration_library::npu_parameters</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv46OVNode"><code class="docutils literal notranslate"><span class="pre">OVNode</span></code></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="c-api-reference">
+<h1>C++ API Reference<a class="headerlink" href="#c-api-reference" title="Link to this heading">#</a></h1>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library12ModelFactoryE">
+<span id="_CPPv3N30intel_npu_acceleration_library12ModelFactoryE"></span><span id="_CPPv2N30intel_npu_acceleration_library12ModelFactoryE"></span><span id="intel_npu_acceleration_library::ModelFactory"></span><span class="target" id="classintel__npu__acceleration__library_1_1ModelFactory"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ModelFactory</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv430intel_npu_acceleration_library" title="intel_npu_acceleration_library"><span class="n"><span class="pre">intel_npu_acceleration_library</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModelE" title="intel_npu_acceleration_library::OVInferenceModel"><span class="n"><span class="pre">OVInferenceModel</span></span></a><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactoryE" title="Link to this definition">#</a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;<a class="reference internal" href="#nn__factory_8h"><span class="std std-ref">nn_factory.h</span></a>&gt;</em></div>
+<p>The <a class="reference internal" href="#classintel__npu__acceleration__library_1_1ModelFactory"><span class="std std-ref">ModelFactory</span></a> class implements a generic interface for NPU network generation and inference. It supports only single input single output operations with input of shape [batch, input_channels] and output of shape [batch, output_channels]. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library12ModelFactory12ModelFactoryENSt6stringE6size_t6size_t6size_tb">
+<span id="_CPPv3N30intel_npu_acceleration_library12ModelFactory12ModelFactoryENSt6stringE6size_t6size_t6size_tb"></span><span id="_CPPv2N30intel_npu_acceleration_library12ModelFactory12ModelFactoryENSt6stringE6size_t6size_t6size_tb"></span><span id="intel_npu_acceleration_library::ModelFactory::ModelFactory__ss.s.s.s.b"></span><span class="target" id="classintel__npu__acceleration__library_1_1ModelFactory_1ac425460f90a0fb46509d066c84e03823"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ModelFactory</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">device</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">inC</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">outC</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">batch</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">profile</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory12ModelFactoryENSt6stringE6size_t6size_t6size_tb" title="Link to this definition">#</a><br /></dt>
+<dd><p>Construct a new Model Factory object. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>device</strong> – target device </p></li>
+<li><p><strong>inC</strong> – number of input channels </p></li>
+<li><p><strong>outC</strong> – number of output channels </p></li>
+<li><p><strong>batch</strong> – batch size </p></li>
+<li><p><strong>profile</strong> – enable/disable profiling </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library12ModelFactory9parameterE6size_t6size_tN2ov7element6Type_tE">
+<span id="_CPPv3N30intel_npu_acceleration_library12ModelFactory9parameterE6size_t6size_tN2ov7element6Type_tE"></span><span id="_CPPv2N30intel_npu_acceleration_library12ModelFactory9parameterE6size_t6size_tN2ov7element6Type_tE"></span><span id="intel_npu_acceleration_library::ModelFactory::parameter__s.s.ov::element::Type_t"></span><span class="target" id="classintel__npu__acceleration__library_1_1ModelFactory_1a0aba1b59bc2a196b24b74c581305bcf8"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">op</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Op</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">parameter</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">dim0</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">dim1</span></span>, <span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">element</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Type_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">dtype</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory9parameterE6size_t6size_tN2ov7element6Type_tE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Create a new 2D [dim0, dim1] network parameter. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dim0</strong> – dimension 0 </p></li>
+<li><p><strong>dim1</strong> – dimension 1 </p></li>
+<li><p><strong>dtype</strong> – parameter datatype </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ov::op::Op* </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library12ModelFactory6matmulEPN2ov2op2OpERPN2ov2op2OpEbb">
+<span id="_CPPv3N30intel_npu_acceleration_library12ModelFactory6matmulEPN2ov2op2OpERPN2ov2op2OpEbb"></span><span id="_CPPv2N30intel_npu_acceleration_library12ModelFactory6matmulEPN2ov2op2OpERPN2ov2op2OpEbb"></span><span id="intel_npu_acceleration_library::ModelFactory::matmul__ov::op::OpP.ov::op::OpPR.b.b"></span><span class="target" id="classintel__npu__acceleration__library_1_1ModelFactory_1a8a5e95cecbcaa2b6b2ae28b141d0434c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">op</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Op</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">matmul</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">op</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Op</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">input</span></span>, <span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">op</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Op</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">weights</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">trA</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">trB</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory6matmulEPN2ov2op2OpERPN2ov2op2OpEbb" title="Link to this definition">#</a><br /></dt>
+<dd><p>Create a new matmul operation. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input</strong> – matmul lhs input </p></li>
+<li><p><strong>weights</strong> – matmul rhs input, a.k.a. weights </p></li>
+<li><p><strong>trA</strong> – transpose the lhs input </p></li>
+<li><p><strong>trB</strong> – transpose the rhs input </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ov::op::Op* </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library12ModelFactory4geluEPN2ov2op2OpE">
+<span id="_CPPv3N30intel_npu_acceleration_library12ModelFactory4geluEPN2ov2op2OpE"></span><span id="_CPPv2N30intel_npu_acceleration_library12ModelFactory4geluEPN2ov2op2OpE"></span><span id="intel_npu_acceleration_library::ModelFactory::gelu__ov::op::OpP"></span><span class="target" id="classintel__npu__acceleration__library_1_1ModelFactory_1ad05fd26dc196256b7d1ebf3070f07100"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">op</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Op</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">gelu</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">op</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Op</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">input</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory4geluEPN2ov2op2OpE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Create a new gelu operation. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input</strong> – operation’s input node </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ov::op::Op* </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library12ModelFactory5swishEPN2ov2op2OpE">
+<span id="_CPPv3N30intel_npu_acceleration_library12ModelFactory5swishEPN2ov2op2OpE"></span><span id="_CPPv2N30intel_npu_acceleration_library12ModelFactory5swishEPN2ov2op2OpE"></span><span id="intel_npu_acceleration_library::ModelFactory::swish__ov::op::OpP"></span><span class="target" id="classintel__npu__acceleration__library_1_1ModelFactory_1a70aa3426925f11b3375d453e506f80b4"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">op</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Op</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">swish</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">op</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Op</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">input</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory5swishEPN2ov2op2OpE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Create a new swish operation. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input</strong> – operation’s input node </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ov::op::Op* </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library12ModelFactory7softmaxEPN2ov2op2OpE">
+<span id="_CPPv3N30intel_npu_acceleration_library12ModelFactory7softmaxEPN2ov2op2OpE"></span><span id="_CPPv2N30intel_npu_acceleration_library12ModelFactory7softmaxEPN2ov2op2OpE"></span><span id="intel_npu_acceleration_library::ModelFactory::softmax__ov::op::OpP"></span><span class="target" id="classintel__npu__acceleration__library_1_1ModelFactory_1a641ddaf151b378712b4c8e0ac43c5d1f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">op</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Op</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">softmax</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">op</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Op</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">input</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory7softmaxEPN2ov2op2OpE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Create a new softmax operation. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input</strong> – operation’s input node </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ov::op::Op* </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library12ModelFactory15convert_to_fp16EPN2ov2op2OpE">
+<span id="_CPPv3N30intel_npu_acceleration_library12ModelFactory15convert_to_fp16EPN2ov2op2OpE"></span><span id="_CPPv2N30intel_npu_acceleration_library12ModelFactory15convert_to_fp16EPN2ov2op2OpE"></span><span id="intel_npu_acceleration_library::ModelFactory::convert_to_fp16__ov::op::OpP"></span><span class="target" id="classintel__npu__acceleration__library_1_1ModelFactory_1a65e902063fc7d2b4d798531fa2acf0d9"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">op</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Op</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">convert_to_fp16</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">op</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Op</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">input</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory15convert_to_fp16EPN2ov2op2OpE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Create a new conversion to fp16 operation. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input</strong> – operation’s input node </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ov::op::Op* </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library12ModelFactory11eltwise_addEPN2ov2op2OpERPN2ov2op2OpE">
+<span id="_CPPv3N30intel_npu_acceleration_library12ModelFactory11eltwise_addEPN2ov2op2OpERPN2ov2op2OpE"></span><span id="_CPPv2N30intel_npu_acceleration_library12ModelFactory11eltwise_addEPN2ov2op2OpERPN2ov2op2OpE"></span><span id="intel_npu_acceleration_library::ModelFactory::eltwise_add__ov::op::OpP.ov::op::OpPR"></span><span class="target" id="classintel__npu__acceleration__library_1_1ModelFactory_1aa3a51905c1aced4c05e34d9ca3d7e49f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">op</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Op</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">eltwise_add</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">op</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Op</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">x1</span></span>, <span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">op</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Op</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">x2</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory11eltwise_addEPN2ov2op2OpERPN2ov2op2OpE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Create a new elementwise add operation. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x1</strong> – eltwise lhs input </p></li>
+<li><p><strong>x2</strong> – eltwise rhs input </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ov::op::Op* </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library12ModelFactory11eltwise_mulEPN2ov2op2OpERPN2ov2op2OpE">
+<span id="_CPPv3N30intel_npu_acceleration_library12ModelFactory11eltwise_mulEPN2ov2op2OpERPN2ov2op2OpE"></span><span id="_CPPv2N30intel_npu_acceleration_library12ModelFactory11eltwise_mulEPN2ov2op2OpERPN2ov2op2OpE"></span><span id="intel_npu_acceleration_library::ModelFactory::eltwise_mul__ov::op::OpP.ov::op::OpPR"></span><span class="target" id="classintel__npu__acceleration__library_1_1ModelFactory_1af66a413f6aaefea8d3d814fc0bc98915"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">op</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Op</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">eltwise_mul</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">op</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Op</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">x1</span></span>, <span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">op</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Op</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">x2</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory11eltwise_mulEPN2ov2op2OpERPN2ov2op2OpE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Create a new elementwise multiply operation. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x1</strong> – eltwise lhs input </p></li>
+<li><p><strong>x2</strong> – eltwise rhs input </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ov::op::Op* </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library12ModelFactory11eltwise_divEPN2ov2op2OpERPN2ov2op2OpE">
+<span id="_CPPv3N30intel_npu_acceleration_library12ModelFactory11eltwise_divEPN2ov2op2OpERPN2ov2op2OpE"></span><span id="_CPPv2N30intel_npu_acceleration_library12ModelFactory11eltwise_divEPN2ov2op2OpERPN2ov2op2OpE"></span><span id="intel_npu_acceleration_library::ModelFactory::eltwise_div__ov::op::OpP.ov::op::OpPR"></span><span class="target" id="classintel__npu__acceleration__library_1_1ModelFactory_1a5e9f95d4b241be5981c64e041b175c7f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">op</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Op</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">eltwise_div</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">op</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Op</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">x1</span></span>, <span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">op</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Op</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">x2</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory11eltwise_divEPN2ov2op2OpERPN2ov2op2OpE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Create a new elementwise division operation. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x1</strong> – eltwise lhs input </p></li>
+<li><p><strong>x2</strong> – eltwise rhs input </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ov::op::Op* </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library12ModelFactory7compileEPN2ov2op2OpE">
+<span id="_CPPv3N30intel_npu_acceleration_library12ModelFactory7compileEPN2ov2op2OpE"></span><span id="_CPPv2N30intel_npu_acceleration_library12ModelFactory7compileEPN2ov2op2OpE"></span><span id="intel_npu_acceleration_library::ModelFactory::compile__ov::op::OpP"></span><span class="target" id="classintel__npu__acceleration__library_1_1ModelFactory_1a941f4ae134472c797f0dcb7565d63da3"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">compile</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">op</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Op</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">result</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory7compileEPN2ov2op2OpE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Compile the model. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>result</strong> – the last operation in the network. Must have a [batch, output_channel] shape </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library12ModelFactory10parametersE">
+<span id="_CPPv3N30intel_npu_acceleration_library12ModelFactory10parametersE"></span><span id="_CPPv2N30intel_npu_acceleration_library12ModelFactory10parametersE"></span><span id="intel_npu_acceleration_library::ModelFactory::parameters__ov::ParameterVector"></span><span class="target" id="classintel__npu__acceleration__library_1_1ModelFactory_1a0a2676383c6830a93d6756607044c238"></span><span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ParameterVector</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">parameters</span></span></span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory10parametersE" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library12ModelFactory10operationsE">
+<span id="_CPPv3N30intel_npu_acceleration_library12ModelFactory10operationsE"></span><span id="_CPPv2N30intel_npu_acceleration_library12ModelFactory10operationsE"></span><span id="intel_npu_acceleration_library::ModelFactory::operations__std::vector:std::shared_ptr:ov::op::Op::"></span><span class="target" id="classintel__npu__acceleration__library_1_1ModelFactory_1a842817c6b49f1a44582d5d2f464d396d"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">shared_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">op</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Op</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">operations</span></span></span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory10operationsE" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library16OVInferenceModelE">
+<span id="_CPPv3N30intel_npu_acceleration_library16OVInferenceModelE"></span><span id="_CPPv2N30intel_npu_acceleration_library16OVInferenceModelE"></span><span id="intel_npu_acceleration_library::OVInferenceModel"></span><span class="target" id="classintel__npu__acceleration__library_1_1OVInferenceModel"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">OVInferenceModel</span></span></span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModelE" title="Link to this definition">#</a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;<a class="reference internal" href="#inference_8h"><span class="std std-ref">inference.h</span></a>&gt;</em></div>
+<p>The <a class="reference internal" href="#classintel__npu__acceleration__library_1_1OVInferenceModel"><span class="std std-ref">OVInferenceModel</span></a> implements the basic of NN inference on NPU. </p>
+<p>Subclassed by <a class="reference internal" href="#classintel__npu__acceleration__library_1_1ModelFactory"><span class="std std-ref">intel_npu_acceleration_library::ModelFactory</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library16OVInferenceModel16OVInferenceModelENSt6stringE6size_t6size_t6size_tb">
+<span id="_CPPv3N30intel_npu_acceleration_library16OVInferenceModel16OVInferenceModelENSt6stringE6size_t6size_t6size_tb"></span><span id="_CPPv2N30intel_npu_acceleration_library16OVInferenceModel16OVInferenceModelENSt6stringE6size_t6size_t6size_tb"></span><span id="intel_npu_acceleration_library::OVInferenceModel::OVInferenceModel__ss.s.s.s.b"></span><span class="target" id="classintel__npu__acceleration__library_1_1OVInferenceModel_1a70017a0320eef3f1143c42dcfe295679"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">OVInferenceModel</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">device</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">inC</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">outC</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">batch</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">profile</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel16OVInferenceModelENSt6stringE6size_t6size_t6size_tb" title="Link to this definition">#</a><br /></dt>
+<dd><p>Construct a new <a class="reference internal" href="#classintel__npu__acceleration__library_1_1OVInferenceModel"><span class="std std-ref">OVInferenceModel</span></a> object. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>device</strong> – target device </p></li>
+<li><p><strong>inC</strong> – number of input channels </p></li>
+<li><p><strong>outC</strong> – number of output channels </p></li>
+<li><p><strong>batch</strong> – batch size </p></li>
+<li><p><strong>profile</strong> – enable/disable profiling </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library16OVInferenceModelD0Ev">
+<span id="_CPPv3N30intel_npu_acceleration_library16OVInferenceModelD0Ev"></span><span id="_CPPv2N30intel_npu_acceleration_library16OVInferenceModelD0Ev"></span><span id="intel_npu_acceleration_library::OVInferenceModel::~OVInferenceModel"></span><span class="target" id="classintel__npu__acceleration__library_1_1OVInferenceModel_1aca3fa010e3c8f2e91cbc6bfe5130c4d3"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">~OVInferenceModel</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModelD0Ev" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library16OVInferenceModel17saveCompiledModelERKNSt6stringE">
+<span id="_CPPv3N30intel_npu_acceleration_library16OVInferenceModel17saveCompiledModelERKNSt6stringE"></span><span id="_CPPv2N30intel_npu_acceleration_library16OVInferenceModel17saveCompiledModelERKNSt6stringE"></span><span id="intel_npu_acceleration_library::OVInferenceModel::saveCompiledModel__ssCR"></span><span class="target" id="classintel__npu__acceleration__library_1_1OVInferenceModel_1a425fba56268ac543598c566408b06635"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">saveCompiledModel</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">path</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel17saveCompiledModelERKNSt6stringE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Save the model to a local path. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library16OVInferenceModel9saveModelERKNSt6stringE">
+<span id="_CPPv3N30intel_npu_acceleration_library16OVInferenceModel9saveModelERKNSt6stringE"></span><span id="_CPPv2N30intel_npu_acceleration_library16OVInferenceModel9saveModelERKNSt6stringE"></span><span id="intel_npu_acceleration_library::OVInferenceModel::saveModel__ssCR"></span><span class="target" id="classintel__npu__acceleration__library_1_1OVInferenceModel_1abe5d53770180e105aecbc1cd0f57cb01"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">saveModel</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">path</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel9saveModelERKNSt6stringE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Save the model to a local path. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library16OVInferenceModel3runEv">
+<span id="_CPPv3N30intel_npu_acceleration_library16OVInferenceModel3runEv"></span><span id="_CPPv2N30intel_npu_acceleration_library16OVInferenceModel3runEv"></span><span id="intel_npu_acceleration_library::OVInferenceModel::run"></span><span class="target" id="classintel__npu__acceleration__library_1_1OVInferenceModel_1ae783bff514113a2d9f87c4df447f07dc"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">run</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel3runEv" title="Link to this definition">#</a><br /></dt>
+<dd><p>Run an inference. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>void </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library16OVInferenceModel14setActivationsE8half_ptr8half_ptr">
+<span id="_CPPv3N30intel_npu_acceleration_library16OVInferenceModel14setActivationsE8half_ptr8half_ptr"></span><span id="_CPPv2N30intel_npu_acceleration_library16OVInferenceModel14setActivationsE8half_ptr8half_ptr"></span><span id="intel_npu_acceleration_library::OVInferenceModel::setActivations__half_ptr.half_ptr"></span><span class="target" id="classintel__npu__acceleration__library_1_1OVInferenceModel_1a2c7105b46ac394233556319a76aecffd"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setActivations</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">half_ptr</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">_X</span></span>, <span class="n"><span class="pre">half_ptr</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">_Out</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel14setActivationsE8half_ptr8half_ptr" title="Link to this definition">#</a><br /></dt>
+<dd><p>Set the input and output activations. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>_X</strong> – pointer to the float16 input activation </p></li>
+<li><p><strong>_Out</strong> – pointer to the float16 output activation </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library16OVInferenceModel10setWeightsENSt6vectorINSt10shared_ptrI9ParameterEEEERNSt11atomic_boolE">
+<span id="_CPPv3N30intel_npu_acceleration_library16OVInferenceModel10setWeightsENSt6vectorINSt10shared_ptrI9ParameterEEEERNSt11atomic_boolE"></span><span id="_CPPv2N30intel_npu_acceleration_library16OVInferenceModel10setWeightsENSt6vectorINSt10shared_ptrI9ParameterEEEERNSt11atomic_boolE"></span><span id="intel_npu_acceleration_library::OVInferenceModel::setWeights__std::vector:std::shared_ptr:Parameter::.std::atomic_boolR"></span><span class="target" id="classintel__npu__acceleration__library_1_1OVInferenceModel_1a571f249fd097555d9a2a3d69da90ff4c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setWeights</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">shared_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N30intel_npu_acceleration_library9ParameterE" title="intel_npu_acceleration_library::Parameter"><span class="n"><span class="pre">Parameter</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">_weights</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">atomic_bool</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">started</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel10setWeightsENSt6vectorINSt10shared_ptrI9ParameterEEEERNSt11atomic_boolE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Set the network parameters. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>_weights</strong> – vector of network parameters </p></li>
+<li><p><strong>started</strong> – atomic bool variable that is set to true once the conversion started. Useful for thread syncronizations </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library16OVInferenceModel1XE">
+<span id="_CPPv3N30intel_npu_acceleration_library16OVInferenceModel1XE"></span><span id="_CPPv2N30intel_npu_acceleration_library16OVInferenceModel1XE"></span><span id="intel_npu_acceleration_library::OVInferenceModel::X__ov::Tensor"></span><span class="target" id="classintel__npu__acceleration__library_1_1OVInferenceModel_1ace5fb5fb8dac72156c6383ae91a1c9cd"></span><span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Tensor</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">X</span></span></span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel1XE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Model input tensor. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library16OVInferenceModel3OutE">
+<span id="_CPPv3N30intel_npu_acceleration_library16OVInferenceModel3OutE"></span><span id="_CPPv2N30intel_npu_acceleration_library16OVInferenceModel3OutE"></span><span id="intel_npu_acceleration_library::OVInferenceModel::Out__ov::Tensor"></span><span class="target" id="classintel__npu__acceleration__library_1_1OVInferenceModel_1aae4a5f93a5a0185c97db9d08e850cdc8"></span><span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Tensor</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Out</span></span></span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel3OutE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Model output tensor. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library16OVInferenceModel9wt_threadE">
+<span id="_CPPv3N30intel_npu_acceleration_library16OVInferenceModel9wt_threadE"></span><span id="_CPPv2N30intel_npu_acceleration_library16OVInferenceModel9wt_threadE"></span><span id="intel_npu_acceleration_library::OVInferenceModel::wt_thread__std::thread"></span><span class="target" id="classintel__npu__acceleration__library_1_1OVInferenceModel_1ad44de2d5dfbd0ebc9e4cf8deef61d980"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">thread</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">wt_thread</span></span></span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel9wt_threadE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Async weight prefetch thread. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-protected-functions">Protected Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library16OVInferenceModel13compile_modelENSt6stringE">
+<span id="_CPPv3N30intel_npu_acceleration_library16OVInferenceModel13compile_modelENSt6stringE"></span><span id="_CPPv2N30intel_npu_acceleration_library16OVInferenceModel13compile_modelENSt6stringE"></span><span id="intel_npu_acceleration_library::OVInferenceModel::compile_model__ss"></span><span class="target" id="classintel__npu__acceleration__library_1_1OVInferenceModel_1ab59f8e5461b982d59d48651476a1b605"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">compile_model</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">device</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel13compile_modelENSt6stringE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Compile a generated OV model to a specific device. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>device</strong> – target compialtion device </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library16OVInferenceModel15create_ov_modelEv">
+<span id="_CPPv3N30intel_npu_acceleration_library16OVInferenceModel15create_ov_modelEv"></span><span id="_CPPv2N30intel_npu_acceleration_library16OVInferenceModel15create_ov_modelEv"></span><span id="intel_npu_acceleration_library::OVInferenceModel::create_ov_model"></span><span class="target" id="classintel__npu__acceleration__library_1_1OVInferenceModel_1aec99d8c99994c5734ba8857e8df33a91"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">create_ov_model</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel15create_ov_modelEv" title="Link to this definition">#</a><br /></dt>
+<dd><p>Create a ov model object. This class needs to be override in child classes. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-protected-attributes">Protected Attributes</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library16OVInferenceModel5modelE">
+<span id="_CPPv3N30intel_npu_acceleration_library16OVInferenceModel5modelE"></span><span id="_CPPv2N30intel_npu_acceleration_library16OVInferenceModel5modelE"></span><span id="intel_npu_acceleration_library::OVInferenceModel::model__std::shared_ptr:ov::Model:"></span><span class="target" id="classintel__npu__acceleration__library_1_1OVInferenceModel_1a09d07f0f2ba01886e5d3cf6a768b0fd7"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">shared_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Model</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">model</span></span></span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel5modelE" title="Link to this definition">#</a><br /></dt>
+<dd><p>OpenVINO model. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library16OVInferenceModel3inCE">
+<span id="_CPPv3N30intel_npu_acceleration_library16OVInferenceModel3inCE"></span><span id="_CPPv2N30intel_npu_acceleration_library16OVInferenceModel3inCE"></span><span id="intel_npu_acceleration_library::OVInferenceModel::inC__s"></span><span class="target" id="classintel__npu__acceleration__library_1_1OVInferenceModel_1a30d12b13550eca33846dec093c2dc7b3"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">inC</span></span></span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel3inCE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Model input channels. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library16OVInferenceModel4outCE">
+<span id="_CPPv3N30intel_npu_acceleration_library16OVInferenceModel4outCE"></span><span id="_CPPv2N30intel_npu_acceleration_library16OVInferenceModel4outCE"></span><span id="intel_npu_acceleration_library::OVInferenceModel::outC__s"></span><span class="target" id="classintel__npu__acceleration__library_1_1OVInferenceModel_1a2cf1a636912cac0465de9f70a5a0e634"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">outC</span></span></span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel4outCE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Model output channels. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library16OVInferenceModel5batchE">
+<span id="_CPPv3N30intel_npu_acceleration_library16OVInferenceModel5batchE"></span><span id="_CPPv2N30intel_npu_acceleration_library16OVInferenceModel5batchE"></span><span id="intel_npu_acceleration_library::OVInferenceModel::batch__s"></span><span class="target" id="classintel__npu__acceleration__library_1_1OVInferenceModel_1a6c5f0294dcc51e824a0ab040a7b96dc1"></span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">batch</span></span></span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel5batchE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Model batch szie. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library16OVInferenceModel6deviceE">
+<span id="_CPPv3N30intel_npu_acceleration_library16OVInferenceModel6deviceE"></span><span id="_CPPv2N30intel_npu_acceleration_library16OVInferenceModel6deviceE"></span><span id="intel_npu_acceleration_library::OVInferenceModel::device__ss"></span><span class="target" id="classintel__npu__acceleration__library_1_1OVInferenceModel_1a0d7a7c8c9d140fbff3352c35c0e8daf5"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">device</span></span></span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel6deviceE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Target device. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library16OVInferenceModel7profileE">
+<span id="_CPPv3N30intel_npu_acceleration_library16OVInferenceModel7profileE"></span><span id="_CPPv2N30intel_npu_acceleration_library16OVInferenceModel7profileE"></span><span id="intel_npu_acceleration_library::OVInferenceModel::profile__b"></span><span class="target" id="classintel__npu__acceleration__library_1_1OVInferenceModel_1a9ee090388a6aa10f813b5dc38cb6a370"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">profile</span></span></span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel7profileE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Enable/disable profiling. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library16OVInferenceModel4coreE">
+<span id="_CPPv3N30intel_npu_acceleration_library16OVInferenceModel4coreE"></span><span id="_CPPv2N30intel_npu_acceleration_library16OVInferenceModel4coreE"></span><span id="intel_npu_acceleration_library::OVInferenceModel::core__ov::Core"></span><span class="target" id="classintel__npu__acceleration__library_1_1OVInferenceModel_1a465cafe12027e6528b4c5e67df216b3f"></span><span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Core</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">core</span></span></span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel4coreE" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library16OVInferenceModel14compiled_modelE">
+<span id="_CPPv3N30intel_npu_acceleration_library16OVInferenceModel14compiled_modelE"></span><span id="_CPPv2N30intel_npu_acceleration_library16OVInferenceModel14compiled_modelE"></span><span id="intel_npu_acceleration_library::OVInferenceModel::compiled_model__ov::CompiledModel"></span><span class="target" id="classintel__npu__acceleration__library_1_1OVInferenceModel_1a275b5fd7cedce711eb3c7572ad1d4a6f"></span><span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">CompiledModel</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">compiled_model</span></span></span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel14compiled_modelE" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library16OVInferenceModel13infer_requestE">
+<span id="_CPPv3N30intel_npu_acceleration_library16OVInferenceModel13infer_requestE"></span><span id="_CPPv2N30intel_npu_acceleration_library16OVInferenceModel13infer_requestE"></span><span id="intel_npu_acceleration_library::OVInferenceModel::infer_request__ov::InferRequest"></span><span class="target" id="classintel__npu__acceleration__library_1_1OVInferenceModel_1a10261094e0d8182aa4bc147a958629f5"></span><span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">InferRequest</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">infer_request</span></span></span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel13infer_requestE" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library16OVInferenceModel6mutex_E">
+<span id="_CPPv3N30intel_npu_acceleration_library16OVInferenceModel6mutex_E"></span><span id="_CPPv2N30intel_npu_acceleration_library16OVInferenceModel6mutex_E"></span><span id="intel_npu_acceleration_library::OVInferenceModel::mutex___std::mutex"></span><span class="target" id="classintel__npu__acceleration__library_1_1OVInferenceModel_1a001d3beaf9e1fb99c44a7db55da0ea6a"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">mutex</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">mutex_</span></span></span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel6mutex_E" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library9ParameterE">
+<span id="_CPPv3N30intel_npu_acceleration_library9ParameterE"></span><span id="_CPPv2N30intel_npu_acceleration_library9ParameterE"></span><span id="intel_npu_acceleration_library::Parameter"></span><span class="target" id="classintel__npu__acceleration__library_1_1Parameter"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Parameter</span></span></span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library9ParameterE" title="Link to this definition">#</a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;<a class="reference internal" href="#parameters_8h"><span class="std std-ref">parameters.h</span></a>&gt;</em></div>
+<p>The <a class="reference internal" href="#classintel__npu__acceleration__library_1_1Parameter"><span class="std std-ref">Parameter</span></a> class represents a generic NN parameter. </p>
+<p>Subclassed by <a class="reference internal" href="#classintel__npu__acceleration__library_1_1ParameterWithConversion"><span class="std std-ref">intel_npu_acceleration_library::ParameterWithConversion</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library9Parameter9ParameterE5Shape">
+<span id="_CPPv3N30intel_npu_acceleration_library9Parameter9ParameterE5Shape"></span><span id="_CPPv2N30intel_npu_acceleration_library9Parameter9ParameterE5Shape"></span><span id="intel_npu_acceleration_library::Parameter::Parameter__Shape"></span><span class="target" id="classintel__npu__acceleration__library_1_1Parameter_1a7761b727338e90eccae1ff2851b2bdbf"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Parameter</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N30intel_npu_acceleration_library5ShapeE" title="intel_npu_acceleration_library::Shape"><span class="n"><span class="pre">Shape</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">shape</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library9Parameter9ParameterE5Shape" title="Link to this definition">#</a><br /></dt>
+<dd><p>Construct a new <a class="reference internal" href="#classintel__npu__acceleration__library_1_1Parameter"><span class="std std-ref">Parameter</span></a> object. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>shape</strong> – parameter shape </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library9Parameter9ParameterE8half_ptr5Shape">
+<span id="_CPPv3N30intel_npu_acceleration_library9Parameter9ParameterE8half_ptr5Shape"></span><span id="_CPPv2N30intel_npu_acceleration_library9Parameter9ParameterE8half_ptr5Shape"></span><span id="intel_npu_acceleration_library::Parameter::Parameter__half_ptr.Shape"></span><span class="target" id="classintel__npu__acceleration__library_1_1Parameter_1a0adb5b15af5a0aa51def57921b998bf7"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Parameter</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">half_ptr</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">_data</span></span>, <a class="reference internal" href="#_CPPv4N30intel_npu_acceleration_library5ShapeE" title="intel_npu_acceleration_library::Shape"><span class="n"><span class="pre">Shape</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">shape</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library9Parameter9ParameterE8half_ptr5Shape" title="Link to this definition">#</a><br /></dt>
+<dd><p>Construct a new <a class="reference internal" href="#classintel__npu__acceleration__library_1_1Parameter"><span class="std std-ref">Parameter</span></a> object from fp16 data pointer. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>_data</strong> – fp16 parameter data pointer </p></li>
+<li><p><strong>shape</strong> – parameter shape </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library9Parameter9ParameterEP6int8_t5Shape">
+<span id="_CPPv3N30intel_npu_acceleration_library9Parameter9ParameterEP6int8_t5Shape"></span><span id="_CPPv2N30intel_npu_acceleration_library9Parameter9ParameterEP6int8_t5Shape"></span><span id="intel_npu_acceleration_library::Parameter::Parameter__int8_tP.Shape"></span><span class="target" id="classintel__npu__acceleration__library_1_1Parameter_1a63b41cc7e1d3e7dc7c9a7b088a8d28d5"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Parameter</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">int8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">_data</span></span>, <a class="reference internal" href="#_CPPv4N30intel_npu_acceleration_library5ShapeE" title="intel_npu_acceleration_library::Shape"><span class="n"><span class="pre">Shape</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">shape</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library9Parameter9ParameterEP6int8_t5Shape" title="Link to this definition">#</a><br /></dt>
+<dd><p>Construct a new <a class="reference internal" href="#classintel__npu__acceleration__library_1_1Parameter"><span class="std std-ref">Parameter</span></a> object from int8 data pointer. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>_data</strong> – int8 parameter data pointer </p></li>
+<li><p><strong>shape</strong> – parameter shape </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK30intel_npu_acceleration_library9Parameter8get_sizeEv">
+<span id="_CPPv3NK30intel_npu_acceleration_library9Parameter8get_sizeEv"></span><span id="_CPPv2NK30intel_npu_acceleration_library9Parameter8get_sizeEv"></span><span id="intel_npu_acceleration_library::Parameter::get_sizeC"></span><span class="target" id="classintel__npu__acceleration__library_1_1Parameter_1a0959f3124bf4960bd8fa2ae26edf7bab"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_size</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK30intel_npu_acceleration_library9Parameter8get_sizeEv" title="Link to this definition">#</a><br /></dt>
+<dd><p>Get the size of the parameter. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>size_t </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library9Parameter8set_dataEPv6size_t">
+<span id="_CPPv3N30intel_npu_acceleration_library9Parameter8set_dataEPv6size_t"></span><span id="_CPPv2N30intel_npu_acceleration_library9Parameter8set_dataEPv6size_t"></span><span id="intel_npu_acceleration_library::Parameter::set_data__voidP.s"></span><span class="target" id="classintel__npu__acceleration__library_1_1Parameter_1abbc90c1fce88048f6c8f47aa54418d9c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">set_data</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">dst</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library9Parameter8set_dataEPv6size_t" title="Link to this definition">#</a><br /></dt>
+<dd><p>Set the <a class="reference internal" href="#classintel__npu__acceleration__library_1_1Parameter"><span class="std std-ref">Parameter</span></a> data to the memory location dst of size. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dst</strong> – destination memory location </p></li>
+<li><p><strong>size</strong> – destination memory location size </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library9ParameterD0Ev">
+<span id="_CPPv3N30intel_npu_acceleration_library9ParameterD0Ev"></span><span id="_CPPv2N30intel_npu_acceleration_library9ParameterD0Ev"></span><span id="intel_npu_acceleration_library::Parameter::~Parameter"></span><span class="target" id="classintel__npu__acceleration__library_1_1Parameter_1a4dd21baea2dc4a5f39fdccaebe5082c3"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">~Parameter</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library9ParameterD0Ev" title="Link to this definition">#</a><br /></dt>
+<dd><p>Destroy the <a class="reference internal" href="#classintel__npu__acceleration__library_1_1Parameter"><span class="std std-ref">Parameter</span></a> object. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-protected-attributes">Protected Attributes</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library9Parameter5shapeE">
+<span id="_CPPv3N30intel_npu_acceleration_library9Parameter5shapeE"></span><span id="_CPPv2N30intel_npu_acceleration_library9Parameter5shapeE"></span><span id="intel_npu_acceleration_library::Parameter::shape__Shape"></span><span class="target" id="classintel__npu__acceleration__library_1_1Parameter_1ad45f4216947c2f779f6cd84741ff9480"></span><a class="reference internal" href="#_CPPv4N30intel_npu_acceleration_library5ShapeE" title="intel_npu_acceleration_library::Shape"><span class="n"><span class="pre">Shape</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">shape</span></span></span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library9Parameter5shapeE" title="Link to this definition">#</a><br /></dt>
+<dd><p><a class="reference internal" href="#classintel__npu__acceleration__library_1_1Parameter"><span class="std std-ref">Parameter</span></a> shape. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library9Parameter4dataE">
+<span id="_CPPv3N30intel_npu_acceleration_library9Parameter4dataE"></span><span id="_CPPv2N30intel_npu_acceleration_library9Parameter4dataE"></span><span id="intel_npu_acceleration_library::Parameter::data__voidP"></span><span class="target" id="classintel__npu__acceleration__library_1_1Parameter_1afefdcd5a2fad9cf3fb852a7bec154d12"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">data</span></span></span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library9Parameter4dataE" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library9Parameter9quantizedE">
+<span id="_CPPv3N30intel_npu_acceleration_library9Parameter9quantizedE"></span><span id="_CPPv2N30intel_npu_acceleration_library9Parameter9quantizedE"></span><span id="intel_npu_acceleration_library::Parameter::quantized__b"></span><span class="target" id="classintel__npu__acceleration__library_1_1Parameter_1a71edd6edd7bcb43cc244af8b657725f6"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">quantized</span></span></span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library9Parameter9quantizedE" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library10ParametersE">
+<span id="_CPPv3N30intel_npu_acceleration_library10ParametersE"></span><span id="_CPPv2N30intel_npu_acceleration_library10ParametersE"></span><span id="intel_npu_acceleration_library::Parameters"></span><span class="target" id="classintel__npu__acceleration__library_1_1Parameters"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Parameters</span></span></span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library10ParametersE" title="Link to this definition">#</a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;<a class="reference internal" href="#parameters_8h"><span class="std std-ref">parameters.h</span></a>&gt;</em></div>
+<p>The class <a class="reference internal" href="#classintel__npu__acceleration__library_1_1Parameters"><span class="std std-ref">Parameters</span></a> represents a list of NN parameter for a NPU kernel. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library10Parameters13add_parameterE8half_ptr5Shape">
+<span id="_CPPv3N30intel_npu_acceleration_library10Parameters13add_parameterE8half_ptr5Shape"></span><span id="_CPPv2N30intel_npu_acceleration_library10Parameters13add_parameterE8half_ptr5Shape"></span><span id="intel_npu_acceleration_library::Parameters::add_parameter__half_ptr.Shape"></span><span class="target" id="classintel__npu__acceleration__library_1_1Parameters_1ae662e6e0c6fd633a638fcfccc79d5475"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N30intel_npu_acceleration_library10ParametersE" title="intel_npu_acceleration_library::Parameters"><span class="n"><span class="pre">Parameters</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">add_parameter</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">half_ptr</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">data</span></span>, <a class="reference internal" href="#_CPPv4N30intel_npu_acceleration_library5ShapeE" title="intel_npu_acceleration_library::Shape"><span class="n"><span class="pre">Shape</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">shape</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library10Parameters13add_parameterE8half_ptr5Shape" title="Link to this definition">#</a><br /></dt>
+<dd><p>Add a new float16 parameter. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – </p></li>
+<li><p><strong>shape</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#classintel__npu__acceleration__library_1_1Parameters"><span class="std std-ref">Parameters</span></a>&amp; </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library10Parameters13add_parameterEP6int8_t8half_ptr5Shape">
+<span id="_CPPv3N30intel_npu_acceleration_library10Parameters13add_parameterEP6int8_t8half_ptr5Shape"></span><span id="_CPPv2N30intel_npu_acceleration_library10Parameters13add_parameterEP6int8_t8half_ptr5Shape"></span><span id="intel_npu_acceleration_library::Parameters::add_parameter__int8_tP.half_ptr.Shape"></span><span class="target" id="classintel__npu__acceleration__library_1_1Parameters_1a3165748d3eb0d0b8c060e391854a777b"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N30intel_npu_acceleration_library10ParametersE" title="intel_npu_acceleration_library::Parameters"><span class="n"><span class="pre">Parameters</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">add_parameter</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">int8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">data</span></span>, <span class="n"><span class="pre">half_ptr</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">scale</span></span>, <a class="reference internal" href="#_CPPv4N30intel_npu_acceleration_library5ShapeE" title="intel_npu_acceleration_library::Shape"><span class="n"><span class="pre">Shape</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">shape</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library10Parameters13add_parameterEP6int8_t8half_ptr5Shape" title="Link to this definition">#</a><br /></dt>
+<dd><p>Add a new int8 parameter, provide also the scale. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – </p></li>
+<li><p><strong>scale</strong> – </p></li>
+<li><p><strong>shape</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#classintel__npu__acceleration__library_1_1Parameters"><span class="std std-ref">Parameters</span></a>&amp; </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library10Parameters13add_parameterEP6int8_tPf5Shape">
+<span id="_CPPv3N30intel_npu_acceleration_library10Parameters13add_parameterEP6int8_tPf5Shape"></span><span id="_CPPv2N30intel_npu_acceleration_library10Parameters13add_parameterEP6int8_tPf5Shape"></span><span id="intel_npu_acceleration_library::Parameters::add_parameter__int8_tP.floatP.Shape"></span><span class="target" id="classintel__npu__acceleration__library_1_1Parameters_1a936d6ce693a16c825e16e83b14cf4e1e"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N30intel_npu_acceleration_library10ParametersE" title="intel_npu_acceleration_library::Parameters"><span class="n"><span class="pre">Parameters</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">add_parameter</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">int8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">data</span></span>, <span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">scale</span></span>, <a class="reference internal" href="#_CPPv4N30intel_npu_acceleration_library5ShapeE" title="intel_npu_acceleration_library::Shape"><span class="n"><span class="pre">Shape</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">shape</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library10Parameters13add_parameterEP6int8_tPf5Shape" title="Link to this definition">#</a><br /></dt>
+<dd><p>Add a new int8 parameter with explicit CPU conversion. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – </p></li>
+<li><p><strong>scale</strong> – </p></li>
+<li><p><strong>shape</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#classintel__npu__acceleration__library_1_1Parameters"><span class="std std-ref">Parameters</span></a>&amp; </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library10Parameters14get_parametersEv">
+<span id="_CPPv3N30intel_npu_acceleration_library10Parameters14get_parametersEv"></span><span id="_CPPv2N30intel_npu_acceleration_library10Parameters14get_parametersEv"></span><span id="intel_npu_acceleration_library::Parameters::get_parameters"></span><span class="target" id="classintel__npu__acceleration__library_1_1Parameters_1aaffe3fa75eaa20d3c08338e83c2be962"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">auto</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_parameters</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library10Parameters14get_parametersEv" title="Link to this definition">#</a><br /></dt>
+<dd><p>Get the parameters. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>auto </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library10Parameters10parametersE">
+<span id="_CPPv3N30intel_npu_acceleration_library10Parameters10parametersE"></span><span id="_CPPv2N30intel_npu_acceleration_library10Parameters10parametersE"></span><span id="intel_npu_acceleration_library::Parameters::parameters__std::vector:std::shared_ptr:Parameter::"></span><span class="target" id="classintel__npu__acceleration__library_1_1Parameters_1a7d5396e5fcdf868f46d5dc5629a36278"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">shared_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N30intel_npu_acceleration_library9ParameterE" title="intel_npu_acceleration_library::Parameter"><span class="n"><span class="pre">Parameter</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">parameters</span></span></span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library10Parameters10parametersE" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library23ParameterWithConversionE">
+<span id="_CPPv3N30intel_npu_acceleration_library23ParameterWithConversionE"></span><span id="_CPPv2N30intel_npu_acceleration_library23ParameterWithConversionE"></span><span id="intel_npu_acceleration_library::ParameterWithConversion"></span><span class="target" id="classintel__npu__acceleration__library_1_1ParameterWithConversion"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ParameterWithConversion</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv430intel_npu_acceleration_library" title="intel_npu_acceleration_library"><span class="n"><span class="pre">intel_npu_acceleration_library</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N30intel_npu_acceleration_library9ParameterE" title="intel_npu_acceleration_library::Parameter"><span class="n"><span class="pre">Parameter</span></span></a><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library23ParameterWithConversionE" title="Link to this definition">#</a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;<a class="reference internal" href="#parameters_8h"><span class="std std-ref">parameters.h</span></a>&gt;</em></div>
+<p>The <a class="reference internal" href="#classintel__npu__acceleration__library_1_1ParameterWithConversion"><span class="std std-ref">ParameterWithConversion</span></a> represent a generic quantized NN parameter where the conversion to fp16 is performed explicitly on CPU. The conversion equation is Y_float = Scale * float(data) </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library23ParameterWithConversion23ParameterWithConversionEP6int8_tPf5Shape">
+<span id="_CPPv3N30intel_npu_acceleration_library23ParameterWithConversion23ParameterWithConversionEP6int8_tPf5Shape"></span><span id="_CPPv2N30intel_npu_acceleration_library23ParameterWithConversion23ParameterWithConversionEP6int8_tPf5Shape"></span><span id="intel_npu_acceleration_library::ParameterWithConversion::ParameterWithConversion__int8_tP.floatP.Shape"></span><span class="target" id="classintel__npu__acceleration__library_1_1ParameterWithConversion_1a8837a8d4a2867d659558d6e73d5959ab"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ParameterWithConversion</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">int8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">data</span></span>, <span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">scale</span></span>, <a class="reference internal" href="#_CPPv4N30intel_npu_acceleration_library5ShapeE" title="intel_npu_acceleration_library::Shape"><span class="n"><span class="pre">Shape</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">shape</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library23ParameterWithConversion23ParameterWithConversionEP6int8_tPf5Shape" title="Link to this definition">#</a><br /></dt>
+<dd><p>Construct a new <a class="reference internal" href="#classintel__npu__acceleration__library_1_1ParameterWithConversion"><span class="std std-ref">ParameterWithConversion</span></a> object from int8 data, float scale and shape. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – int8 data buffer </p></li>
+<li><p><strong>scale</strong> – float per output channel scale </p></li>
+<li><p><strong>shape</strong> – parameter shape </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library23ParameterWithConversion8set_dataEPv6size_t">
+<span id="_CPPv3N30intel_npu_acceleration_library23ParameterWithConversion8set_dataEPv6size_t"></span><span id="_CPPv2N30intel_npu_acceleration_library23ParameterWithConversion8set_dataEPv6size_t"></span><span id="intel_npu_acceleration_library::ParameterWithConversion::set_data__voidP.s"></span><span class="target" id="classintel__npu__acceleration__library_1_1ParameterWithConversion_1a64c4ca8f46c3b41b9e5f22a45be9a697"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">set_data</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">dst</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library23ParameterWithConversion8set_dataEPv6size_t" title="Link to this definition">#</a><br /></dt>
+<dd><p>Set the <a class="reference internal" href="#classintel__npu__acceleration__library_1_1Parameter"><span class="std std-ref">Parameter</span></a> data to the memory location dst of size. Here is where the conversion from int to float is performed. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dst</strong> – destination memory location </p></li>
+<li><p><strong>size</strong> – destination memory location size </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library23ParameterWithConversion4dataE">
+<span id="_CPPv3N30intel_npu_acceleration_library23ParameterWithConversion4dataE"></span><span id="_CPPv2N30intel_npu_acceleration_library23ParameterWithConversion4dataE"></span><span id="intel_npu_acceleration_library::ParameterWithConversion::data__int8_tP"></span><span class="target" id="classintel__npu__acceleration__library_1_1ParameterWithConversion_1aecf868d7f5654468eb57a4a76bec47ce"></span><span class="n"><span class="pre">int8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">data</span></span></span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library23ParameterWithConversion4dataE" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library23ParameterWithConversion5scaleE">
+<span id="_CPPv3N30intel_npu_acceleration_library23ParameterWithConversion5scaleE"></span><span id="_CPPv2N30intel_npu_acceleration_library23ParameterWithConversion5scaleE"></span><span id="intel_npu_acceleration_library::ParameterWithConversion::scale__floatP"></span><span class="target" id="classintel__npu__acceleration__library_1_1ParameterWithConversion_1af99014ffbc019ce145d820b1bfe89c2e"></span><span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">scale</span></span></span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library23ParameterWithConversion5scaleE" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library5ShapeE">
+<span id="_CPPv3N30intel_npu_acceleration_library5ShapeE"></span><span id="_CPPv2N30intel_npu_acceleration_library5ShapeE"></span><span id="intel_npu_acceleration_library::Shape"></span><span class="target" id="classintel__npu__acceleration__library_1_1Shape"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Shape</span></span></span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library5ShapeE" title="Link to this definition">#</a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;<a class="reference internal" href="#parameters_8h"><span class="std std-ref">parameters.h</span></a>&gt;</em></div>
+<p>A class representing a generic tensor shape. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library5Shape5ShapeENSt16initializer_listI6size_tEE">
+<span id="_CPPv3N30intel_npu_acceleration_library5Shape5ShapeENSt16initializer_listI6size_tEE"></span><span id="_CPPv2N30intel_npu_acceleration_library5Shape5ShapeENSt16initializer_listI6size_tEE"></span><span id="intel_npu_acceleration_library::Shape::Shape__std::initializer_list:s:"></span><span class="target" id="classintel__npu__acceleration__library_1_1Shape_1ad9b6bc6854ef4d8927f6be2c0f91d7ee"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Shape</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">initializer_list</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">size_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">dims</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library5Shape5ShapeENSt16initializer_listI6size_tEE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Construct a new <a class="reference internal" href="#classintel__npu__acceleration__library_1_1Shape"><span class="std std-ref">Shape</span></a> object. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dims</strong> – : a list of integers representing each dimension size </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library5ShapeixEi">
+<span id="_CPPv3N30intel_npu_acceleration_library5ShapeixEi"></span><span id="_CPPv2N30intel_npu_acceleration_library5ShapeixEi"></span><span id="intel_npu_acceleration_library::Shape::subscript-operator__i"></span><span class="target" id="classintel__npu__acceleration__library_1_1Shape_1a308cc35a77f601e4214395d94ec50d73"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">[]</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">idx</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library5ShapeixEi" title="Link to this definition">#</a><br /></dt>
+<dd><p>Overload of the operator []. Return the dimension at index idx. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>idx</strong> – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>const size_t&amp; </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK30intel_npu_acceleration_library5Shape8get_sizeEv">
+<span id="_CPPv3NK30intel_npu_acceleration_library5Shape8get_sizeEv"></span><span id="_CPPv2NK30intel_npu_acceleration_library5Shape8get_sizeEv"></span><span id="intel_npu_acceleration_library::Shape::get_sizeC"></span><span class="target" id="classintel__npu__acceleration__library_1_1Shape_1aae6675da89148f7f32567a18231b0f35"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_size</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK30intel_npu_acceleration_library5Shape8get_sizeEv" title="Link to this definition">#</a><br /></dt>
+<dd><p>Get the number of element of the tensor. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>size_t </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library5Shape10dimensionsE">
+<span id="_CPPv3N30intel_npu_acceleration_library5Shape10dimensionsE"></span><span id="_CPPv2N30intel_npu_acceleration_library5Shape10dimensionsE"></span><span id="intel_npu_acceleration_library::Shape::dimensions__std::vector:s:"></span><span class="target" id="classintel__npu__acceleration__library_1_1Shape_1a5a517a5566bc1a559a38327bf166931a"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">size_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">dimensions</span></span></span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library5Shape10dimensionsE" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv430intel_npu_acceleration_library">
+<span id="_CPPv330intel_npu_acceleration_library"></span><span id="_CPPv230intel_npu_acceleration_library"></span><span id="intel_npu_acceleration_library"></span><span class="target" id="namespaceintel__npu__acceleration__library"></span><span class="k"><span class="pre">namespace</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intel_npu_acceleration_library</span></span></span><a class="headerlink" href="#_CPPv430intel_npu_acceleration_library" title="Link to this definition">#</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library15_isNPUAvailableERN2ov4CoreE">
+<span id="_CPPv3N30intel_npu_acceleration_library15_isNPUAvailableERN2ov4CoreE"></span><span id="_CPPv2N30intel_npu_acceleration_library15_isNPUAvailableERN2ov4CoreE"></span><span id="intel_npu_acceleration_library::_isNPUAvailable__ov::CoreR"></span><span class="target" id="common_8h_1a9e412da1ba282763206e33ed8911c83d"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_isNPUAvailable</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Core</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">core</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library15_isNPUAvailableERN2ov4CoreE" title="Link to this definition">#</a><br /></dt>
+<dd><p>Return true if the NPU is available on the system, otherwise return false. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>core</strong> – ov::Cor object </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true NPU AI accelerator is available </p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>false NPU AI accelerator is not available </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library14vector_to_fp16EPK6int8_tf8half_ptr6size_t">
+<span id="_CPPv3N30intel_npu_acceleration_library14vector_to_fp16EPK6int8_tf8half_ptr6size_t"></span><span id="_CPPv2N30intel_npu_acceleration_library14vector_to_fp16EPK6int8_tf8half_ptr6size_t"></span><span id="intel_npu_acceleration_library::vector_to_fp16__int8_tCP.float.half_ptr.s"></span><span class="target" id="conversion_8h_1a1b75482474573750a7b697e933074d93"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">vector_to_fp16</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">int8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">src</span></span>, <span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">scale</span></span>, <span class="n"><span class="pre">half_ptr</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">dst</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library14vector_to_fp16EPK6int8_tf8half_ptr6size_t" title="Link to this definition">#</a><br /></dt>
+<dd><p>Convert a int8 vector to fp16 given a scalar scale. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>src</strong> – pointer to the source int8 buffer </p></li>
+<li><p><strong>scale</strong> – Float scale </p></li>
+<li><p><strong>dst</strong> – pointer to the destination float16 buffer </p></li>
+<li><p><strong>size</strong> – size of the src and dst buffers </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library20array_to_fp16_workerEPK6int8_tPf8half_ptr6size_t6size_t">
+<span id="_CPPv3N30intel_npu_acceleration_library20array_to_fp16_workerEPK6int8_tPf8half_ptr6size_t6size_t"></span><span id="_CPPv2N30intel_npu_acceleration_library20array_to_fp16_workerEPK6int8_tPf8half_ptr6size_t6size_t"></span><span id="intel_npu_acceleration_library::array_to_fp16_worker__int8_tCP.floatP.half_ptr.s.s"></span><span class="target" id="conversion_8h_1a6a09adac45aab3899afb190edc3af35b"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">array_to_fp16_worker</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">int8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">input</span></span>, <span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">scale</span></span>, <span class="n"><span class="pre">half_ptr</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">output</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">input_channels</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">output_channels</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library20array_to_fp16_workerEPK6int8_tPf8half_ptr6size_t6size_t" title="Link to this definition">#</a><br /></dt>
+<dd><p>Convert a int8 array to fp16 given a per output channel scale vector. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input</strong> – pointer to the source int8 buffer of shape [output_channels, input_channels] </p></li>
+<li><p><strong>scale</strong> – pointer of a float scale vector of shape [output_channels] </p></li>
+<li><p><strong>output</strong> – dst pointer to the destination float16 buffer of shape [output_channels, input_channels] </p></li>
+<li><p><strong>input_channels</strong> – number of input channels </p></li>
+<li><p><strong>output_channels</strong> – number of output channels </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library7to_fp16EPK6int8_tPf8half_ptr6size_t6size_tj">
+<span id="_CPPv3N30intel_npu_acceleration_library7to_fp16EPK6int8_tPf8half_ptr6size_t6size_tj"></span><span id="_CPPv2N30intel_npu_acceleration_library7to_fp16EPK6int8_tPf8half_ptr6size_t6size_tj"></span><span id="intel_npu_acceleration_library::to_fp16__int8_tCP.floatP.half_ptr.s.s.unsigned-i"></span><span class="target" id="conversion_8h_1adecd360d1449bf007cb9d8e41050cc57"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">to_fp16</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">int8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">input</span></span>, <span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">scale</span></span>, <span class="n"><span class="pre">half_ptr</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">output</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">input_channels</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">output_channels</span></span>, <span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">num_threads</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library7to_fp16EPK6int8_tPf8half_ptr6size_t6size_tj" title="Link to this definition">#</a><br /></dt>
+<dd><p>Convert a int8 array to fp16 given a per output channel scale vector. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input</strong> – pointer to the source int8 buffer of shape [output_channels, input_channels] </p></li>
+<li><p><strong>scale</strong> – pointer of a float scale vector of shape [output_channels] </p></li>
+<li><p><strong>output</strong> – dst pointer to the destination float16 buffer of shape [output_channels, input_channels] </p></li>
+<li><p><strong>input_channels</strong> – number of input channels </p></li>
+<li><p><strong>output_channels</strong> – number of output channels </p></li>
+<li><p><strong>num_threads</strong> – number of parallel threads to use </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-variables">Variables</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library17npu_compiler_typeE">
+<span id="_CPPv3N30intel_npu_acceleration_library17npu_compiler_typeE"></span><span id="_CPPv2N30intel_npu_acceleration_library17npu_compiler_typeE"></span><span id="intel_npu_acceleration_library::npu_compiler_type__ov::Property:ss:"></span><span class="target" id="common_8h_1a1dd9063e6c2b9224d763e82dffd5cf04"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">constexpr</span></span><span class="w"> </span><span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Property</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">npu_compiler_type</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="s"><span class="pre">&quot;NPU_COMPILER_TYPE&quot;</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library17npu_compiler_typeE" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N30intel_npu_acceleration_library14npu_parametersE">
+<span id="_CPPv3N30intel_npu_acceleration_library14npu_parametersE"></span><span id="_CPPv2N30intel_npu_acceleration_library14npu_parametersE"></span><span id="intel_npu_acceleration_library::npu_parameters__ov::Property:ss:"></span><span class="target" id="common_8h_1a80d2d22a52c24f03a6f90ac3ed1a1b88"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">constexpr</span></span><span class="w"> </span><span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Property</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">npu_parameters</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="s"><span class="pre">&quot;NPU_COMPILATION_MODE_PARAMS&quot;</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N30intel_npu_acceleration_library14npu_parametersE" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl>
+<dt class="sig sig-object cpp">
+<span class="target" id="common_8h"></span><em><span class="pre">file</span></em> <span class="sig-name descname"><span class="pre">common.h</span></span></dt>
+<dd><div class="docutils container">
+<em>#include “openvino/openvino.hpp”</em></div>
+<div class="docutils container">
+<em>#include “openvino/opsets/opset1.hpp”</em></div>
+<div class="docutils container">
+<em>#include “openvino/opsets/opset13.hpp”</em></div>
+<div class="docutils container">
+<em>#include “openvino/opsets/opset4.hpp”</em></div>
+<div class="docutils container">
+<em>#include “openvino/opsets/opset6.hpp”</em></div>
+<div class="docutils container">
+<em>#include “openvino/opsets/opset7.hpp”</em></div>
+<div class="docutils container">
+<em>#include “openvino/opsets/opset8.hpp”</em></div>
+</dd></dl>
+
+<dl>
+<dt class="sig sig-object cpp">
+<span class="target" id="conversion_8h"></span><em><span class="pre">file</span></em> <span class="sig-name descname"><span class="pre">conversion.h</span></span></dt>
+<dd><div class="docutils container">
+<em>#include &lt;immintrin.h&gt;</em></div>
+<div class="docutils container">
+<em>#include &lt;iostream&gt;</em></div>
+<div class="docutils container">
+<em>#include &lt;thread&gt;</em></div>
+<div class="docutils container">
+<em>#include &lt;vector&gt;</em></div>
+<div class="docutils container">
+<em>#include “<a class="reference internal" href="#common_8h"><span class="std std-ref">intel_npu_acceleration_library/common.h</span></a>”</em></div>
+</dd></dl>
+
+<dl>
+<dt class="sig sig-object cpp">
+<span class="target" id="inference_8h"></span><em><span class="pre">file</span></em> <span class="sig-name descname"><span class="pre">inference.h</span></span></dt>
+<dd><div class="docutils container">
+<em>#include &lt;atomic&gt;</em></div>
+<div class="docutils container">
+<em>#include &lt;condition_variable&gt;</em></div>
+<div class="docutils container">
+<em>#include &lt;cstdint&gt;</em></div>
+<div class="docutils container">
+<em>#include &lt;cstdlib&gt;</em></div>
+<div class="docutils container">
+<em>#include &lt;cstring&gt;</em></div>
+<div class="docutils container">
+<em>#include &lt;fstream&gt;</em></div>
+<div class="docutils container">
+<em>#include &lt;iostream&gt;</em></div>
+<div class="docutils container">
+<em>#include &lt;limits&gt;</em></div>
+<div class="docutils container">
+<em>#include &lt;memory&gt;</em></div>
+<div class="docutils container">
+<em>#include &lt;mutex&gt;</em></div>
+<div class="docutils container">
+<em>#include &lt;string&gt;</em></div>
+<div class="docutils container">
+<em>#include &lt;thread&gt;</em></div>
+<div class="docutils container">
+<em>#include &lt;vector&gt;</em></div>
+<div class="docutils container">
+<em>#include “<a class="reference internal" href="#common_8h"><span class="std std-ref">intel_npu_acceleration_library/common.h</span></a>”</em></div>
+<div class="docutils container">
+<em>#include “<a class="reference internal" href="#parameters_8h"><span class="std std-ref">intel_npu_acceleration_library/parameters.h</span></a>”</em></div>
+</dd></dl>
+
+<dl>
+<dt class="sig sig-object cpp">
+<span class="target" id="nn__factory_8h"></span><em><span class="pre">file</span></em> <span class="sig-name descname"><span class="pre">nn_factory.h</span></span></dt>
+<dd><div class="docutils container">
+<em>#include “<a class="reference internal" href="#inference_8h"><span class="std std-ref">intel_npu_acceleration_library/inference.h</span></a>”</em></div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-typedefs">Typedefs</p>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv46OVNode">
+<span id="_CPPv36OVNode"></span><span id="_CPPv26OVNode"></span><span id="OVNode"></span><span class="target" id="nn__factory_8h_1aa0a5f2b4601004b8c24f28d4a5faf6d0"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Output</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">ov</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Node</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">OVNode</span></span></span><a class="headerlink" href="#_CPPv46OVNode" title="Link to this definition">#</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl>
+<dt class="sig sig-object cpp">
+<span class="target" id="parameters_8h"></span><em><span class="pre">file</span></em> <span class="sig-name descname"><span class="pre">parameters.h</span></span></dt>
+<dd><div class="docutils container">
+<em>#include &lt;memory&gt;</em></div>
+<div class="docutils container">
+<em>#include “<a class="reference internal" href="#common_8h"><span class="std std-ref">intel_npu_acceleration_library/common.h</span></a>”</em></div>
+<div class="docutils container">
+<em>#include “<a class="reference internal" href="#conversion_8h"><span class="std std-ref">intel_npu_acceleration_library/conversion.h</span></a>”</em></div>
+</dd></dl>
+
+<dl>
+<dt class="sig sig-object cpp">
+<span class="target" id="dir_d44c64559bbebec7f509842c48db8b23"></span><em><span class="pre">dir</span></em> <span class="sig-name descname"><span class="pre">include</span></span></dt>
+<dd></dd></dl>
+
+<dl>
+<dt class="sig sig-object cpp">
+<span class="target" id="dir_c6ed5e713f73fa7e54b7646255c63276"></span><em><span class="pre">dir</span></em> <span class="sig-name descname"><span class="pre">intel_npu_acceleration_library</span></span></dt>
+<dd></dd></dl>
+
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="python/intel_npu_acceleration_library.nn.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">intel_npu_acceleration_library.nn package</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactoryE"><code class="docutils literal notranslate"><span class="pre">ModelFactory</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory12ModelFactoryENSt6stringE6size_t6size_t6size_tb"><code class="docutils literal notranslate"><span class="pre">ModelFactory::ModelFactory()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory9parameterE6size_t6size_tN2ov7element6Type_tE"><code class="docutils literal notranslate"><span class="pre">ModelFactory::parameter()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory6matmulEPN2ov2op2OpERPN2ov2op2OpEbb"><code class="docutils literal notranslate"><span class="pre">ModelFactory::matmul()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory4geluEPN2ov2op2OpE"><code class="docutils literal notranslate"><span class="pre">ModelFactory::gelu()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory5swishEPN2ov2op2OpE"><code class="docutils literal notranslate"><span class="pre">ModelFactory::swish()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory7softmaxEPN2ov2op2OpE"><code class="docutils literal notranslate"><span class="pre">ModelFactory::softmax()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory15convert_to_fp16EPN2ov2op2OpE"><code class="docutils literal notranslate"><span class="pre">ModelFactory::convert_to_fp16()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory11eltwise_addEPN2ov2op2OpERPN2ov2op2OpE"><code class="docutils literal notranslate"><span class="pre">ModelFactory::eltwise_add()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory11eltwise_mulEPN2ov2op2OpERPN2ov2op2OpE"><code class="docutils literal notranslate"><span class="pre">ModelFactory::eltwise_mul()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory11eltwise_divEPN2ov2op2OpERPN2ov2op2OpE"><code class="docutils literal notranslate"><span class="pre">ModelFactory::eltwise_div()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory7compileEPN2ov2op2OpE"><code class="docutils literal notranslate"><span class="pre">ModelFactory::compile()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory10parametersE"><code class="docutils literal notranslate"><span class="pre">ModelFactory::parameters</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library12ModelFactory10operationsE"><code class="docutils literal notranslate"><span class="pre">ModelFactory::operations</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModelE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel16OVInferenceModelENSt6stringE6size_t6size_t6size_tb"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::OVInferenceModel()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModelD0Ev"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::~OVInferenceModel()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel17saveCompiledModelERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::saveCompiledModel()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel9saveModelERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::saveModel()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel3runEv"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::run()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel14setActivationsE8half_ptr8half_ptr"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::setActivations()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel10setWeightsENSt6vectorINSt10shared_ptrI9ParameterEEEERNSt11atomic_boolE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::setWeights()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel1XE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::X</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel3OutE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::Out</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel9wt_threadE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::wt_thread</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel13compile_modelENSt6stringE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::compile_model()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel15create_ov_modelEv"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::create_ov_model()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel5modelE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::model</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel3inCE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::inC</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel4outCE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::outC</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel5batchE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::batch</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel6deviceE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::device</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel7profileE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::profile</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel4coreE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::core</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel14compiled_modelE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::compiled_model</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel13infer_requestE"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::infer_request</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library16OVInferenceModel6mutex_E"><code class="docutils literal notranslate"><span class="pre">OVInferenceModel::mutex_</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library9ParameterE"><code class="docutils literal notranslate"><span class="pre">Parameter</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library9Parameter9ParameterE5Shape"><code class="docutils literal notranslate"><span class="pre">Parameter::Parameter()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library9Parameter9ParameterE8half_ptr5Shape"><code class="docutils literal notranslate"><span class="pre">Parameter::Parameter()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library9Parameter9ParameterEP6int8_t5Shape"><code class="docutils literal notranslate"><span class="pre">Parameter::Parameter()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4NK30intel_npu_acceleration_library9Parameter8get_sizeEv"><code class="docutils literal notranslate"><span class="pre">Parameter::get_size()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library9Parameter8set_dataEPv6size_t"><code class="docutils literal notranslate"><span class="pre">Parameter::set_data()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library9ParameterD0Ev"><code class="docutils literal notranslate"><span class="pre">Parameter::~Parameter()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library9Parameter5shapeE"><code class="docutils literal notranslate"><span class="pre">Parameter::shape</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library9Parameter4dataE"><code class="docutils literal notranslate"><span class="pre">Parameter::data</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library9Parameter9quantizedE"><code class="docutils literal notranslate"><span class="pre">Parameter::quantized</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library10ParametersE"><code class="docutils literal notranslate"><span class="pre">Parameters</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library10Parameters13add_parameterE8half_ptr5Shape"><code class="docutils literal notranslate"><span class="pre">Parameters::add_parameter()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library10Parameters13add_parameterEP6int8_t8half_ptr5Shape"><code class="docutils literal notranslate"><span class="pre">Parameters::add_parameter()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library10Parameters13add_parameterEP6int8_tPf5Shape"><code class="docutils literal notranslate"><span class="pre">Parameters::add_parameter()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library10Parameters14get_parametersEv"><code class="docutils literal notranslate"><span class="pre">Parameters::get_parameters()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library10Parameters10parametersE"><code class="docutils literal notranslate"><span class="pre">Parameters::parameters</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library23ParameterWithConversionE"><code class="docutils literal notranslate"><span class="pre">ParameterWithConversion</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library23ParameterWithConversion23ParameterWithConversionEP6int8_tPf5Shape"><code class="docutils literal notranslate"><span class="pre">ParameterWithConversion::ParameterWithConversion()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library23ParameterWithConversion8set_dataEPv6size_t"><code class="docutils literal notranslate"><span class="pre">ParameterWithConversion::set_data()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library23ParameterWithConversion4dataE"><code class="docutils literal notranslate"><span class="pre">ParameterWithConversion::data</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library23ParameterWithConversion5scaleE"><code class="docutils literal notranslate"><span class="pre">ParameterWithConversion::scale</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library5ShapeE"><code class="docutils literal notranslate"><span class="pre">Shape</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library5Shape5ShapeENSt16initializer_listI6size_tEE"><code class="docutils literal notranslate"><span class="pre">Shape::Shape()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library5ShapeixEi"><code class="docutils literal notranslate"><span class="pre">Shape::operator[]()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4NK30intel_npu_acceleration_library5Shape8get_sizeEv"><code class="docutils literal notranslate"><span class="pre">Shape::get_size()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library5Shape10dimensionsE"><code class="docutils literal notranslate"><span class="pre">Shape::dimensions</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv430intel_npu_acceleration_library"><code class="docutils literal notranslate"><span class="pre">intel_npu_acceleration_library</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library15_isNPUAvailableERN2ov4CoreE"><code class="docutils literal notranslate"><span class="pre">intel_npu_acceleration_library::_isNPUAvailable()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library14vector_to_fp16EPK6int8_tf8half_ptr6size_t"><code class="docutils literal notranslate"><span class="pre">intel_npu_acceleration_library::vector_to_fp16()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library20array_to_fp16_workerEPK6int8_tPf8half_ptr6size_t6size_t"><code class="docutils literal notranslate"><span class="pre">intel_npu_acceleration_library::array_to_fp16_worker()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library7to_fp16EPK6int8_tPf8half_ptr6size_t6size_tj"><code class="docutils literal notranslate"><span class="pre">intel_npu_acceleration_library::to_fp16()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library17npu_compiler_typeE"><code class="docutils literal notranslate"><span class="pre">intel_npu_acceleration_library::npu_compiler_type</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv4N30intel_npu_acceleration_library14npu_parametersE"><code class="docutils literal notranslate"><span class="pre">intel_npu_acceleration_library::npu_parameters</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#_CPPv46OVNode"><code class="docutils literal notranslate"><span class="pre">OVNode</span></code></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Intel Corporation
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, Intel Corporation.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
