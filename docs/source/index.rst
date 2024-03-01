@@ -11,9 +11,9 @@ The Intel® NPU Acceleration Library is a Python library designed to boost the e
 Installation
 -------------
 
-Download the ``*.whl`` file relative to your setup from the latest ``intel-npu-acceleration-library`` `release page <https://github.com/intel/intel-npu-acceleration-library/releases/latest>`_. If for example you have ``python 3.9`` and a ``x64`` operative system installation you should use ``intel_npu_acceleration_library-*-cp39-cp39-win_amd64.whl``
+Check that your system has an available NPU (`how-to <https://www.intel.com/content/www/us/en/support/articles/000097597/processors.html>`_).
 
-Once downloaded, you can install it in your machine with
+You can install the packet in your machine with
 
 .. code-block:: bash
 
