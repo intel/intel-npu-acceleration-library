@@ -319,15 +319,100 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-base-module">intel_npu_acceleration_library.backend.base module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-factory-module">intel_npu_acceleration_library.backend.factory module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-linear-module">intel_npu_acceleration_library.backend.linear module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-matmul-module">intel_npu_acceleration_library.backend.matmul module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-mlp-module">intel_npu_acceleration_library.backend.mlp module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-qlinear-module">intel_npu_acceleration_library.backend.qlinear module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-qmatmul-module">intel_npu_acceleration_library.backend.qmatmul module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-runtime-module">intel_npu_acceleration_library.backend.runtime module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-base-module">intel_npu_acceleration_library.backend.base module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.base.BaseNPUBackend"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackend</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.base.BaseNPUBackend.save"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackend.save()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.base.BaseNPUBackend.saveCompiledModel"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackend.saveCompiledModel()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackendWithPrefetch</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.add_to_map"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackendWithPrefetch.add_to_map()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.create_parameters"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackendWithPrefetch.create_parameters()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.load_wt_fn"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackendWithPrefetch.load_wt_fn()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.prefetchWeights"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackendWithPrefetch.prefetchWeights()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.setWeights"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackendWithPrefetch.setWeights()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.base.adapt_weight"><code class="docutils literal notranslate"><span class="pre">adapt_weight()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-factory-module">intel_npu_acceleration_library.backend.factory module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.factory.NNFactory"><code class="docutils literal notranslate"><span class="pre">NNFactory</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.factory.NNFactory.compile"><code class="docutils literal notranslate"><span class="pre">NNFactory.compile()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.factory.NNFactory.linear"><code class="docutils literal notranslate"><span class="pre">NNFactory.linear()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.factory.NNFactory.parameter"><code class="docutils literal notranslate"><span class="pre">NNFactory.parameter()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.factory.NNFactory.run"><code class="docutils literal notranslate"><span class="pre">NNFactory.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-linear-module">intel_npu_acceleration_library.backend.linear module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.linear.Linear"><code class="docutils literal notranslate"><span class="pre">Linear</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.linear.Linear.run"><code class="docutils literal notranslate"><span class="pre">Linear.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-matmul-module">intel_npu_acceleration_library.backend.matmul module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.matmul.MatMul"><code class="docutils literal notranslate"><span class="pre">MatMul</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.matmul.MatMul.run"><code class="docutils literal notranslate"><span class="pre">MatMul.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-mlp-module">intel_npu_acceleration_library.backend.mlp module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.mlp.MLP"><code class="docutils literal notranslate"><span class="pre">MLP</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-qlinear-module">intel_npu_acceleration_library.backend.qlinear module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.qlinear.QLinear"><code class="docutils literal notranslate"><span class="pre">QLinear</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.qlinear.QLinear.run"><code class="docutils literal notranslate"><span class="pre">QLinear.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-qmatmul-module">intel_npu_acceleration_library.backend.qmatmul module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.qmatmul.QMatMul"><code class="docutils literal notranslate"><span class="pre">QMatMul</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.qmatmul.QMatMul.run"><code class="docutils literal notranslate"><span class="pre">QMatMul.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-runtime-module">intel_npu_acceleration_library.backend.runtime module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.runtime.run_factory"><code class="docutils literal notranslate"><span class="pre">run_factory()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.runtime.run_matmul"><code class="docutils literal notranslate"><span class="pre">run_matmul()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.runtime.set_contiguous"><code class="docutils literal notranslate"><span class="pre">set_contiguous()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-intel_npu_acceleration_library.backend">Module contents</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.Linear"><code class="docutils literal notranslate"><span class="pre">Linear</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.Linear.run"><code class="docutils literal notranslate"><span class="pre">Linear.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.MLP"><code class="docutils literal notranslate"><span class="pre">MLP</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.MatMul"><code class="docutils literal notranslate"><span class="pre">MatMul</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.MatMul.run"><code class="docutils literal notranslate"><span class="pre">MatMul.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.NNFactory"><code class="docutils literal notranslate"><span class="pre">NNFactory</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.NNFactory.compile"><code class="docutils literal notranslate"><span class="pre">NNFactory.compile()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.NNFactory.linear"><code class="docutils literal notranslate"><span class="pre">NNFactory.linear()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.NNFactory.parameter"><code class="docutils literal notranslate"><span class="pre">NNFactory.parameter()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.NNFactory.run"><code class="docutils literal notranslate"><span class="pre">NNFactory.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.QLinear"><code class="docutils literal notranslate"><span class="pre">QLinear</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.QLinear.run"><code class="docutils literal notranslate"><span class="pre">QLinear.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.QMatMul"><code class="docutils literal notranslate"><span class="pre">QMatMul</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.QMatMul.run"><code class="docutils literal notranslate"><span class="pre">QMatMul.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.run_factory"><code class="docutils literal notranslate"><span class="pre">run_factory()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.run_matmul"><code class="docutils literal notranslate"><span class="pre">run_matmul()</span></code></a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -346,30 +431,713 @@ document.write(`
 </section>
 <section id="intel-npu-acceleration-library-backend-base-module">
 <h2>intel_npu_acceleration_library.backend.base module<a class="headerlink" href="#intel-npu-acceleration-library-backend-base-module" title="Link to this heading">#</a></h2>
+<dl class="py class" id="module-intel_npu_acceleration_library.backend.base">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.base.BaseNPUBackend">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.backend.base.</span></span><span class="sig-name descname"><span class="pre">BaseNPUBackend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#intel_npu_acceleration_library.backend.base.BaseNPUBackend" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A base class that represent a abstract Matrix-Matrix operation on the NPU.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.base.BaseNPUBackend.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#intel_npu_acceleration_library.backend.base.BaseNPUBackend.save" title="Link to this definition">#</a></dt>
+<dd><p>Save the Openvino model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – the model save path</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.base.BaseNPUBackend.saveCompiledModel">
+<span class="sig-name descname"><span class="pre">saveCompiledModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#intel_npu_acceleration_library.backend.base.BaseNPUBackend.saveCompiledModel" title="Link to this definition">#</a></dt>
+<dd><p>Save the compiled model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – the compiled model save path</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.backend.base.</span></span><span class="sig-name descname"><span class="pre">BaseNPUBackendWithPrefetch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#intel_npu_acceleration_library.backend.base.BaseNPUBackend" title="intel_npu_acceleration_library.backend.base.BaseNPUBackend"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseNPUBackend</span></code></a></p>
+<p>A base class that represent a abstract Matrix-Matrix operation on the NPU.</p>
+<p>Linear type classes employ an algorithm to optimize weights prefetching</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.add_to_map">
+<span class="sig-name descname"><span class="pre">add_to_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wt_hash</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.add_to_map" title="Link to this definition">#</a></dt>
+<dd><p>Add an operation parameters to the operation hash:parameter map.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wt_hash</strong> (<em>str</em>) – operation hash</p></li>
+<li><p><strong>weights</strong> (<em>Iterable</em><em>[</em><em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>Tuple</em><em>[</em><em>np.ndarray</em><em>, </em><em>...</em><em>]</em><em>]</em><em>]</em>) – Operation parameters</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.create_parameters">
+<span class="sig-name descname"><span class="pre">create_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Pointer</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.create_parameters" title="Link to this definition">#</a></dt>
+<dd><p>Create an operation parameter from a list of weights.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>weights</strong> (<em>Iterable</em><em>[</em><em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>Tuple</em><em>[</em><em>np.ndarray</em><em>, </em><em>...</em><em>]</em><em>]</em><em>]</em>) – Operation parameters</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>RuntimeError</strong> – Quantized weights needs to be in int8 format</p></li>
+<li><p><strong>ValueError</strong> – Invalid dtype for scale</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>an instance to the Parameters object</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ctypes._Pointer</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.load_wt_fn">
+<span class="sig-name descname"><span class="pre">load_wt_fn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.load_wt_fn" title="Link to this definition">#</a></dt>
+<dd><p>Load asyncronously the parameter into the NPU.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>module</strong> – the NPU backend module</p></li>
+<li><p><strong>parameters</strong> – the weights parameter class</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.prefetchWeights">
+<span class="sig-name descname"><span class="pre">prefetchWeights</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.prefetchWeights" title="Link to this definition">#</a></dt>
+<dd><p>Prefetch next operation weights.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.setWeights">
+<span class="sig-name descname"><span class="pre">setWeights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wt_hash</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.setWeights" title="Link to this definition">#</a></dt>
+<dd><p>Set the operation weights in the NPU.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wt_hash</strong> (<em>str</em>) – operation hash. If set to None force the load of the weights</p></li>
+<li><p><strong>args</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>Tuple</em><em>[</em><em>np.ndarray</em><em>, </em><em>...</em><em>]</em><em>]</em>) – Variable length weights list. Can be a np array or a tuple of weight, scale in case of quantized tensors</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Return True if the op parameters are already in the op map</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.base.adapt_weight">
+<span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.backend.base.</span></span><span class="sig-name descname"><span class="pre">adapt_weight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">w</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.backend.base.adapt_weight" title="Link to this definition">#</a></dt>
+<dd><p>Adapt the weights to run on the NPU.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>w</strong> (<em>np.ndarray</em>) – weights array</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – Unsupported shape</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The adapted array</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="intel-npu-acceleration-library-backend-factory-module">
 <h2>intel_npu_acceleration_library.backend.factory module<a class="headerlink" href="#intel-npu-acceleration-library-backend-factory-module" title="Link to this heading">#</a></h2>
+<dl class="py class" id="module-intel_npu_acceleration_library.backend.factory">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.factory.NNFactory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.backend.factory.</span></span><span class="sig-name descname"><span class="pre">NNFactory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inC</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outC</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'NPU'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#intel_npu_acceleration_library.backend.factory.NNFactory" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch" title="intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseNPUBackendWithPrefetch</span></code></a></p>
+<p>Linear class, computing a matrix matrix multiplication with weights prefetching.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.factory.NNFactory.compile">
+<span class="sig-name descname"><span class="pre">compile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_Pointer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#intel_npu_acceleration_library.backend.factory.NNFactory.compile" title="Link to this definition">#</a></dt>
+<dd><p>Finalize and compile a model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>output_node</strong> (<em>ctypes._Pointer</em>) – Model output node</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.factory.NNFactory.linear">
+<span class="sig-name descname"><span class="pre">linear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_Pointer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_channels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_channels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quantize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Pointer</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.backend.factory.NNFactory.linear" title="Link to this definition">#</a></dt>
+<dd><p>Generate a linear layer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_node</strong> (<em>ctypes._Pointer</em>) – layer input node</p></li>
+<li><p><strong>output_channels</strong> (<em>int</em>) – number of output channels</p></li>
+<li><p><strong>input_channels</strong> (<em>int</em>) – number of input channels</p></li>
+<li><p><strong>bias</strong> (<em>bool</em><em>, </em><em>optional</em>) – enable/disable bias. Defaults to False.</p></li>
+<li><p><strong>quantize</strong> (<em>bool</em><em>, </em><em>optional</em>) – quantize linear model. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>_description_</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ctypes._Pointer</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.factory.NNFactory.parameter">
+<span class="sig-name descname"><span class="pre">parameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">shape:</span> <span class="pre">~typing.Tuple[int,</span> <span class="pre">int],</span> <span class="pre">dtype:</span> <span class="pre">~numpy.dtype[~typing.Any]</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">|</span> <span class="pre">type[~typing.Any]</span> <span class="pre">|</span> <span class="pre">~numpy._typing._dtype_like._SupportsDType[~numpy.dtype[~typing.Any]]</span> <span class="pre">|</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">tuple[~typing.Any,</span> <span class="pre">int]</span> <span class="pre">|</span> <span class="pre">tuple[~typing.Any,</span> <span class="pre">~typing.SupportsIndex</span> <span class="pre">|</span> <span class="pre">~collections.abc.Sequence[~typing.SupportsIndex]]</span> <span class="pre">|</span> <span class="pre">list[~typing.Any]</span> <span class="pre">|</span> <span class="pre">~numpy._typing._dtype_like._DTypeDict</span> <span class="pre">|</span> <span class="pre">tuple[~typing.Any,</span> <span class="pre">~typing.Any]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'numpy.float16'&gt;</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Pointer</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.backend.factory.NNFactory.parameter" title="Link to this definition">#</a></dt>
+<dd><p>Generate a model input parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shape</strong> (<em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – Parameter shape (only 2D tensors supported atm)</p></li>
+<li><p><strong>dtype</strong> (<em>np.dtype</em><em>, </em><em>optional</em>) – parameter type np.int8 and np.float16 supported. Defaults to np.float16.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – Unsupported shape</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>an instance to a parameter object</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ctypes._Pointer</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.factory.NNFactory.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.backend.factory.NNFactory.run" title="Link to this definition">#</a></dt>
+<dd><p>Run the layer: X * W^T.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – lhs operator</p></li>
+<li><p><strong>weights</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>Tuple</em><em>[</em><em>np.ndarray</em><em>, </em><em>np.ndarray</em><em>]</em><em>]</em>) – rhs operators</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>) – additional arguments</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – Input tensor shape mismatch</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>result</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="intel-npu-acceleration-library-backend-linear-module">
 <h2>intel_npu_acceleration_library.backend.linear module<a class="headerlink" href="#intel-npu-acceleration-library-backend-linear-module" title="Link to this heading">#</a></h2>
+<dl class="py class" id="module-intel_npu_acceleration_library.backend.linear">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.linear.Linear">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.backend.linear.</span></span><span class="sig-name descname"><span class="pre">Linear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inC</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outC</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'NPU'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#intel_npu_acceleration_library.backend.linear.Linear" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#intel_npu_acceleration_library.backend.factory.NNFactory" title="intel_npu_acceleration_library.backend.factory.NNFactory"><code class="xref py py-class docutils literal notranslate"><span class="pre">NNFactory</span></code></a></p>
+<p>Linear class, computing a matrix matrix multiplication with weights prefetching.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.linear.Linear.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">W</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.backend.linear.Linear.run" title="Link to this definition">#</a></dt>
+<dd><p>Run the layer: X * W^T.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – lhs operator</p></li>
+<li><p><strong>W</strong> (<em>np.ndarray</em>) – rhs operator</p></li>
+<li><p><strong>op_id</strong> (<em>str</em>) – operation id</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – Input or weight tensor shape mismatch</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>result</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="intel-npu-acceleration-library-backend-matmul-module">
 <h2>intel_npu_acceleration_library.backend.matmul module<a class="headerlink" href="#intel-npu-acceleration-library-backend-matmul-module" title="Link to this heading">#</a></h2>
+<dl class="py class" id="module-intel_npu_acceleration_library.backend.matmul">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.matmul.MatMul">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.backend.matmul.</span></span><span class="sig-name descname"><span class="pre">MatMul</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inC</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outC</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'NPU'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#intel_npu_acceleration_library.backend.matmul.MatMul" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#intel_npu_acceleration_library.backend.factory.NNFactory" title="intel_npu_acceleration_library.backend.factory.NNFactory"><code class="xref py py-class docutils literal notranslate"><span class="pre">NNFactory</span></code></a></p>
+<p>MatMul class, computing a matrix matrix multiplication.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.matmul.MatMul.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">W</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.backend.matmul.MatMul.run" title="Link to this definition">#</a></dt>
+<dd><p>Run the layer: X * W^T.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – lhs operator</p></li>
+<li><p><strong>W</strong> (<em>np.ndarray</em>) – rhs operator</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – Input or weight tensor shape mismatch</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>result</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="intel-npu-acceleration-library-backend-mlp-module">
 <h2>intel_npu_acceleration_library.backend.mlp module<a class="headerlink" href="#intel-npu-acceleration-library-backend-mlp-module" title="Link to this heading">#</a></h2>
+<dl class="py class" id="module-intel_npu_acceleration_library.backend.mlp">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.mlp.MLP">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.backend.mlp.</span></span><span class="sig-name descname"><span class="pre">MLP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hidden_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intermediate_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">activation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'swiglu'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'NPU'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#intel_npu_acceleration_library.backend.mlp.MLP" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#intel_npu_acceleration_library.backend.factory.NNFactory" title="intel_npu_acceleration_library.backend.factory.NNFactory"><code class="xref py py-class docutils literal notranslate"><span class="pre">NNFactory</span></code></a></p>
+<p>Linear class, computing a matrix matrix multiplication with weights prefetching.</p>
+</dd></dl>
+
 </section>
 <section id="intel-npu-acceleration-library-backend-qlinear-module">
 <h2>intel_npu_acceleration_library.backend.qlinear module<a class="headerlink" href="#intel-npu-acceleration-library-backend-qlinear-module" title="Link to this heading">#</a></h2>
+<dl class="py class" id="module-intel_npu_acceleration_library.backend.qlinear">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.qlinear.QLinear">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.backend.qlinear.</span></span><span class="sig-name descname"><span class="pre">QLinear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inC</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outC</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'NPU'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#intel_npu_acceleration_library.backend.qlinear.QLinear" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#intel_npu_acceleration_library.backend.factory.NNFactory" title="intel_npu_acceleration_library.backend.factory.NNFactory"><code class="xref py py-class docutils literal notranslate"><span class="pre">NNFactory</span></code></a></p>
+<p>Quantized Linear class, computing a matrix matrix multiplication with weights prefetching.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.qlinear.QLinear.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">W</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.backend.qlinear.QLinear.run" title="Link to this definition">#</a></dt>
+<dd><p>Run the layer:  $X * (W * S)^T$ .</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – activation</p></li>
+<li><p><strong>W</strong> (<em>np.ndarray</em>) – quantized weights</p></li>
+<li><p><strong>scale</strong> (<em>np.ndarray</em>) – quantization scale</p></li>
+<li><p><strong>op_id</strong> (<em>str</em>) – operation id</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – Input, weights or scale shape mismatch</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>result</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="intel-npu-acceleration-library-backend-qmatmul-module">
 <h2>intel_npu_acceleration_library.backend.qmatmul module<a class="headerlink" href="#intel-npu-acceleration-library-backend-qmatmul-module" title="Link to this heading">#</a></h2>
+<dl class="py class" id="module-intel_npu_acceleration_library.backend.qmatmul">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.qmatmul.QMatMul">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.backend.qmatmul.</span></span><span class="sig-name descname"><span class="pre">QMatMul</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inC</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outC</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'NPU'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#intel_npu_acceleration_library.backend.qmatmul.QMatMul" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#intel_npu_acceleration_library.backend.factory.NNFactory" title="intel_npu_acceleration_library.backend.factory.NNFactory"><code class="xref py py-class docutils literal notranslate"><span class="pre">NNFactory</span></code></a></p>
+<p>Quantized Linear class, computing a matrix matrix multiplication.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.qmatmul.QMatMul.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">W</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.backend.qmatmul.QMatMul.run" title="Link to this definition">#</a></dt>
+<dd><p>Run the layer:  X * (W * S)^T.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – activation</p></li>
+<li><p><strong>W</strong> (<em>np.ndarray</em>) – quantized weights</p></li>
+<li><p><strong>scale</strong> (<em>np.ndarray</em>) – quantization scale</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – Input, weights or scale shape mismatch</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>result</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="intel-npu-acceleration-library-backend-runtime-module">
 <h2>intel_npu_acceleration_library.backend.runtime module<a class="headerlink" href="#intel-npu-acceleration-library-backend-runtime-module" title="Link to this heading">#</a></h2>
+<dl class="py function" id="module-intel_npu_acceleration_library.backend.runtime">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.runtime.run_factory">
+<span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.backend.runtime.</span></span><span class="sig-name descname"><span class="pre">run_factory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend_cls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.backend.runtime.run_factory" title="Link to this definition">#</a></dt>
+<dd><p>Run a factory operation. Depending on the datatype of the weights it runs a float or quantized operation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>torch.Tensor</em>) – Activation tensor. Its dtype must be torch.float16</p></li>
+<li><p><strong>weights</strong> (<em>torch.Tensor</em>) – Weights tensor.  Its dtype can be torch.float16 or torch.int8</p></li>
+<li><p><strong>backend_cls</strong> (<em>Any</em>) – Backend class to run</p></li>
+<li><p><strong>op_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Operation ID. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>result</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.runtime.run_matmul">
+<span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.backend.runtime.</span></span><span class="sig-name descname"><span class="pre">run_matmul</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.backend.runtime.run_matmul" title="Link to this definition">#</a></dt>
+<dd><p>Run a matmul operation. Depending on the datatype of the weights it runs a float or quantized operation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>torch.Tensor</em>) – Activation tensor. Its dtype must be torch.float16</p></li>
+<li><p><strong>weights</strong> (<em>torch.Tensor</em>) – Weights tensor.  Its dtype can be torch.float16 or torch.int8</p></li>
+<li><p><strong>scale</strong> (<em>Optional</em><em>[</em><em>torch.Tensor</em><em>]</em><em>, </em><em>optional</em>) – Quantization scale. If weights.dtype == torch.int8 then it must be set. Defaults to None.</p></li>
+<li><p><strong>op_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Operation ID. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – Unsupported weights datatype. Supported types: [torch.float16, torch.int8]</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>result</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.runtime.set_contiguous">
+<span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.backend.runtime.</span></span><span class="sig-name descname"><span class="pre">set_contiguous</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tensor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.backend.runtime.set_contiguous" title="Link to this definition">#</a></dt>
+<dd><p>Set tensor to be contiguous in memory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tensor</strong> (<em>torch.Tensor</em>) – input tensor</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>output, contiguous tensor</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
+<section id="module-intel_npu_acceleration_library.backend">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-intel_npu_acceleration_library.backend" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.Linear">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.backend.</span></span><span class="sig-name descname"><span class="pre">Linear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inC</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outC</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'NPU'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#intel_npu_acceleration_library.backend.Linear" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#intel_npu_acceleration_library.backend.factory.NNFactory" title="intel_npu_acceleration_library.backend.factory.NNFactory"><code class="xref py py-class docutils literal notranslate"><span class="pre">NNFactory</span></code></a></p>
+<p>Linear class, computing a matrix matrix multiplication with weights prefetching.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.Linear.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">W</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.backend.Linear.run" title="Link to this definition">#</a></dt>
+<dd><p>Run the layer: X * W^T.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – lhs operator</p></li>
+<li><p><strong>W</strong> (<em>np.ndarray</em>) – rhs operator</p></li>
+<li><p><strong>op_id</strong> (<em>str</em>) – operation id</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – Input or weight tensor shape mismatch</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>result</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.MLP">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.backend.</span></span><span class="sig-name descname"><span class="pre">MLP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hidden_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intermediate_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">activation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'swiglu'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'NPU'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#intel_npu_acceleration_library.backend.MLP" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#intel_npu_acceleration_library.backend.factory.NNFactory" title="intel_npu_acceleration_library.backend.factory.NNFactory"><code class="xref py py-class docutils literal notranslate"><span class="pre">NNFactory</span></code></a></p>
+<p>Linear class, computing a matrix matrix multiplication with weights prefetching.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.MatMul">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.backend.</span></span><span class="sig-name descname"><span class="pre">MatMul</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inC</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outC</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'NPU'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#intel_npu_acceleration_library.backend.MatMul" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#intel_npu_acceleration_library.backend.factory.NNFactory" title="intel_npu_acceleration_library.backend.factory.NNFactory"><code class="xref py py-class docutils literal notranslate"><span class="pre">NNFactory</span></code></a></p>
+<p>MatMul class, computing a matrix matrix multiplication.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.MatMul.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">W</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.backend.MatMul.run" title="Link to this definition">#</a></dt>
+<dd><p>Run the layer: X * W^T.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – lhs operator</p></li>
+<li><p><strong>W</strong> (<em>np.ndarray</em>) – rhs operator</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – Input or weight tensor shape mismatch</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>result</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.NNFactory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.backend.</span></span><span class="sig-name descname"><span class="pre">NNFactory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inC</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outC</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'NPU'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#intel_npu_acceleration_library.backend.NNFactory" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch" title="intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseNPUBackendWithPrefetch</span></code></a></p>
+<p>Linear class, computing a matrix matrix multiplication with weights prefetching.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.NNFactory.compile">
+<span class="sig-name descname"><span class="pre">compile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_Pointer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#intel_npu_acceleration_library.backend.NNFactory.compile" title="Link to this definition">#</a></dt>
+<dd><p>Finalize and compile a model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>output_node</strong> (<em>ctypes._Pointer</em>) – Model output node</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.NNFactory.linear">
+<span class="sig-name descname"><span class="pre">linear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_Pointer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_channels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_channels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quantize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Pointer</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.backend.NNFactory.linear" title="Link to this definition">#</a></dt>
+<dd><p>Generate a linear layer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_node</strong> (<em>ctypes._Pointer</em>) – layer input node</p></li>
+<li><p><strong>output_channels</strong> (<em>int</em>) – number of output channels</p></li>
+<li><p><strong>input_channels</strong> (<em>int</em>) – number of input channels</p></li>
+<li><p><strong>bias</strong> (<em>bool</em><em>, </em><em>optional</em>) – enable/disable bias. Defaults to False.</p></li>
+<li><p><strong>quantize</strong> (<em>bool</em><em>, </em><em>optional</em>) – quantize linear model. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>_description_</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ctypes._Pointer</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.NNFactory.parameter">
+<span class="sig-name descname"><span class="pre">parameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">shape:</span> <span class="pre">~typing.Tuple[int,</span> <span class="pre">int],</span> <span class="pre">dtype:</span> <span class="pre">~numpy.dtype[~typing.Any]</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">|</span> <span class="pre">type[~typing.Any]</span> <span class="pre">|</span> <span class="pre">~numpy._typing._dtype_like._SupportsDType[~numpy.dtype[~typing.Any]]</span> <span class="pre">|</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">tuple[~typing.Any,</span> <span class="pre">int]</span> <span class="pre">|</span> <span class="pre">tuple[~typing.Any,</span> <span class="pre">~typing.SupportsIndex</span> <span class="pre">|</span> <span class="pre">~collections.abc.Sequence[~typing.SupportsIndex]]</span> <span class="pre">|</span> <span class="pre">list[~typing.Any]</span> <span class="pre">|</span> <span class="pre">~numpy._typing._dtype_like._DTypeDict</span> <span class="pre">|</span> <span class="pre">tuple[~typing.Any,</span> <span class="pre">~typing.Any]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'numpy.float16'&gt;</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_Pointer</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.backend.NNFactory.parameter" title="Link to this definition">#</a></dt>
+<dd><p>Generate a model input parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shape</strong> (<em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – Parameter shape (only 2D tensors supported atm)</p></li>
+<li><p><strong>dtype</strong> (<em>np.dtype</em><em>, </em><em>optional</em>) – parameter type np.int8 and np.float16 supported. Defaults to np.float16.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – Unsupported shape</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>an instance to a parameter object</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ctypes._Pointer</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.NNFactory.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.backend.NNFactory.run" title="Link to this definition">#</a></dt>
+<dd><p>Run the layer: X * W^T.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – lhs operator</p></li>
+<li><p><strong>weights</strong> (<em>Union</em><em>[</em><em>np.ndarray</em><em>, </em><em>Tuple</em><em>[</em><em>np.ndarray</em><em>, </em><em>np.ndarray</em><em>]</em><em>]</em>) – rhs operators</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>) – additional arguments</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – Input tensor shape mismatch</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>result</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.QLinear">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.backend.</span></span><span class="sig-name descname"><span class="pre">QLinear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inC</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outC</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'NPU'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#intel_npu_acceleration_library.backend.QLinear" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#intel_npu_acceleration_library.backend.factory.NNFactory" title="intel_npu_acceleration_library.backend.factory.NNFactory"><code class="xref py py-class docutils literal notranslate"><span class="pre">NNFactory</span></code></a></p>
+<p>Quantized Linear class, computing a matrix matrix multiplication with weights prefetching.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.QLinear.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">W</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.backend.QLinear.run" title="Link to this definition">#</a></dt>
+<dd><p>Run the layer:  $X * (W * S)^T$ .</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – activation</p></li>
+<li><p><strong>W</strong> (<em>np.ndarray</em>) – quantized weights</p></li>
+<li><p><strong>scale</strong> (<em>np.ndarray</em>) – quantization scale</p></li>
+<li><p><strong>op_id</strong> (<em>str</em>) – operation id</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – Input, weights or scale shape mismatch</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>result</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.QMatMul">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.backend.</span></span><span class="sig-name descname"><span class="pre">QMatMul</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inC</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outC</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'NPU'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#intel_npu_acceleration_library.backend.QMatMul" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#intel_npu_acceleration_library.backend.factory.NNFactory" title="intel_npu_acceleration_library.backend.factory.NNFactory"><code class="xref py py-class docutils literal notranslate"><span class="pre">NNFactory</span></code></a></p>
+<p>Quantized Linear class, computing a matrix matrix multiplication.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.QMatMul.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">W</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.backend.QMatMul.run" title="Link to this definition">#</a></dt>
+<dd><p>Run the layer:  X * (W * S)^T.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – activation</p></li>
+<li><p><strong>W</strong> (<em>np.ndarray</em>) – quantized weights</p></li>
+<li><p><strong>scale</strong> (<em>np.ndarray</em>) – quantization scale</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – Input, weights or scale shape mismatch</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>result</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.run_factory">
+<span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.backend.</span></span><span class="sig-name descname"><span class="pre">run_factory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend_cls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.backend.run_factory" title="Link to this definition">#</a></dt>
+<dd><p>Run a factory operation. Depending on the datatype of the weights it runs a float or quantized operation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>torch.Tensor</em>) – Activation tensor. Its dtype must be torch.float16</p></li>
+<li><p><strong>weights</strong> (<em>torch.Tensor</em>) – Weights tensor.  Its dtype can be torch.float16 or torch.int8</p></li>
+<li><p><strong>backend_cls</strong> (<em>Any</em>) – Backend class to run</p></li>
+<li><p><strong>op_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Operation ID. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>result</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.backend.run_matmul">
+<span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.backend.</span></span><span class="sig-name descname"><span class="pre">run_matmul</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">op_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.backend.run_matmul" title="Link to this definition">#</a></dt>
+<dd><p>Run a matmul operation. Depending on the datatype of the weights it runs a float or quantized operation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>torch.Tensor</em>) – Activation tensor. Its dtype must be torch.float16</p></li>
+<li><p><strong>weights</strong> (<em>torch.Tensor</em>) – Weights tensor.  Its dtype can be torch.float16 or torch.int8</p></li>
+<li><p><strong>scale</strong> (<em>Optional</em><em>[</em><em>torch.Tensor</em><em>]</em><em>, </em><em>optional</em>) – Quantization scale. If weights.dtype == torch.int8 then it must be set. Defaults to None.</p></li>
+<li><p><strong>op_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Operation ID. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – Unsupported weights datatype. Supported types: [torch.float16, torch.int8]</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>result</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 </section>
 
@@ -419,15 +1187,100 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-base-module">intel_npu_acceleration_library.backend.base module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-factory-module">intel_npu_acceleration_library.backend.factory module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-linear-module">intel_npu_acceleration_library.backend.linear module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-matmul-module">intel_npu_acceleration_library.backend.matmul module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-mlp-module">intel_npu_acceleration_library.backend.mlp module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-qlinear-module">intel_npu_acceleration_library.backend.qlinear module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-qmatmul-module">intel_npu_acceleration_library.backend.qmatmul module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-runtime-module">intel_npu_acceleration_library.backend.runtime module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-base-module">intel_npu_acceleration_library.backend.base module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.base.BaseNPUBackend"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackend</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.base.BaseNPUBackend.save"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackend.save()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.base.BaseNPUBackend.saveCompiledModel"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackend.saveCompiledModel()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackendWithPrefetch</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.add_to_map"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackendWithPrefetch.add_to_map()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.create_parameters"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackendWithPrefetch.create_parameters()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.load_wt_fn"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackendWithPrefetch.load_wt_fn()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.prefetchWeights"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackendWithPrefetch.prefetchWeights()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.setWeights"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackendWithPrefetch.setWeights()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.base.adapt_weight"><code class="docutils literal notranslate"><span class="pre">adapt_weight()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-factory-module">intel_npu_acceleration_library.backend.factory module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.factory.NNFactory"><code class="docutils literal notranslate"><span class="pre">NNFactory</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.factory.NNFactory.compile"><code class="docutils literal notranslate"><span class="pre">NNFactory.compile()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.factory.NNFactory.linear"><code class="docutils literal notranslate"><span class="pre">NNFactory.linear()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.factory.NNFactory.parameter"><code class="docutils literal notranslate"><span class="pre">NNFactory.parameter()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.factory.NNFactory.run"><code class="docutils literal notranslate"><span class="pre">NNFactory.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-linear-module">intel_npu_acceleration_library.backend.linear module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.linear.Linear"><code class="docutils literal notranslate"><span class="pre">Linear</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.linear.Linear.run"><code class="docutils literal notranslate"><span class="pre">Linear.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-matmul-module">intel_npu_acceleration_library.backend.matmul module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.matmul.MatMul"><code class="docutils literal notranslate"><span class="pre">MatMul</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.matmul.MatMul.run"><code class="docutils literal notranslate"><span class="pre">MatMul.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-mlp-module">intel_npu_acceleration_library.backend.mlp module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.mlp.MLP"><code class="docutils literal notranslate"><span class="pre">MLP</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-qlinear-module">intel_npu_acceleration_library.backend.qlinear module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.qlinear.QLinear"><code class="docutils literal notranslate"><span class="pre">QLinear</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.qlinear.QLinear.run"><code class="docutils literal notranslate"><span class="pre">QLinear.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-qmatmul-module">intel_npu_acceleration_library.backend.qmatmul module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.qmatmul.QMatMul"><code class="docutils literal notranslate"><span class="pre">QMatMul</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.qmatmul.QMatMul.run"><code class="docutils literal notranslate"><span class="pre">QMatMul.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-backend-runtime-module">intel_npu_acceleration_library.backend.runtime module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.runtime.run_factory"><code class="docutils literal notranslate"><span class="pre">run_factory()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.runtime.run_matmul"><code class="docutils literal notranslate"><span class="pre">run_matmul()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.runtime.set_contiguous"><code class="docutils literal notranslate"><span class="pre">set_contiguous()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-intel_npu_acceleration_library.backend">Module contents</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.Linear"><code class="docutils literal notranslate"><span class="pre">Linear</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.Linear.run"><code class="docutils literal notranslate"><span class="pre">Linear.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.MLP"><code class="docutils literal notranslate"><span class="pre">MLP</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.MatMul"><code class="docutils literal notranslate"><span class="pre">MatMul</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.MatMul.run"><code class="docutils literal notranslate"><span class="pre">MatMul.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.NNFactory"><code class="docutils literal notranslate"><span class="pre">NNFactory</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.NNFactory.compile"><code class="docutils literal notranslate"><span class="pre">NNFactory.compile()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.NNFactory.linear"><code class="docutils literal notranslate"><span class="pre">NNFactory.linear()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.NNFactory.parameter"><code class="docutils literal notranslate"><span class="pre">NNFactory.parameter()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.NNFactory.run"><code class="docutils literal notranslate"><span class="pre">NNFactory.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.QLinear"><code class="docutils literal notranslate"><span class="pre">QLinear</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.QLinear.run"><code class="docutils literal notranslate"><span class="pre">QLinear.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.QMatMul"><code class="docutils literal notranslate"><span class="pre">QMatMul</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.QMatMul.run"><code class="docutils literal notranslate"><span class="pre">QMatMul.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.run_factory"><code class="docutils literal notranslate"><span class="pre">run_factory()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.backend.run_matmul"><code class="docutils literal notranslate"><span class="pre">run_matmul()</span></code></a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

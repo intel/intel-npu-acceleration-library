@@ -321,7 +321,12 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subpackages">Subpackages</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-bindings-module">intel_npu_acceleration_library.bindings module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-compiler-module">intel_npu_acceleration_library.compiler module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-compiler-module">intel_npu_acceleration_library.compiler module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compiler.compile"><code class="docutils literal notranslate"><span class="pre">compile()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compiler.npu"><code class="docutils literal notranslate"><span class="pre">npu()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compiler.prepare_model_for_npu"><code class="docutils literal notranslate"><span class="pre">prepare_model_for_npu()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-optimizations-module">intel_npu_acceleration_library.optimizations module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.optimizations.delattr_recursively"><code class="docutils literal notranslate"><span class="pre">delattr_recursively()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.optimizations.fuse_linear_layers"><code class="docutils literal notranslate"><span class="pre">fuse_linear_layers()</span></code></a></li>
@@ -332,7 +337,10 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.quantization.quantize_tensor"><code class="docutils literal notranslate"><span class="pre">quantize_tensor()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-intel_npu_acceleration_library">Module contents</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compile"><code class="docutils literal notranslate"><span class="pre">compile()</span></code></a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -352,23 +360,169 @@ document.write(`
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="intel_npu_acceleration_library.backend.html">intel_npu_acceleration_library.backend package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-base-module">intel_npu_acceleration_library.backend.base module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-factory-module">intel_npu_acceleration_library.backend.factory module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-linear-module">intel_npu_acceleration_library.backend.linear module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-matmul-module">intel_npu_acceleration_library.backend.matmul module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-mlp-module">intel_npu_acceleration_library.backend.mlp module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-qlinear-module">intel_npu_acceleration_library.backend.qlinear module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-qmatmul-module">intel_npu_acceleration_library.backend.qmatmul module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-runtime-module">intel_npu_acceleration_library.backend.runtime module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-base-module">intel_npu_acceleration_library.backend.base module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.base.BaseNPUBackend"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackend</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.base.BaseNPUBackend.save"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackend.save()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.base.BaseNPUBackend.saveCompiledModel"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackend.saveCompiledModel()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackendWithPrefetch</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.add_to_map"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackendWithPrefetch.add_to_map()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.create_parameters"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackendWithPrefetch.create_parameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.load_wt_fn"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackendWithPrefetch.load_wt_fn()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.prefetchWeights"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackendWithPrefetch.prefetchWeights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.setWeights"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackendWithPrefetch.setWeights()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.base.adapt_weight"><code class="docutils literal notranslate"><span class="pre">adapt_weight()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-factory-module">intel_npu_acceleration_library.backend.factory module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory"><code class="docutils literal notranslate"><span class="pre">NNFactory</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.compile"><code class="docutils literal notranslate"><span class="pre">NNFactory.compile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.linear"><code class="docutils literal notranslate"><span class="pre">NNFactory.linear()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.parameter"><code class="docutils literal notranslate"><span class="pre">NNFactory.parameter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.run"><code class="docutils literal notranslate"><span class="pre">NNFactory.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-linear-module">intel_npu_acceleration_library.backend.linear module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.linear.Linear"><code class="docutils literal notranslate"><span class="pre">Linear</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.linear.Linear.run"><code class="docutils literal notranslate"><span class="pre">Linear.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-matmul-module">intel_npu_acceleration_library.backend.matmul module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.matmul.MatMul"><code class="docutils literal notranslate"><span class="pre">MatMul</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.matmul.MatMul.run"><code class="docutils literal notranslate"><span class="pre">MatMul.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-mlp-module">intel_npu_acceleration_library.backend.mlp module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.mlp.MLP"><code class="docutils literal notranslate"><span class="pre">MLP</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-qlinear-module">intel_npu_acceleration_library.backend.qlinear module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.qlinear.QLinear"><code class="docutils literal notranslate"><span class="pre">QLinear</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.qlinear.QLinear.run"><code class="docutils literal notranslate"><span class="pre">QLinear.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-qmatmul-module">intel_npu_acceleration_library.backend.qmatmul module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.qmatmul.QMatMul"><code class="docutils literal notranslate"><span class="pre">QMatMul</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.qmatmul.QMatMul.run"><code class="docutils literal notranslate"><span class="pre">QMatMul.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-runtime-module">intel_npu_acceleration_library.backend.runtime module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.runtime.run_factory"><code class="docutils literal notranslate"><span class="pre">run_factory()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.runtime.run_matmul"><code class="docutils literal notranslate"><span class="pre">run_matmul()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.runtime.set_contiguous"><code class="docutils literal notranslate"><span class="pre">set_contiguous()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#module-intel_npu_acceleration_library.backend">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Linear"><code class="docutils literal notranslate"><span class="pre">Linear</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Linear.run"><code class="docutils literal notranslate"><span class="pre">Linear.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.MLP"><code class="docutils literal notranslate"><span class="pre">MLP</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.MatMul"><code class="docutils literal notranslate"><span class="pre">MatMul</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.MatMul.run"><code class="docutils literal notranslate"><span class="pre">MatMul.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory"><code class="docutils literal notranslate"><span class="pre">NNFactory</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.compile"><code class="docutils literal notranslate"><span class="pre">NNFactory.compile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.linear"><code class="docutils literal notranslate"><span class="pre">NNFactory.linear()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.parameter"><code class="docutils literal notranslate"><span class="pre">NNFactory.parameter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.run"><code class="docutils literal notranslate"><span class="pre">NNFactory.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.QLinear"><code class="docutils literal notranslate"><span class="pre">QLinear</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.QLinear.run"><code class="docutils literal notranslate"><span class="pre">QLinear.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.QMatMul"><code class="docutils literal notranslate"><span class="pre">QMatMul</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.QMatMul.run"><code class="docutils literal notranslate"><span class="pre">QMatMul.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.run_factory"><code class="docutils literal notranslate"><span class="pre">run_factory()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.run_matmul"><code class="docutils literal notranslate"><span class="pre">run_matmul()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="intel_npu_acceleration_library.nn.html">intel_npu_acceleration_library.nn package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel-npu-acceleration-library-nn-autograd-module">intel_npu_acceleration_library.nn.autograd module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel-npu-acceleration-library-nn-linear-module">intel_npu_acceleration_library.nn.linear module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel-npu-acceleration-library-nn-llm-module">intel_npu_acceleration_library.nn.llm module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel-npu-acceleration-library-nn-autograd-module">intel_npu_acceleration_library.nn.autograd module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.autograd.AutogradMatMul"><code class="docutils literal notranslate"><span class="pre">AutogradMatMul</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.autograd.AutogradMatMul.backward"><code class="docutils literal notranslate"><span class="pre">AutogradMatMul.backward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.autograd.AutogradMatMul.forward"><code class="docutils literal notranslate"><span class="pre">AutogradMatMul.forward()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel-npu-acceleration-library-nn-linear-module">intel_npu_acceleration_library.nn.linear module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.linear.Linear"><code class="docutils literal notranslate"><span class="pre">Linear</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.linear.Linear.forward"><code class="docutils literal notranslate"><span class="pre">Linear.forward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.linear.Linear.fromTensor"><code class="docutils literal notranslate"><span class="pre">Linear.fromTensor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.linear.Linear.fromTorch"><code class="docutils literal notranslate"><span class="pre">Linear.fromTorch()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.linear.QuantizedLinear"><code class="docutils literal notranslate"><span class="pre">QuantizedLinear</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.linear.QuantizedLinear.forward"><code class="docutils literal notranslate"><span class="pre">QuantizedLinear.forward()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel-npu-acceleration-library-nn-llm-module">intel_npu_acceleration_library.nn.llm module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.FusedLlamaMLP"><code class="docutils literal notranslate"><span class="pre">FusedLlamaMLP</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.FusedLlamaMLP.forward"><code class="docutils literal notranslate"><span class="pre">FusedLlamaMLP.forward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.FusedLlamaMLP.fromTorch"><code class="docutils literal notranslate"><span class="pre">FusedLlamaMLP.fromTorch()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.LlamaAttention"><code class="docutils literal notranslate"><span class="pre">LlamaAttention</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.LlamaAttention.forward"><code class="docutils literal notranslate"><span class="pre">LlamaAttention.forward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.LlamaAttention.fromTorch"><code class="docutils literal notranslate"><span class="pre">LlamaAttention.fromTorch()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.PhiMLP"><code class="docutils literal notranslate"><span class="pre">PhiMLP</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.PhiMLP.forward"><code class="docutils literal notranslate"><span class="pre">PhiMLP.forward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.PhiMLP.fromTorch"><code class="docutils literal notranslate"><span class="pre">PhiMLP.fromTorch()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.generate_with_static_shape"><code class="docutils literal notranslate"><span class="pre">generate_with_static_shape()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.lshift_insert"><code class="docutils literal notranslate"><span class="pre">lshift_insert()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.warm_up_decoder_model"><code class="docutils literal notranslate"><span class="pre">warm_up_decoder_model()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#module-intel_npu_acceleration_library.nn">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Linear"><code class="docutils literal notranslate"><span class="pre">Linear</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Linear.forward"><code class="docutils literal notranslate"><span class="pre">Linear.forward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Linear.fromTensor"><code class="docutils literal notranslate"><span class="pre">Linear.fromTensor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Linear.fromTorch"><code class="docutils literal notranslate"><span class="pre">Linear.fromTorch()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.LlamaAttention"><code class="docutils literal notranslate"><span class="pre">LlamaAttention</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.LlamaAttention.forward"><code class="docutils literal notranslate"><span class="pre">LlamaAttention.forward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.LlamaAttention.fromTorch"><code class="docutils literal notranslate"><span class="pre">LlamaAttention.fromTorch()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.PhiMLP"><code class="docutils literal notranslate"><span class="pre">PhiMLP</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.PhiMLP.forward"><code class="docutils literal notranslate"><span class="pre">PhiMLP.forward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.PhiMLP.fromTorch"><code class="docutils literal notranslate"><span class="pre">PhiMLP.fromTorch()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.QuantizedLinear"><code class="docutils literal notranslate"><span class="pre">QuantizedLinear</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.QuantizedLinear.forward"><code class="docutils literal notranslate"><span class="pre">QuantizedLinear.forward()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -382,6 +536,70 @@ document.write(`
 </section>
 <section id="intel-npu-acceleration-library-compiler-module">
 <h2>intel_npu_acceleration_library.compiler module<a class="headerlink" href="#intel-npu-acceleration-library-compiler-module" title="Link to this heading">#</a></h2>
+<dl class="py function" id="module-intel_npu_acceleration_library.compiler">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.compiler.compile">
+<span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.compiler.</span></span><span class="sig-name descname"><span class="pre">compile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dtype</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">torch.float16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Module</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.compiler.compile" title="Link to this definition">#</a></dt>
+<dd><p>Compile a model for the NPU.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>torch.nn.Module</em>) – a pytorch nn.Module to compile and optimize for the npu</p></li>
+<li><p><strong>dtype</strong> (<em>torch.dtype</em>) – the model target datatype, default to torch.float16</p></li>
+<li><p><strong>training</strong> (<em>bool</em>) – enable training. Default disabled</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – invalid datatypes</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>compiled NPU nn.Module</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>torch.nn.Module</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.compiler.npu">
+<span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.compiler.</span></span><span class="sig-name descname"><span class="pre">npu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">GraphModule</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">example_inputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Module</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">GraphModule</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.compiler.npu" title="Link to this definition">#</a></dt>
+<dd><p>Implement the custom torch 2.0 compile backend for the NPU.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gm</strong> (<em>Union</em><em>[</em><em>torch.nn.Module</em><em>, </em><em>torch.fx.GraphModule</em><em>]</em>) – The torch fx Module</p></li>
+<li><p><strong>example_inputs</strong> (<em>List</em><em>[</em><em>torch.Tensor</em><em>]</em>) – A list of example inputs</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The compiled model</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[torch.nn.Module, torch.fx.GraphModule]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.compiler.prepare_model_for_npu">
+<span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.compiler.</span></span><span class="sig-name descname"><span class="pre">prepare_model_for_npu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dtype</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">torch.float16</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Module</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.compiler.prepare_model_for_npu" title="Link to this definition">#</a></dt>
+<dd><p>Prepare a torch.nn.Module model to run on the NPU.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>torch.nn.Module</em>) – The model to offload to the NPU</p></li>
+<li><p><strong>dtype</strong> (<em>torch.dtype</em>) – the model target datatype</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The torch.nn.Module compiled and optimized for the NPU</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.Module</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="intel-npu-acceleration-library-optimizations-module">
 <h2>intel_npu_acceleration_library.optimizations module<a class="headerlink" href="#intel-npu-acceleration-library-optimizations-module" title="Link to this heading">#</a></h2>
@@ -407,7 +625,7 @@ document.write(`
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model</strong> (<em>nn.Module</em>) – Origianl nn.Module object</p></li>
-<li><p><strong>modules</strong> (<em>Dict</em><em>[</em><em>nn.Linear</em><em>]</em>) – a dictiorany of node name: linear layer</p></li>
+<li><p><strong>modules</strong> (<em>Dict</em><em>[</em><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Linear" title="intel_npu_acceleration_library.nn.Linear"><em>nn.Linear</em></a><em>]</em>) – a dictiorany of node name: linear layer</p></li>
 <li><p><strong>targets</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – list of layer node names</p></li>
 <li><p><strong>fused_layer_name</strong> (<em>str</em>) – fused layer name</p></li>
 </ul>
@@ -461,8 +679,32 @@ The quantization equation is the following W = S * W_q</p>
 </dd></dl>
 
 </section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
+<section id="module-intel_npu_acceleration_library">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-intel_npu_acceleration_library" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.compile">
+<span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.</span></span><span class="sig-name descname"><span class="pre">compile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dtype</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">torch.float16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Module</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.compile" title="Link to this definition">#</a></dt>
+<dd><p>Compile a model for the NPU.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>torch.nn.Module</em>) – a pytorch nn.Module to compile and optimize for the npu</p></li>
+<li><p><strong>dtype</strong> (<em>torch.dtype</em>) – the model target datatype, default to torch.float16</p></li>
+<li><p><strong>training</strong> (<em>bool</em>) – enable training. Default disabled</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – invalid datatypes</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>compiled NPU nn.Module</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>torch.nn.Module</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 </section>
 
@@ -514,7 +756,12 @@ The quantization equation is the following W = S * W_q</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subpackages">Subpackages</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-bindings-module">intel_npu_acceleration_library.bindings module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-compiler-module">intel_npu_acceleration_library.compiler module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-compiler-module">intel_npu_acceleration_library.compiler module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compiler.compile"><code class="docutils literal notranslate"><span class="pre">compile()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compiler.npu"><code class="docutils literal notranslate"><span class="pre">npu()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compiler.prepare_model_for_npu"><code class="docutils literal notranslate"><span class="pre">prepare_model_for_npu()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-optimizations-module">intel_npu_acceleration_library.optimizations module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.optimizations.delattr_recursively"><code class="docutils literal notranslate"><span class="pre">delattr_recursively()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.optimizations.fuse_linear_layers"><code class="docutils literal notranslate"><span class="pre">fuse_linear_layers()</span></code></a></li>
@@ -525,7 +772,10 @@ The quantization equation is the following W = S * W_q</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.quantization.quantize_tensor"><code class="docutils literal notranslate"><span class="pre">quantize_tensor()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-intel_npu_acceleration_library">Module contents</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compile"><code class="docutils literal notranslate"><span class="pre">compile()</span></code></a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
