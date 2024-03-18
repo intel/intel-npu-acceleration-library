@@ -5,7 +5,7 @@
 
 from intel_npu_acceleration_library.optimizations import horizontal_fusion_linear
 from torch._dynamo import register_backend
-from typing import Union
+from typing import Union, Callable, Any
 
 try:
     from transformers.models.llama.modeling_llama import LlamaMLP, LlamaAttention
@@ -42,9 +42,15 @@ def compile(
         raise RuntimeError(
             f"intel-npu-acceleration-library library do not support yet the requeste datatype: {dtype}"
         )
+
     # Prepare and optimize model for NPU
     with torch.no_grad():
-        model = prepare_model_for_npu(model, dtype=dtype)
+        # General optimizations
+        apply_horizontal_fusion(model)
+        optimize_llama_attention(model, dtype)
+
+        # Model lowering to NPU ops
+        lower_linear(model, dtype)
 
     if dtype.is_floating_point and training:
         # Set model to evaluation only as quantized training is not supported yet
@@ -53,36 +59,92 @@ def compile(
     return model.eval()
 
 
-def prepare_model_for_npu(
-    model: torch.nn.Module, dtype: torch.dtype = torch.float16
-) -> torch.nn.Module:
-    """Prepare a torch.nn.Module model to run on the NPU.
+def module_optimization(func: Callable) -> torch.nn.Module:
+    """Optimize recursively a torch.nn.Module with a specific function.
+
+    The function `func` get called recursively to every module in the network.
 
     Args:
-        model (torch.nn.Module): The model to offload to the NPU
-        dtype (torch.dtype): the model target datatype
+        func (Callable): optimization function
 
     Returns:
-        torch.nn.Module: The torch.nn.Module compiled and optimized for the NPU
+        torch.nn.Module: optimized module
     """
-    for name, layer in model.named_children():
-        if isinstance(layer, torch.nn.Linear):
-            model.add_module(name, nn.Linear.fromTorch(layer, dtype))
-        elif is_transformers_available:
-            if isinstance(layer, (LlamaMLP, GemmaMLP)):
-                new_layer = horizontal_fusion_linear(layer)
-                model.add_module(name, new_layer)
-                prepare_model_for_npu(new_layer, dtype)
-            elif isinstance(layer, (LlamaAttention, GemmaAttention)):
-                model.add_module(name, nn.LlamaAttention.fromTorch(layer, dtype))
-            # elif layer.__class__.__name__ == "PhiMLP":
-            #     model.add_module(name, nn.PhiMLP.fromTorch(layer, dtype))
-            else:
-                prepare_model_for_npu(layer, dtype)
-        else:
-            prepare_model_for_npu(layer, dtype)
 
-    return model
+    def wrapper(model: torch.nn.Module, *args: Any, **kwargs: Any):
+        """Recursively apply the optimization function.
+
+        Args:
+            model (torch.nn.Module): original module
+            args (Any): positional arguments
+            kwargs (Any): keyword arguments
+
+        """
+        for name, layer in model.named_children():
+            new_layer = func(name, layer, *args, **kwargs)
+            if new_layer:
+                model.add_module(name, new_layer)
+                wrapper(new_layer, *args, **kwargs)
+            else:
+                wrapper(layer, *args, **kwargs)
+
+    return wrapper
+
+
+@module_optimization
+def lower_linear(
+    name: str, layer: torch.nn.Module, dtype: torch.dtype
+) -> Union[torch.nn.Module, None]:
+    """Lower torch.nn.Linear layer to NPU equivalent operators.
+
+    Args:
+        name (str): Layer name
+        layer (torch.nn.Module): Original torch.nn.Linear module
+        dtype (torch.dtype): Target datatype
+
+    Returns:
+        Union[torch.nn.Module, None]: Return the new NPU operator or None
+    """
+    if isinstance(layer, torch.nn.Linear):
+        return nn.Linear.fromTorch(layer, dtype)
+    return None
+
+
+@module_optimization
+def apply_horizontal_fusion(
+    name: str, layer: torch.nn.Module
+) -> Union[torch.nn.Module, None]:
+    """Apply horizontal fusion (merging two linear layers with same input) when necessary.
+
+    Args:
+        name (str): Layer name
+        layer (torch.nn.Module): Original module
+
+    Returns:
+        Union[torch.nn.Module, None]: optimized module
+    """
+    if isinstance(layer, (LlamaMLP, GemmaMLP)):
+        return horizontal_fusion_linear(layer)
+    return None
+
+
+@module_optimization
+def optimize_llama_attention(
+    name: str, layer: torch.nn.Module, dtype: torch.dtype
+) -> Union[torch.nn.Module, None]:
+    """Optimize LLAMA attention block.
+
+    Args:
+        name (str): Module name
+        layer (torch.nn.Module): Original Module
+        dtype (torch.dtype): Target datatype
+
+    Returns:
+        Union[torch.nn.Module, None]: optimized llama module
+    """
+    if isinstance(layer, (LlamaAttention, GemmaAttention)):
+        return nn.LlamaAttention.fromTorch(layer, dtype)
+    return None
 
 
 @register_backend
