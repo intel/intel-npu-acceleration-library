@@ -5,6 +5,7 @@
 
 from sklearn.metrics import r2_score
 import intel_npu_acceleration_library
+import cpuinfo
 import pytest
 import torch
 
@@ -16,6 +17,14 @@ try:
 except ModuleNotFoundError:
     # Transformer library is not installed
     pytest.skip("Transformer library is not installed", allow_module_level=True)
+
+
+def check_avx_support():
+    info = cpuinfo.get_cpu_info()
+    if "flags" in info:
+        if "avx" in info["flags"]:
+            return True
+    return False
 
 
 @pytest.fixture
@@ -48,6 +57,8 @@ def test_warm_up(tokenizer, model, model_seq_length):
 
 @pytest.mark.parametrize("dtype", [torch.float16, torch.int8])
 def test_compilation(tokenizer, decoder_model, dtype):
+    if dtype == torch.int8 and not check_avx_support():
+        pytest.skip("AVX instructions not available")
     prefill = tokenizer("test sentence", return_tensors="pt")["input_ids"].to("cpu")
     y_ref = decoder_model(prefill).logits.detach()
 
