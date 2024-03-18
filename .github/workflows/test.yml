@@ -9,16 +9,20 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+        os: [windows-latest, ubuntu-latest]
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
+    - name: Install TBB on ubuntu
+      if: matrix.os  == 'ubuntu-latest'
+      run: sudo apt install libtbb-dev
     - name: Install packet
       run: |
         python -m pip install --upgrade pip
