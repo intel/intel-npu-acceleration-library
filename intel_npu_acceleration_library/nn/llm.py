@@ -222,8 +222,8 @@ class LlamaAttention(torch.nn.Module):
         value_states = repeat_kv(value_states, self.num_key_value_groups)
 
         causal_mask = attention_mask
-        if causal_mask is not None and cache_position is not None:
-            causal_mask = causal_mask[:, :, cache_position, : key_states.shape[-2]]
+        if causal_mask is not None:
+            causal_mask = causal_mask[:, :, :, : key_states.shape[-2]]
 
         attn_output = torch.nn.functional.scaled_dot_product_attention(
             query_states,

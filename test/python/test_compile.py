@@ -6,6 +6,7 @@
 from intel_npu_acceleration_library.compiler import compile
 from sklearn.metrics import r2_score
 import intel_npu_acceleration_library
+from packaging.version import Version
 import pytest
 import torch
 import time
@@ -66,7 +67,9 @@ def test_compilation(dtype):
     assert torch.allclose(y1, y2)
 
     # Check that for next iteration weights are prefetched
-    assert (t2 - t1) < (t1 - t0)
+    latency2 = t2 - t1
+    latency1 = t1 - t0
+    assert latency2 < latency1
 
     intel_npu_acceleration_library.backend.runtime._model_cache = {}
 
@@ -76,7 +79,9 @@ def test_torch_compile():
     model = NN()
     y_ref = model(x.to(torch.float32)).detach()
 
-    if sys.platform == "win32" or sys.version_info >= (3, 12):
+    if (
+        sys.platform == "win32" and Version(torch.__version__) < Version("2.2.2")
+    ) or sys.version_info >= (3, 12):
         with pytest.raises(RuntimeError) as e:
             compiled_model = torch.compile(model, backend="npu")
             assert str(e.value) == "Windows not yet supported for torch.compile"
@@ -109,3 +114,6 @@ def test_compile_inference(dtype):
 
     for name, layer in compiled_model.named_children():
         assert layer.training == False
+
+
+test_torch_compile()

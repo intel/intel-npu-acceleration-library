@@ -20,3 +20,4 @@ xml
 .coverage*
 coverity
 .tox
+nc_workspace
