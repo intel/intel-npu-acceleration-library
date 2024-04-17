@@ -81,7 +81,9 @@ class Conv2d(torch.nn.Module):
             torch.Tensor: Output tensor.
         """
         # Unfold the input
-        inp_unf = torch.nn.functional.unfold(x, self.kernel_size).transpose(1, 2)
+        inp_unf = torch.nn.functional.unfold(
+            x, self.kernel_size, self.dilation, self.padding, self.stride
+        ).transpose(1, 2)
         out_unf = self.matmul(inp_unf).transpose(1, 2)
 
         out_shape = [x.shape[0], self.out_channels] + [
