@@ -49,7 +49,7 @@ protected:
     void compile_model(std::string device) {
         if (!_isNPUAvailable(core)) {
             // Fallback to auto in case there is no NPU device. Handle this situation at python level
-            device = "AUTO";
+            device = "CPU";
         }
         // set letency hint
         core.set_property(ov::cache_dir("cache"));
