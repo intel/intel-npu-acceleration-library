@@ -4,6 +4,7 @@
 #
 
 from .linear import Linear, QuantizedLinear  # noqa
+from .conv import Conv2d  # noqa
 
 try:
     from .llm import LlamaAttention, PhiMLP  # noqa
@@ -14,4 +15,4 @@ except ModuleNotFoundError:
     llm_modules = []
 
 
-__all__ = ["Linear", "QuantizedLinear"] + llm_modules
+__all__ = ["Linear", "QuantizedLinear", "Conv2d"] + llm_modules

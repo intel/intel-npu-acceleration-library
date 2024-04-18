@@ -107,6 +107,8 @@ def lower_linear(
     """
     if isinstance(layer, torch.nn.Linear):
         return nn.Linear.fromTorch(layer, dtype)
+    if isinstance(layer, torch.nn.Conv2d):
+        return nn.Conv2d.fromTorch(layer, dtype)
     return None
 
 
