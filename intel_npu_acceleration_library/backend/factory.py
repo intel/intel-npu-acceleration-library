@@ -71,7 +71,7 @@ class NNFactory(BaseNPUBackendWithPrefetch):
 
         Args:
             shape (Tuple[int, int]): Parameter shape (only 2D tensors supported atm)
-            dtype (np.dtype, optional): parameter type np.int8 and np.float16 supported. Defaults to np.float16.
+            dtype (np.dtype, optional): parameter type np.int8, np.uint8 and np.float16 supported. Defaults to np.float16. Unit8 represents packed i4 dtypes
 
         Raises:
             RuntimeError: Unsupported shape
@@ -86,6 +86,9 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             )
         if dtype == np.int8:
             return backend_lib.i8parameter(self._mm, shape[0], shape[1])
+        elif dtype == np.uint8:
+            # u8 represents packed i4 dtypes
+            return backend_lib.i4parameter(self._mm, shape[0], shape[1])
         elif dtype == np.float16:
             return backend_lib.fp16parameter(self._mm, shape[0], shape[1])
         else:
@@ -98,6 +101,7 @@ class NNFactory(BaseNPUBackendWithPrefetch):
         input_channels: int,
         bias: Optional[bool] = False,
         quantize: bool = False,
+        quantization_bits: int = 8,
     ) -> ctypes._Pointer:
         """Generate a linear layer.
 
@@ -107,12 +111,19 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             input_channels (int): number of input channels
             bias (bool, optional): enable/disable bias. Defaults to False.
             quantize (bool, optional): quantize linear model. Defaults to False.
+            quantization_bits (int, optional): quantization bits. Defaults to 8.
 
         Returns:
             ctypes._Pointer: _description_
         """
         return backend_lib.linear(
-            self._mm, input_node, output_channels, input_channels, bias, quantize
+            self._mm,
+            input_node,
+            output_channels,
+            input_channels,
+            bias,
+            quantize,
+            quantization_bits,
         )
 
     def compile(self, output_node: ctypes._Pointer):

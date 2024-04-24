@@ -23,6 +23,10 @@ def quantize_tensor(weight: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
     """
     scale = torch.max(torch.abs(weight), dim=-1).values
 
+    # if any of the elements are zeros set the scale to the max value
+    if torch.any(scale == 0):
+        scale = torch.ones_like(scale) * torch.max(torch.abs(weight))
+
     # Compute scale and zero point
     scale = (scale / 127).to(torch.float16).view(-1, 1)
 

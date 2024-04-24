@@ -5,6 +5,7 @@
 
 from intel_npu_acceleration_library.backend.ops import get_supported_ops
 import numpy as np
+import warnings
 import ctypes
 import sys
 import os
@@ -13,6 +14,7 @@ handler = ctypes.POINTER(ctypes.c_char)
 c_fp16_array = np.ctypeslib.ndpointer(dtype=np.float16, ndim=2, flags="C_CONTIGUOUS")
 c_fp32_array = np.ctypeslib.ndpointer(dtype=np.float32, ndim=2, flags="C_CONTIGUOUS")
 c_i8_array = np.ctypeslib.ndpointer(dtype=np.int8, ndim=2, flags="C_CONTIGUOUS")
+c_u8_array = np.ctypeslib.ndpointer(dtype=np.uint8, ndim=2, flags="C_CONTIGUOUS")
 
 
 def load_library() -> ctypes.CDLL:
@@ -25,8 +27,18 @@ def load_library() -> ctypes.CDLL:
         ctypes.CDLL: The loaded dynamic library
     """
     path = os.path.dirname(os.path.abspath(__file__))
+    if "openvino" in sys.modules:
+        warnings.warn(
+            "OpenVINO library is already loaded. It might interfere with NPU acceleration library if it uses an old version.",
+            stacklevel=2,
+        )
+
+    external_path = os.path.join(path, "..", "external")
+    sys.path.insert(0, external_path)
+
     if sys.platform == "win32":
         dll_path = os.path.join(path, "..", "lib", "Release")
+        os.environ["OPENVINO_LIB_PATHS"] = dll_path
         os.add_dll_directory(os.path.abspath(dll_path))
         # Load DLL into memory.
         lib = ctypes.WinDLL(
@@ -90,6 +102,9 @@ def init_network_factory(lib: ctypes.CDLL):
     lib.i8parameter.argtypes = [handler, ctypes.c_int, ctypes.c_int]
     lib.i8parameter.restype = handler
 
+    lib.i4parameter.argtypes = [handler, ctypes.c_int, ctypes.c_int]
+    lib.i4parameter.restype = handler
+
     lib.compile.argtypes = [handler, handler]
     lib.compile.restype = handler
 
@@ -100,6 +115,7 @@ def init_network_factory(lib: ctypes.CDLL):
         ctypes.c_int,
         ctypes.c_bool,
         ctypes.c_bool,
+        ctypes.c_int,
     ]
     lib.linear.restype = handler
 
@@ -124,6 +140,14 @@ def init_parameters(lib: ctypes.CDLL):
     lib.addIntParameter.argtypes = [
         handler,
         c_i8_array,
+        c_fp16_array,
+        ctypes.c_int,
+        ctypes.c_int,
+    ]
+
+    lib.addInt4Parameter.argtypes = [
+        handler,
+        c_u8_array,
         c_fp16_array,
         ctypes.c_int,
         ctypes.c_int,

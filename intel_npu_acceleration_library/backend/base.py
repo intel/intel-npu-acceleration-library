@@ -118,19 +118,27 @@ class BaseNPUBackendWithPrefetch(BaseNPUBackend):
                 if isinstance(weight, (list, tuple)):
                     # int8: data and scale
                     data, scale = weight
-                    if data.dtype != np.int8:
+                    if data.dtype not in [np.int8, np.uint8]:
                         raise RuntimeError(
-                            "Quantized weights needs to be in int8 format"
+                            "Quantized weights needs to be in int8 or uint8 format"
                         )
                     shape = data.shape if len(data.shape) > 1 else [data.shape[0], 1]
                     if scale.dtype == np.float16:
                         # Mixed precision matmul
-                        backend_lib.addIntParameter(
-                            param,
-                            adapt_weight(data),
-                            adapt_weight(scale),
-                            *shape,
-                        )
+                        if data.dtype == np.int8:
+                            backend_lib.addIntParameter(
+                                param,
+                                adapt_weight(data),
+                                adapt_weight(scale),
+                                *shape,
+                            )
+                        else:
+                            backend_lib.addInt4Parameter(
+                                param,
+                                adapt_weight(data),
+                                adapt_weight(scale),
+                                *shape,
+                            )
                     elif scale.dtype == np.float32:
                         # FP16 matmul with CPU conversion
                         backend_lib.addIntParameterConversion(

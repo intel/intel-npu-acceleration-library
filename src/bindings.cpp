@@ -32,6 +32,11 @@ intel_npu_acceleration_library_DLL_API void addIntParameter(intel_npu_accelerati
     parameters->add_parameter(data, scale, intel_npu_acceleration_library::Shape({dim0, dim1}));
 }
 
+intel_npu_acceleration_library_DLL_API void addInt4Parameter(intel_npu_acceleration_library::Parameters* parameters,
+                                                             uint8_t* data, half_ptr scale, size_t dim0, size_t dim1) {
+    parameters->add_parameter(data, scale, intel_npu_acceleration_library::Shape({dim0, dim1}));
+}
+
 intel_npu_acceleration_library_DLL_API void addIntParameterConversion(
         intel_npu_acceleration_library::Parameters* parameters, int8_t* data, float* scale, size_t dim0, size_t dim1) {
     parameters->add_parameter(data, scale, intel_npu_acceleration_library::Shape({dim0, dim1}));
@@ -99,6 +104,11 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* i8parameter(intel_npu_acceler
     return factory->parameter(dim0, dim1, ov::element::Type_t::i8);
 }
 
+intel_npu_acceleration_library_DLL_API ov::op::Op* i4parameter(intel_npu_acceleration_library::ModelFactory* factory,
+                                                               size_t dim0, size_t dim1) {
+    return factory->parameter(dim0, dim1, ov::element::Type_t::i4);
+}
+
 intel_npu_acceleration_library_DLL_API ov::op::Op* matmul(intel_npu_acceleration_library::ModelFactory* factory,
                                                           ov::op::Op* in0, ov::op::Op* in1) {
     return factory->matmul(in0, in1);
@@ -141,8 +151,11 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* convert_to_fp16(
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* linear(intel_npu_acceleration_library::ModelFactory* factory,
                                                           ov::op::Op* in0, size_t dim0, size_t dim1, bool bias,
-                                                          bool quantized) {
-    auto weights = factory->parameter(dim0, dim1, quantized ? ov::element::Type_t::i8 : ov::element::Type_t::f16);
+                                                          bool quantized, size_t quantization_bits = 8) {
+    auto weights =
+            factory->parameter(dim0, dim1,
+                               quantized ? quantization_bits == 8 ? ov::element::Type_t::i8 : ov::element::Type_t::i4
+                                         : ov::element::Type_t::f16);
     if (quantized) {
         weights = factory->convert_to_fp16(weights);
     }

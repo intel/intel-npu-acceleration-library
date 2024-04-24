@@ -91,6 +91,16 @@ public:
     }
 
     /**
+     * @brief Construct a new Parameter object from uint8 data pointer
+     *
+     * @param _data uint8 parameter data pointer
+     * @param shape parameter shape
+     */
+    Parameter(uint8_t* _data, Shape shape): shape(shape), quantized(true) {
+        data = static_cast<void*>(_data);
+    }
+
+    /**
      * @brief Get the size of the parameter
      *
      * @return size_t
@@ -181,6 +191,20 @@ public:
      * @return Parameters&
      */
     Parameters& add_parameter(int8_t* data, half_ptr scale, Shape shape) {
+        parameters.push_back(std::make_shared<Parameter>(data, shape));
+        parameters.push_back(std::make_shared<Parameter>(scale, shape));
+        return *this;
+    }
+
+    /**
+     * @brief Add a new int4 parameter, provide also the scale
+     *
+     * @param data
+     * @param scale
+     * @param shape
+     * @return Parameters&
+     */
+    Parameters& add_parameter(uint8_t* data, half_ptr scale, Shape shape) {
         parameters.push_back(std::make_shared<Parameter>(data, shape));
         parameters.push_back(std::make_shared<Parameter>(scale, shape));
         return *this;

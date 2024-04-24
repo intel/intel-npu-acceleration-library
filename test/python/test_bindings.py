@@ -36,7 +36,7 @@ def test_factory_bindings(inC, outC, batch, run_op):
 
     # Create linear layer
     p0 = backend_lib.fp16parameter(factory, batch, inC)
-    linear = backend_lib.linear(factory, p0, outC, inC, False, False)
+    linear = backend_lib.linear(factory, p0, outC, inC, False, False, 8)
     backend_lib.compile(factory, linear)
 
     # Set parameters
