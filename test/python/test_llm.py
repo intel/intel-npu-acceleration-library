@@ -3,19 +3,13 @@
 # SPDX-License-Identifier: Apache 2.0
 #
 
+from transformers.models.llama.modeling_llama import LlamaForCausalLM, LlamaConfig
+from transformers.models.phi.modeling_phi import PhiConfig, PhiMLP
+from transformers import AutoTokenizer, AutoModelForCausalLM
 from sklearn.metrics import r2_score
 import intel_npu_acceleration_library
 import pytest
 import torch
-
-
-try:
-    from transformers.models.llama.modeling_llama import LlamaForCausalLM, LlamaConfig
-    from transformers.models.phi.modeling_phi import PhiConfig, PhiMLP
-    from transformers import AutoTokenizer, AutoModelForCausalLM
-except ModuleNotFoundError:
-    # Transformer library is not installed
-    pytest.skip("Transformer library is not installed", allow_module_level=True)
 
 
 @pytest.fixture
