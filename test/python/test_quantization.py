@@ -49,6 +49,33 @@ def test_explicit_quantization(batch, inC, outC):
 @pytest.mark.parametrize("batch", [16, 128])
 @pytest.mark.parametrize("inC", [256, 512])
 @pytest.mark.parametrize("outC", [256, 512])
+def test_i8_quantization(batch, inC, outC):
+    module = intel_npu_acceleration_library.backend.NNFactory(inC, outC, batch)
+    assert module
+
+    input = module.input
+    assert input
+
+    output = module.linear(input, outC, inC, False, True, 8)
+    assert output
+
+    module.compile(output)
+
+    X = np.random.random((batch, inC)).astype(np.float16)
+    W = np.random.randint(-127, 127, (outC, inC)).astype(np.int8)
+    S = np.random.random((outC, 1)).astype(np.float16)
+
+    w_float = W.astype(np.float16) * S
+    y_ref = np.matmul(X, w_float.T)
+
+    y = module.run(X, (W, S), op_id="0000")
+
+    assert 1 - r2_score(y_ref, y) < 0.01
+
+
+@pytest.mark.parametrize("batch", [16, 128])
+@pytest.mark.parametrize("inC", [256, 512])
+@pytest.mark.parametrize("outC", [256, 512])
 def test_compiled_quantized(batch, inC, outC):
 
     intel_npu_acceleration_library.backend.runtime._model_cache = {}
