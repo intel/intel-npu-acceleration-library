@@ -36,15 +36,14 @@ public:
     }
 
     /**
-     * @brief Create a new 2D [dim0, dim1] network parameter
+     * @brief Create a new N-Dimensional network parameter
      *
-     * @param dim0 dimension 0
-     * @param dim1 dimension 1
+     * @param shape parameter shape
      * @param dtype parameter datatype
      * @return ov::op::Op*
      */
-    ov::op::Op* parameter(size_t dim0, size_t dim1, ov::element::Type_t dtype) {
-        auto param = std::make_shared<ov::opset8::Parameter>(dtype, ov::Shape({dim0, dim1}));
+    ov::op::Op* parameter(std::vector<size_t> shape, ov::element::Type_t dtype) {
+        auto param = std::make_shared<ov::opset8::Parameter>(dtype, ov::Shape(shape));
         parameters.push_back(param);
         return param.get();
     }
@@ -62,6 +61,29 @@ public:
         auto matmul = std::make_shared<ov::opset1::MatMul>(input->output(0), weights->output(0), trA, trB);
         operations.push_back(matmul);
         return matmul.get();
+    }
+
+    /**
+     * @brief Create a new convolution operation
+     *
+     * @param input convolution input
+     * @param weights convolution weights
+     * @param strides convolution strides
+     * @param pads_begin convolution padding begin
+     * @param pads_ends convolution padding end
+     * @param dilations convolution dilations
+     * @return ov::op::Op*
+     */
+    ov::op::Op* convolution(ov::op::Op* input, ov::op::Op*& weights, std::vector<size_t> strides,
+                            std::vector<size_t> pads_begin, std::vector<size_t> pads_ends,
+                            std::vector<size_t> dilations) {
+        auto conv = std::make_shared<ov::opset8::Convolution>(
+                input->output(0), weights->output(0), ov::Strides(strides),
+                ov::CoordinateDiff(std::vector<std::ptrdiff_t>(pads_begin.begin(), pads_begin.end())),
+                ov::CoordinateDiff(std::vector<std::ptrdiff_t>(pads_ends.begin(), pads_ends.end())),
+                ov::Strides(dilations));
+        operations.push_back(conv);
+        return conv.get();
     }
 
     /**
@@ -101,13 +123,13 @@ public:
     }
 
     /**
-     * @brief Create a new conversion to fp16 operation
+     * @brief Create a new conversion to dtype operation
      *
      * @param input operation's input node
      * @return ov::op::Op*
      */
-    ov::op::Op* convert_to_fp16(ov::op::Op* input) {
-        auto convert = std::make_shared<ov::opset1::Convert>(input->output(0), ov::element::Type_t::f16);
+    ov::op::Op* convert_to(ov::op::Op* input, ov::element::Type_t dtype) {
+        auto convert = std::make_shared<ov::opset1::Convert>(input->output(0), dtype);
         operations.push_back(convert);
         return convert.get();
     }

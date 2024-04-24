@@ -15,6 +15,7 @@ c_fp16_array = np.ctypeslib.ndpointer(dtype=np.float16, ndim=2, flags="C_CONTIGU
 c_fp32_array = np.ctypeslib.ndpointer(dtype=np.float32, ndim=2, flags="C_CONTIGUOUS")
 c_i8_array = np.ctypeslib.ndpointer(dtype=np.int8, ndim=2, flags="C_CONTIGUOUS")
 c_u8_array = np.ctypeslib.ndpointer(dtype=np.uint8, ndim=2, flags="C_CONTIGUOUS")
+c_u32_array = np.ctypeslib.ndpointer(dtype=np.uint32, ndim=1, flags="C_CONTIGUOUS")
 
 
 def load_library() -> ctypes.CDLL:
@@ -96,14 +97,8 @@ def init_network_factory(lib: ctypes.CDLL):
 
     lib.setNNFactoryWeights.argtypes = [handler, handler]
 
-    lib.fp16parameter.argtypes = [handler, ctypes.c_int, ctypes.c_int]
-    lib.fp16parameter.restype = handler
-
-    lib.i8parameter.argtypes = [handler, ctypes.c_int, ctypes.c_int]
-    lib.i8parameter.restype = handler
-
-    lib.i4parameter.argtypes = [handler, ctypes.c_int, ctypes.c_int]
-    lib.i4parameter.restype = handler
+    lib.parameter.argtypes = [handler, ctypes.c_int, c_u32_array, ctypes.c_char_p]
+    lib.parameter.restype = handler
 
     lib.compile.argtypes = [handler, handler]
     lib.compile.restype = handler
@@ -114,8 +109,8 @@ def init_network_factory(lib: ctypes.CDLL):
         ctypes.c_int,
         ctypes.c_int,
         ctypes.c_bool,
-        ctypes.c_bool,
-        ctypes.c_int,
+        ctypes.c_char_p,
+        ctypes.c_char_p,
     ]
     lib.linear.restype = handler
 

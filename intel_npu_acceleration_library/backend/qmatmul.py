@@ -28,7 +28,7 @@ class QMatMul(NNFactory):
             device (str): Target device, default to "NPU".
         """
         super().__init__(inC, outC, batch, profile, device)
-        out = self.linear(self.input, outC, inC, bias=False, quantize=True)
+        out = self.linear(self.input, outC, inC, bias=False, wt_dtype=np.int8)
         self.compile(out)
 
     def run(self, X: np.ndarray, W: np.ndarray, scale: np.ndarray) -> np.ndarray:

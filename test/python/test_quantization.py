@@ -29,7 +29,7 @@ def test_explicit_quantization(batch, inC, outC):
     input = module.input
     assert input
 
-    output = module.linear(input, outC, inC, False, False)
+    output = module.linear(input, outC, inC)
     assert output
 
     module.compile(output)
@@ -56,7 +56,7 @@ def test_i8_quantization(batch, inC, outC):
     input = module.input
     assert input
 
-    output = module.linear(input, outC, inC, False, True, 8)
+    output = module.linear(input, outC, inC, False, wt_dtype=np.int8)
     assert output
 
     module.compile(output)

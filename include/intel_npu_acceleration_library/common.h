@@ -35,6 +35,22 @@ bool _isNPUAvailable(ov::Core& core) {
     return std::find(availableDevices.begin(), availableDevices.end(), "NPU") != availableDevices.end();
 }
 
+ov::element::Type_t dtype_from_string(std::string& dtype) {
+    if (dtype == "int8" || dtype == "i8") {
+        return ov::element::Type_t::i8;
+    } else if (dtype == "int4" || dtype == "i4") {
+        return ov::element::Type_t::i4;
+    }
+    if (dtype == "float16" || dtype == "half" || dtype == "f16") {
+        return ov::element::Type_t::f16;
+    }
+    if (dtype == "bfloat16" || dtype == "bf16") {
+        return ov::element::Type_t::bf16;
+    } else {
+        throw std::invalid_argument("Unsupported datatype: " + dtype);
+    }
+}
+
 }  // namespace intel_npu_acceleration_library
 
 // Define half pointer as uint16_t pointer datatype

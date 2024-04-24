@@ -64,6 +64,29 @@ class NNFactory(BaseNPUBackendWithPrefetch):
         fn = getattr(backend_lib, op_name)
         return fn(self._mm, *parameters)
 
+    def get_backend_dtype(self, dtype) -> ctypes.c_char_p:
+        """Get the string representation of the dtype.
+
+        Args:
+            dtype: numpy dtype
+
+        Raises:
+            RuntimeError: Unsupported datatype
+
+        Returns:
+            ctypes.c_char_p: string representation of the dtype
+        """
+        if dtype == np.int8:
+            str_dtype = "int8"
+        elif dtype == np.uint8:
+            # u8 represents packed i4 dtypes
+            str_dtype = "int4"
+        elif dtype == np.float16:
+            str_dtype = "float16"
+        else:
+            raise RuntimeError(f"DType is not supported {dtype}")
+        return ctypes.c_char_p(str_dtype.encode())
+
     def parameter(
         self, shape: Tuple[int, int], dtype: npt.DTypeLike = np.float16
     ) -> ctypes._Pointer:
@@ -73,26 +96,14 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             shape (Tuple[int, int]): Parameter shape (only 2D tensors supported atm)
             dtype (np.dtype, optional): parameter type np.int8, np.uint8 and np.float16 supported. Defaults to np.float16. Unit8 represents packed i4 dtypes
 
-        Raises:
-            RuntimeError: Unsupported shape
-
         Returns:
             ctypes._Pointer: an instance to a parameter object
 
         """
-        if len(shape) != 2:
-            raise RuntimeError(
-                f"Parameter shape {shape} length != 2 is not yet suuported in the library"
-            )
-        if dtype == np.int8:
-            return backend_lib.i8parameter(self._mm, shape[0], shape[1])
-        elif dtype == np.uint8:
-            # u8 represents packed i4 dtypes
-            return backend_lib.i4parameter(self._mm, shape[0], shape[1])
-        elif dtype == np.float16:
-            return backend_lib.fp16parameter(self._mm, shape[0], shape[1])
-        else:
-            raise RuntimeError(f"DType is not supported {dtype}")
+        shape_ptr = np.array(shape, dtype=np.uint32)
+        return backend_lib.parameter(
+            self._mm, shape_ptr.size, shape_ptr, self.get_backend_dtype(dtype)
+        )
 
     def linear(
         self,
@@ -100,8 +111,8 @@ class NNFactory(BaseNPUBackendWithPrefetch):
         output_channels: int,
         input_channels: int,
         bias: Optional[bool] = False,
-        quantize: bool = False,
-        quantization_bits: int = 8,
+        act_dtype: npt.DTypeLike = np.float16,
+        wt_dtype: npt.DTypeLike = np.float16,
     ) -> ctypes._Pointer:
         """Generate a linear layer.
 
@@ -110,8 +121,8 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             output_channels (int): number of output channels
             input_channels (int): number of input channels
             bias (bool, optional): enable/disable bias. Defaults to False.
-            quantize (bool, optional): quantize linear model. Defaults to False.
-            quantization_bits (int, optional): quantization bits. Defaults to 8.
+            act_dtype (npt.DTypeLike, optional): activation dtype. Defaults to np.float16.
+            wt_dtype (npt.DTypeLike, optional): weight dtype. Defaults to np.float16.
 
         Returns:
             ctypes._Pointer: _description_
@@ -122,8 +133,8 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             output_channels,
             input_channels,
             bias,
-            quantize,
-            quantization_bits,
+            self.get_backend_dtype(act_dtype),
+            self.get_backend_dtype(wt_dtype),
         )
 
     def compile(self, output_node: ctypes._Pointer):

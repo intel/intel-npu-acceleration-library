@@ -35,7 +35,7 @@ class QLinear(NNFactory):
             raise RuntimeError(
                 "Quantized matmul requires input_channel to be a multiple of 8"
             )
-        out = self.linear(self.input, outC, inC, bias=False, quantize=True)
+        out = self.linear(self.input, outC, inC, bias=False, wt_dtype=np.int8)
         self.compile(out)
 
     def run(

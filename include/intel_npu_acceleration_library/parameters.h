@@ -28,6 +28,14 @@ public:
     }
 
     /**
+     * @brief Construct a new Shape object
+     *
+     * @param dims : a list of integers representing each dimension size
+     */
+    Shape(std::vector<size_t>& dims): dimensions(dims) {
+    }
+
+    /**
      * @brief Overload of the operator []. Return the dimension at index idx
      *
      * @param idx
