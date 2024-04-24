@@ -51,7 +51,7 @@ def test_explicit_quantization(batch, inC, outC):
 @pytest.mark.parametrize("outC", [256, 512])
 def test_compiled_quantized(batch, inC, outC):
 
-    intel_npu_acceleration_library.backend.runtime._model_cache = {}
+    intel_npu_acceleration_library.backend.clear_cache()
 
     torch.manual_seed(0)
     X = torch.rand((batch, inC), dtype=torch.float16) - 0.5
