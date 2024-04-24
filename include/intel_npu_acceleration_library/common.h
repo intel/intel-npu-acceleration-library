@@ -35,7 +35,7 @@ bool _isNPUAvailable(ov::Core& core) {
     return std::find(availableDevices.begin(), availableDevices.end(), "NPU") != availableDevices.end();
 }
 
-ov::element::Type_t dtype_from_string(std::string& dtype) {
+ov::element::Type_t dtype_from_string(const std::string& dtype) {
     if (dtype == "int8" || dtype == "i8") {
         return ov::element::Type_t::i8;
     } else if (dtype == "int4" || dtype == "i4") {
