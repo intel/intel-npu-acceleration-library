@@ -71,7 +71,7 @@ def test_compilation(dtype):
     # latency1 = t1 - t0
     # assert latency2 < latency1
 
-    intel_npu_acceleration_library.backend.runtime._model_cache = {}
+    intel_npu_acceleration_library.backend.clear_cache()
 
 
 def test_torch_compile():

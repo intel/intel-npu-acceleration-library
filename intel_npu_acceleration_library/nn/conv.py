@@ -11,6 +11,10 @@ class Conv2d(torch.nn.Module):
     """
     2D convolutional layer implementation.
 
+    Attrs:
+        weight (torch.Tensor): The weight tensor of the layer.
+        bias (torch.Tensor): The bias tensor of the layer.
+
     Args:
         matmul (torch.nn.Module): The matrix multiplication module.
         in_channels (int): Number of input channels.
@@ -51,6 +55,26 @@ class Conv2d(torch.nn.Module):
         self.padding = padding
         self.dilation = dilation
         self.stride = stride
+
+    @property
+    def weight(self) -> torch.Tensor:
+        """
+        Get the weight tensor of the layer.
+
+        Returns:
+            torch.Tensor: The weight tensor.
+        """
+        return self.matmul.weight
+
+    @property
+    def bias(self) -> torch.Tensor:
+        """
+        Get the bias tensor of the layer.
+
+        Returns:
+            torch.Tensor: The bias tensor.
+        """
+        return self.matmul.bias
 
     def compute_output_dim(self, dim, idx) -> int:
         """

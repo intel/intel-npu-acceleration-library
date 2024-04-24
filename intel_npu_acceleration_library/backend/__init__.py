@@ -9,7 +9,7 @@ from .linear import Linear
 from .qmatmul import QMatMul
 from .qlinear import QLinear
 from .factory import NNFactory
-from .runtime import run_matmul, run_factory
+from .runtime import run_matmul, run_factory, clear_cache
 import warnings
 
 
@@ -38,4 +38,5 @@ __all__ = [
     "QLinear",
     "run_matmul",
     "run_factory",
+    "clear_cache",
 ]

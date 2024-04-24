@@ -15,6 +15,12 @@ import torch
 _model_cache: Dict[str, Deque[NNFactory]] = {}
 
 
+def clear_cache():
+    """Clear the cache of models."""
+    global _model_cache
+    _model_cache = {}
+
+
 @torch.no_grad()
 def run_matmul(
     x: torch.Tensor,
