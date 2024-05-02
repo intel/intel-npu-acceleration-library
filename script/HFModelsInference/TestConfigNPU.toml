@@ -1,0 +1,57 @@
+[Configuration]
+# Flag to clean previous results
+clean_prev_results = true
+
+# Path to the input image file for Visual QA tasks
+#input_img_file = "test-local.jpg"
+input_img_file = "https://cdn4.geckoandfly.com/wp-content/uploads/2017/02/cute-cat-image-quotes-18.jpg"
+
+# Path to the input audio file for transcription tasks. Only wav files are supported.
+#input_aud_file = "test-local.wav"
+input_aud_file = "https://www.signalogic.com/melp/EngSamples/Orig/male.wav"
+
+# Question to be provided as input for Text 2 Text QA and VQA
+input_text_ttot = 'What was the name of the first processor built by Intel?'
+input_text_vqa = "what animal is in this picture?"
+
+# Number of Iterations
+num-iter = 2
+
+# Hugging Face access token
+HFaccessToken = ""
+
+# Reference answers for the above questions
+#ref_answer_aud = 'When the going gets tough, tough gets going. When the going gets rougher, tough gets rough. Water is the epitome of life.'
+ref_answer_aud = "But what if somebody decides to break it? Be careful that you keep adequate coverage. But look for places to save money. Maybe it's taking longer to get things squared away than the bankers expected. The boost is helpful, but inadequate. What a discussion can ensue when the title of this type of song is in question. There is no dying or waxing or gasing needed."
+ref_answer_ttot = 'Intel 4004'
+#ref_answer_vqa = 'horse'
+ref_answer_vqa = 'cat'
+
+# Flag to enable Pytorch profiling
+enable_pytorch_profiling = true
+
+# Text to Text Generation Models
+[t5-small-intel]
+id = "Intel/t5-small-finetuned-cnn-news-int8-dynamic"
+import_library = "optimum.intel"
+input_q = "What colors are present in a rainbow?"
+modelgen = "INCModelForSeq2SeqLM"
+ref_answer = "purple, yellow, and blue"
+tokenizer = "AutoTokenizer"
+useNPUAccelerationLibrary = false
+
+#Image to Text generation models
+[git-base-vqav2]
+id = "microsoft/git-base-vqav2"
+inputs = "image,text"
+modelgen = "AutoModelForCausalLM"
+tokenizer = "AutoProcessor"
+useNPUAccelerationLibrary = true
+
+#Audio to Text generation models
+[whisper-tiny]
+id = "openai/whisper-tiny"
+inputs = "audio"
+modelgen = "WhisperForConditionalGeneration"
+tokenizer = "WhisperProcessor"
+useNPUAccelerationLibrary = true
