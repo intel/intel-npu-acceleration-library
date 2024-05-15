@@ -9,6 +9,7 @@ import numpy as np
 import intel_npu_acceleration_library
 import pytest
 import time
+import sys
 import os
 
 
@@ -65,3 +66,17 @@ def test_save_compiled_model():
     mm.saveCompiledModel("model.blob")
     assert os.path.isfile("model.blob")
     os.remove("model.blob")
+
+
+@pytest.mark.skipif(
+    not intel_npu_acceleration_library.backend.npu_available(),
+    reason="Skip test if NPU is not available",
+)
+@pytest.mark.skipif(
+    sys.platform != "win32",
+    reason="Skip test if not on windows platform",
+)
+def test_driver_version():
+
+    version = intel_npu_acceleration_library.backend.get_driver_version()
+    assert version is not None
