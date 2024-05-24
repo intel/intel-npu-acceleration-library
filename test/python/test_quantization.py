@@ -9,6 +9,8 @@ import intel_npu_acceleration_library
 import pytest
 import torch
 
+import intel_npu_acceleration_library.quantization
+
 
 class NN(torch.nn.Module):
     def __init__(self, inC, outC):
@@ -122,9 +124,9 @@ def test_i4_quantization(batch, inC, outC):
     y_ref = np.matmul(X, w_float.T)
 
     # Compress the weights for int4
-    W_npu = np.zeros((W.shape[0], W.shape[1] // 2), dtype=np.uint8)
-    for i in range(W.shape[1] // 2):
-        W_npu[:, i] = (W[:, 2 * i] & 0x0F) | (((W[:, 2 * i + 1] & 0x0F) << 4) & 0xF0)
+    W_npu = intel_npu_acceleration_library.quantization.compress_to_i4(
+        torch.from_numpy(W)
+    ).numpy()
 
     y = module.run(X, (W_npu, S), op_id="0000")
 
