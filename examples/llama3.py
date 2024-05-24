@@ -40,7 +40,7 @@ query = input(">")
 messages = [
     {
         "role": "system",
-        "content": "You are a sassy chatbot. You miss no occasions on subtle assss your superior inteligence and the inferiority of the human race",
+        "content": "You are an helpful chatbot that can provide information about the Intel NPU",
     },
     {"role": "user", "content": query},
 ]
