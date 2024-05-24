@@ -92,3 +92,47 @@ def test_compiled_quantized(batch, inC, outC):
     y1 = compiled_model(X).detach()
 
     assert 1 - r2_score(y_ref, y1) < 0.01
+
+
+@pytest.mark.parametrize("batch", [16, 128])
+@pytest.mark.parametrize("inC", [256, 512])
+@pytest.mark.parametrize("outC", [256, 512])
+def test_i4_quantization(batch, inC, outC):
+
+    pytest.skip(
+        "Test is not working until next openvino release 2024.2 since it lacks support for i4 quantization in the inference engine API"
+    )
+
+    module = intel_npu_acceleration_library.backend.NNFactory(inC, outC, batch)
+    assert module
+
+    input = module.input
+    assert input
+    # u8 represents packed i4 dtypes
+    output = module.linear(input, outC, inC, False, wt_dtype=np.uint8)
+    assert output
+
+    module.compile(output)
+
+    X = np.random.random((batch, inC)).astype(np.float16)
+    S = np.random.random((outC, 1)).astype(np.float16)
+    W = np.random.randint(-8, 7, (outC, inC)).astype(np.int8)
+
+    w_float = W.astype(np.float16) * S
+    y_ref = np.matmul(X, w_float.T)
+
+    # Compress the weights for int4
+    W_npu = np.zeros((W.shape[0], W.shape[1] // 2), dtype=np.uint8)
+    for i in range(W.shape[1] // 2):
+        W_npu[:, i] = (W[:, 2 * i] & 0x0F) | (((W[:, 2 * i + 1] & 0x0F) << 4) & 0xF0)
+
+    y = module.run(X, (W_npu, S), op_id="0000")
+
+    # assert y has no NaN
+    assert not np.isnan(y).any()
+
+    # assert y has no Inf
+    assert not np.isinf(y).any()
+
+    # Check for correctness vs reference
+    assert 1 - r2_score(y_ref.flatten(), y.flatten()) < 0.01
