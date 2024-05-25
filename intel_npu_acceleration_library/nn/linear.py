@@ -127,7 +127,7 @@ class QuantizedLinear(torch.nn.Module):
             raise RuntimeError(
                 f"Quantized weight must be in torch.int8 dtype instead of {self.weight.dtype}"
             )
-        self.scale = scale.to(torch.float32)
+        self.scale = scale
         self.outC, self.inC = self.weight.shape
         self.bias = bias
         self.op_id = str(uuid.uuid4())

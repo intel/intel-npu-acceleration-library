@@ -32,6 +32,11 @@ intel_npu_acceleration_library_DLL_API void addIntParameter(intel_npu_accelerati
     parameters->add_parameter(data, scale, intel_npu_acceleration_library::Shape({dim0, dim1}));
 }
 
+intel_npu_acceleration_library_DLL_API void addInt4Parameter(intel_npu_acceleration_library::Parameters* parameters,
+                                                             uint8_t* data, half_ptr scale, size_t dim0, size_t dim1) {
+    parameters->add_parameter(data, scale, intel_npu_acceleration_library::Shape({dim0, dim1}));
+}
+
 intel_npu_acceleration_library_DLL_API void addIntParameterConversion(
         intel_npu_acceleration_library::Parameters* parameters, int8_t* data, float* scale, size_t dim0, size_t dim1) {
     parameters->add_parameter(data, scale, intel_npu_acceleration_library::Shape({dim0, dim1}));
@@ -89,14 +94,11 @@ intel_npu_acceleration_library_DLL_API float run(intel_npu_acceleration_library:
 
 // ######################### NN Factory layers #########################
 
-intel_npu_acceleration_library_DLL_API ov::op::Op* fp16parameter(intel_npu_acceleration_library::ModelFactory* factory,
-                                                                 size_t dim0, size_t dim1) {
-    return factory->parameter(dim0, dim1, ov::element::Type_t::f16);
-}
-
-intel_npu_acceleration_library_DLL_API ov::op::Op* i8parameter(intel_npu_acceleration_library::ModelFactory* factory,
-                                                               size_t dim0, size_t dim1) {
-    return factory->parameter(dim0, dim1, ov::element::Type_t::i8);
+intel_npu_acceleration_library_DLL_API ov::op::Op* parameter(intel_npu_acceleration_library::ModelFactory* factory,
+                                                             size_t size, unsigned int* data, char* dtype) {
+    ov::element::Type_t ov_dtype = intel_npu_acceleration_library::dtype_from_string(std::string(dtype));
+    std::vector<size_t> shape(data, data + size);
+    return factory->parameter(shape, ov_dtype);
 }
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* matmul(intel_npu_acceleration_library::ModelFactory* factory,
@@ -136,26 +138,31 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* softmax(intel_npu_acceleratio
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* convert_to_fp16(
         intel_npu_acceleration_library::ModelFactory* factory, ov::op::Op* in0) {
-    return factory->convert_to_fp16(in0);
+    return factory->convert_to(in0, ov::element::Type_t::f16);
 }
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* linear(intel_npu_acceleration_library::ModelFactory* factory,
                                                           ov::op::Op* in0, size_t dim0, size_t dim1, bool bias,
-                                                          bool quantized) {
-    auto weights = factory->parameter(dim0, dim1, quantized ? ov::element::Type_t::i8 : ov::element::Type_t::f16);
+                                                          char* act_dtype, char* wt_dtype) {
+    ov::element::Type_t act_ov_dtype = intel_npu_acceleration_library::dtype_from_string(std::string(act_dtype));
+    ov::element::Type_t wt_ov_dtype = intel_npu_acceleration_library::dtype_from_string(std::string(wt_dtype));
+
+    bool quantized = wt_ov_dtype == ov::element::Type_t::i8 || wt_ov_dtype == ov::element::Type_t::i4;
+
+    auto weights = factory->parameter({dim0, dim1}, wt_ov_dtype);
     if (quantized) {
-        weights = factory->convert_to_fp16(weights);
+        weights = factory->convert_to(weights, act_ov_dtype);
     }
 
     auto mm = factory->matmul(in0, weights);
 
     if (quantized) {
-        auto scale = factory->parameter(1, dim0, ov::element::Type_t::f16);
+        auto scale = factory->parameter({1, dim0}, act_ov_dtype);
         mm = factory->eltwise_mul(mm, scale);
     }
 
     if (bias) {
-        auto bias = factory->parameter(1, dim0, ov::element::Type_t::f16);
+        auto bias = factory->parameter({1, dim0}, act_ov_dtype);
         return factory->eltwise_add(mm, bias);
     }
     return mm;

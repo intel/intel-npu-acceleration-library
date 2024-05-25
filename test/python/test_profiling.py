@@ -38,7 +38,7 @@ def test_profiling_matmul():
     os.remove("profiling.json")
 
     QLinear(W.shape[1], W.shape[0], X.shape[0], profile=True).run(
-        X, W_q.numpy(), scale.to(torch.float32).numpy(), op_id=0
+        X, W_q.numpy(), scale.numpy(), op_id=0
     )
     assert os.path.isfile("profiling.json")
     os.remove("profiling.json")

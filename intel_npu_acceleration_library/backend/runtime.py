@@ -86,7 +86,7 @@ def run_matmul(
 
     # If the real batch is 1, we need to use 16 and then slice it
     if real_batch == 1:
-        batch = 16
+        batch = 1
     else:
         batch = real_batch
 
@@ -106,7 +106,7 @@ def run_matmul(
     if real_batch == 1:
         # Expand and then slice
         with record_function(f"npu_matvec_{key}"):
-            ret = model.run(np.vstack(16 * [x_np]), *op_args, **op_kwargs)[:1, ...]
+            ret = model.run(np.vstack(1 * [x_np]), *op_args, **op_kwargs)[:1, ...]
     else:
         with record_function(f"npu_matmul_{key}"):
             ret = model.run(x_np, *op_args, **op_kwargs)

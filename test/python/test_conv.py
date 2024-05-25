@@ -30,9 +30,10 @@ def test_conv(in_channels, out_channels, kernels, dim, bias, dtype):
         pytest.skip("int8 only supports kernel size 1")
 
     with torch.no_grad():
-        X = 128 * torch.rand((1, in_channels, dim, dim), dtype=torch.float32)
+        X = torch.rand((1, in_channels, dim, dim), dtype=torch.float32)
 
         conv = DummyConv(in_channels, out_channels, kernels, bias=bias)
+        conv.conv.weight.data *= 128
         y_ref = conv(X)
 
         npu_conv = intel_npu_acceleration_library.compile(conv, dtype)
