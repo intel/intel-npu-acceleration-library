@@ -69,7 +69,7 @@ with open("dev_requirements.txt") as fh:
 
 setup(
     name="intel_npu_acceleration_library",
-    version="v1.0.0",
+    version="v1.1.0",
     packages=[
         "intel_npu_acceleration_library",
         "intel_npu_acceleration_library.backend",
