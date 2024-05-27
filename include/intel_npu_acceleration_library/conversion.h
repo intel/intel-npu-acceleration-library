@@ -21,7 +21,7 @@ namespace intel_npu_acceleration_library {
  * @param size size of the src and dst buffers
  */
 void compressToI4(const int8_t* src, uint8_t* dst, size_t size) {
-    for (int i = 0; i < size / 2; i++) {
+    for (size_t i = 0; i < size / 2; i++) {
         dst[i] = (src[2 * i] & 0x0F) | ((src[2 * i + 1] & 0x0F) << 4);
     }
 }
