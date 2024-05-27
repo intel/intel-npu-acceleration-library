@@ -5,7 +5,7 @@
 
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from intel_npu_acceleration_library.nn.llm import generate_with_static_shape
-from intel_npu_acceleration_library.dtypes import FP16, INT8, INT4
+from intel_npu_acceleration_library.dtypes import float16, int8, int4
 
 from torch.profiler import profile, ProfilerActivity
 import intel_npu_acceleration_library
@@ -42,11 +42,11 @@ def main(
         )
 
     if dtype == "float16":
-        dtype = FP16
+        dtype = float16
     elif dtype == "int8":
-        dtype = INT8
+        dtype = int8
     elif dtype == "int4":
-        dtype = INT4
+        dtype = int4
     else:
         raise RuntimeError(f"Invalid dtype: {dtype}")
 
