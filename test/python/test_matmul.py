@@ -34,7 +34,7 @@ def test_matmul(batch, inC, outC):
 
     assert np.isfinite(npu_mm).all()
 
-    assert 1 - r2_score(cpu_mm, npu_mm) < 0.001
+    assert 1 - r2_score(cpu_mm.numpy(), npu_mm) < 0.001
 
 
 @pytest.mark.parametrize(
@@ -69,4 +69,4 @@ def test_qmatmul_per_channel_scales(batch, inC, outC):
 
     assert np.isfinite(npu_mm).all()
 
-    assert 1 - r2_score(cpu_mm, npu_mm) < 0.001
+    assert 1 - r2_score(cpu_mm.numpy(), npu_mm) < 0.001
