@@ -48,7 +48,7 @@ class NPUDtype:
             bool: True if the objects are equal, False otherwise.
         """
         if isinstance(value, torch.dtype):
-            if value.is_floating_point():
+            if value.is_floating_point:
                 info = torch.finfo(value)
             else:
                 info = torch.iinfo(value)
@@ -79,8 +79,6 @@ class NPUDtype:
             return float16
         elif dtype == torch.bfloat16:
             return bfloat16
-        elif dtype == torch.int4:
-            return int4
         elif dtype == torch.int8:
             return int8
         else:
