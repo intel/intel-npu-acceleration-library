@@ -93,7 +93,7 @@ def test_compiled_quantized(batch, inC, outC):
 
     y1 = compiled_model(X).detach()
 
-    assert 1 - r2_score(y_ref, y1) < 0.01
+    assert 1 - r2_score(y_ref.numpy(), y1.numpy()) < 0.01
 
 
 @pytest.mark.parametrize("batch", [16, 128])

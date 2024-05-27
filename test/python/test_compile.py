@@ -62,7 +62,7 @@ def test_compilation(dtype):
     y2 = compiled_model(x).detach()
     t2 = time.perf_counter()
 
-    assert 1 - r2_score(y_ref, y1) < 0.01
+    assert 1 - r2_score(y_ref.numpy(), y1.numpy()) < 0.01
 
     assert torch.allclose(y1, y2)
 
@@ -88,7 +88,7 @@ def test_torch_compile():
     else:
         compiled_model = torch.compile(model, backend="npu")
         y = compiled_model(x).detach()
-        assert 1 - r2_score(y_ref, y) < 0.01
+        assert 1 - r2_score(y_ref.numpy(), y.numpy()) < 0.01
 
 
 @pytest.mark.parametrize("dtype", [torch.float32, torch.float16, torch.int8])
