@@ -146,7 +146,7 @@ def test_model(model_name, hidden_size, intermediate_size, sequence_length, bias
 
         output = optimized(example_input)[0]
 
-    assert 1 - r2_score(reference.flatten(), output.flatten()) < 0.01
+    assert 1 - r2_score(reference.flatten().numpy(), output.flatten().numpy()) < 0.01
 
 
 @pytest.mark.parametrize("layers", [2, 3, 10])

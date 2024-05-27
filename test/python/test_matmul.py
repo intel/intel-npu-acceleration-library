@@ -58,7 +58,8 @@ def test_qmatmul_per_channel_scales(batch, inC, outC):
     assert weights_quant.shape == W.shape
 
     # Conversion done properly
-    assert 1 - r2_score(weights_quant.to(torch.float16) * scale, W) < 0.001
+    expected_W = weights_quant.to(torch.float16) * scale
+    assert 1 - r2_score(expected_W.numpy(), W.numpy()) < 0.001
 
     mm = QMatMul(inC, outC, batch)
 

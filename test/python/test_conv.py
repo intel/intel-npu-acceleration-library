@@ -42,6 +42,6 @@ def test_conv(in_channels, out_channels, kernels, dim, bias, dtype):
         assert y.dtype == y_ref.dtype
         assert y.shape == y_ref.shape
         if dtype == torch.int8:
-            assert 1 - r2_score(y_ref.flatten(), y.flatten()) < 0.05
+            assert 1 - r2_score(y_ref.flatten().numpy(), y.flatten().numpy()) < 0.05
         else:
-            assert 1 - r2_score(y_ref.flatten(), y.flatten()) < 0.001
+            assert 1 - r2_score(y_ref.flatten().numpy(), y.flatten().numpy()) < 0.001
