@@ -48,12 +48,15 @@ class NPUDtype:
             bool: True if the objects are equal, False otherwise.
         """
         if isinstance(value, torch.dtype):
-            info = torch.finfo(value)
+            if value.is_floating_point():
+                info = torch.finfo(value)
+            else:
+                info = torch.iinfo(value)
             return (
                 self.bits == info.bits
                 and self.max == info.max
                 and self.min == info.min
-                and self.torch_dtype == info
+                and self.torch_dtype == value
             )
         else:
             return super().__eq__(value)
@@ -73,18 +76,18 @@ class NPUDtype:
             ValueError: If the dtype is not supported.
         """
         if dtype == torch.float16:
-            return FP16
+            return float16
         elif dtype == torch.bfloat16:
-            return BFLOAT16
+            return bfloat16
         elif dtype == torch.int4:
-            return INT4
+            return int4
         elif dtype == torch.int8:
-            return INT8
+            return int8
         else:
             raise ValueError(f"Unsupported dtype: {dtype}")
 
 
-FP16 = NPUDtype("fp16", 16, -65504, 65504, torch.float16)
-BFLOAT16 = NPUDtype("bfloat16", 16, -65504, 65504, torch.float16)
-INT4 = NPUDtype("int4", 4, -8, 7, torch.int8)
-INT8 = NPUDtype("int8", 8, -128, 127, torch.int8)
+float16 = NPUDtype("fp16", 16, -65504, 65504, torch.float16)
+bfloat16 = NPUDtype("bfloat16", 16, -65504, 65504, torch.float16)
+int4 = NPUDtype("int4", 4, -8, 7, torch.int8)
+int8 = NPUDtype("int8", 8, -128, 127, torch.int8)

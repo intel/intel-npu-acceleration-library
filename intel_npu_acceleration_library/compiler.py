@@ -6,7 +6,7 @@
 from intel_npu_acceleration_library.optimizations import horizontal_fusion_linear
 from transformers.models.llama.modeling_llama import LlamaMLP, LlamaAttention
 from transformers.models.gemma.modeling_gemma import GemmaMLP, GemmaAttention
-from intel_npu_acceleration_library.dtypes import INT8, INT4
+from intel_npu_acceleration_library.dtypes import int8, int4
 import intel_npu_acceleration_library.nn as nn
 from torch._dynamo import register_backend
 from typing import Union, Callable, Any
@@ -30,7 +30,7 @@ def compile(
     Returns:
         torch.nn.Module: compiled NPU nn.Module
     """
-    if not (dtype.is_floating_point or dtype in (INT8, INT4)):
+    if not (dtype.is_floating_point or dtype in (int8, int4)):
         raise RuntimeError(
             f"intel-npu-acceleration-library library do not support yet the requeste datatype: {dtype}"
         )
