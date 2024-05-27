@@ -2,6 +2,7 @@
 # Copyright © 2024 Intel Corporation
 # SPDX-License-Identifier: Apache 2.0
 #
+import intel_npu_acceleration_library.backend.compression as compression
 from typing import Tuple
 import torch
 
@@ -55,11 +56,4 @@ def compress_to_i4(weights: torch.Tensor) -> torch.Tensor:
     Returns:
         torch.Tensor: The compressed tensor with 4-bit representation.
     """
-    compressed_weights = torch.zeros(
-        (weights.shape[0], weights.shape[1] // 2), dtype=torch.uint8
-    )
-    for i in range(weights.shape[1] // 2):
-        compressed_weights[:, i] = (weights[:, 2 * i] & 0x0F) | (
-            ((weights[:, 2 * i + 1] & 0x0F) << 4) & 0xF0
-        )
-    return compressed_weights
+    return torch.tensor(compression.compress_to_i4(weights.numpy()))

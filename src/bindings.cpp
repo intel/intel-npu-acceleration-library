@@ -12,6 +12,12 @@ intel_npu_acceleration_library_DLL_API bool isNPUAvailable() {
     return intel_npu_acceleration_library::_isNPUAvailable(core);
 }
 
+// ######################## Compression ########################
+
+intel_npu_acceleration_library_DLL_API void compressToI4(const int8_t* src, uint8_t* dst, size_t size) {
+    intel_npu_acceleration_library::compressToI4(src, dst, size);
+}
+
 // ######################### Parameters #########################
 
 intel_npu_acceleration_library_DLL_API intel_npu_acceleration_library::Parameters* createParameters() {

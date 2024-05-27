@@ -61,29 +61,6 @@ class NPUDtype:
         else:
             return super().__eq__(value)
 
-    @staticmethod
-    def from_torch_dtype(dtype: torch.dtype) -> "NPUDtype":
-        """
-        Create an NPUDtype object from a torch.dtype object.
-
-        Args:
-            dtype (torch.dtype): The torch data type.
-
-        Returns:
-            NPUDtype: The corresponding NPUDtype object.
-
-        Raises:
-            ValueError: If the dtype is not supported.
-        """
-        if dtype == torch.float16:
-            return float16
-        elif dtype == torch.bfloat16:
-            return bfloat16
-        elif dtype == torch.int8:
-            return int8
-        else:
-            raise ValueError(f"Unsupported dtype: {dtype}")
-
 
 float16 = NPUDtype("fp16", 16, -65504, 65504, torch.float16)
 bfloat16 = NPUDtype("bfloat16", 16, -65504, 65504, torch.float16)
