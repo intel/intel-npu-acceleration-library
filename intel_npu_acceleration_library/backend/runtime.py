@@ -8,6 +8,7 @@ from intel_npu_acceleration_library.backend import MatMul, QMatMul
 from intel_npu_acceleration_library.backend import NNFactory
 from torch.profiler import record_function
 from typing import Optional, List, Any, Dict, Deque
+from functools import partial
 from collections import deque
 import numpy as np
 import torch
@@ -46,6 +47,10 @@ def run_matmul(
 
     outC, inC = weights.shape[-2:]
 
+    if weights.dtype == torch.uint8:
+        # In case is Int4 we need to double the input channels because weights are compressed
+        inC *= 2
+
     # Set tensors as contiguous in memory
     x = set_contiguous(x)
     weights = set_contiguous(weights)
@@ -53,11 +58,16 @@ def run_matmul(
 
     if weights.dtype.is_floating_point:
         op_class = Linear if op_id is not None else MatMul
+        op_class_name = op_class.__name__
+        create_op = partial(op_class)
         op_args = [weights.to(torch.float16).numpy()]
-    elif weights.dtype == torch.int8:
+    elif weights.dtype in (torch.int8, torch.uint8):
         if scale is None:
             raise RuntimeError("Quantized weights require a not null scale")
         op_class = QLinear if op_id is not None else QMatMul
+        op_class_name = op_class.__name__
+        np_dtype = np.int8 if weights.dtype == torch.int8 else np.uint8
+        create_op = partial(op_class, dtype=np_dtype)
         if scale is None:
             raise RuntimeError(
                 f"Quantized matmul (weights dtype == {weights.dtype}) requires scale (scale = {scale})"
@@ -90,13 +100,13 @@ def run_matmul(
     else:
         batch = real_batch
 
-    key = f"{str(op_class.__name__)}_{batch}_{inC}_x_{outC}_{inC}_{x_np.dtype}"
+    key = f"{str(op_class_name)}_{batch}_{inC}_x_{outC}_{inC}_{x_np.dtype}"
     models = _model_cache.get(key, None)
 
     if models is None:
-        _model_cache[key] = deque([op_class(inC, outC, batch)])
+        _model_cache[key] = deque([create_op(inC, outC, batch)])
     elif len(models) < 1:
-        _model_cache[key].append(op_class(inC, outC, batch))
+        _model_cache[key].append(create_op(inC, outC, batch))
     else:
         _model_cache[key].rotate(1)
 
