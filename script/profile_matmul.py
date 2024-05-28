@@ -6,6 +6,7 @@
 from intel_npu_acceleration_library.quantization import quantize_tensor, compress_to_i4
 from intel_npu_acceleration_library.dtypes import int4
 from intel_npu_acceleration_library.backend import Linear, QLinear
+from functools import partial
 import numpy as np
 import argparse
 import torch
@@ -35,13 +36,13 @@ def profile(inC, outC, batch, dtype, n_iters=500, skip_first=10):
         matmul_csl = Linear
         args = [W]
     elif dtype == "int8":
-        matmul_csl = QLinear
         weights, scale = quantize_tensor(torch.tensor(W))
+        matmul_csl = partial(QLinear, dtype=np.int8)
         args = [weights.numpy(), scale.numpy()]
     elif dtype == "int4":
-        matmul_csl = QLinear
         weights, scale = quantize_tensor(torch.tensor(W), (int4.min, int4.max))
         weights = compress_to_i4(weights)
+        matmul_csl = partial(QLinear, dtype=np.uint8)
         args = [weights.numpy(), scale.numpy()]
     else:
         raise RuntimeError(f"Invalid dtype: {dtype}")
