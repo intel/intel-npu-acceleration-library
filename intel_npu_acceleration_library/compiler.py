@@ -42,8 +42,9 @@ def compile(
         # General optimizations
         apply_horizontal_fusion(model)
         optimize_llama_attention(model, dtype)
-
-        model = quantize_model(model, dtype)
+        if dtype in (int8, int4):
+            # Quantize model
+            model = quantize_model(model, dtype)
 
         # Model lowering to NPU ops
         lower_linear(model, dtype)
