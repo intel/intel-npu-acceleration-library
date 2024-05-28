@@ -4,6 +4,7 @@
 #
 import intel_npu_acceleration_library.backend.compression as compression
 from neural_compressor.config import PostTrainingQuantConfig, TuningCriterion
+from intel_npu_acceleration_library.dtypes import int8, int4
 from intel_npu_acceleration_library.dtypes import NPUDtype
 from neural_compressor.quantization import fit
 from typing import Tuple
@@ -165,9 +166,9 @@ def quantize_model(model: torch.nn.Module, dtype: NPUDtype) -> torch.nn.Module:
     logger = logging.getLogger("neural_compressor")
     logger.setLevel(logging.ERROR)
 
-    if dtype.bits == 4:
+    if dtype == int4:
         return quantize_i4_model(model)
-    elif dtype == torch.int8:
+    elif dtype == int8:
         return quantize_i8_model(model)
     else:
         raise RuntimeError(f"Quantization error: unsupported datatype {dtype}")
