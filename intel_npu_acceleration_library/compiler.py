@@ -7,6 +7,7 @@ from intel_npu_acceleration_library.optimizations import horizontal_fusion_linea
 from transformers.models.llama.modeling_llama import LlamaMLP, LlamaAttention
 from transformers.models.gemma.modeling_gemma import GemmaMLP, GemmaAttention
 from neural_compressor.adaptor.torch_utils.model_wrapper import WeightOnlyLinear
+from intel_npu_acceleration_library.quantization import quantize_model
 from intel_npu_acceleration_library.dtypes import int8, int4
 import intel_npu_acceleration_library.nn as nn
 from torch._dynamo import register_backend
@@ -41,6 +42,8 @@ def compile(
         # General optimizations
         apply_horizontal_fusion(model)
         optimize_llama_attention(model, dtype)
+
+        model = quantize_model(model, dtype)
 
         # Model lowering to NPU ops
         lower_linear(model, dtype)
@@ -95,6 +98,9 @@ def lower_linear(
         layer (torch.nn.Module): Original torch.nn.Linear module
         dtype (torch.dtype): Target datatype
 
+    Raises:
+        RuntimeError: unsupported quantization bits
+
     Returns:
         Union[torch.nn.Module, None]: Return the new NPU operator or None
     """
@@ -103,9 +109,16 @@ def lower_linear(
     if isinstance(layer, torch.nn.Conv2d):
         return nn.Conv2d.fromTorch(layer, dtype)
     if isinstance(layer, WeightOnlyLinear):
-        return nn.QuantizedLinear(
-            layer.qweight.to(torch.uint8), layer.scales, layer.bias
-        )
+        if layer.bits == 4:
+            return nn.QuantizedLinear(
+                layer.qweight.to(torch.uint8), layer.scales, layer.bias
+            )
+        elif layer.bits == 8:
+            return nn.QuantizedLinear(
+                layer.qweight.view(torch.int8), layer.scales, layer.bias
+            )
+        else:
+            raise RuntimeError(f"Unsupported quantization bits: {layer.bits}")
     return None
 
 

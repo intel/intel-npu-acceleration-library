@@ -5,9 +5,7 @@
 
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline, TextStreamer
-from neural_compressor.config import PostTrainingQuantConfig
-from neural_compressor.quantization import fit
-import intel_npu_acceleration_library
+import intel_npu_acceleration_library as npu_lib
 import warnings
 
 torch.random.manual_seed(0)
@@ -18,32 +16,7 @@ model = AutoModelForCausalLM.from_pretrained(
     trust_remote_code=True,
 )
 
-
-woq_conf = PostTrainingQuantConfig(
-    approach="weight_only",
-    op_type_dict={
-        ".*": {  # match all ops
-            "weight": {
-                "dtype": "int4",
-                "bits": 4,
-                "group_size": -1,
-                "scheme": "sym",
-                # "algorithm": "AUTOROUND",
-                "algorithm": "minmax",
-            },
-            "activation": {
-                "dtype": "fp16",
-            },
-        }
-    },
-)
-quantized_model = fit(model=model, conf=woq_conf)  # , calib_dataloader=dataloader)
-
-compressed_model = quantized_model.export_compressed_model(
-    compression_dtype=torch.int8, scale_dtype=torch.float16, use_optimum_format=False
-)
-
-model = intel_npu_acceleration_library.compile(compressed_model)
+model = npu_lib.compile(model, dtype=npu_lib.int4)
 tokenizer = AutoTokenizer.from_pretrained("microsoft/Phi-3-mini-4k-instruct")
 streamer = TextStreamer(tokenizer, skip_prompt=True)
 
