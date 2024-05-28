@@ -3,7 +3,8 @@
 # SPDX-License-Identifier: Apache 2.0
 #
 
-from intel_npu_acceleration_library.quantization import quantize_tensor
+from intel_npu_acceleration_library.quantization import quantize_tensor, compress_to_i4
+from intel_npu_acceleration_library.dtypes import int4
 from intel_npu_acceleration_library.backend import Linear, QLinear
 import numpy as np
 import argparse
@@ -22,7 +23,7 @@ def print_profile_data(hwp_data, data):
     )
 
 
-def profile(inC, outC, batch, quantized=False, n_iters=500, skip_first=10):
+def profile(inC, outC, batch, dtype, n_iters=500, skip_first=10):
     data = []
     mac = inC * outC * batch
     memcpy = (inC + outC) * batch
@@ -30,13 +31,20 @@ def profile(inC, outC, batch, quantized=False, n_iters=500, skip_first=10):
     X = np.random.uniform(-1, 1, (batch, inC)).astype(np.float16)
     W = np.random.uniform(-1, 1, (outC, inC)).astype(np.float16)
 
-    if quantized:
+    if dtype == "float16":
+        matmul_csl = Linear
+        args = [W]
+    elif dtype == "int8":
         matmul_csl = QLinear
         weights, scale = quantize_tensor(torch.tensor(W))
         args = [weights.numpy(), scale.numpy()]
+    elif dtype == "int4":
+        matmul_csl = QLinear
+        weights, scale = quantize_tensor(torch.tensor(W), (int4.min, int4.max))
+        weights = compress_to_i4(weights)
+        args = [weights.numpy(), scale.numpy()]
     else:
-        matmul_csl = Linear
-        args = [W]
+        raise RuntimeError(f"Invalid dtype: {dtype}")
 
     args.append("0000")
 
@@ -56,7 +64,7 @@ def profile(inC, outC, batch, quantized=False, n_iters=500, skip_first=10):
         memcpy=memcpy,
         mac=mac,
         runtime=hwp_runtime,
-        dtype=W.dtype,
+        dtype=dtype,
     )
 
     for idx in range(n_iters):
@@ -94,13 +102,16 @@ def define_and_parse_args():
         required=True,
         help="MatMul output channels",
     )
-    parser.add_argument("--quantize", "-q", action="store_true", help="Quantize")
+    parser.add_argument(
+        "--dtype",
+        default="float16",
+        choices=["float16", "int8", "int4"],
+        help="Select the target dtype (default: %(default)s)",
+    )
 
     return parser.parse_args()
 
 
 if __name__ == "__main__":
     args = define_and_parse_args()
-    profile(
-        args.input_channels, args.output_channels, args.batch, quantized=args.quantize
-    )
+    profile(args.input_channels, args.output_channels, args.batch, dtype=args.dtype)
