@@ -6,6 +6,7 @@
 from intel_npu_acceleration_library.optimizations import horizontal_fusion_linear
 from transformers.models.llama.modeling_llama import LlamaMLP, LlamaAttention
 from transformers.models.gemma.modeling_gemma import GemmaMLP, GemmaAttention
+from neural_compressor.adaptor.torch_utils.model_wrapper import WeightOnlyLinear
 from intel_npu_acceleration_library.dtypes import int8, int4
 import intel_npu_acceleration_library.nn as nn
 from torch._dynamo import register_backend
@@ -101,6 +102,10 @@ def lower_linear(
         return nn.Linear.fromTorch(layer, dtype)
     if isinstance(layer, torch.nn.Conv2d):
         return nn.Conv2d.fromTorch(layer, dtype)
+    if isinstance(layer, WeightOnlyLinear):
+        return nn.QuantizedLinear(
+            layer.qweight.to(torch.uint8), layer.scales, layer.bias
+        )
     return None
 
 
