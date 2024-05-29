@@ -17,6 +17,7 @@ class QMatMul(NNFactory):
         batch: int,
         profile: bool = False,
         device: str = "NPU",
+        dtype: np.dtype = np.int8,
     ):
         """Initialize the QMatmul class.
 
@@ -26,9 +27,10 @@ class QMatMul(NNFactory):
             batch (int): batch
             profile (bool): Enable/Disable profiling. Defaults to False.
             device (str): Target device, default to "NPU".
+            dtype (np.dtype): weights datatype. Defaults to np.int8.
         """
         super().__init__(inC, outC, batch, profile, device)
-        out = self.linear(self.input, outC, inC, bias=False, wt_dtype=np.int8)
+        out = self.linear(self.input, outC, inC, bias=False, wt_dtype=dtype)
         self.compile(out)
 
     def run(self, X: np.ndarray, W: np.ndarray, scale: np.ndarray) -> np.ndarray:

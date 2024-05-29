@@ -101,10 +101,6 @@ def test_compiled_quantized(batch, inC, outC):
 @pytest.mark.parametrize("outC", [256, 512])
 def test_i4_quantization(batch, inC, outC):
 
-    pytest.skip(
-        "Test is not working until next openvino release 2024.2 since it lacks support for i4 quantization in the inference engine API"
-    )
-
     module = intel_npu_acceleration_library.backend.NNFactory(inC, outC, batch)
     assert module
 

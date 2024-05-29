@@ -17,6 +17,7 @@ class QLinear(NNFactory):
         batch: int,
         profile: bool = False,
         device: str = "NPU",
+        dtype: np.dtype = np.int8,
     ):
         """Initialize the QLinear class.
 
@@ -26,6 +27,7 @@ class QLinear(NNFactory):
             batch (int): batch
             profile (bool): Enable/Disable profiling. Defaults to False.
             device (str): Target device, default to "NPU".
+            dtype (np.dtype): weights datatype. Defaults to np.int8.
 
         Raises:
             RuntimeError: Quantized matmul requires input_channel to be a multiple of 8
@@ -35,7 +37,7 @@ class QLinear(NNFactory):
             raise RuntimeError(
                 "Quantized matmul requires input_channel to be a multiple of 8"
             )
-        out = self.linear(self.input, outC, inC, bias=False, wt_dtype=np.int8)
+        out = self.linear(self.input, outC, inC, bias=False, wt_dtype=dtype)
         self.compile(out)
 
     def run(

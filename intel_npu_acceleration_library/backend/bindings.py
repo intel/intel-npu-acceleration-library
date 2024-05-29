@@ -79,6 +79,8 @@ def init_common(lib: ctypes.CDLL):
 
     lib.isNPUAvailable.restype = ctypes.c_bool
 
+    lib.compressToI4.argtypes = [c_i8_array, c_u8_array, ctypes.c_int]
+
 
 def init_network_factory(lib: ctypes.CDLL):
     """Initialize Netowrk factory bindings.

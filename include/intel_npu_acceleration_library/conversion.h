@@ -14,6 +14,19 @@
 namespace intel_npu_acceleration_library {
 
 /**
+ * @brief Compress a int8 vector to I4 format.
+ *
+ * @param src pointer to the source int8 buffer
+ * @param dst pointer to the destination uint8 buffer
+ * @param size size of the src and dst buffers
+ */
+void compressToI4(const int8_t* src, uint8_t* dst, size_t size) {
+    for (size_t i = 0; i < size / 2; i++) {
+        dst[i] = (src[2 * i] & 0x0F) | ((src[2 * i + 1] & 0x0F) << 4);
+    }
+}
+
+/**
  * @brief Convert a int8 vector to fp16 given a scalar scale.
  *
  * @param src pointer to the source int8 buffer
