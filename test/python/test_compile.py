@@ -4,6 +4,7 @@
 #
 
 from intel_npu_acceleration_library.compiler import compile
+from intel_npu_acceleration_library.dtypes import int4
 from sklearn.metrics import r2_score
 import intel_npu_acceleration_library
 from packaging.version import Version
@@ -30,7 +31,7 @@ torch.manual_seed(0)
 x = 128 * (torch.rand((16, 32), dtype=torch.float16) - 0.5)
 
 
-@pytest.mark.parametrize("dtype", [torch.float32, torch.float16, torch.int8])
+@pytest.mark.parametrize("dtype", [torch.float32, torch.float16, torch.int8, int4])
 def test_compilation(dtype):
 
     model = NN()
@@ -48,7 +49,10 @@ def test_compilation(dtype):
             else intel_npu_acceleration_library.nn.QuantizedLinear
         )
         assert isinstance(layer, expected_cls)
-        assert layer.weight.dtype == dtype
+        if dtype == int4:
+            assert layer.weight.dtype == torch.uint8
+        else:
+            assert layer.weight.dtype == dtype
         if layer.bias is not None:
             if dtype.is_floating_point:
                 assert layer.bias.dtype == dtype
@@ -62,7 +66,10 @@ def test_compilation(dtype):
     y2 = compiled_model(x).detach()
     t2 = time.perf_counter()
 
-    assert 1 - r2_score(y_ref.numpy(), y1.numpy()) < 0.01
+    if dtype == int4:
+        assert 1 - r2_score(y_ref.numpy(), y1.numpy()) < 0.05
+    else:
+        assert 1 - r2_score(y_ref.numpy(), y1.numpy()) < 0.01
 
     assert torch.allclose(y1, y2)
 
@@ -105,7 +112,7 @@ def test_compile_training(dtype):
             assert layer.training == True
 
 
-@pytest.mark.parametrize("dtype", [torch.float32, torch.float16, torch.int8])
+@pytest.mark.parametrize("dtype", [torch.float32, torch.float16, torch.int8, int4])
 def test_compile_inference(dtype):
 
     model = NN()
