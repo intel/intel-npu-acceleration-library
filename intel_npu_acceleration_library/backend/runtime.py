@@ -96,13 +96,7 @@ def run_matmul(
         x = x.view([-1, inC])
     x_np = x.numpy()
 
-    real_batch = x_np.shape[0]
-
-    # If the real batch is 1, we need to use 16 and then slice it
-    if real_batch == 1:
-        batch = 1
-    else:
-        batch = real_batch
+    batch = x_np.shape[0]
 
     key = f"{str(op_class_name)}_{batch}_{inC}_x_{outC}_{inC}_{x_np.dtype}"
     models = _model_cache.get(key, None)
@@ -117,13 +111,9 @@ def run_matmul(
     # Get the model
     model = _model_cache[key][0]
 
-    if real_batch == 1:
-        # Expand and then slice
-        with record_function(f"npu_matvec_{key}"):
-            ret = model.run(np.vstack(1 * [x_np]), *op_args, **op_kwargs)[:1, ...]
-    else:
-        with record_function(f"npu_matmul_{key}"):
-            ret = model.run(x_np, *op_args, **op_kwargs)
+    profiling_name = "matvec" if batch == 1 else "matmul"
+    with record_function(f"npu_{profiling_name}_{key}"):
+        ret = model.run(x_np, *op_args, **op_kwargs)
 
     return adapt_output_tensor(ret, expected_output_shape, input_dtype)
 
