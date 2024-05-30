@@ -92,7 +92,7 @@ def run_matmul(
     # Reshape input
     input_dtype = x.dtype
     x = x.to(torch.float16) if input_dtype != torch.float16 else x
-    if len(x.shape) > 2 and x.shape[-1] != inC:
+    if len(x.shape) > 2 or x.shape[-1] != inC:
         x = x.view([-1, inC])
     x_np = x.numpy()
 
