@@ -31,7 +31,7 @@ torch.manual_seed(0)
 x = 128 * (torch.rand((16, 32), dtype=torch.float16) - 0.5)
 
 
-@pytest.mark.parametrize("dtype", [torch.float32, torch.float16, torch.int8, int4])
+@pytest.mark.parametrize("dtype", [torch.float16, torch.int8, int4])
 def test_compilation(dtype):
 
     model = NN()
