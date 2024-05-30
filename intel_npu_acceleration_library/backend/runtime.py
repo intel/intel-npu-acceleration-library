@@ -134,10 +134,8 @@ def adapt_output_tensor(
     output = torch.from_numpy(output)
     if output.shape != original_shape:
         output = output.view(original_shape)
-
-    if output.dtype != input_dtype:
-        output = output.to(input_dtype)
-    return output
+    # needs to copy as the same buffer can be reutilized
+    return output.to(input_dtype, copy=True)
 
 
 def set_contiguous(tensor: torch.Tensor) -> torch.Tensor:

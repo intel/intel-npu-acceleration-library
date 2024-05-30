@@ -12,6 +12,7 @@ from intel_npu_acceleration_library.dtypes import int8, int4
 import intel_npu_acceleration_library.nn as nn
 from torch._dynamo import register_backend
 from typing import Union, Callable, Any
+from packaging.version import Version
 from typing import List
 import torch
 
@@ -36,6 +37,10 @@ def compile(
         raise RuntimeError(
             f"intel-npu-acceleration-library library do not support yet the requeste datatype: {dtype}"
         )
+
+    # Convert model to half precision if torch version is greater or equal to 2.3.0
+    if Version(torch.__version__) >= Version("2.3.0"):
+        model = model.half()
 
     # Prepare and optimize model for NPU
     with torch.no_grad():
