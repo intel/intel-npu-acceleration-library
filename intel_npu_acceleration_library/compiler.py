@@ -39,7 +39,7 @@ def compile(
         )
 
     # Convert model to half precision if torch version is greater or equal to 2.3.0
-    if Version(torch.__version__) >= Version("2.3.0"):
+    if Version(torch.__version__) >= Version("2.3.0") and dtype != torch.float32:
         model = model.half()
 
     # Prepare and optimize model for NPU
