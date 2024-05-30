@@ -43,15 +43,15 @@ def test_parameters(model, model_no_bias):
 
 def test_gradient():
 
-    npu_model = NN(inc=in_c, outc=out_c, bias=True)
-    cpu_model = NN(inc=in_c, outc=out_c, bias=True)
+    npu_model = NN(inc=in_c, outc=out_c, bias=True).half()
+    cpu_model = NN(inc=in_c, outc=out_c, bias=True).half()
     cpu_model.load_state_dict(copy.deepcopy(npu_model.state_dict()))
 
     # Compile one of the model on npu
-    compile(npu_model, torch.float32, training=True)
+    compile(npu_model, training=True)
 
-    x = torch.rand([batch, in_c])
-    yref = torch.rand([batch, in_c])
+    x = torch.rand([batch, in_c]).half()
+    yref = torch.rand([batch, in_c]).half()
 
     opt1 = torch.optim.SGD(npu_model.parameters(), lr=0.5)
     opt2 = torch.optim.SGD(cpu_model.parameters(), lr=0.5)

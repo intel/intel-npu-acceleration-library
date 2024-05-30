@@ -71,13 +71,8 @@ intel_npu_acceleration_library_DLL_API void saveCompiledModel(intel_npu_accelera
 
 intel_npu_acceleration_library_DLL_API void setNNFactoryWeights(
         intel_npu_acceleration_library::OVInferenceModel* mm, intel_npu_acceleration_library::Parameters* parameters) {
-    std::atomic_bool started(false);
-    mm->wt_thread = std::thread([&] {
-        mm->setWeights(parameters->get_parameters(), started);
-    });
-
-    while (!started) {
-    }
+    mm->wt_thread = std::thread(&intel_npu_acceleration_library::OVInferenceModel::setWeights, mm,
+                                parameters->get_parameters());
 }
 
 intel_npu_acceleration_library_DLL_API void compile(intel_npu_acceleration_library::ModelFactory* factory,
