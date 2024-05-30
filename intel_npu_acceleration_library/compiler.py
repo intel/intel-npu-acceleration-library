@@ -37,6 +37,9 @@ def compile(
             f"intel-npu-acceleration-library library do not support yet the requeste datatype: {dtype}"
         )
 
+    # Convert model to half precision
+    model = model.half()
+
     # Prepare and optimize model for NPU
     with torch.no_grad():
         # General optimizations

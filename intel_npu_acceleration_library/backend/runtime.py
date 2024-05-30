@@ -54,13 +54,14 @@ def run_matmul(
     # Set tensors as contiguous in memory
     x = set_contiguous(x)
     weights = set_contiguous(weights)
-    weights = weights.view([-1, weights.shape[-1]])
+    if len(weights.shape) > 2:
+        weights = weights.view([-1, weights.shape[-1]])
 
     if weights.dtype.is_floating_point:
         op_class = Linear if op_id is not None else MatMul
         op_class_name = op_class.__name__
         create_op = partial(op_class)
-        op_args = [weights.to(torch.float16).numpy()]
+        op_args = [weights.numpy()]
     elif weights.dtype in (torch.int8, torch.uint8):
         if scale is None:
             raise RuntimeError("Quantized weights require a not null scale")
@@ -90,7 +91,10 @@ def run_matmul(
 
     # Reshape input
     input_dtype = x.dtype
-    x_np = x.to(torch.float16).view([-1, inC]).numpy()
+    x = x.to(torch.float16) if input_dtype != torch.float16 else x
+    if len(x.shape) > 2 and x.shape[-1] != inC:
+        x = x.view([-1, inC])
+    x_np = x.numpy()
 
     real_batch = x_np.shape[0]
 
@@ -120,7 +124,30 @@ def run_matmul(
     else:
         with record_function(f"npu_matmul_{key}"):
             ret = model.run(x_np, *op_args, **op_kwargs)
-    return torch.from_numpy(ret).view(expected_output_shape).to(input_dtype)
+
+    return adapt_output_tensor(ret, expected_output_shape, input_dtype)
+
+
+def adapt_output_tensor(
+    output: np.ndarray, original_shape: torch.Size, input_dtype: torch.dtype
+) -> torch.Tensor:
+    """Adapt the output tensor to the original shape and dtype.
+
+    Args:
+        output (np.ndarray): output tensor
+        original_shape (torch.Size): original shape
+        input_dtype (torch.dtype): input dtype
+
+    Returns:
+        torch.Tensor: output tensor
+    """
+    output = torch.from_numpy(output)
+    if output.shape != original_shape:
+        output = output.view(original_shape)
+
+    if output.dtype != input_dtype:
+        output = output.to(input_dtype)
+    return output
 
 
 def set_contiguous(tensor: torch.Tensor) -> torch.Tensor:
