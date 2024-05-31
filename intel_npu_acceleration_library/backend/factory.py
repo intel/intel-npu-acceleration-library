@@ -39,9 +39,6 @@ class NNFactory(BaseNPUBackendWithPrefetch):
         self.device = device
         self._mm = backend_lib.createNNFactory(
             ctypes.c_char_p(self.device.encode()),
-            self.inC,
-            self.outC,
-            self.batch,
             profile,
         )
         self.out = np.empty((self.batch, self.outC), dtype=np.float16)

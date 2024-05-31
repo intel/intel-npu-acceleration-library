@@ -12,7 +12,7 @@ import ctypes
 def test_bindings(device):
 
     device = ctypes.c_char_p(device.encode())
-    matmul = backend_lib.createNNFactory(device, 32, 64, 16, False)
+    matmul = backend_lib.createNNFactory(device, False)
 
     assert isinstance(matmul, ctypes.POINTER(ctypes.c_char))
 
@@ -32,7 +32,7 @@ def test_factory_bindings(inC, outC, batch, run_op):
 
     # Create nn factory
     device = ctypes.c_char_p("NPU".encode())
-    factory = backend_lib.createNNFactory(device, inC, outC, batch, False)
+    factory = backend_lib.createNNFactory(device, False)
 
     # Create linear layer
     shape_ptr = np.array((batch, inC), dtype=np.uint32)

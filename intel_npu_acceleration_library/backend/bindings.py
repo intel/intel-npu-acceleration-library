@@ -90,9 +90,6 @@ def init_network_factory(lib: ctypes.CDLL):
     """
     lib.createNNFactory.argtypes = [
         ctypes.c_char_p,
-        ctypes.c_int,
-        ctypes.c_int,
-        ctypes.c_int,
         ctypes.c_bool,
     ]
     lib.createNNFactory.restype = handler

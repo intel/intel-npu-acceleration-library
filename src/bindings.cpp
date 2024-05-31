@@ -51,8 +51,8 @@ intel_npu_acceleration_library_DLL_API void addIntParameterConversion(
 // ######################### NN Factory #########################
 
 intel_npu_acceleration_library_DLL_API intel_npu_acceleration_library::ModelFactory* createNNFactory(
-        char* device, size_t inC, size_t outC, size_t batch, bool profile = false) {
-    return new intel_npu_acceleration_library::ModelFactory(std::string(device), inC, outC, batch, profile);
+        char* device, bool profile = false) {
+    return new intel_npu_acceleration_library::ModelFactory(std::string(device), profile);
 }
 
 intel_npu_acceleration_library_DLL_API void destroyNNFactory(intel_npu_acceleration_library::OVInferenceModel* matmul) {

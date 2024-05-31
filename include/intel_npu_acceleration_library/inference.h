@@ -34,9 +34,6 @@ private:
 
 protected:
     std::shared_ptr<ov::Model> model;  ///< @brief OpenVINO model
-    size_t inC;                        ///< @brief Model input channels
-    size_t outC;                       ///< @brief Model output channels
-    size_t batch;                      ///< @brief Model batch szie
     std::string device;                ///< @brief Target device
     bool profile;                      ///< @brief Enable/disable profiling
 
@@ -87,13 +84,9 @@ public:
      * @brief Construct a new OVInferenceModel object
      *
      * @param device target device
-     * @param inC number of input channels
-     * @param outC number of output channels
-     * @param batch batch size
      * @param profile enable/disable profiling
      */
-    OVInferenceModel(std::string device, size_t inC, size_t outC, size_t batch, bool profile = false)
-            : inC(inC), outC(outC), batch(batch), device(device), profile(profile) {
+    OVInferenceModel(std::string device, bool profile = false): device(device), profile(profile) {
     }
 
     virtual ~OVInferenceModel() {
@@ -149,8 +142,10 @@ public:
      * @param _Out pointer to the float16 output activation
      */
     void setActivations(half_ptr _X, half_ptr _Out) {
-        X = ov::Tensor(ov::element::f16, ov::Shape({batch, inC}), (void*)_X);
-        Out = ov::Tensor(ov::element::f16, ov::Shape({batch, outC}), (void*)_Out);
+        auto inT = infer_request.get_input_tensor(0);
+        auto outT = infer_request.get_output_tensor(0);
+        X = ov::Tensor(inT.get_element_type(), inT.get_shape(), (void*)_X);
+        Out = ov::Tensor(outT.get_element_type(), outT.get_shape(), (void*)_Out);
 
         infer_request.set_input_tensor(0, X);
         infer_request.set_output_tensor(Out);

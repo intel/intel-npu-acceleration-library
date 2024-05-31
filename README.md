@@ -32,7 +32,7 @@ In our quest to significantly improve the library's performance, we are directin
 - [x] **`torch.compile` support**
 - [x] **LLM MLP horizontal fusion implementation**
 - [x] **Static shape inference**
-- [ ] **MHA NPU inference**
+- [x] **MHA NPU inference**
 - [ ] **NPU/GPU hetero compute**
 - [ ] **Paper**
 

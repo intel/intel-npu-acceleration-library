@@ -26,13 +26,10 @@ public:
      * @brief Construct a new Model Factory object
      *
      * @param device target device
-     * @param inC number of input channels
-     * @param outC number of output channels
-     * @param batch batch size
      * @param profile enable/disable profiling
      */
-    ModelFactory(std::string device, size_t inC, size_t outC, size_t batch, bool profile = false)
-            : intel_npu_acceleration_library::OVInferenceModel(device, inC, outC, batch, profile) {
+    ModelFactory(std::string device, bool profile = false)
+            : intel_npu_acceleration_library::OVInferenceModel(device, profile) {
     }
 
     /**
