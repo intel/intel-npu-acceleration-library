@@ -180,4 +180,10 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* linear(intel_npu_acceleration
     }
     return mm;
 }
+
+intel_npu_acceleration_library_DLL_API ov::op::Op* scaled_dot_product_attention(
+        intel_npu_acceleration_library::ModelFactory* factory, ov::op::Op* query, ov::op::Op* key, ov::op::Op* value,
+        ov::op::Op* attn_mask, bool is_causal) {
+    return factory->scaled_dot_product_attention(query, key, value, attn_mask, is_causal);
+}
 };

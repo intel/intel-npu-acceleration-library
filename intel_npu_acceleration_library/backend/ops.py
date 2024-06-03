@@ -5,7 +5,8 @@
 
 from dataclasses import dataclass
 from functools import lru_cache
-from typing import List
+from typing import List, Any, Sequence
+import ctypes
 
 
 @dataclass(frozen=True)
@@ -15,10 +16,12 @@ class SupportedOp:
     Attrs:
         name (str): Operation name
         inputs (int): Number of inputs
+        parameters (Sequence[Any]): Optional parameters type.
     """
 
     name: str
     inputs: int
+    parameters: Sequence[Any] = ()
 
 
 @lru_cache(maxsize=None)
@@ -37,5 +40,10 @@ def get_supported_ops() -> List[SupportedOp]:
         SupportedOp(name="softmax", inputs=1),
         SupportedOp(name="swish", inputs=1),
         SupportedOp(name="convert_to_fp16", inputs=1),
+        SupportedOp(
+            name="scaled_dot_product_attention",
+            inputs=4,
+            parameters=[ctypes.c_bool],
+        ),
     ]
     return supported_ops

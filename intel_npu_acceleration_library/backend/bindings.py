@@ -121,7 +121,7 @@ def init_network_factory(lib: ctypes.CDLL):
 
     for op in get_supported_ops():
         fn = getattr(lib, op.name)
-        fn.argtypes = [handler] * (op.inputs + 1)
+        fn.argtypes = [handler] * (op.inputs + 1) + list(op.parameters)
         fn.restype = handler
 
 

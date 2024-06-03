@@ -145,8 +145,12 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             output_node (ctypes._Pointer): Model output node
         """
         backend_lib.compile(self._mm, output_node)
-        output_shape = self.get_output_tensor_shape()
-        self.out = np.empty(output_shape, dtype=np.float16)
+        self.output_shape = self.get_output_tensor_shape()
+        if len(self.output_shape) != 2:
+            out_shape_1d = np.prod(self.output_shape)
+            self.out = np.empty((1, out_shape_1d), dtype=np.float16)
+        else:
+            self.out = np.empty(self.output_shape, dtype=np.float16)
 
     def run(
         self,
@@ -171,4 +175,4 @@ class NNFactory(BaseNPUBackendWithPrefetch):
         if prefetch:
             self.prefetchWeights()
 
-        return self.out
+        return self.out.reshape(self.output_shape)

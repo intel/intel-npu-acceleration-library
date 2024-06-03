@@ -171,6 +171,25 @@ public:
     }
 
     /**
+     * @brief Create a new ScaledDotProductAttention operation
+     *
+     * @param query sdpa query input
+     * @param key sdpa key input
+     * @param value sdpa value input
+     * @param attn_mask sdpa attn_mask input
+     * @param is_causal set the attention mask to causal. If it is set, attn_mask is ignored
+     * @return ov::op::Op*
+     */
+    ov::op::Op* scaled_dot_product_attention(ov::op::Op* query, ov::op::Op* key, ov::op::Op* value,
+                                             ov::op::Op* attn_mask, bool is_causal) {
+        auto sdpa = std::make_shared<ov::opset13::ScaledDotProductAttention>(
+                query->output(0), key->output(0), value->output(0), attn_mask->output(0), is_causal);
+
+        operations.push_back(sdpa);
+        return sdpa.get();
+    }
+
+    /**
      * @brief Compile the model
      *
      * @param result the last operation in the network. Must have a [batch, output_channel] shape
