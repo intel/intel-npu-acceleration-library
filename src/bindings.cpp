@@ -80,6 +80,18 @@ intel_npu_acceleration_library_DLL_API void compile(intel_npu_acceleration_libra
     factory->compile(result);
 }
 
+intel_npu_acceleration_library_DLL_API size_t
+get_output_tensor_shape_size(intel_npu_acceleration_library::ModelFactory* factory, size_t tensor_idx) {
+    ov::Tensor tensor = factory->getOutputTensors(tensor_idx);
+    return tensor.get_shape().size();
+}
+
+intel_npu_acceleration_library_DLL_API size_t
+get_output_tensor_shape(intel_npu_acceleration_library::ModelFactory* factory, size_t tensor_idx, size_t idx) {
+    ov::Tensor tensor = factory->getOutputTensors(tensor_idx);
+    return tensor.get_shape()[idx];
+}
+
 intel_npu_acceleration_library_DLL_API float run(intel_npu_acceleration_library::OVInferenceModel* mm, half_ptr X,
                                                  half_ptr Out) {
     auto start = std::chrono::system_clock::now();
