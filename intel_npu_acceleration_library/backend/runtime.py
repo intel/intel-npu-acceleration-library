@@ -8,6 +8,7 @@ from intel_npu_acceleration_library.backend import MatMul, QMatMul
 from intel_npu_acceleration_library.backend import NNFactory
 from torch.profiler import record_function
 from typing import Optional, List, Any, Dict, Deque
+from functools import partial
 from collections import deque
 import numpy as np
 import torch
@@ -46,18 +47,28 @@ def run_matmul(
 
     outC, inC = weights.shape[-2:]
 
+    if weights.dtype == torch.uint8:
+        # In case is Int4 we need to double the input channels because weights are compressed
+        inC *= 2
+
     # Set tensors as contiguous in memory
     x = set_contiguous(x)
     weights = set_contiguous(weights)
-    weights = weights.view([-1, weights.shape[-1]])
+    if len(weights.shape) > 2:
+        weights = weights.view([-1, weights.shape[-1]])
 
     if weights.dtype.is_floating_point:
         op_class = Linear if op_id is not None else MatMul
-        op_args = [weights.to(torch.float16).numpy()]
-    elif weights.dtype == torch.int8:
+        op_class_name = op_class.__name__
+        create_op = partial(op_class)
+        op_args = [weights.numpy()]
+    elif weights.dtype in (torch.int8, torch.uint8):
         if scale is None:
             raise RuntimeError("Quantized weights require a not null scale")
         op_class = QLinear if op_id is not None else QMatMul
+        op_class_name = op_class.__name__
+        np_dtype = np.int8 if weights.dtype == torch.int8 else np.uint8
+        create_op = partial(op_class, dtype=np_dtype)
         if scale is None:
             raise RuntimeError(
                 f"Quantized matmul (weights dtype == {weights.dtype}) requires scale (scale = {scale})"
@@ -80,37 +91,51 @@ def run_matmul(
 
     # Reshape input
     input_dtype = x.dtype
-    x_np = x.to(torch.float16).view([-1, inC]).numpy()
+    x = x.to(torch.float16) if input_dtype != torch.float16 else x
+    if len(x.shape) > 2 or x.shape[-1] != inC:
+        x = x.view([-1, inC])
+    x_np = x.numpy()
 
-    real_batch = x_np.shape[0]
+    batch = x_np.shape[0]
 
-    # If the real batch is 1, we need to use 16 and then slice it
-    if real_batch == 1:
-        batch = 16
-    else:
-        batch = real_batch
-
-    key = f"{str(op_class.__name__)}_{batch}_{inC}_x_{outC}_{inC}_{x_np.dtype}"
+    key = f"{str(op_class_name)}_{batch}_{inC}_x_{outC}_{inC}_{x_np.dtype}"
     models = _model_cache.get(key, None)
 
     if models is None:
-        _model_cache[key] = deque([op_class(inC, outC, batch)])
+        _model_cache[key] = deque([create_op(inC, outC, batch)])
     elif len(models) < 1:
-        _model_cache[key].append(op_class(inC, outC, batch))
+        _model_cache[key].append(create_op(inC, outC, batch))
     else:
         _model_cache[key].rotate(1)
 
     # Get the model
     model = _model_cache[key][0]
 
-    if real_batch == 1:
-        # Expand and then slice
-        with record_function(f"npu_matvec_{key}"):
-            ret = model.run(np.vstack(16 * [x_np]), *op_args, **op_kwargs)[:1, ...]
-    else:
-        with record_function(f"npu_matmul_{key}"):
-            ret = model.run(x_np, *op_args, **op_kwargs)
-    return torch.from_numpy(ret).view(expected_output_shape).to(input_dtype)
+    profiling_name = "matvec" if batch == 1 else "matmul"
+    with record_function(f"npu_{profiling_name}_{key}"):
+        ret = model.run(x_np, *op_args, **op_kwargs)
+
+    return adapt_output_tensor(ret, expected_output_shape, input_dtype)
+
+
+def adapt_output_tensor(
+    output: np.ndarray, original_shape: torch.Size, input_dtype: torch.dtype
+) -> torch.Tensor:
+    """Adapt the output tensor to the original shape and dtype.
+
+    Args:
+        output (np.ndarray): output tensor
+        original_shape (torch.Size): original shape
+        input_dtype (torch.dtype): input dtype
+
+    Returns:
+        torch.Tensor: output tensor
+    """
+    output = torch.from_numpy(output)
+    if output.shape != original_shape:
+        output = output.view(original_shape)
+    # needs to copy as the same buffer can be reutilized
+    return output.to(input_dtype, copy=True)
 
 
 def set_contiguous(tensor: torch.Tensor) -> torch.Tensor:

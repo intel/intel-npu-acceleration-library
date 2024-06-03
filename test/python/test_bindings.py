@@ -35,8 +35,10 @@ def test_factory_bindings(inC, outC, batch, run_op):
     factory = backend_lib.createNNFactory(device, inC, outC, batch, False)
 
     # Create linear layer
-    p0 = backend_lib.fp16parameter(factory, batch, inC)
-    linear = backend_lib.linear(factory, p0, outC, inC, False, False)
+    shape_ptr = np.array((batch, inC), dtype=np.uint32)
+    dtype = ctypes.c_char_p("float16".encode())
+    p0 = backend_lib.parameter(factory, shape_ptr.size, shape_ptr, dtype)
+    linear = backend_lib.linear(factory, p0, outC, inC, False, dtype, dtype)
     backend_lib.compile(factory, linear)
 
     # Set parameters

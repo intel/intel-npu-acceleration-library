@@ -37,9 +37,19 @@ function(get_linux_lsb_release_information)
     set(LSB_RELEASE_VERSION "${LSB_RELEASE_VERSION}" PARENT_SCOPE)
 endfunction()
 
+set(OV_VERSION_SHORT "nightly")
+set(OV_VERSION "2024.3.0.dev20240524_x86_64")
+set(OV_STORAGE_URL "https://storage.openvinotoolkit.org/repositories/openvino/packages")
+set(OV_NIGHTLY_COMMIT "2024.3.0-15502-66093834e38")
+
 if (WIN32)
     if(NOT OV_LIBRARY_URL)
-        set(OV_LIBRARY_URL "https://storage.openvinotoolkit.org/repositories/openvino/packages/2024.0/windows/w_openvino_toolkit_windows_2024.0.0.14509.34caeefd078_x86_64.zip")
+        if (${OV_VERSION_SHORT} STREQUAL "nightly")
+            set(OV_PLATFORM "${OV_NIGHTLY_COMMIT}")
+        else()
+            set(OV_PLATFORM "windows")
+        endif()
+        set(OV_LIBRARY_URL "${OV_STORAGE_URL}/${OV_VERSION_SHORT}/${OV_PLATFORM}/w_openvino_toolkit_windows_${OV_VERSION}.zip")
     endif()
 elseif(UNIX)
     if(NOT OV_LIBRARY_URL)
@@ -47,7 +57,13 @@ elseif(UNIX)
         if (LSB_RELEASE_ID STREQUAL "Ubuntu")
             if (${LSB_RELEASE_VERSION} STREQUAL "18.04" OR ${LSB_RELEASE_VERSION} STREQUAL "20.04" OR ${LSB_RELEASE_VERSION} STREQUAL "22.04")
                 string(REPLACE ".04" "" LSB_RELEASE_VERSION_SHORT ${LSB_RELEASE_VERSION})
-                set(OV_LIBRARY_URL "https://storage.openvinotoolkit.org/repositories/openvino/packages/2024.0/linux/l_openvino_toolkit_ubuntu${LSB_RELEASE_VERSION_SHORT}_2024.0.0.14509.34caeefd078_x86_64.tgz")
+                if (${OV_VERSION_SHORT} STREQUAL "nightly")
+                    set(OV_PLATFORM "${OV_NIGHTLY_COMMIT}")
+                else()
+                    set(OV_PLATFORM "linux")
+                endif()
+
+                set(OV_LIBRARY_URL "${OV_STORAGE_URL}/${OV_VERSION_SHORT}/${OV_PLATFORM}/l_openvino_toolkit_ubuntu${LSB_RELEASE_VERSION_SHORT}_${OV_VERSION}.tgz")
             else()
                 message(FATAL_ERROR "Ubuntu version ${LSB_RELEASE_VERSION} is unsupported")
             endif()
@@ -60,6 +76,7 @@ else()
     message(FATAL_ERROR "Unsupported architecture")
 endif ()
 
+message(STATUS "OpenVINO library URL: ${OV_LIBRARY_URL}")
 
 FetchContent_Declare(
     openvino
@@ -80,6 +97,9 @@ else()
     file(GLOB OpenVINObin ${openvino_SOURCE_DIR}/runtime/lib/intel64/*)
     file(COPY ${OpenVINObin} DESTINATION ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 endif()
+
+file(GLOB OpenVINOPython ${openvino_SOURCE_DIR}/python/openvino/*)
+file(COPY ${OpenVINOPython} DESTINATION ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/../external/openvino)
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 

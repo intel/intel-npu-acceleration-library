@@ -4,20 +4,15 @@
 #
 
 from intel_npu_acceleration_library.optimizations import horizontal_fusion_linear
+from transformers.models.llama.modeling_llama import LlamaMLP, LlamaAttention
+from transformers.models.gemma.modeling_gemma import GemmaMLP, GemmaAttention
+from neural_compressor.adaptor.torch_utils.model_wrapper import WeightOnlyLinear
+from intel_npu_acceleration_library.quantization import quantize_model
+from intel_npu_acceleration_library.dtypes import int8, int4
+import intel_npu_acceleration_library.nn as nn
 from torch._dynamo import register_backend
 from typing import Union, Callable, Any
-
-try:
-    from transformers.models.llama.modeling_llama import LlamaMLP, LlamaAttention
-    from transformers.models.gemma.modeling_gemma import GemmaMLP, GemmaAttention
-
-    is_transformers_available = True
-except ModuleNotFoundError:
-    # Transformer library is not installed
-    is_transformers_available = False
-
-
-import intel_npu_acceleration_library.nn as nn
+from packaging.version import Version
 from typing import List
 import torch
 
@@ -38,16 +33,23 @@ def compile(
     Returns:
         torch.nn.Module: compiled NPU nn.Module
     """
-    if not (dtype.is_floating_point or dtype == torch.int8):
+    if not (dtype.is_floating_point or dtype in (int8, int4)):
         raise RuntimeError(
             f"intel-npu-acceleration-library library do not support yet the requeste datatype: {dtype}"
         )
+
+    # Convert model to half precision if torch version is greater or equal to 2.3.0
+    if Version(torch.__version__) >= Version("2.3.0") and dtype != torch.float32:
+        model = model.half()
 
     # Prepare and optimize model for NPU
     with torch.no_grad():
         # General optimizations
         apply_horizontal_fusion(model)
         optimize_llama_attention(model, dtype)
+        if dtype in (int8, int4):
+            # Quantize model
+            model = quantize_model(model, dtype)
 
         # Model lowering to NPU ops
         lower_linear(model, dtype)
@@ -102,6 +104,9 @@ def lower_linear(
         layer (torch.nn.Module): Original torch.nn.Linear module
         dtype (torch.dtype): Target datatype
 
+    Raises:
+        RuntimeError: unsupported quantization bits
+
     Returns:
         Union[torch.nn.Module, None]: Return the new NPU operator or None
     """
@@ -109,6 +114,17 @@ def lower_linear(
         return nn.Linear.fromTorch(layer, dtype)
     if isinstance(layer, torch.nn.Conv2d):
         return nn.Conv2d.fromTorch(layer, dtype)
+    if isinstance(layer, WeightOnlyLinear):
+        if layer.bits == 4:
+            return nn.QuantizedLinear(
+                layer.qweight.to(torch.uint8), layer.scales, layer.bias
+            )
+        elif layer.bits == 8:
+            return nn.QuantizedLinear(
+                layer.qweight.view(torch.int8), layer.scales, layer.bias
+            )
+        else:
+            raise RuntimeError(f"Unsupported quantization bits: {layer.bits}")
     return None
 
 

@@ -31,7 +31,6 @@ private:
     ov::Core core;
     ov::CompiledModel compiled_model;
     ov::InferRequest infer_request;
-    std::mutex mutex_;
 
 protected:
     std::shared_ptr<ov::Model> model;  ///< @brief OpenVINO model
@@ -98,7 +97,6 @@ public:
     }
 
     virtual ~OVInferenceModel() {
-        std::lock_guard<std::mutex> lock(mutex_);
         if (wt_thread.joinable())
             wt_thread.join();
     }
@@ -133,8 +131,6 @@ public:
      * @return void
      */
     void run() {
-        std::lock_guard<std::mutex> lock(mutex_);
-
         if (wt_thread.joinable())
             wt_thread.join();
 
@@ -153,7 +149,6 @@ public:
      * @param _Out pointer to the float16 output activation
      */
     void setActivations(half_ptr _X, half_ptr _Out) {
-        std::lock_guard<std::mutex> lock(mutex_);
         X = ov::Tensor(ov::element::f16, ov::Shape({batch, inC}), (void*)_X);
         Out = ov::Tensor(ov::element::f16, ov::Shape({batch, outC}), (void*)_Out);
 
@@ -165,14 +160,9 @@ public:
      * @brief Set the network parameters
      *
      * @param _weights vector of network parameters
-     * @param started atomic bool variable that is set to true once the conversion started. Useful for thread
-     * syncronizations
      */
-    void setWeights(std::vector<std::shared_ptr<Parameter>> _weights, std::atomic_bool& started) {
-        std::lock_guard<std::mutex> lock(mutex_);
-
+    void setWeights(std::vector<std::shared_ptr<Parameter>> _weights) {
         std::vector<std::tuple<Parameter*, void*, size_t>> memcpy_vector;
-
         // Start from idx == 1
         size_t idx = 1;
         for (auto& _W : _weights) {
@@ -182,7 +172,6 @@ public:
             memcpy_vector.push_back({_W.get(), addr, size});
         }
 
-        started = true;
         for (auto& elem : memcpy_vector) {
             std::get<0>(elem)->set_data(std::get<1>(elem), std::get<2>(elem));
         }

@@ -51,7 +51,7 @@ def test_compilation(tokenizer, decoder_model, dtype):
 
     y = compiled_model(prefill).logits.detach()
 
-    assert 1 - r2_score(y_ref.flatten(), y.flatten()) < 0.01
+    assert 1 - r2_score(y_ref.flatten().numpy(), y.flatten().numpy()) < 0.01
 
 
 @torch.no_grad
@@ -75,5 +75,4 @@ def test_phi2_mlp(seq_len, hidden_size, intermediate_size):
 
     out = model(x)
 
-    assert 1 - r2_score(reference, out) < 0.001
-    print(r2_score(reference, out))
+    assert 1 - r2_score(reference.numpy(), out.numpy()) < 0.001

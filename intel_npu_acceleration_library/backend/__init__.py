@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: Apache 2.0
 #
 from .bindings import lib
+from .utils import npu_available, get_driver_version
 from .mlp import MLP
 from .matmul import MatMul
 from .linear import Linear
@@ -11,15 +12,6 @@ from .qlinear import QLinear
 from .factory import NNFactory
 from .runtime import run_matmul, run_factory, clear_cache
 import warnings
-
-
-def npu_available() -> bool:
-    """Return if the NPU is available.
-
-    Returns:
-        bool: Return True if the NPU is available in the system
-    """
-    return lib.isNPUAvailable()
 
 
 if not npu_available():
@@ -39,4 +31,7 @@ __all__ = [
     "run_matmul",
     "run_factory",
     "clear_cache",
+    "npu_available",
+    "get_driver_version",
+    "lib",
 ]

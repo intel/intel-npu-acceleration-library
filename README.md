@@ -25,8 +25,8 @@ Some useful links
 In our quest to significantly improve the library's performance, we are directing our efforts toward implementing a range of key features, including:
 
 - [x] **8-bit quantization**
-- [ ] **4-bit Quantization and GPTQ**
-- [ ] **NPU-Native mixed precision inference**
+- [x] **4-bit Quantization and GPTQ**
+- [x] **NPU-Native mixed precision inference**
 - [x] **Float16 support**
 - [ ] **BFloat16 (Brain Floating Point Format)**
 - [x] **`torch.compile` support**

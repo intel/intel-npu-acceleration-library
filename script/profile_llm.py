@@ -5,6 +5,8 @@
 
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from intel_npu_acceleration_library.nn.llm import generate_with_static_shape
+from intel_npu_acceleration_library.dtypes import int8, int4
+
 from torch.profiler import profile, ProfilerActivity
 import intel_npu_acceleration_library
 import argparse
@@ -42,7 +44,9 @@ def main(
     if dtype == "float16":
         dtype = torch.float16
     elif dtype == "int8":
-        dtype = torch.int8
+        dtype = int8
+    elif dtype == "int4":
+        dtype = int4
     else:
         raise RuntimeError(f"Invalid dtype: {dtype}")
 
@@ -128,7 +132,7 @@ def define_and_parse_args():
     parser.add_argument(
         "--dtype",
         default="float16",
-        choices=["float16", "int8"],
+        choices=["float16", "int8", "int4"],
         help="Select the target dtype (default: %(default)s)",
     )
 
@@ -144,7 +148,9 @@ def define_and_parse_args():
 if __name__ == "__main__":
     args = define_and_parse_args()
 
-    print(f"Profiling {args.model} with context size {args.context_size}")
+    print(
+        f"Profiling {args.model} with context size {args.context_size} and dtype {args.dtype}"
+    )
     if args.n_threads:
         print(f"Setting number of pytorch thread to {args.n_threads}")
         torch.set_num_threads(args.n_threads)

@@ -3,9 +3,10 @@
 # SPDX-License-Identifier: Apache 2.0
 #
 
-from intel_npu_acceleration_library.quantization import quantize_tensor
+from intel_npu_acceleration_library.quantization import quantize_tensor, compress_to_i4
 from intel_npu_acceleration_library.nn.autograd import AutogradMatMul
 from intel_npu_acceleration_library.backend import run_matmul
+from intel_npu_acceleration_library.dtypes import NPUDtype
 from typing import Optional, Union
 import torch
 import uuid
@@ -88,6 +89,11 @@ class Linear(torch.nn.Module):
             if bias is None:
                 return Linear(weight.to(dtype), None)
             return Linear(weight.to(dtype), bias.to(dtype))
+        elif isinstance(dtype, NPUDtype):
+            weights_quant, scale = quantize_tensor(weight, (dtype.min, dtype.max))
+            if dtype.bits == 4:
+                weights_quant = compress_to_i4(weights_quant)
+            return QuantizedLinear(weights_quant, scale, bias)
         elif dtype == torch.int8:
             if weight.shape[-1] % 8 != 0:
                 raise RuntimeError(
@@ -123,11 +129,11 @@ class QuantizedLinear(torch.nn.Module):
         super().__init__()
 
         self.weight = weight
-        if self.weight.dtype != torch.int8:
+        if self.weight.dtype not in (torch.int8, torch.uint8):
             raise RuntimeError(
-                f"Quantized weight must be in torch.int8 dtype instead of {self.weight.dtype}"
+                f"Quantized weight must be in torch.(u)int8 dtype instead of {self.weight.dtype}"
             )
-        self.scale = scale.to(torch.float32)
+        self.scale = scale
         self.outC, self.inC = self.weight.shape
         self.bias = bias
         self.op_id = str(uuid.uuid4())
