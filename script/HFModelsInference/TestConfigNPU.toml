@@ -30,33 +30,26 @@ ref_answer_vqa = 'cat'
 # Flag to enable Pytorch profiling
 enable_pytorch_profiling = false
 
+# Flag to enable additional run on CPU
+run_additional_cpu = false
+
 # Text to Text Generation Models
 [codereviewer]
 id = "microsoft/codereviewer"
 input_q = "if (a==b): print('yes') else:"
 modelgen = "AutoModelForSeq2SeqLM"
-ref_answer = "<msg>This is not needed."
+ref_answer = "<msg>Please remove this blank line."
 tokenizer = "AutoTokenizer"
-import_library = "transformers"
 useNPUAccelerationLibrary = true
 target_dtype = "int8"
+attn_impl = "eager"
 
-#Image to Text generation models
-[git-base-vqav2]
-id = "microsoft/git-base-vqav2"
-inputs = "image,text"
-modelgen = "AutoModelForCausalLM"
-tokenizer = "AutoProcessor"
+[mt0-base]
+id = "bigscience/mt0-base"
+input_q = "What colors are present in a rainbow?"
+modelgen = "AutoModelForSeq2SeqLM"
+ref_answer = "purple, yellow, and blue"
+tokenizer = "AutoTokenizer"
 useNPUAccelerationLibrary = true
 attn_impl = "eager"
 target_dtype = "int8"
-
-#Audio to Text generation models
-[whisper-tiny]
-id = "openai/whisper-tiny"
-inputs = "audio"
-modelgen = "WhisperForConditionalGeneration"
-tokenizer = "WhisperProcessor"
-useNPUAccelerationLibrary = true
-target_dtype = "int8"
-
