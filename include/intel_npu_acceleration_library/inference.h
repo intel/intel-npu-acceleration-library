@@ -136,6 +136,28 @@ public:
     }
 
     /**
+     * @brief Get model input tensor
+     *
+     * @param idx input tensor index
+     *
+     * @return ov::Tensor
+     */
+    ov::Tensor getInputTensors(size_t idx) {
+        return infer_request.get_input_tensor(idx);
+    }
+
+    /**
+     * @brief Get model output tensor
+     *
+     * @param idx output tensor index
+     *
+     * @return ov::Tensor
+     */
+    ov::Tensor getOutputTensors(size_t idx) {
+        return infer_request.get_output_tensor(idx);
+    }
+
+    /**
      * @brief Set the input and output activations
      *
      * @param _X pointer to the float16 input activation

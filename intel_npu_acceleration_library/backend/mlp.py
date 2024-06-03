@@ -31,12 +31,15 @@ class MLP(NNFactory):
             profile (bool): Enable/Disable profiling. Defaults to False.
             device (str): Target device, default to "NPU".
         """
-        super().__init__(hidden_size, hidden_size, batch, profile, device)
+        super().__init__(profile, device)
+        self.hidden_size, self.intermediate_size = hidden_size, intermediate_size
+        self.batch = batch
+        input = self.parameter((self.batch, self.hidden_size))
 
-        mm1 = self.linear(self.input, intermediate_size, hidden_size, bias=bias)
+        mm1 = self.linear(input, intermediate_size, hidden_size, bias=bias)
 
         if activation == "swiglu":
-            mm2 = self.linear(self.input, intermediate_size, hidden_size, bias=bias)  # type: ignore[attr-defined]
+            mm2 = self.linear(input, intermediate_size, hidden_size, bias=bias)  # type: ignore[attr-defined]
             mm1 = self.eltwise_mul(self.swish(mm1), mm2)  # type: ignore[attr-defined]
         else:
             atc_fn = getattr(self, activation)

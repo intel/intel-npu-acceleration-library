@@ -15,10 +15,10 @@ import os
 @pytest.mark.parametrize("dtype", [np.float16, np.int8])
 @pytest.mark.parametrize("activation", ["gelu", "swish", "softmax"])
 def test_factory(batch, inC, outC, dtype, activation):
-    module = intel_npu_acceleration_library.backend.NNFactory(inC, outC, batch)
+    module = intel_npu_acceleration_library.backend.NNFactory()
     assert module
 
-    input = module.input
+    input = module.parameter((batch, inC))
     assert input
 
     weights = module.parameter((outC, inC), dtype)
@@ -35,6 +35,10 @@ def test_factory(batch, inC, outC, dtype, activation):
     assert output
 
     module.compile(output)
+
+    output_shape = module.get_output_tensor_shape()
+    assert output_shape == (batch, outC)
+
     filename = f"test_factory_mm_{batch}_{inC}_{outC}_{dtype.__name__}_{activation}"
     module.save(f"{filename}.xml")
 
