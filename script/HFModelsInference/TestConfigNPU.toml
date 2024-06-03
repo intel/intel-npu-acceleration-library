@@ -4,7 +4,7 @@ clean_prev_results = true
 
 # Path to the input image file for Visual QA tasks
 #input_img_file = "test-local.jpg"
-input_img_file = "https://cdn4.geckoandfly.com/wp-content/uploads/2017/02/cute-cat-image-quotes-18.jpg"
+input_img_file = "https://retailedge.intel.com/content/images/loginpage7/VideoScreen_2.jpg"
 
 # Path to the input audio file for transcription tasks. Only wav files are supported.
 #input_aud_file = "test-local.wav"
