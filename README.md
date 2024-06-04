@@ -2,6 +2,8 @@
 
 [![Test](https://github.com/intel/intel-npu-acceleration-library/actions/workflows/test.yml/badge.svg)](https://github.com/intel/intel-npu-acceleration-library/actions/workflows/test.yml) [![Style](https://github.com/intel/intel-npu-acceleration-library/actions/workflows/style.yml/badge.svg)](https://github.com/intel/intel-npu-acceleration-library/actions/workflows/style.yml) [![Documentation](https://github.com/intel/intel-npu-acceleration-library/actions/workflows/documentation.yml/badge.svg)](https://github.com/intel/intel-npu-acceleration-library/actions/workflows/documentation.yml)
 
+[![PyPI version](https://badge.fury.io/py/intel-npu-acceleration-library.svg)](https://badge.fury.io/py/intel-npu-acceleration-library) [![Downloads](https://static.pepy.tech/badge/intel-npu-acceleration-library)](https://pepy.tech/project/intel-npu-acceleration-library)
+
 [Documentation](https://intel.github.io/intel-npu-acceleration-library/)
 
 The Intel® NPU Acceleration Library is a Python library designed to boost the efficiency of your applications by leveraging the power of the Intel Neural Processing Unit (NPU) to perform high-speed computations on compatible hardware.
