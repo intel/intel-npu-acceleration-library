@@ -2,7 +2,7 @@
 # Copyright © 2024 Intel Corporation
 # SPDX-License-Identifier: Apache 2.0
 #
-from transformers import AutoModelForCausalLM, AutoModelForSeq2SeqLM
+from transformers import AutoModel, AutoModelForCausalLM, AutoModelForSeq2SeqLM
 import intel_npu_acceleration_library as npu_lib
 from functools import partialmethod
 from typing import Type, Any, Tuple, Optional
@@ -56,11 +56,11 @@ def get_model_path(model_name: str, *args: Any, **kwargs: Any) -> Tuple[str, str
     return model_dir_path, model_path
 
 
-class BaseNPUModel:
+class NPUModel:
     """Base NPU model class."""
 
     @staticmethod
-    def from_pretrained_template(
+    def from_pretrained(
         model_name_or_path: str,
         dtype: torch.dtype = torch.float16,
         training: bool = False,
@@ -109,6 +109,18 @@ class BaseNPUModel:
             return model
 
 
+class NPUAutoModel:
+    """NPU wrapper for AutoModel.
+
+    Attrs:
+        from_pretrained: Load a pretrained model
+    """
+
+    from_pretrained = partialmethod(
+        NPUModel.from_pretrained, transformers_class=AutoModel
+    )
+
+
 class NPUModelForCausalLM:
     """NPU wrapper for AutoModelForCausalLM.
 
@@ -117,7 +129,7 @@ class NPUModelForCausalLM:
     """
 
     from_pretrained = partialmethod(
-        BaseNPUModel.from_pretrained_template, transformers_class=AutoModelForCausalLM
+        NPUModel.from_pretrained, transformers_class=AutoModelForCausalLM
     )
 
 
@@ -129,5 +141,5 @@ class NPUModelForSeq2SeqLM:
     """
 
     from_pretrained = partialmethod(
-        BaseNPUModel.from_pretrained_template, transformers_class=AutoModelForSeq2SeqLM
+        NPUModel.from_pretrained, transformers_class=AutoModelForSeq2SeqLM
     )
