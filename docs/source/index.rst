@@ -34,21 +34,18 @@ You are now up and running! You can create a simple script like the following on
 
 
 .. code-block:: python
-   :emphasize-lines: 12, 13
+   :emphasize-lines: 2, 7
 
-   from transformers import AutoTokenizer, TextStreamer, AutoModelForCausalLM
-   import intel_npu_acceleration_library
+   from transformers import AutoTokenizer, TextStreamer
+   from intel_npu_acceleration_library import NPUModelForCausalLM
    import torch
 
    model_id = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
 
-   model = AutoModelForCausalLM.from_pretrained(model_id, use_cache=True).eval()
+   model = NPUModelForCausalLM.from_pretrained(model_id, use_cache=True, dtype=torch.int8).eval()
    tokenizer = AutoTokenizer.from_pretrained(model_id, use_default_system_prompt=True)
    tokenizer.pad_token_id = tokenizer.eos_token_id
    streamer = TextStreamer(tokenizer, skip_special_tokens=True)
-
-   print("Compile model for the NPU")
-   model = intel_npu_acceleration_library.compile(model, dtype=torch.int8)
 
    query = input("Ask something: ")
    prefix = tokenizer(query, return_tensors="pt")["input_ids"]
