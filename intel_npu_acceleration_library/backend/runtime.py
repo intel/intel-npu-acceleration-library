@@ -7,7 +7,7 @@ from intel_npu_acceleration_library.backend import Linear, QLinear
 from intel_npu_acceleration_library.backend import MatMul, QMatMul
 from intel_npu_acceleration_library.backend import NNFactory
 from torch.profiler import record_function
-from typing import Optional, List, Any, Dict, Deque
+from typing import Optional, List, Dict, Deque
 from functools import partial
 from collections import deque
 import numpy as np
@@ -156,7 +156,7 @@ def set_contiguous(tensor: torch.Tensor) -> torch.Tensor:
 def run_factory(
     x: torch.Tensor,
     weights: List[torch.Tensor],
-    backend_cls: Any,
+    backend_cls: partial[NNFactory],
     op_id: Optional[str] = None,
 ) -> torch.Tensor:
     """Run a factory operation. Depending on the datatype of the weights it runs a float or quantized operation.
@@ -164,7 +164,7 @@ def run_factory(
     Args:
         x (torch.Tensor): Activation tensor. Its dtype must be torch.float16
         weights (torch.Tensor): Weights tensor.  Its dtype can be torch.float16 or torch.int8
-        backend_cls (Any): Backend class to run
+        backend_cls (partial[NNFactory]): Backend class to run
         op_id (Optional[str], optional): Operation ID. Defaults to None.
 
     Returns:
@@ -172,49 +172,35 @@ def run_factory(
     """
     global _model_cache
 
-    inC = x.shape[-1]
-    # TODO: fix this
-    outC = inC
-
     # Use or not op_id depending on the class used
     op_kwargs = {"op_id": op_id} if op_id else {}
 
-    original_input_shape = x.shape
-    expected_output_shape = list(original_input_shape[:-1]) + [outC]
-
     # Reshape input
     input_dtype = x.dtype
-    x_np = x.to(torch.float16).view((-1, inC)).numpy()
+    x_np = set_contiguous(x).to(torch.float16).numpy()
 
-    op_args = [w.to(torch.float16).numpy() for w in weights]
+    op_args = [set_contiguous(w).to(torch.float16).numpy() for w in weights]
 
-    real_batch = x_np.shape[0]
-
-    # If the real batch is 1, we need to use 16 and then slice it
-    if real_batch == 1:
-        batch = 16
-    else:
-        batch = real_batch
-
-    key = f"{backend_cls.func.__name__}_{batch}_{inC}_{outC}_{x_np.dtype}"
+    shape_dtype_signature = "_".join(
+        [
+            "_".join(str(dim) for dim in t.shape) + f"_{t.dtype}"
+            for t in [x_np] + op_args
+        ]
+    )
+    key = f"{backend_cls.func.__name__}_{shape_dtype_signature}"
     models = _model_cache.get(key, None)
 
     if models is None:
-        _model_cache[key] = deque([backend_cls(batch=batch)])
+        _model_cache[key] = deque([backend_cls(x.shape)])
     elif len(models) < 1:
-        _model_cache[key].append(backend_cls(batch=batch))
+        _model_cache[key].append(backend_cls(x.shape))
     else:
         _model_cache[key].rotate(1)
 
     # Get the model
     model = _model_cache[key][0]
 
-    if real_batch == 1:
-        # Expand and then slice
-        with record_function(f"npu_factory_vect_{key}"):
-            ret = model.run(np.vstack(16 * [x_np]), *op_args, **op_kwargs)[:1, ...]
-    else:
-        with record_function(f"npu_factory_mul_{key}"):
-            ret = model.run(x_np, *op_args, **op_kwargs)
+    with record_function(f"npu_factory_mul_{key}"):
+        ret = model.run(x_np, *op_args, **op_kwargs)
 
-    return torch.from_numpy(ret).view(expected_output_shape).to(input_dtype)
+    return adapt_output_tensor(ret, model.output_shape, input_dtype)
