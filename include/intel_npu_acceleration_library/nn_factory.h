@@ -26,13 +26,10 @@ public:
      * @brief Construct a new Model Factory object
      *
      * @param device target device
-     * @param inC number of input channels
-     * @param outC number of output channels
-     * @param batch batch size
      * @param profile enable/disable profiling
      */
-    ModelFactory(std::string device, size_t inC, size_t outC, size_t batch, bool profile = false)
-            : intel_npu_acceleration_library::OVInferenceModel(device, inC, outC, batch, profile) {
+    ModelFactory(std::string device, bool profile = false)
+            : intel_npu_acceleration_library::OVInferenceModel(device, profile) {
     }
 
     /**
@@ -171,6 +168,25 @@ public:
         auto eltwise = std::make_shared<ov::opset1::Divide>(x1->output(0), x2->output(0));
         operations.push_back(eltwise);
         return eltwise.get();
+    }
+
+    /**
+     * @brief Create a new ScaledDotProductAttention operation
+     *
+     * @param query sdpa query input
+     * @param key sdpa key input
+     * @param value sdpa value input
+     * @param attn_mask sdpa attn_mask input
+     * @param is_causal set the attention mask to causal. If it is set, attn_mask is ignored
+     * @return ov::op::Op*
+     */
+    ov::op::Op* scaled_dot_product_attention(ov::op::Op* query, ov::op::Op* key, ov::op::Op* value,
+                                             ov::op::Op* attn_mask, bool is_causal) {
+        auto sdpa = std::make_shared<ov::opset13::ScaledDotProductAttention>(
+                query->output(0), key->output(0), value->output(0), attn_mask->output(0), is_causal);
+
+        operations.push_back(sdpa);
+        return sdpa.get();
     }
 
     /**

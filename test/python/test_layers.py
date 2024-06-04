@@ -42,7 +42,7 @@ def test_mlp(batch, hidden_dim, intermediate_dim, bias, activation):
 
     reference = module(X.to(torch.float32)).to(torch.float16).numpy()
 
-    model = MLP(hidden_dim, intermediate_dim, batch, activation, bias)
+    model = MLP((batch, hidden_dim), intermediate_dim, activation, bias)
     weights = list(module.parameters())
     if activation == "swiglu":
         if bias:

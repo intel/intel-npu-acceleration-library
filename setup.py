@@ -74,6 +74,7 @@ setup(
         "intel_npu_acceleration_library",
         "intel_npu_acceleration_library.backend",
         "intel_npu_acceleration_library.nn",
+        "intel_npu_acceleration_library.functional",
     ],
     author="Alessandro Palla",
     author_email="alessandro.palla@intel.com",

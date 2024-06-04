@@ -51,8 +51,8 @@ intel_npu_acceleration_library_DLL_API void addIntParameterConversion(
 // ######################### NN Factory #########################
 
 intel_npu_acceleration_library_DLL_API intel_npu_acceleration_library::ModelFactory* createNNFactory(
-        char* device, size_t inC, size_t outC, size_t batch, bool profile = false) {
-    return new intel_npu_acceleration_library::ModelFactory(std::string(device), inC, outC, batch, profile);
+        char* device, bool profile = false) {
+    return new intel_npu_acceleration_library::ModelFactory(std::string(device), profile);
 }
 
 intel_npu_acceleration_library_DLL_API void destroyNNFactory(intel_npu_acceleration_library::OVInferenceModel* matmul) {
@@ -80,11 +80,30 @@ intel_npu_acceleration_library_DLL_API void compile(intel_npu_acceleration_libra
     factory->compile(result);
 }
 
-intel_npu_acceleration_library_DLL_API float run(intel_npu_acceleration_library::OVInferenceModel* mm, half_ptr X,
-                                                 half_ptr Out) {
-    auto start = std::chrono::system_clock::now();
+intel_npu_acceleration_library_DLL_API size_t
+get_output_tensor_shape_size(intel_npu_acceleration_library::ModelFactory* factory, size_t tensor_idx) {
+    ov::Tensor tensor = factory->getOutputTensors(tensor_idx);
+    return tensor.get_shape().size();
+}
 
-    mm->setActivations(X, Out);
+intel_npu_acceleration_library_DLL_API size_t
+get_output_tensor_shape(intel_npu_acceleration_library::ModelFactory* factory, size_t tensor_idx, size_t idx) {
+    ov::Tensor tensor = factory->getOutputTensors(tensor_idx);
+    return tensor.get_shape()[idx];
+}
+
+intel_npu_acceleration_library_DLL_API void set_activation(intel_npu_acceleration_library::OVInferenceModel* mm,
+                                                           half_ptr X, size_t idx) {
+    mm->setInputTensor(X, idx);
+}
+
+intel_npu_acceleration_library_DLL_API void set_output(intel_npu_acceleration_library::OVInferenceModel* mm,
+                                                       half_ptr Out, size_t idx) {
+    mm->setOutputTensor(Out, idx);
+}
+
+intel_npu_acceleration_library_DLL_API float run(intel_npu_acceleration_library::OVInferenceModel* mm) {
+    auto start = std::chrono::system_clock::now();
 
     mm->run();
 
@@ -167,5 +186,11 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* linear(intel_npu_acceleration
         return factory->eltwise_add(mm, bias);
     }
     return mm;
+}
+
+intel_npu_acceleration_library_DLL_API ov::op::Op* scaled_dot_product_attention(
+        intel_npu_acceleration_library::ModelFactory* factory, ov::op::Op* query, ov::op::Op* key, ov::op::Op* value,
+        ov::op::Op* attn_mask, bool is_causal) {
+    return factory->scaled_dot_product_attention(query, key, value, attn_mask, is_causal);
 }
 };

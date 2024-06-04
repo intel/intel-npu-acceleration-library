@@ -18,35 +18,22 @@ class NNFactory(BaseNPUBackendWithPrefetch):
 
     def __init__(
         self,
-        inC: int,
-        outC: int,
-        batch: int,
         profile: bool = False,
         device: str = "NPU",
     ):
         """Initialize the Linear class.
 
         Args:
-            inC (int): input channels
-            outC (int): output channels
-            batch (int): batch
             profile (Optional[bool], optional): Enable/Disable profiling. Defaults to False.
             device (str): Target device, default to "NPU".
         """
         super().__init__(profile)
-        self.batch = batch
-        self.inC, self.outC = inC, outC
         self.device = device
         self._mm = backend_lib.createNNFactory(
             ctypes.c_char_p(self.device.encode()),
-            self.inC,
-            self.outC,
-            self.batch,
             profile,
         )
-        self.out = np.empty((self.batch, self.outC), dtype=np.float16)
         self.elapsed = None
-        self.input = self.parameter((self.batch, self.inC))
 
         for op in get_supported_ops():
             setattr(self, op.name, partial(self._call_backend_op, op.name))
@@ -137,6 +124,20 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             self.get_backend_dtype(wt_dtype),
         )
 
+    def get_output_tensor_shape(self):
+        """Get output tensor shape.
+
+        Returns:
+            tuple[int]: output tensor shape
+        """
+        size = backend_lib.get_output_tensor_shape_size(self._mm, 0)
+        return tuple(
+            [
+                backend_lib.get_output_tensor_shape(self._mm, 0, idx)
+                for idx in range(size)
+            ]
+        )
+
     def compile(self, output_node: ctypes._Pointer):
         """Finalize and compile a model.
 
@@ -144,6 +145,25 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             output_node (ctypes._Pointer): Model output node
         """
         backend_lib.compile(self._mm, output_node)
+        self.output_shape = self.get_output_tensor_shape()
+        if len(self.output_shape) != 2:
+            out_shape_1d = np.prod(self.output_shape)
+            self.out = np.empty((1, out_shape_1d), dtype=np.float16)
+        else:
+            self.out = np.empty(self.output_shape, dtype=np.float16)
+        backend_lib.set_output(self._mm, self.out, 0)
+
+    def set_input_tensor(self, tensor: np.ndarray, idx: int):
+        """Set input tensor.
+
+        Args:
+            tensor (np.ndarray): Input tensor
+            idx (int): tensor index
+        """
+        if len(tensor.shape) != 2:
+            backend_lib.set_activation(self._mm, tensor.reshape(1, -1), idx)
+        else:
+            backend_lib.set_activation(self._mm, tensor, idx)
 
     def run(
         self,
@@ -158,22 +178,21 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             weights (Union[np.ndarray, Tuple[np.ndarray, np.ndarray]]): rhs operators
             kwargs (Any): additional arguments
 
-        Raises:
-            RuntimeError: Input tensor shape mismatch
-
         Returns:
             np.ndarray: result
         """
-        if not (X.shape[0] == self.batch and X.shape[1] == self.inC):
-            raise RuntimeError(
-                f"Input shape {X.shape} different from expected one {(self.batch, self.inC)}"
-            )
+        op_id = kwargs.get("op_id", None)
+        if op_id is None and all(isinstance(tensor, np.ndarray) for tensor in weights):
+            for idx, weight in enumerate(weights):
+                self.set_input_tensor(weight, idx + 1)
+            prefetch = False
+        else:
+            prefetch = self.setWeights(kwargs.get("op_id", None), *weights)
 
-        prefetch = self.setWeights(kwargs.get("op_id", None), *weights)
-
-        self.elapsed = backend_lib.run(self._mm, X, self.out)
+        self.set_input_tensor(X, 0)
+        self.elapsed = backend_lib.run(self._mm)
 
         if prefetch:
             self.prefetchWeights()
 
-        return self.out
+        return self.out.reshape(self.output_shape)

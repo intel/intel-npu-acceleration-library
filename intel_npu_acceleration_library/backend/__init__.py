@@ -10,6 +10,7 @@ from .linear import Linear
 from .qmatmul import QMatMul
 from .qlinear import QLinear
 from .factory import NNFactory
+from .sdpa import SDPA
 from .runtime import run_matmul, run_factory, clear_cache
 import warnings
 
@@ -28,6 +29,7 @@ __all__ = [
     "Linear",
     "QMatMul",
     "QLinear",
+    "SDPA",
     "run_matmul",
     "run_factory",
     "clear_cache",

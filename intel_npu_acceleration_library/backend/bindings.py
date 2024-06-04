@@ -70,8 +70,14 @@ def init_common(lib: ctypes.CDLL):
     lib.saveModel.argtypes = [handler, ctypes.c_char_p]
     lib.saveCompiledModel.argtypes = [handler, ctypes.c_char_p]
 
+    # Set input activations
+    lib.set_activation.argtypes = [handler, c_fp16_array, ctypes.c_int]
+
+    # Set outputs activations
+    lib.set_output.argtypes = [handler, c_fp16_array, ctypes.c_int]
+
     # Run a linar layer
-    lib.run.argtypes = [handler, c_fp16_array, c_fp16_array]
+    lib.run.argtypes = [handler]
     lib.run.restype = ctypes.c_float
 
     # Common destructor
@@ -90,9 +96,6 @@ def init_network_factory(lib: ctypes.CDLL):
     """
     lib.createNNFactory.argtypes = [
         ctypes.c_char_p,
-        ctypes.c_int,
-        ctypes.c_int,
-        ctypes.c_int,
         ctypes.c_bool,
     ]
     lib.createNNFactory.restype = handler
@@ -104,6 +107,12 @@ def init_network_factory(lib: ctypes.CDLL):
 
     lib.compile.argtypes = [handler, handler]
     lib.compile.restype = handler
+
+    lib.get_output_tensor_shape_size.argtypes = [handler, ctypes.c_int]
+    lib.get_output_tensor_shape_size.restype = ctypes.c_int
+
+    lib.get_output_tensor_shape.argtypes = [handler, ctypes.c_int, ctypes.c_int]
+    lib.get_output_tensor_shape.restype = ctypes.c_int
 
     lib.linear.argtypes = [
         handler,
@@ -118,7 +127,7 @@ def init_network_factory(lib: ctypes.CDLL):
 
     for op in get_supported_ops():
         fn = getattr(lib, op.name)
-        fn.argtypes = [handler] * (op.inputs + 1)
+        fn.argtypes = [handler] * (op.inputs + 1) + list(op.parameters)
         fn.restype = handler
 
 
