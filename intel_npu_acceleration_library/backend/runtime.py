@@ -8,7 +8,7 @@ from intel_npu_acceleration_library.backend import MatMul, QMatMul
 from intel_npu_acceleration_library.backend import NNFactory
 from intel_npu_acceleration_library.backend.sdpa import SDPA
 from torch.profiler import record_function
-from typing import Optional, List, Dict, Deque, Union
+from typing import Optional, Any, List, Dict, Deque, Union
 from functools import partial
 from collections import deque
 import numpy as np
@@ -157,7 +157,7 @@ def set_contiguous(tensor: torch.Tensor) -> torch.Tensor:
 def run_factory(
     x: Union[torch.Tensor, List[torch.Tensor]],
     weights: List[torch.Tensor],
-    backend_cls: partial[NNFactory],
+    backend_cls: Any,
     op_id: Optional[str] = None,
 ) -> torch.Tensor:
     """Run a factory operation. Depending on the datatype of the weights it runs a float or quantized operation.
@@ -165,7 +165,7 @@ def run_factory(
     Args:
         x (Union[torch.Tensor, List[torch.Tensor]]): Activation tensor(s). Its dtype must be torch.float16
         weights (torch.Tensor): Weights tensor.  Its dtype can be torch.float16 or torch.int8
-        backend_cls (partial[NNFactory]): Backend class to run
+        backend_cls (Any): Backend class to run
         op_id (Optional[str], optional): Operation ID. Defaults to None.
 
     Returns:
