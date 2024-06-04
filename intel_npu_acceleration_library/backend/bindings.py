@@ -70,8 +70,14 @@ def init_common(lib: ctypes.CDLL):
     lib.saveModel.argtypes = [handler, ctypes.c_char_p]
     lib.saveCompiledModel.argtypes = [handler, ctypes.c_char_p]
 
+    # Set input activations
+    lib.set_activation.argtypes = [handler, c_fp16_array, ctypes.c_int]
+
+    # Set outputs activations
+    lib.set_output.argtypes = [handler, c_fp16_array, ctypes.c_int]
+
     # Run a linar layer
-    lib.run.argtypes = [handler, c_fp16_array, c_fp16_array]
+    lib.run.argtypes = [handler]
     lib.run.restype = ctypes.c_float
 
     # Common destructor

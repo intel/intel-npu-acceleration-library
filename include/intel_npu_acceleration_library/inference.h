@@ -158,19 +158,38 @@ public:
     }
 
     /**
+     * @brief Set the input activations
+     *
+     * @param _X pointer to the float16 input activation buffer
+     * @param idx input tensor index
+     */
+    void setInputTensor(half_ptr _X, size_t idx) {
+        auto tensor = infer_request.get_input_tensor(idx);
+        X = ov::Tensor(tensor.get_element_type(), tensor.get_shape(), (void*)_X);
+        infer_request.set_input_tensor(idx, X);
+    }
+
+    /**
+     * @brief Set the output activations
+     *
+     * @param _X pointer to the float16 output activation buffer
+     * @param idx output tensor index
+     */
+    void setOutputTensor(half_ptr _X, size_t idx) {
+        auto tensor = infer_request.get_output_tensor(idx);
+        X = ov::Tensor(tensor.get_element_type(), tensor.get_shape(), (void*)_X);
+        infer_request.set_output_tensor(idx, X);
+    }
+
+    /**
      * @brief Set the input and output activations
      *
      * @param _X pointer to the float16 input activation
      * @param _Out pointer to the float16 output activation
      */
     void setActivations(half_ptr _X, half_ptr _Out) {
-        auto inT = infer_request.get_input_tensor(0);
-        auto outT = infer_request.get_output_tensor(0);
-        X = ov::Tensor(inT.get_element_type(), inT.get_shape(), (void*)_X);
-        Out = ov::Tensor(outT.get_element_type(), outT.get_shape(), (void*)_Out);
-
-        infer_request.set_input_tensor(0, X);
-        infer_request.set_output_tensor(Out);
+        setInputTensor(_X, 0);
+        setOutputTensor(_Out, 0);
     }
 
     /**

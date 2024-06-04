@@ -151,6 +151,7 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             self.out = np.empty((1, out_shape_1d), dtype=np.float16)
         else:
             self.out = np.empty(self.output_shape, dtype=np.float16)
+        backend_lib.set_output(self._mm, self.out, 0)
 
     def run(
         self,
@@ -170,7 +171,8 @@ class NNFactory(BaseNPUBackendWithPrefetch):
         """
         prefetch = self.setWeights(kwargs.get("op_id", None), *weights)
 
-        self.elapsed = backend_lib.run(self._mm, X, self.out)
+        backend_lib.set_activation(self._mm, X, 0)
+        self.elapsed = backend_lib.run(self._mm)
 
         if prefetch:
             self.prefetchWeights()

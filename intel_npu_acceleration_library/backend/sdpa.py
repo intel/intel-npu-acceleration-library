@@ -2,6 +2,7 @@
 # Copyright © 2024 Intel Corporation
 # SPDX-License-Identifier: Apache 2.0
 #
+from intel_npu_acceleration_library.backend.bindings import lib as backend_lib
 from intel_npu_acceleration_library.backend.factory import NNFactory
 from typing import Tuple
 import numpy as np
@@ -33,8 +34,8 @@ class SDPA(NNFactory):
         """
         super().__init__(profile, device)
 
-        self.key = self.parameter(key_shapes)
         self.query = self.parameter(query_shapes)
+        self.key = self.parameter(key_shapes)
         self.value = self.parameter(value_shapes)
         self.mask = self.parameter(mask_shapes)
 
@@ -44,17 +45,25 @@ class SDPA(NNFactory):
         self.compile(out)
 
     def run(
-        self, key: np.ndarray, query: np.ndarray, value: np.ndarray, mask: np.ndarray
+        self, query: np.ndarray, key: np.ndarray, value: np.ndarray, mask: np.ndarray
     ) -> np.ndarray:
         """Run the scaled dot product attention kernel.
 
         Args:
-            key (np.ndarray): sdpa key tensor
             query (np.ndarray): sdpa query tensor
+            key (np.ndarray): sdpa key tensor
             value (np.ndarray): sdpa value tensor
             mask (np.ndarray): sdpa mask tensor
 
         Returns:
             np.ndarray: result
         """
-        return super().run(query.flatten().reshape((1, -1)), key, value, mask)
+        backend_lib.set_activation(self._mm, query.reshape(1, -1), 0)
+        backend_lib.set_activation(self._mm, key.reshape(1, -1), 1)
+        backend_lib.set_activation(self._mm, value.reshape(1, -1), 2)
+        backend_lib.set_activation(self._mm, mask.reshape(1, -1), 3)
+
+        self.elapsed = backend_lib.run(self._mm)
+        return self.out.reshape(self.output_shape)
+
+        # return super().run(query.flatten().reshape((1, -1)), key, value, mask)

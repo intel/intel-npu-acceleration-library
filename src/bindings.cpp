@@ -92,11 +92,18 @@ get_output_tensor_shape(intel_npu_acceleration_library::ModelFactory* factory, s
     return tensor.get_shape()[idx];
 }
 
-intel_npu_acceleration_library_DLL_API float run(intel_npu_acceleration_library::OVInferenceModel* mm, half_ptr X,
-                                                 half_ptr Out) {
-    auto start = std::chrono::system_clock::now();
+intel_npu_acceleration_library_DLL_API void set_activation(intel_npu_acceleration_library::OVInferenceModel* mm,
+                                                           half_ptr X, size_t idx) {
+    mm->setInputTensor(X, idx);
+}
 
-    mm->setActivations(X, Out);
+intel_npu_acceleration_library_DLL_API void set_output(intel_npu_acceleration_library::OVInferenceModel* mm,
+                                                       half_ptr Out, size_t idx) {
+    mm->setOutputTensor(Out, idx);
+}
+
+intel_npu_acceleration_library_DLL_API float run(intel_npu_acceleration_library::OVInferenceModel* mm) {
+    auto start = std::chrono::system_clock::now();
 
     mm->run();
 

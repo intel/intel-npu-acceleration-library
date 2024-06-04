@@ -40,6 +40,7 @@ def test_factory_bindings(inC, outC, batch, run_op):
     p0 = backend_lib.parameter(factory, shape_ptr.size, shape_ptr, dtype)
     linear = backend_lib.linear(factory, p0, outC, inC, False, dtype, dtype)
     backend_lib.compile(factory, linear)
+    backend_lib.set_output(factory, out, 0)
 
     # Set parameters
     param = backend_lib.createParameters()
@@ -48,7 +49,8 @@ def test_factory_bindings(inC, outC, batch, run_op):
 
     # run
     if run_op:
-        backend_lib.run(factory, x, out)
+        backend_lib.set_activation(factory, x, 0)
+        backend_lib.run(factory)
 
     # Call destuctors for parameters and weights
     backend_lib.destroyNNFactory(factory)
