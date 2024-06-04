@@ -6,8 +6,9 @@
 from intel_npu_acceleration_library.backend import Linear, QLinear
 from intel_npu_acceleration_library.backend import MatMul, QMatMul
 from intel_npu_acceleration_library.backend import NNFactory
+from intel_npu_acceleration_library.backend.sdpa import SDPA
 from torch.profiler import record_function
-from typing import Optional, List, Dict, Deque
+from typing import Optional, List, Dict, Deque, Union
 from functools import partial
 from collections import deque
 import numpy as np
@@ -154,7 +155,7 @@ def set_contiguous(tensor: torch.Tensor) -> torch.Tensor:
 
 @torch.no_grad()
 def run_factory(
-    x: torch.Tensor,
+    x: Union[torch.Tensor, List[torch.Tensor]],
     weights: List[torch.Tensor],
     backend_cls: partial[NNFactory],
     op_id: Optional[str] = None,
@@ -162,7 +163,7 @@ def run_factory(
     """Run a factory operation. Depending on the datatype of the weights it runs a float or quantized operation.
 
     Args:
-        x (torch.Tensor): Activation tensor. Its dtype must be torch.float16
+        x (Union[torch.Tensor, List[torch.Tensor]]): Activation tensor(s). Its dtype must be torch.float16
         weights (torch.Tensor): Weights tensor.  Its dtype can be torch.float16 or torch.int8
         backend_cls (partial[NNFactory]): Backend class to run
         op_id (Optional[str], optional): Operation ID. Defaults to None.
@@ -175,25 +176,25 @@ def run_factory(
     # Use or not op_id depending on the class used
     op_kwargs = {"op_id": op_id} if op_id else {}
 
-    # Reshape input
-    input_dtype = x.dtype
-    x_np = set_contiguous(x).to(torch.float16).numpy()
+    if not isinstance(x, (list, tuple)):
+        x = [x]
 
+    # Reshape input
+    input_dtype = x[0].dtype
+    x_np = [set_contiguous(elem).to(torch.float16).numpy() for elem in x]
     op_args = [set_contiguous(w).to(torch.float16).numpy() for w in weights]
 
     shape_dtype_signature = "_".join(
-        [
-            "_".join(str(dim) for dim in t.shape) + f"_{t.dtype}"
-            for t in [x_np] + op_args
-        ]
+        ["_".join(str(dim) for dim in t.shape) + f"_{t.dtype}" for t in x_np + op_args]
     )
     key = f"{backend_cls.func.__name__}_{shape_dtype_signature}"
     models = _model_cache.get(key, None)
 
+    input_shapes = [elem.shape for elem in x_np]
     if models is None:
-        _model_cache[key] = deque([backend_cls(x.shape)])
+        _model_cache[key] = deque([backend_cls(*input_shapes)])
     elif len(models) < 1:
-        _model_cache[key].append(backend_cls(x.shape))
+        _model_cache[key].append(backend_cls(*input_shapes))
     else:
         _model_cache[key].rotate(1)
 
@@ -201,6 +202,41 @@ def run_factory(
     model = _model_cache[key][0]
 
     with record_function(f"npu_factory_mul_{key}"):
-        ret = model.run(x_np, *op_args, **op_kwargs)
+        ret = model.run(*x_np, *op_args, **op_kwargs)
 
     return adapt_output_tensor(ret, model.output_shape, input_dtype)
+
+
+def scaled_dot_product_attention(
+    query: torch.Tensor,
+    key: torch.Tensor,
+    value: torch.Tensor,
+    attn_mask: torch.Tensor = None,
+    dropout_p: float = 0.0,
+    is_causal: bool = False,
+    scale: Optional[float] = None,
+) -> torch.Tensor:
+    """Execute SDPA kernel.
+
+    Args:
+        query (torch.Tensor): query tensor
+        key (torch.Tensor): key tensor
+        value (torch.Tensor): value tensor
+        attn_mask (torch.Tensor, optional): attention mask tensor. Defaults to None.
+        dropout_p (float, optional): optional dropout. Defaults to 0.0.
+        is_causal (bool, optional): enable causal mask. Defaults to False.
+        scale (Optional[float], optional): custom scale. Defaults to None.
+
+    Raises:
+        RuntimeError: _description_
+
+    Returns:
+        torch.Tensor: _description_
+    """
+    backend_cls = partial(SDPA, is_causal=is_causal)
+    if dropout_p != 0:
+        raise RuntimeError("dropout_p != 0 is not supported yet")
+    # if scale is not None:
+    #     raise RuntimeError("scale != 0 is not supported yet")
+
+    return run_factory([query, key, value, attn_mask], [], backend_cls)

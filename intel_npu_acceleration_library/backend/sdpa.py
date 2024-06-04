@@ -57,4 +57,4 @@ class SDPA(NNFactory):
         Returns:
             np.ndarray: result
         """
-        return super().run(query.flatten().reshape((1, -1)), key, value, mask)
+        return super().run(query, key, value, mask)
