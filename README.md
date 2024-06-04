@@ -2,6 +2,8 @@
 
 [![Test](https://github.com/intel/intel-npu-acceleration-library/actions/workflows/test.yml/badge.svg)](https://github.com/intel/intel-npu-acceleration-library/actions/workflows/test.yml) [![Style](https://github.com/intel/intel-npu-acceleration-library/actions/workflows/style.yml/badge.svg)](https://github.com/intel/intel-npu-acceleration-library/actions/workflows/style.yml) [![Documentation](https://github.com/intel/intel-npu-acceleration-library/actions/workflows/documentation.yml/badge.svg)](https://github.com/intel/intel-npu-acceleration-library/actions/workflows/documentation.yml)
 
+[![PyPI version](https://badge.fury.io/py/intel-npu-acceleration-library.svg)](https://badge.fury.io/py/intel-npu-acceleration-library) [![Downloads](https://static.pepy.tech/badge/intel-npu-acceleration-library)](https://pepy.tech/project/intel-npu-acceleration-library)
+
 [Documentation](https://intel.github.io/intel-npu-acceleration-library/)
 
 The Intel® NPU Acceleration Library is a Python library designed to boost the efficiency of your applications by leveraging the power of the Intel Neural Processing Unit (NPU) to perform high-speed computations on compatible hardware.
@@ -109,20 +111,17 @@ optimized_model = intel_npu_acceleration_library.compile(model, dtype=torch.int8
 ### Run a Tiny-llama model on the NPU
 
 ```python
-from transformers import AutoTokenizer, TextStreamer, AutoModelForCausalLM
-import intel_npu_acceleration_library
+from transformers import AutoTokenizer, TextStreamer
+from intel_npu_acceleration_library import NPUModelForCausalLM
 import torch
 
 model_id = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
 
-model = AutoModelForCausalLM.from_pretrained(model_id, use_cache=True).eval()
+model = NPUModelForCausalLM.from_pretrained(model_id, use_cache=True, dtype=torch.int8).eval()
 tokenizer = AutoTokenizer.from_pretrained(model_id, use_default_system_prompt=True)
 tokenizer.pad_token_id = tokenizer.eos_token_id
 streamer = TextStreamer(tokenizer, skip_special_tokens=True)
 
-
-print("Compile model for the NPU")
-model = intel_npu_acceleration_library.compile(model, dtype=torch.int8)
 
 query = input("Ask something: ")
 prefix = tokenizer(query, return_tensors="pt")["input_ids"]

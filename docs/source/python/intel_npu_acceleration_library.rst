@@ -9,6 +9,7 @@ Subpackages
 
    intel_npu_acceleration_library.backend
    intel_npu_acceleration_library.nn
+   intel_npu_acceleration_library.functional
 
 Submodules
 ----------
