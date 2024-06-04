@@ -2,7 +2,6 @@
 # Copyright © 2024 Intel Corporation
 # SPDX-License-Identifier: Apache 2.0
 #
-from intel_npu_acceleration_library.backend.bindings import lib as backend_lib
 from intel_npu_acceleration_library.backend.factory import NNFactory
 from typing import Tuple
 import numpy as np
@@ -58,12 +57,4 @@ class SDPA(NNFactory):
         Returns:
             np.ndarray: result
         """
-        backend_lib.set_activation(self._mm, query.reshape(1, -1), 0)
-        backend_lib.set_activation(self._mm, key.reshape(1, -1), 1)
-        backend_lib.set_activation(self._mm, value.reshape(1, -1), 2)
-        backend_lib.set_activation(self._mm, mask.reshape(1, -1), 3)
-
-        self.elapsed = backend_lib.run(self._mm)
-        return self.out.reshape(self.output_shape)
-
-        # return super().run(query.flatten().reshape((1, -1)), key, value, mask)
+        return super().run(query.flatten().reshape((1, -1)), key, value, mask)

@@ -153,6 +153,18 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             self.out = np.empty(self.output_shape, dtype=np.float16)
         backend_lib.set_output(self._mm, self.out, 0)
 
+    def set_input_tensor(self, tensor: np.ndarray, idx: int):
+        """Set input tensor.
+
+        Args:
+            tensor (np.ndarray): Input tensor
+            idx (int): tensor index
+        """
+        if len(tensor.shape) != 2:
+            backend_lib.set_activation(self._mm, tensor.reshape(1, -1), idx)
+        else:
+            backend_lib.set_activation(self._mm, tensor, idx)
+
     def run(
         self,
         X: np.ndarray,
@@ -169,9 +181,15 @@ class NNFactory(BaseNPUBackendWithPrefetch):
         Returns:
             np.ndarray: result
         """
-        prefetch = self.setWeights(kwargs.get("op_id", None), *weights)
+        op_id = kwargs.get("op_id", None)
+        if op_id is None and all(isinstance(tensor, np.ndarray) for tensor in weights):
+            for idx, weight in enumerate(weights):
+                self.set_input_tensor(weight, idx + 1)
+            prefetch = False
+        else:
+            prefetch = self.setWeights(kwargs.get("op_id", None), *weights)
 
-        backend_lib.set_activation(self._mm, X, 0)
+        self.set_input_tensor(X, 0)
         self.elapsed = backend_lib.run(self._mm)
 
         if prefetch:
