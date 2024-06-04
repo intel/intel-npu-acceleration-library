@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache 2.0
 #
 from intel_npu_acceleration_library.backend.sdpa import SDPA
-from intel_npu_acceleration_library.backend import scaled_dot_product_attention
+from intel_npu_acceleration_library.functional import scaled_dot_product_attention
 from sklearn.metrics import r2_score
 import numpy as np
 import pytest
@@ -91,6 +91,6 @@ def test_sdpa_runtime(heads, sequence, dim, kv_cache, is_causal):
 
     assert np.isfinite(npu_result).all()
 
-    r2 = r2_score(ref_result.numpy().flatten(), npu_result.flatten())
+    r2 = r2_score(ref_result.numpy().flatten(), npu_result.numpy().flatten())
 
     assert 1 - r2 < 0.05

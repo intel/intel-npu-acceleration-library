@@ -6,7 +6,6 @@
 from intel_npu_acceleration_library.backend import Linear, QLinear
 from intel_npu_acceleration_library.backend import MatMul, QMatMul
 from intel_npu_acceleration_library.backend import NNFactory
-from intel_npu_acceleration_library.backend.sdpa import SDPA
 from torch.profiler import record_function
 from typing import Optional, Any, List, Dict, Deque, Union
 from functools import partial
@@ -205,38 +204,3 @@ def run_factory(
         ret = model.run(*x_np, *op_args, **op_kwargs)
 
     return adapt_output_tensor(ret, model.output_shape, input_dtype)
-
-
-def scaled_dot_product_attention(
-    query: torch.Tensor,
-    key: torch.Tensor,
-    value: torch.Tensor,
-    attn_mask: torch.Tensor = None,
-    dropout_p: float = 0.0,
-    is_causal: bool = False,
-    scale: Optional[float] = None,
-) -> torch.Tensor:
-    """Execute SDPA kernel.
-
-    Args:
-        query (torch.Tensor): query tensor
-        key (torch.Tensor): key tensor
-        value (torch.Tensor): value tensor
-        attn_mask (torch.Tensor, optional): attention mask tensor. Defaults to None.
-        dropout_p (float, optional): optional dropout. Defaults to 0.0.
-        is_causal (bool, optional): enable causal mask. Defaults to False.
-        scale (Optional[float], optional): custom scale. Defaults to None.
-
-    Raises:
-        RuntimeError: _description_
-
-    Returns:
-        torch.Tensor: _description_
-    """
-    backend_cls = partial(SDPA, is_causal=is_causal)
-    if dropout_p != 0:
-        raise RuntimeError("dropout_p != 0 is not supported yet")
-    # if scale is not None:
-    #     raise RuntimeError("scale != 0 is not supported yet")
-
-    return run_factory([query, key, value, attn_mask], [], backend_cls)
