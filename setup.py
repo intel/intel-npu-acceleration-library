@@ -8,6 +8,23 @@ from setuptools.command.build_ext import build_ext as build_ext_orig
 import pathlib
 import glob
 import os
+import re
+
+
+def get_version():
+    this_file_path = os.path.dirname(os.path.abspath(__file__))
+    with open(
+        os.path.join(this_file_path, "intel_npu_acceleration_library", "_version.py"),
+        "rt",
+    ) as fp:
+        verstrline = fp.read()
+    VSRE = r"^__version__ = ['\"]([^'\"]*)['\"]"
+    mo = re.search(VSRE, verstrline, re.M)
+    if mo:
+        verstr = mo.group(1)
+    else:
+        raise RuntimeError("Unable to find version string")
+    return verstr
 
 
 class CMakeExtension(Extension):
@@ -69,7 +86,7 @@ with open("dev_requirements.txt") as fh:
 
 setup(
     name="intel_npu_acceleration_library",
-    version="v1.1.0",
+    version=get_version(),
     packages=[
         "intel_npu_acceleration_library",
         "intel_npu_acceleration_library.backend",
