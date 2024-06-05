@@ -4,7 +4,7 @@
 #
 
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline, TextStreamer
+from transformers import AutoTokenizer, pipeline, TextStreamer
 import intel_npu_acceleration_library as npu_lib
 import warnings
 
@@ -13,7 +13,6 @@ torch.random.manual_seed(0)
 model = npu_lib.NPUModelForCausalLM.from_pretrained(
     "microsoft/Phi-3-mini-4k-instruct",
     torch_dtype="auto",
-    trust_remote_code=True,
     dtype=npu_lib.int4,
 )
 

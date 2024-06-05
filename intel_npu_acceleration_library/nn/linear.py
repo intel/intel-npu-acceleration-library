@@ -80,7 +80,7 @@ class Linear(torch.nn.Module):
             dtype (torch.dtype): the desired datatype
 
         Raises:
-            RuntimeError: Quantized Linear requires input_channel to be a multiple of 8
+            RuntimeError: dtype not supported
 
         Returns:
             Union[Linear, QuantizedLinear]: A NPU linear layer
@@ -95,10 +95,6 @@ class Linear(torch.nn.Module):
                 weights_quant = compress_to_i4(weights_quant)
             return QuantizedLinear(weights_quant, scale, bias)
         elif dtype == torch.int8:
-            if weight.shape[-1] % 8 != 0:
-                raise RuntimeError(
-                    "Quantized Linear requires input_channel to be a multiple of 8"
-                )
             weights_quant, scale = quantize_tensor(weight)
             return QuantizedLinear(weights_quant, scale, bias)
         else:

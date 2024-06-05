@@ -82,6 +82,7 @@ class NPUModel:
 
         Raises:
             RuntimeError: Invalid class
+            AttributeError: Cannot export model with trust_remote_code=True
 
         Returns:
             torch.nn.Module: compiled mode
@@ -103,6 +104,10 @@ class NPUModel:
             )
             model = npu_lib.compile(model, dtype, training)
             if export:
+                if kwargs.get("trust_remote_code", False):
+                    raise AttributeError(
+                        "Cannot export model with trust_remote_code=True. Please set trust_remote_code=False or export=False"
+                    )
                 print(f"Exporting model {model_name_or_path} to {model_dir_path}")
                 os.makedirs(model_dir_path, exist_ok=True)
                 torch.save(model, model_path)
