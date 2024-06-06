@@ -84,6 +84,7 @@ def init_common(lib: ctypes.CDLL):
     lib.destroyNNFactory.argtypes = [handler]
 
     lib.isNPUAvailable.restype = ctypes.c_bool
+    lib.getNPUDriverVersion.restype = ctypes.c_int32
 
     lib.compressToI4.argtypes = [c_i8_array, c_u8_array, ctypes.c_int]
 

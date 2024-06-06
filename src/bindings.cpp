@@ -12,6 +12,11 @@ intel_npu_acceleration_library_DLL_API bool isNPUAvailable() {
     return intel_npu_acceleration_library::_isNPUAvailable(core);
 }
 
+intel_npu_acceleration_library_DLL_API uint32_t getNPUDriverVersion() {
+    ov::Core core;
+    return intel_npu_acceleration_library::driver_version(core);
+}
+
 // ######################## Compression ########################
 
 intel_npu_acceleration_library_DLL_API void compressToI4(const int8_t* src, uint8_t* dst, size_t size) {

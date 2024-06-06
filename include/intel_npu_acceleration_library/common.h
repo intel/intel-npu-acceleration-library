@@ -11,6 +11,7 @@
 #include "openvino/opsets/opset6.hpp"
 #include "openvino/opsets/opset7.hpp"
 #include "openvino/opsets/opset8.hpp"
+#include "openvino/runtime/intel_npu/properties.hpp"
 
 #if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
 #define intel_npu_acceleration_library_DLL_API __attribute__((visibility("default")))
@@ -33,6 +34,10 @@ static constexpr ov::Property<std::string> npu_parameters{"NPU_COMPILATION_MODE_
 bool _isNPUAvailable(ov::Core& core) {
     std::vector<std::string> availableDevices = core.get_available_devices();
     return std::find(availableDevices.begin(), availableDevices.end(), "NPU") != availableDevices.end();
+}
+
+uint32_t driver_version(ov::Core& core) {
+    return static_cast<uint32_t>(core.get_property("NPU", ov::intel_npu::driver_version));
 }
 
 ov::element::Type_t dtype_from_string(const std::string& dtype) {
