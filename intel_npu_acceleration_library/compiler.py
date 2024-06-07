@@ -72,7 +72,7 @@ def create_npu_kernels(model, dtype):
         model (torch.nn.Module): a pytorch nn.Module to compile and optimize for the npu
         dtype (torch.dtype): the model target datatype, default to torch.float16
     """
-    lower_linear(model, dtype)
+    lower_linear(model)
 
 
 def module_optimization(func: Callable) -> torch.nn.Module:
