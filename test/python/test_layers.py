@@ -19,6 +19,8 @@ class MLP_PT(torch.nn.Module):
             self.fn = lambda x: torch.nn.functional.silu(self.l1(x)) * self.swiglu(x)
         elif activation == "gelu":
             self.fn = lambda x: torch.nn.functional.gelu(self.l1(x), approximate="tanh")
+        elif activation == "relu":
+            self.fn = lambda x: torch.nn.functional.relu(self.l1(x))
         else:
             raise RuntimeError(f"Unsupported activation: {activation}")
         self.l2 = torch.nn.Linear(intermediate_size, hidden_size, bias=bias)
@@ -33,7 +35,7 @@ class MLP_PT(torch.nn.Module):
 @pytest.mark.parametrize("hidden_dim", [256, 512])
 @pytest.mark.parametrize("intermediate_dim", [512, 256])
 @pytest.mark.parametrize("bias", [False, True])
-@pytest.mark.parametrize("activation", ["swiglu", "gelu"])
+@pytest.mark.parametrize("activation", ["swiglu", "gelu", "relu"])
 def test_mlp(batch, hidden_dim, intermediate_dim, bias, activation):
 
     module = MLP_PT(hidden_dim, intermediate_dim, activation, bias)

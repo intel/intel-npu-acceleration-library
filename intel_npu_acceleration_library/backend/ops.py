@@ -37,6 +37,7 @@ def get_supported_ops() -> List[SupportedOp]:
         SupportedOp(name="eltwise_mul", inputs=2),
         SupportedOp(name="eltwise_div", inputs=2),
         SupportedOp(name="gelu", inputs=1),
+        SupportedOp(name="relu", inputs=1),
         SupportedOp(name="softmax", inputs=1),
         SupportedOp(name="swish", inputs=1),
         SupportedOp(name="convert_to_fp16", inputs=1),

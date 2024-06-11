@@ -151,6 +151,11 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* gelu(intel_npu_acceleration_l
     return factory->gelu(in0);
 }
 
+intel_npu_acceleration_library_DLL_API ov::op::Op* relu(intel_npu_acceleration_library::ModelFactory* factory,
+                                                        ov::op::Op* in0) {
+    return factory->relu(in0);
+}
+
 intel_npu_acceleration_library_DLL_API ov::op::Op* swish(intel_npu_acceleration_library::ModelFactory* factory,
                                                          ov::op::Op* in0) {
     return factory->swish(in0);

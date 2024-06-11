@@ -96,6 +96,18 @@ public:
     }
 
     /**
+     * @brief Create a new relu operation
+     *
+     * @param input operation's input node
+     * @return ov::op::Op*
+     */
+    ov::op::Op* relu(ov::op::Op* input) {
+        auto relu = std::make_shared<ov::opset1::Relu>(input->output(0));
+        operations.push_back(relu);
+        return relu.get();
+    }
+
+    /**
      * @brief Create a new swish operation
      *
      * @param input operation's input node
