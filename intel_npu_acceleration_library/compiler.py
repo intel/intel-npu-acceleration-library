@@ -46,7 +46,7 @@ def compile(
             model = quantize_model(model, dtype)
 
         # Model lowering to NPU ops
-        create_npu_kernels(model, dtype)
+        create_npu_kernels(model)
 
     if dtype.is_floating_point and training:
         # Set model to evaluation only as quantized training is not supported yet
@@ -65,12 +65,11 @@ def apply_general_optimizations(model: torch.nn.Module):
     optimize_llama_attention(model)
 
 
-def create_npu_kernels(model, dtype):
+def create_npu_kernels(model: torch.nn.Module):
     """Create NPU kernels.
 
     Args:
         model (torch.nn.Module): a pytorch nn.Module to compile and optimize for the npu
-        dtype (torch.dtype): the model target datatype, default to torch.float16
     """
     lower_linear(model)
 
