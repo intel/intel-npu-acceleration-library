@@ -52,7 +52,7 @@ def get_model_path(model_name: str, *args: Any, **kwargs: Any) -> Tuple[str, str
     cache_dir = get_cache_dir()
     mangled_model_name = get_mangled_model_name(model_name, *args, **kwargs)
     model_dir_path = os.path.join(cache_dir, mangled_model_name)
-    model_path = os.path.join(model_dir_path, "model.pt")
+    model_path = os.path.join(model_dir_path, "pytorch_npu_model.pt")
     return model_dir_path, model_path
 
 

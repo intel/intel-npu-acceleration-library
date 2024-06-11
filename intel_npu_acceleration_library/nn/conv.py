@@ -118,13 +118,13 @@ class Conv2d(torch.nn.Module):
         return out
 
     @staticmethod
-    def fromTorch(layer, dtype) -> "Conv2d":
+    def fromTorch(layer, dtype: torch.dtype = torch.float16) -> "Conv2d":
         """
         Create a Conv2d layer from a torch.nn.Conv2d layer.
 
         Args:
             layer (torch.nn.Conv2d): The torch Conv2d layer.
-            dtype (torch.dtype): Data type of the layer.
+            dtype (torch.dtype, optional): Data type of the layer.
 
         Returns:
             Conv2d: The converted Conv2d layer.
