@@ -98,7 +98,7 @@ else()
     file(COPY ${OpenVINObin} DESTINATION ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 endif()
 
-if(SKBUILD)
+if(SETUPTOOL_BUILD)
     file(GLOB OpenVINOPython ${openvino_SOURCE_DIR}/python/openvino/*)
     file(COPY ${OpenVINOPython} DESTINATION ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/../external/openvino)
 endif()
