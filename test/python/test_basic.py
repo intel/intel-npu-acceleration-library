@@ -7,10 +7,16 @@ from sklearn.metrics import r2_score
 from intel_npu_acceleration_library.backend import MatMul
 import numpy as np
 import intel_npu_acceleration_library
+import intel_npu_acceleration_library.external.openvino as ov
 import pytest
 import time
 import sys
 import os
+
+
+def test_openvino_version():
+    version = ov.get_version()
+    assert version is not None
 
 
 def profile(func):
