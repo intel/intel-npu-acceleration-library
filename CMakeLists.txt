@@ -98,8 +98,10 @@ else()
     file(COPY ${OpenVINObin} DESTINATION ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 endif()
 
-file(GLOB OpenVINOPython ${openvino_SOURCE_DIR}/python/openvino/*)
-file(COPY ${OpenVINOPython} DESTINATION ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/../external/openvino)
+if(SKBUILD)
+    file(GLOB OpenVINOPython ${openvino_SOURCE_DIR}/python/openvino/*)
+    file(COPY ${OpenVINOPython} DESTINATION ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/../external/openvino)
+endif()
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
