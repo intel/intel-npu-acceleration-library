@@ -84,6 +84,19 @@ public:
     }
 
     /**
+     * @brief Create a new elu operation
+     *
+     * @param input operation's input node
+     * @param alpha alpha value for the elu formulation
+     * @return ov::op::Op*
+     */
+    ov::op::Op* elu(ov::op::Op* input, float alpha) {
+        auto elu = std::make_shared<ov::opset1::Elu>(input->output(0), alpha);
+        operations.push_back(elu);
+        return elu.get();
+    }
+
+    /**
      * @brief Create a new gelu operation
      *
      * @param input operation's input node
@@ -96,6 +109,30 @@ public:
     }
 
     /**
+     * @brief Create a new hswish operation
+     *
+     * @param input operation's input node
+     * @return ov::op::Op*
+     */
+    ov::op::Op* hswish(ov::op::Op* input) {
+        auto hswish = std::make_shared<ov::opset4::HSwish>(input->output(0));
+        operations.push_back(hswish);
+        return hswish.get();
+    }
+
+    /**
+     * @brief Create a new mish operation
+     *
+     * @param input operation's input node
+     * @return ov::op::Op*
+     */
+    ov::op::Op* mish(ov::op::Op* input) {
+        auto mish = std::make_shared<ov::opset4::Mish>(input->output(0));
+        operations.push_back(mish);
+        return mish.get();
+    }
+
+    /**
      * @brief Create a new relu operation
      *
      * @param input operation's input node
@@ -105,6 +142,18 @@ public:
         auto relu = std::make_shared<ov::opset1::Relu>(input->output(0));
         operations.push_back(relu);
         return relu.get();
+    }
+
+    /**
+     * @brief Create a new sigmoid operation
+     *
+     * @param input operation's input node
+     * @return ov::op::Op*
+     */
+    ov::op::Op* sigmoid(ov::op::Op* input) {
+        auto sigmoid = std::make_shared<ov::opset1::Sigmoid>(input->output(0));
+        operations.push_back(sigmoid);
+        return sigmoid.get();
     }
 
     /**

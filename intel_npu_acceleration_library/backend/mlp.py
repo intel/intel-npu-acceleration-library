@@ -16,6 +16,7 @@ class MLP(NNFactory):
         intermediate_size: int,
         activation: str = "swiglu",
         bias: Optional[bool] = False,
+        alpha: Optional[float] = 1.0,
         profile: bool = False,
         device: str = "NPU",
     ):
@@ -26,6 +27,7 @@ class MLP(NNFactory):
             intermediate_size (int): intermediate_size
             activation (str): activation function to use
             bias (Optional[bool], optional): Enable/Disable bias. Defaults to False.
+            alpha (Optional[float], optional): Alpha value for the elu formulation. Defaults to 1.0
             profile (bool): Enable/Disable profiling. Defaults to False.
             device (str): Target device, default to "NPU".
         """
@@ -39,6 +41,9 @@ class MLP(NNFactory):
         if activation == "swiglu":
             mm2 = self.linear(input, self.intermediate_size, self.hidden_size, bias=bias)  # type: ignore[attr-defined]
             mm1 = self.eltwise_mul(self.swish(mm1), mm2)  # type: ignore[attr-defined]
+        elif activation == "elu":
+            atc_fn = getattr(self, activation)
+            mm1 = atc_fn(mm1, alpha)
         else:
             atc_fn = getattr(self, activation)
             mm1 = atc_fn(mm1)

@@ -146,14 +146,34 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* eltwise_div(intel_npu_acceler
     return factory->eltwise_div(in0, in1);
 }
 
+intel_npu_acceleration_library_DLL_API ov::op::Op* elu(intel_npu_acceleration_library::ModelFactory* factory,
+                                                        ov::op::Op* in0, float alpha) {
+    return factory->elu(in0, alpha);
+}
+
 intel_npu_acceleration_library_DLL_API ov::op::Op* gelu(intel_npu_acceleration_library::ModelFactory* factory,
                                                         ov::op::Op* in0) {
     return factory->gelu(in0);
 }
 
+intel_npu_acceleration_library_DLL_API ov::op::Op* hswish(intel_npu_acceleration_library::ModelFactory* factory,
+                                                         ov::op::Op* in0) {
+    return factory->hswish(in0);
+}
+
+intel_npu_acceleration_library_DLL_API ov::op::Op* mish(intel_npu_acceleration_library::ModelFactory* factory,
+                                                        ov::op::Op* in0) {
+    return factory->mish(in0);
+}
+
 intel_npu_acceleration_library_DLL_API ov::op::Op* relu(intel_npu_acceleration_library::ModelFactory* factory,
                                                         ov::op::Op* in0) {
     return factory->relu(in0);
+}
+
+intel_npu_acceleration_library_DLL_API ov::op::Op* sigmoid(intel_npu_acceleration_library::ModelFactory* factory,
+                                                        ov::op::Op* in0) {
+    return factory->sigmoid(in0);
 }
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* swish(intel_npu_acceleration_library::ModelFactory* factory,
