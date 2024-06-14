@@ -10,7 +10,9 @@ import torch
 
 
 class MLP_PT(torch.nn.Module):
-    def __init__(self, hidden_size, intermediate_size, activation, bias=False, alpha=1.0):
+    def __init__(
+        self, hidden_size, intermediate_size, activation, bias=False, alpha=1.0
+    ):
         super().__init__()
         self.l1 = torch.nn.Linear(hidden_size, intermediate_size, bias=bias)
         if activation == "swiglu":
@@ -18,7 +20,9 @@ class MLP_PT(torch.nn.Module):
             # pytorch call swish silu
             self.fn = lambda x: torch.nn.functional.silu(self.l1(x)) * self.swiglu(x)
         elif activation == "elu":
-            self.fn = lambda x: torch.nn.functional.elu(self.l1(x), alpha=alpha, inplace=False)
+            self.fn = lambda x: torch.nn.functional.elu(
+                self.l1(x), alpha=alpha, inplace=False
+            )
         elif activation == "gelu":
             self.fn = lambda x: torch.nn.functional.gelu(self.l1(x), approximate="tanh")
         elif activation == "hswish":
@@ -44,7 +48,9 @@ class MLP_PT(torch.nn.Module):
 @pytest.mark.parametrize("intermediate_dim", [512, 256])
 @pytest.mark.parametrize("bias", [False, True])
 @pytest.mark.parametrize("alpha", [1.0, 0.5])
-@pytest.mark.parametrize("activation", [ "swiglu", "elu", "gelu", "hswish", "mish", "relu", "sigmoid"])
+@pytest.mark.parametrize(
+    "activation", ["swiglu", "elu", "gelu", "hswish", "mish", "relu", "sigmoid"]
+)
 def test_mlp(batch, hidden_dim, intermediate_dim, bias, activation, alpha):
 
     module = MLP_PT(hidden_dim, intermediate_dim, activation, bias, alpha)
@@ -69,7 +75,8 @@ def test_mlp(batch, hidden_dim, intermediate_dim, bias, activation, alpha):
     out = model.run(
         X.numpy(),
         *[w.to(torch.float16).numpy() for w in weights],
-        op_id="000", alpha=alpha
+        op_id="000",
+        alpha=alpha,
     )
 
     assert out.shape == reference.shape
