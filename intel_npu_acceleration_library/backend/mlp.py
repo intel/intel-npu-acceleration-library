@@ -16,9 +16,9 @@ class MLP(NNFactory):
         intermediate_size: int,
         activation: str = "swiglu",
         bias: Optional[bool] = False,
-        alpha: Optional[float] = 1.0,
         profile: bool = False,
         device: str = "NPU",
+        **additional_args
     ):
         """Initialize the Linear class.
 
@@ -27,9 +27,9 @@ class MLP(NNFactory):
             intermediate_size (int): intermediate_size
             activation (str): activation function to use
             bias (Optional[bool], optional): Enable/Disable bias. Defaults to False.
-            alpha (Optional[float], optional): Alpha value for the elu formulation. Defaults to 1.0
             profile (bool): Enable/Disable profiling. Defaults to False.
             device (str): Target device, default to "NPU".
+            additional_args: additional arguments
         """
         super().__init__(profile, device)
         self.intermediate_size = intermediate_size
@@ -43,7 +43,7 @@ class MLP(NNFactory):
             mm1 = self.eltwise_mul(self.swish(mm1), mm2)  # type: ignore[attr-defined]
         elif activation == "elu":
             atc_fn = getattr(self, activation)
-            mm1 = atc_fn(mm1, alpha)
+            mm1 = atc_fn(mm1, additional_args.get("alpha", 1.0))
         else:
             atc_fn = getattr(self, activation)
             mm1 = atc_fn(mm1)
