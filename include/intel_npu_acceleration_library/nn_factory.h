@@ -84,16 +84,163 @@ public:
     }
 
     /**
+     * @brief Create a new absolute activation operation
+     *
+     * @param input operation's input node
+     * @return ov::op::Op*
+     */
+    ov::op::Op* abs_act(ov::op::Op* input) {
+        auto abs_act = std::make_shared<ov::opset1::Abs>(input->output(0));
+        operations.push_back(abs_act);
+        return abs_act.get();
+    }
+
+    /**
+     * @brief Create a new arccos activation operation
+     *
+     * @param input operation's input node
+     * @return ov::op::Op*
+     */
+    ov::op::Op* acos_act(ov::op::Op* input) {
+        auto acos_act = std::make_shared<ov::opset1::Acos>(input->output(0));
+        operations.push_back(acos_act);
+        return acos_act.get();
+    }
+
+    /**
+     * @brief Create a new arcsin activation operation
+     *
+     * @param input operation's input node
+     * @return ov::op::Op*
+     */
+    ov::op::Op* asin_act(ov::op::Op* input) {
+        auto asin_act = std::make_shared<ov::opset1::Asin>(input->output(0));
+        operations.push_back(asin_act);
+        return asin_act.get();
+    }
+
+    /**
+     * @brief Create a new arctan activation operation
+     *
+     * @param input operation's input node
+     * @return ov::op::Op*
+     */
+    ov::op::Op* atan_act(ov::op::Op* input) {
+        auto atan_act = std::make_shared<ov::opset1::Atan>(input->output(0));
+        operations.push_back(atan_act);
+        return atan_act.get();
+    }
+
+    /**
+     * @brief Create a new ceiling operation
+     *
+     * @param input operation's input node
+     * @return ov::op::Op*
+     */
+    ov::op::Op* ceiling(ov::op::Op* input) {
+        auto ceiling = std::make_shared<ov::opset1::Ceiling>(input->output(0));
+        operations.push_back(ceiling);
+        return ceiling.get();
+    }
+
+    /**
+     * @brief Create a new clamp operation
+     *
+     * @param input operation's input node
+     * @param min lower bound of the <min;max> range
+     * @param max the upper bound of the <min;max> range
+     * @return ov::op::Op*
+     */
+    ov::op::Op* clamp(ov::op::Op* input, float min, float max) {
+        auto clamp = std::make_shared<ov::opset1::Clamp>(input->output(0), min, max);
+        operations.push_back(clamp);
+        return clamp.get();
+    }
+
+    /**
+     * @brief Create a new cosine activation operation
+     *
+     * @param input operation's input node
+     * @return ov::op::Op*
+     */
+    ov::op::Op* cos_act(ov::op::Op* input) {
+        auto cos_act = std::make_shared<ov::opset1::Cos>(input->output(0));
+        operations.push_back(cos_act);
+        return cos_act.get();
+    }
+
+    /**
+     * @brief Create a new cosh activation operation
+     *
+     * @param input operation's input node
+     * @return ov::op::Op*
+     */
+    ov::op::Op* cosh_act(ov::op::Op* input) {
+        auto cosh_act = std::make_shared<ov::opset1::Cosh>(input->output(0));
+        operations.push_back(cosh_act);
+        return cosh_act.get();
+    }
+
+    /**
      * @brief Create a new elu operation
      *
      * @param input operation's input node
-     * @param alpha alpha value for the elu formulation
+     * @param alpha multiplier for negative values
      * @return ov::op::Op*
      */
     ov::op::Op* elu(ov::op::Op* input, float alpha) {
         auto elu = std::make_shared<ov::opset1::Elu>(input->output(0), alpha);
         operations.push_back(elu);
         return elu.get();
+    }
+
+    /**
+     * @brief Create a new erf activation operation
+     *
+     * @param input operation's input node
+     * @return ov::op::Op*
+     */
+    ov::op::Op* erf_act(ov::op::Op* input) {
+        auto erf_act = std::make_shared<ov::opset1::Erf>(input->output(0));
+        operations.push_back(erf_act);
+        return erf_act.get();
+    }
+
+    /**
+     * @brief Create a new exp activation operation
+     *
+     * @param input operation's input node
+     * @return ov::op::Op*
+     */
+    ov::op::Op* exp_act(ov::op::Op* input) {
+        auto exp_act = std::make_shared<ov::opset1::Exp>(input->output(0));
+        operations.push_back(exp_act);
+        return exp_act.get();
+    }
+
+    /**
+     * @brief Create a new floor activation operation
+     *
+     * @param input operation's input node
+     * @return ov::op::Op*
+     */
+    ov::op::Op* floor_act(ov::op::Op* input) {
+        auto floor_act = std::make_shared<ov::opset1::Floor>(input->output(0));
+        operations.push_back(floor_act);
+        return floor_act.get();
+    }
+
+    /**
+     * @brief Create a new grn operation
+     *
+     * @param input operation's input node
+     * @param bias bias added to the variance
+     * @return ov::op::Op*
+     */
+    ov::op::Op* grn(ov::op::Op* input, float bias) {
+        auto grn = std::make_shared<ov::opset1::GRN>(input->output(0), bias);
+        operations.push_back(grn);
+        return grn.get();
     }
 
     /**
@@ -106,6 +253,162 @@ public:
         auto gelu = std::make_shared<ov::opset7::Gelu>(input->output(0), ov::op::GeluApproximationMode::TANH);
         operations.push_back(gelu);
         return gelu.get();
+    }
+
+    /**
+     * @brief Create a new natural log operation
+     *
+     * @param input operation's input node
+     * @return ov::op::Op*
+     */
+    ov::op::Op* log_act(ov::op::Op* input) {
+        auto log_act = std::make_shared<ov::opset1::Log>(input->output(0));
+        operations.push_back(log_act);
+        return log_act.get();
+    }
+
+    /**
+     * @brief Create a new negative operation
+     *
+     * @param input operation's input node
+     * @return ov::op::Op*
+     */
+    ov::op::Op* negative(ov::op::Op* input) {
+        auto negative = std::make_shared<ov::opset1::Negative>(input->output(0));
+        operations.push_back(negative);
+        return negative.get();
+    }
+
+    /**
+     * @brief Create a new relu operation
+     *
+     * @param input operation's input node
+     * @return ov::op::Op*
+     */
+    ov::op::Op* relu(ov::op::Op* input) {
+        auto relu = std::make_shared<ov::opset1::Relu>(input->output(0));
+        operations.push_back(relu);
+        return relu.get();
+    }
+
+    /**
+     * @brief Create a new sigmoid operation
+     *
+     * @param input operation's input node
+     * @return ov::op::Op*
+     */
+    ov::op::Op* sigmoid(ov::op::Op* input) {
+        auto sigmoid = std::make_shared<ov::opset1::Sigmoid>(input->output(0));
+        operations.push_back(sigmoid);
+        return sigmoid.get();
+    }
+
+    /**
+     * @brief Create a new sign operation
+     *
+     * @param input operation's input node
+     * @return ov::op::Op*
+     */
+    ov::op::Op* sign(ov::op::Op* input) {
+        auto sign = std::make_shared<ov::opset1::Sign>(input->output(0));
+        operations.push_back(sign);
+        return sign.get();
+    }
+
+    /**
+     * @brief Create a new sine activation operation
+     *
+     * @param input operation's input node
+     * @return ov::op::Op*
+     */
+    ov::op::Op* sin_act(ov::op::Op* input) {
+        auto sin_act = std::make_shared<ov::opset1::Sin>(input->output(0));
+        operations.push_back(sin_act);
+        return sin_act.get();
+    }
+
+    /**
+     * @brief Create a new sinh activation operation
+     *
+     * @param input operation's input node
+     * @return ov::op::Op*
+     */
+    ov::op::Op* sinh_act(ov::op::Op* input) {
+        auto sinh_act = std::make_shared<ov::opset1::Sinh>(input->output(0));
+        operations.push_back(sinh_act);
+        return sinh_act.get();
+    }
+
+    /**
+     * @brief Create a new sqrt activation operation
+     *
+     * @param input operation's input node
+     * @return ov::op::Op*
+     */
+    ov::op::Op* sqrt_act(ov::op::Op* input) {
+        auto sqrt_act = std::make_shared<ov::opset1::Sqrt>(input->output(0));
+        operations.push_back(sqrt_act);
+        return sqrt_act.get();
+    }
+
+    /**
+     * @brief Create a new tan activation operation
+     *
+     * @param input operation's input node
+     * @return ov::op::Op*
+     */
+    ov::op::Op* tan_act(ov::op::Op* input) {
+        auto tan_act = std::make_shared<ov::opset1::Tan>(input->output(0));
+        operations.push_back(tan_act);
+        return tan_act.get();
+    }
+
+    /**
+     * @brief Create a new tanh activation operation
+     *
+     * @param input operation's input node
+     * @return ov::op::Op*
+     */
+    ov::op::Op* tanh_act(ov::op::Op* input) {
+        auto tanh_act = std::make_shared<ov::opset1::Tanh>(input->output(0));
+        operations.push_back(tanh_act);
+        return tanh_act.get();
+    }
+
+    /**
+     * @brief Create a new arccosh activation operation
+     *
+     * @param input operation's input node
+     * @return ov::op::Op*
+     */
+    ov::op::Op* acosh_act(ov::op::Op* input) {
+        auto acosh_act = std::make_shared<ov::opset4::Acosh>(input->output(0));
+        operations.push_back(acosh_act);
+        return acosh_act.get();
+    }
+
+    /**
+     * @brief Create a new arcsinh activation operation
+     *
+     * @param input operation's input node
+     * @return ov::op::Op*
+     */
+    ov::op::Op* asinh_act(ov::op::Op* input) {
+        auto asinh_act = std::make_shared<ov::opset4::Asinh>(input->output(0));
+        operations.push_back(asinh_act);
+        return asinh_act.get();
+    }
+
+    /**
+     * @brief Create a new arctanh activation operation
+     *
+     * @param input operation's input node
+     * @return ov::op::Op*
+     */
+    ov::op::Op* atanh_act(ov::op::Op* input) {
+        auto atanh_act = std::make_shared<ov::opset4::Atanh>(input->output(0));
+        operations.push_back(atanh_act);
+        return atanh_act.get();
     }
 
     /**
@@ -133,27 +436,52 @@ public:
     }
 
     /**
-     * @brief Create a new relu operation
+     * @brief Create a new softplus operation
      *
      * @param input operation's input node
      * @return ov::op::Op*
      */
-    ov::op::Op* relu(ov::op::Op* input) {
-        auto relu = std::make_shared<ov::opset1::Relu>(input->output(0));
-        operations.push_back(relu);
-        return relu.get();
+    ov::op::Op* softplus(ov::op::Op* input) {
+        auto softplus = std::make_shared<ov::opset4::SoftPlus>(input->output(0));
+        operations.push_back(softplus);
+        return softplus.get();
     }
 
     /**
-     * @brief Create a new sigmoid operation
+     * @brief Create a new hsigmoid operation
      *
      * @param input operation's input node
      * @return ov::op::Op*
      */
-    ov::op::Op* sigmoid(ov::op::Op* input) {
-        auto sigmoid = std::make_shared<ov::opset1::Sigmoid>(input->output(0));
-        operations.push_back(sigmoid);
-        return sigmoid.get();
+    ov::op::Op* hsigmoid(ov::op::Op* input) {
+        auto hsigmoid = std::make_shared<ov::opset5::HSigmoid>(input->output(0));
+        operations.push_back(hsigmoid);
+        return hsigmoid.get();
+    }
+
+    /**
+     * @brief Create a new round activation operation
+     *
+     * @param input operation's input node
+     * @return ov::op::Op*
+     */
+    ov::op::Op* round_act(ov::op::Op* input) {
+        auto round_act =
+                std::make_shared<ov::opset5::Round>(input->output(0), ov::op::v5::Round::RoundMode::HALF_TO_EVEN);
+        operations.push_back(round_act);
+        return round_act.get();
+    }
+
+    /**
+     * @brief Create a new softsign operation
+     *
+     * @param input operation's input node
+     * @return ov::op::Op*
+     */
+    ov::op::Op* softsign(ov::op::Op* input) {
+        auto softsign = std::make_shared<ov::opset9::SoftSign>(input->output(0));
+        operations.push_back(softsign);
+        return softsign.get();
     }
 
     /**

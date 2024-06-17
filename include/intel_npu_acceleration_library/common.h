@@ -8,9 +8,11 @@
 #include "openvino/opsets/opset1.hpp"
 #include "openvino/opsets/opset13.hpp"
 #include "openvino/opsets/opset4.hpp"
+#include "openvino/opsets/opset5.hpp"
 #include "openvino/opsets/opset6.hpp"
 #include "openvino/opsets/opset7.hpp"
 #include "openvino/opsets/opset8.hpp"
+#include "openvino/opsets/opset9.hpp"
 #include "openvino/runtime/intel_npu/properties.hpp"
 
 #if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)

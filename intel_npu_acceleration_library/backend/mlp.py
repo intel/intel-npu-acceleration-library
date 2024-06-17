@@ -41,9 +41,15 @@ class MLP(NNFactory):
         if activation == "swiglu":
             mm2 = self.linear(input, self.intermediate_size, self.hidden_size, bias=bias)  # type: ignore[attr-defined]
             mm1 = self.eltwise_mul(self.swish(mm1), mm2)  # type: ignore[attr-defined]
+        elif activation == "clamp":
+            atc_fn = getattr(self, activation)
+            mm1 = atc_fn(mm1, additional_args.get("min"), additional_args.get("max"))
         elif activation == "elu":
             atc_fn = getattr(self, activation)
             mm1 = atc_fn(mm1, additional_args.get("alpha", 1.0))
+        elif activation == "grn":
+            atc_fn = getattr(self, activation)
+            mm1 = atc_fn(mm1, additional_args.get("grn_bias"))
         else:
             atc_fn = getattr(self, activation)
             mm1 = atc_fn(mm1)
