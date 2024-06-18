@@ -11,9 +11,13 @@ import torch
 
 
 class DummyConv(torch.nn.Module):
-    def __init__(self, in_channels, out_channels, kernels, bias):
+    def __init__(self, in_channels, out_channels, kernels, bias, groups):
         super().__init__()
-        self.conv = torch.nn.Conv2d(in_channels, out_channels, kernels, bias=bias)
+        if groups == -1:
+            groups = out_channels
+        self.conv = torch.nn.Conv2d(
+            in_channels, out_channels, kernels, bias=bias, groups=groups
+        )
 
     def forward(self, x):
         return self.conv(x)
@@ -25,12 +29,18 @@ class DummyConv(torch.nn.Module):
 @pytest.mark.parametrize("dim", [16, 128])
 @pytest.mark.parametrize("bias", [True, False])
 @pytest.mark.parametrize("dtype", [torch.float16])
-def test_conv(in_channels, out_channels, kernels, dim, bias, dtype):
+@pytest.mark.parametrize("groups", [1, -1])
+def test_conv(in_channels, out_channels, kernels, dim, bias, dtype, groups):
     torch.manual_seed(42)
+
+    if groups != 1 and in_channels != out_channels:
+        pytest.skip("DW convolutions require in_channels == out_channels")
 
     with torch.no_grad():
         X = torch.rand((1, in_channels, dim, dim), dtype=torch.float16)
-        conv = DummyConv(in_channels, out_channels, kernels, bias=bias).half()
+        conv = DummyConv(
+            in_channels, out_channels, kernels, bias=bias, groups=groups
+        ).half()
         conv.conv.weight.data *= 128
         y_ref = conv(X)
 

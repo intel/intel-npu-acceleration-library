@@ -99,11 +99,21 @@ public:
      * @param pads_begin convolution padding begin
      * @param pads_ends convolution padding end
      * @param dilations convolution dilations
+     * @param groups convolution groups
      * @return ov::op::Op*
      */
     ov::op::Op* convolution(ov::op::Op* input, ov::op::Op*& weights, std::vector<size_t> strides,
                             std::vector<size_t> pads_begin, std::vector<size_t> pads_ends,
-                            std::vector<size_t> dilations) {
+                            std::vector<size_t> dilations, size_t groups = 1) {
+        if (groups > 1) {
+            auto conv = std::make_shared<ov::opset8::GroupConvolution>(
+                    input->output(0), weights->output(0), ov::Strides(strides),
+                    ov::CoordinateDiff(std::vector<std::ptrdiff_t>(pads_begin.begin(), pads_begin.end())),
+                    ov::CoordinateDiff(std::vector<std::ptrdiff_t>(pads_ends.begin(), pads_ends.end())),
+                    ov::Strides(dilations));
+            operations.push_back(conv);
+            return conv.get();
+        }
         auto conv = std::make_shared<ov::opset8::Convolution>(
                 input->output(0), weights->output(0), ov::Strides(strides),
                 ov::CoordinateDiff(std::vector<std::ptrdiff_t>(pads_begin.begin(), pads_begin.end())),

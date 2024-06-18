@@ -41,6 +41,10 @@ class Conv2d(torch.nn.Module):
         super().__init__()
 
         self.op_id = str(uuid.uuid4())
+        if groups > 1:
+            new_shape = [groups, weights.shape[0] // groups] + list(weights.shape[1:])
+            weights = weights.view(*new_shape)
+
         self.parameters = [weights]
         if bias is not None:
             self.parameters.append(bias)
