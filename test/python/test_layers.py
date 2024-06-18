@@ -3,8 +3,9 @@
 # SPDX-License-Identifier: Apache 2.0
 #
 
-from intel_npu_acceleration_library.backend import MLP
+from intel_npu_acceleration_library.backend import MLP, NNFactory
 from sklearn.metrics import r2_score
+import numpy as np
 import pytest
 import torch
 
@@ -120,38 +121,19 @@ class MLP_PT(torch.nn.Module):
 @pytest.mark.parametrize(
     "activation",
     [
-        "abs_act",
-        "acos_act",
-        "asin_act",
-        "atan_act",
         "ceiling",
         "clamp",
-        "cos_act",
-        "cosh_act",
-        "erf_act",
         "elu",
-        "exp_act",
-        "floor_act",
         "grn",
         "gelu",
-        "log_act",
         "negative",
         "relu",
         "sigmoid",
         "sign",
-        "sin_act",
-        "sinh_act",
-        "sqrt_act",
-        "tan_act",
-        "tanh_act",
-        "acosh_act",
-        "asinh_act",
-        "atanh_act",
         "hswish",
         "mish",
         "softplus",
         "hsigmoid",
-        "round_act",
         "softsign",
         "swiglu",
     ],
@@ -198,5 +180,63 @@ def test_mlp(
     )
 
     assert out.shape == reference.shape
+
+    assert 1 - r2_score(reference, out) < 0.001
+
+
+@pytest.mark.parametrize("batch", [16, 128])
+@pytest.mark.parametrize("hidden_dim", [256, 512])
+@pytest.mark.parametrize(
+    "activation",
+    [
+        "log_act",
+        "tanh_act",
+        "sqrt_act",
+        "abs_act",
+        "acos_act",
+        "asin_act",
+        "atan_act",
+        "cos_act",
+        "cosh_act",
+        "erf_act",
+        "exp_act",
+        "floor_act",
+        "sin_act",
+        "sinh_act",
+        "tan_act",
+        "acosh_act",
+        "asinh_act",
+        "atanh_act",
+        "round_act",
+    ],
+)
+def test_activation(batch, hidden_dim, activation):
+
+    # X in the range [-0.5, 0.5]
+    X = torch.rand((batch, hidden_dim)).to(torch.float16) - 0.5
+
+    if activation == "acosh_act":
+        # acosh is only defined for x >= 1
+        X += 1.5
+    elif activation in ["sqrt_act", "tanh_act"]:
+        # sqrt and tanh are only defined for x >= 0
+        X += 0.5
+    elif activation == "log_act":
+        # log needs a bigger input to avoid negative overflow in fp16
+        # log in range [0.5, 1.5]
+        X += 1
+
+    reference = eval(f"torch.{activation.replace('_act', '')}")(X).numpy()
+
+    model = NNFactory()
+    input = model.parameter(X.shape)
+    output = eval(f"model.{activation}")(input)
+    model.compile(output)
+
+    out = model.run(X.numpy())
+
+    assert out.shape == reference.shape, "Output shape mismatch"
+    assert np.isfinite(reference).all(), "Pytorch Reference contains NaN or Inf"
+    assert np.isfinite(out).all(), "NPU output contains NaN or Inf"
 
     assert 1 - r2_score(reference, out) < 0.001
