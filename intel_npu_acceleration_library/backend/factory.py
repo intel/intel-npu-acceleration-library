@@ -6,7 +6,7 @@
 from intel_npu_acceleration_library.backend.base import BaseNPUBackendWithPrefetch
 from intel_npu_acceleration_library.backend.ops import get_supported_ops
 from intel_npu_acceleration_library.backend.bindings import lib as backend_lib
-from typing import Optional, Tuple, Any, Union
+from typing import Optional, Tuple, Any, Union, Sequence
 from functools import partial
 import numpy.typing as npt
 import numpy as np
@@ -92,6 +92,61 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             self._mm, shape_ptr.size, shape_ptr, self.get_backend_dtype(dtype)
         )
 
+    def convolution(
+        self,
+        input_node: ctypes._Pointer,
+        weights_shape: Sequence[int],
+        strides: Sequence[int],
+        padding_begins: Sequence[int],
+        padding_ends: Sequence[int],
+        dilation: Sequence[int],
+        groups: int,
+        bias: bool,
+        act_dtype: npt.DTypeLike = np.float16,
+        wt_dtype: npt.DTypeLike = np.float16,
+    ) -> ctypes._Pointer:
+        """Generate a convolution layer.
+
+        Args:
+            input_node (ctypes._Pointer): layer input node
+            weights_shape (Sequence[int]): weights shape
+            strides (Sequence[int]): strides
+            padding_begins (Sequence[int]): padding
+            padding_ends (Sequence[int]): padding
+            dilation (Sequence[int]): dilation
+            groups (int): groups
+            bias (bool): enable/disable bias
+            act_dtype (npt.DTypeLike, optional): activation dtype. Defaults to np.float16.
+            wt_dtype (npt.DTypeLike, optional): weight dtype. Defaults to np.float16.
+
+        Returns:
+            ctypes._Pointer: output node
+        """
+        weights_shape_ptr = np.array(weights_shape, dtype=np.uint32)
+        strides_ptr = np.array(strides, dtype=np.uint32)
+        padding_begins_ptr = np.array(padding_begins, dtype=np.uint32)
+        padding_ends_ptr = np.array(padding_ends, dtype=np.uint32)
+        dilation_ptr = np.array(dilation, dtype=np.uint32)
+
+        return backend_lib.convolution(
+            self._mm,
+            input_node,
+            weights_shape_ptr.size,
+            weights_shape_ptr,
+            strides_ptr.size,
+            strides_ptr,
+            padding_begins_ptr.size,
+            padding_begins_ptr,
+            padding_ends_ptr.size,
+            padding_ends_ptr,
+            dilation_ptr.size,
+            dilation_ptr,
+            groups,
+            bias,
+            self.get_backend_dtype(act_dtype),
+            self.get_backend_dtype(wt_dtype),
+        )
+
     def linear(
         self,
         input_node: ctypes._Pointer,
@@ -112,7 +167,7 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             wt_dtype (npt.DTypeLike, optional): weight dtype. Defaults to np.float16.
 
         Returns:
-            ctypes._Pointer: _description_
+            ctypes._Pointer: output node
         """
         return backend_lib.linear(
             self._mm,
