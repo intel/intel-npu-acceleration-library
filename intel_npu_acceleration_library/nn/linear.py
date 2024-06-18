@@ -10,6 +10,7 @@ from intel_npu_acceleration_library.dtypes import NPUDtype
 from typing import Optional, Union
 import torch
 import uuid
+import math
 
 
 class Linear(torch.nn.Module):
@@ -129,8 +130,8 @@ class QuantizedLinear(torch.nn.Module):
             raise RuntimeError(
                 f"Quantized weight must be in torch.(u)int8 dtype instead of {self.weight.dtype}"
             )
-        self.scale = scale
         self.outC, self.inC = self.weight.shape
+        self.scale = scale * math.sqrt(self.inC)
         self.bias = bias
         self.op_id = str(uuid.uuid4())
         self._mm = AutogradMatMul.apply

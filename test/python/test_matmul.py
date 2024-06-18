@@ -65,6 +65,9 @@ def test_qmatmul_per_channel_scales(batch, inC, outC):
 
     assert mm
 
+    # Adapt for numerically accurate qmatumul
+    scale *= np.sqrt(inC)
+
     npu_mm = mm.run(X.numpy(), weights_quant.numpy(), scale.numpy())
 
     assert np.isfinite(npu_mm).all()

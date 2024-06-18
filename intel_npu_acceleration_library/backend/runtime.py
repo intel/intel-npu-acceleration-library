@@ -115,8 +115,6 @@ def run_matmul(
     with record_function(f"npu_{profiling_name}_{key}"):
         ret = model.run(x_np, *op_args, **op_kwargs)
 
-    # ret[np.isneginf(ret)] = np.finfo(ret.dtype).min
-    # ret[np.isposinf(ret)] = np.finfo(ret.dtype).max
     return adapt_output_tensor(ret, expected_output_shape, input_dtype)
 
 
@@ -137,11 +135,7 @@ def adapt_output_tensor(
     if output.shape != original_shape:
         output = output.view(original_shape)
     # needs to copy as the same buffer can be reutilized
-    return torch.clamp(
-        output.to(input_dtype, copy=True),
-        min=torch.finfo(input_dtype).min,
-        max=torch.finfo(input_dtype).max,
-    )
+    return output.to(input_dtype, copy=True)
 
 
 def set_contiguous(tensor: torch.Tensor) -> torch.Tensor:

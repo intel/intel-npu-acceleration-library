@@ -20,6 +20,10 @@ def test_profiling_matmul():
     X = np.random.uniform(-1, 1, (512, 2048)).astype(np.float16)
     W = np.random.uniform(-1, 1, (512, 2048)).astype(np.float16)
     W_q, scale = quantize_tensor(torch.tensor(W))
+
+    # Adapt for numerically accurate qmatumul
+    scale *= np.sqrt(inC)
+
     if os.path.exists("profiling.json"):
         os.remove("profiling.json")
 
