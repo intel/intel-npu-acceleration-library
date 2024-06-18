@@ -376,19 +376,20 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* convolution(
 
     if (quantized) {
         weights = factory->convert_to(weights, act_ov_dtype);
-        auto scale = factory->constant<double>(act_ov_dtype, std::vector<size_t>({1, 1}), sqrt(1.0 / weight_shape[1]));
+        auto scale =
+                factory->constant<double>(act_ov_dtype, std::vector<size_t>({1, 1, 1, 1}), sqrt(1.0 / weight_shape[1]));
         in0 = factory->eltwise_mul(in0, scale);
     }
 
     auto mm = factory->convolution(in0, weights, strides, pad_begins, pad_ends, dilations);
 
     if (quantized) {
-        auto scale = factory->parameter({1, weight_shape[0]}, act_ov_dtype);
+        auto scale = factory->parameter({1, weight_shape[0], 1, 1}, act_ov_dtype);
         mm = factory->eltwise_mul(mm, scale);
     }
 
     if (bias) {
-        auto bias = factory->parameter({1, weight_shape[0]}, act_ov_dtype);
+        auto bias = factory->parameter({1, weight_shape[0], 1, 1}, act_ov_dtype);
         return factory->eltwise_add(mm, bias);
     }
     return mm;
