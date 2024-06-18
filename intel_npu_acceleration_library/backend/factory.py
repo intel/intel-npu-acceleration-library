@@ -75,12 +75,12 @@ class NNFactory(BaseNPUBackendWithPrefetch):
         return ctypes.c_char_p(str_dtype.encode())
 
     def parameter(
-        self, shape: Tuple[int, int], dtype: npt.DTypeLike = np.float16
+        self, shape: Sequence[int], dtype: npt.DTypeLike = np.float16
     ) -> ctypes._Pointer:
         """Generate a model input parameter.
 
         Args:
-            shape (Tuple[int, int]): Parameter shape (only 2D tensors supported atm)
+            shape (Sequence[int]): Parameter shape
             dtype (np.dtype, optional): parameter type np.int8, np.uint8 and np.float16 supported. Defaults to np.float16. Unit8 represents packed i4 dtypes
 
         Returns:
@@ -96,12 +96,12 @@ class NNFactory(BaseNPUBackendWithPrefetch):
         self,
         input_node: ctypes._Pointer,
         weights_shape: Sequence[int],
-        strides: Sequence[int],
-        padding_begins: Sequence[int],
-        padding_ends: Sequence[int],
-        dilation: Sequence[int],
-        groups: int,
         bias: bool,
+        strides: Sequence[int] = (1, 1),
+        padding_begins: Sequence[int] = (0, 0),
+        padding_ends: Sequence[int] = (0, 0),
+        dilation: Sequence[int] = (1, 1),
+        groups: int = 1,
         act_dtype: npt.DTypeLike = np.float16,
         wt_dtype: npt.DTypeLike = np.float16,
     ) -> ctypes._Pointer:
