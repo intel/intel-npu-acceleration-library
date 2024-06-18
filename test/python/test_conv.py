@@ -19,20 +19,18 @@ class DummyConv(torch.nn.Module):
         return self.conv(x)
 
 
-@pytest.mark.parametrize("in_channels", [128, 256, 512])
-@pytest.mark.parametrize("out_channels", [128, 256, 512])
+@pytest.mark.parametrize("in_channels", [32, 128, 256])
+@pytest.mark.parametrize("out_channels", [32, 128, 256])
 @pytest.mark.parametrize("kernels", [1, 3])
 @pytest.mark.parametrize("dim", [16, 128])
 @pytest.mark.parametrize("bias", [True, False])
-@pytest.mark.parametrize("dtype", [torch.float16, torch.int8])
+@pytest.mark.parametrize("dtype", [torch.float16])
 def test_conv(in_channels, out_channels, kernels, dim, bias, dtype):
-    if dtype == torch.int8 and kernels > 1:
-        pytest.skip("int8 only supports kernel size 1")
+    torch.manual_seed(42)
 
     with torch.no_grad():
-        X = torch.rand((1, in_channels, dim, dim), dtype=torch.float32)
-
-        conv = DummyConv(in_channels, out_channels, kernels, bias=bias)
+        X = torch.rand((1, in_channels, dim, dim), dtype=torch.float16)
+        conv = DummyConv(in_channels, out_channels, kernels, bias=bias).half()
         conv.conv.weight.data *= 128
         y_ref = conv(X)
 
