@@ -62,7 +62,7 @@ class Conv2d(torch.nn.Module):
         Returns:
             torch.Tensor: The weight tensor.
         """
-        return self.weight
+        return self.parameters[0]
 
     @property
     def bias(self) -> torch.Tensor:
@@ -72,7 +72,9 @@ class Conv2d(torch.nn.Module):
         Returns:
             torch.Tensor: The bias tensor.
         """
-        return self.bias
+        if len(self.parameters) > 1:
+            return self.parameters[1]
+        return None
 
     def compute_output_dim(self, dim, idx) -> int:
         """

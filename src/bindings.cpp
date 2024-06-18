@@ -370,6 +370,9 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* convolution(
     std::vector<size_t> pad_ends(pad_ends_data, pad_ends_data + pad_ends_size);
     std::vector<size_t> dilations(dilations_data, dilations_data + dilations_size);
 
+    // TODO: Implement groups
+    (void)groups;
+
     bool quantized = wt_ov_dtype == ov::element::Type_t::i8 || wt_ov_dtype == ov::element::Type_t::i4;
 
     auto weights = factory->parameter(weight_shape, wt_ov_dtype);
