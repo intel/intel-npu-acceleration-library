@@ -166,7 +166,8 @@ def test_mlp(
 
     X = torch.rand((batch, hidden_dim)).to(torch.float16) - 0.5
 
-    reference = module(X.to(torch.float32)).to(torch.float16).numpy()
+    module.to(torch.float16)
+    reference = module(X).numpy()
 
     model = MLP(
         (batch, hidden_dim),

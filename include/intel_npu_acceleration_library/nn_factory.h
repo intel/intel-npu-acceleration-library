@@ -46,6 +46,36 @@ public:
     }
 
     /**
+     * @brief Create a new constant object
+     *
+     * @param dtype element type of the tensor constant
+     * @param shape shape of the tensor constant
+     * @param values vector of literals for initializing the tensor constant
+     * @return ov::op::Op*
+     */
+    template <typename T>
+    ov::op::Op* constant(ov::element::Type_t dtype, std::vector<size_t> shape, std::vector<T>& values) {
+        auto constant = std::make_shared<ov::opset1::Constant>(dtype, ov::Shape(shape), values);
+        operations.push_back(constant);
+        return constant.get();
+    }
+
+    /**
+     * @brief Create a new constant object
+     *
+     * @param dtype element type of the tensor constant
+     * @param shape shape of the tensor constant
+     * @param value value for initializing the tensor constant
+     * @return ov::op::Op*
+     */
+    template <class T, class = typename std::enable_if<std::is_fundamental<T>::value>::type>
+    ov::op::Op* constant(ov::element::Type_t dtype, std::vector<size_t> shape, T value) {
+        auto constant = std::make_shared<ov::opset1::Constant>(dtype, ov::Shape(shape), value);
+        operations.push_back(constant);
+        return constant.get();
+    }
+
+    /**
      * @brief Create a new matmul operation
      *
      * @param input matmul lhs input
