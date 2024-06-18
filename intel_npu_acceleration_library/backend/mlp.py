@@ -18,6 +18,7 @@ class MLP(NNFactory):
         bias: Optional[bool] = False,
         profile: bool = False,
         device: str = "NPU",
+        **additional_args
     ):
         """Initialize the Linear class.
 
@@ -28,6 +29,7 @@ class MLP(NNFactory):
             bias (Optional[bool], optional): Enable/Disable bias. Defaults to False.
             profile (bool): Enable/Disable profiling. Defaults to False.
             device (str): Target device, default to "NPU".
+            additional_args: additional arguments
         """
         super().__init__(profile, device)
         self.intermediate_size = intermediate_size
@@ -39,6 +41,15 @@ class MLP(NNFactory):
         if activation == "swiglu":
             mm2 = self.linear(input, self.intermediate_size, self.hidden_size, bias=bias)  # type: ignore[attr-defined]
             mm1 = self.eltwise_mul(self.swish(mm1), mm2)  # type: ignore[attr-defined]
+        elif activation == "clamp":
+            atc_fn = getattr(self, activation)
+            mm1 = atc_fn(mm1, additional_args.get("min"), additional_args.get("max"))
+        elif activation == "elu":
+            atc_fn = getattr(self, activation)
+            mm1 = atc_fn(mm1, additional_args.get("alpha", 1.0))
+        elif activation == "grn":
+            atc_fn = getattr(self, activation)
+            mm1 = atc_fn(mm1, additional_args.get("grn_bias"))
         else:
             atc_fn = getattr(self, activation)
             mm1 = atc_fn(mm1)
