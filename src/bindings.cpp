@@ -337,6 +337,8 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* linear(intel_npu_acceleration
     auto weights = factory->parameter({dim0, dim1}, wt_ov_dtype);
     if (quantized) {
         weights = factory->convert_to(weights, act_ov_dtype);
+        auto scale = factory->constant<double>(act_ov_dtype, std::vector<size_t>({1, 1}), sqrt(1.0 / dim1));
+        in0 = factory->eltwise_mul(in0, scale);
     }
 
     auto mm = factory->matmul(in0, weights);

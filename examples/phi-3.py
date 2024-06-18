@@ -39,8 +39,8 @@ pipe = pipeline(
 generation_args = {
     "max_new_tokens": 500,
     "return_full_text": False,
-    "temperature": 0.0,
-    "do_sample": False,
+    "temperature": 0.7,
+    "do_sample": True,
     "streamer": streamer,
 }
 
