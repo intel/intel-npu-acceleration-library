@@ -37,6 +37,6 @@ outputs = model.generate(
     input_ids,
     max_new_tokens=256,
     eos_token_id=terminators,
-    do_sample=False,
+    do_sample=True,
     streamer=streamer,
 )
