@@ -58,6 +58,7 @@ class build_ext(build_ext_orig):
         cmake_args = [
             f'-DCMAKE_LIBRARY_OUTPUT_DIRECTORY={os.path.join(extdir.parent.absolute(), ext.name, "lib")}',
             "-DCMAKE_BUILD_TYPE=" + config,
+            "-DSETUPTOOL_BUILD=True",
         ]
 
         # example of build args

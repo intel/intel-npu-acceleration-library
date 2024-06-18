@@ -61,6 +61,15 @@ class NPUDtype:
         else:
             return super().__eq__(value)
 
+    def __repr__(self) -> str:
+        """
+        Return a string representation of the NPUDtype object.
+
+        Returns:
+            str: The string representation of the NPUDtype object.
+        """
+        return self.name
+
 
 float16 = NPUDtype("fp16", 16, -65504, 65504, torch.float16)
 bfloat16 = NPUDtype("bfloat16", 16, -65504, 65504, torch.float16)
