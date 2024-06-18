@@ -131,6 +131,9 @@ class QuantizedLinear(torch.nn.Module):
                 f"Quantized weight must be in torch.(u)int8 dtype instead of {self.weight.dtype}"
             )
         self.outC, self.inC = self.weight.shape
+        if self.weight.dtype == torch.uint8:
+            # In case is Int4 we need to double the input channels because weights are compressed
+            self.inC *= 2
         self.scale = scale * math.sqrt(self.inC)
         self.bias = bias
         self.op_id = str(uuid.uuid4())

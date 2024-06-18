@@ -19,8 +19,8 @@ class NN(torch.nn.Module):
         self,
     ) -> None:
         super().__init__()
-        self.l1 = torch.nn.Linear(32, 64)
-        self.l2 = torch.nn.Linear(64, 32)
+        self.l1 = torch.nn.Linear(32, 128, bias=False)
+        self.l2 = torch.nn.Linear(128, 32, bias=False)
         self.relu = torch.nn.functional.relu
 
     def forward(self, x):
@@ -34,9 +34,9 @@ x = 128 * (torch.rand((16, 32), dtype=torch.float16) - 0.5)
 @pytest.mark.parametrize("dtype", [torch.float16, torch.int8, int4])
 def test_compilation(dtype):
 
-    model = NN()
+    model = NN().half()
 
-    y_ref = model(x.to(torch.float32)).detach()
+    y_ref = model(x).detach()
 
     compiled_model = compile(model, dtype)
 
