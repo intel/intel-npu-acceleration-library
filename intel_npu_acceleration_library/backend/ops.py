@@ -86,5 +86,7 @@ def get_supported_ops() -> List[SupportedOp]:
         ),
         SupportedOp(name="reshape", inputs=2),
         SupportedOp(name="transpose", inputs=2),
+        SupportedOp(name="squeeze", inputs=1),
+        SupportedOp(name="unsqueeze", inputs=2),
     ]
     return supported_ops

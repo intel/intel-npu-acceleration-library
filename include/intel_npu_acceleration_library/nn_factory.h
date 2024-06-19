@@ -166,6 +166,31 @@ public:
     }
 
     /**
+     * @brief create a new squeeze operation
+     *
+     * @param input tensor to be squeezed.
+     * @return ov::op::Op*
+     */
+    ov::op::Op* squeeze(ov::op::Op* input) {
+        auto squeeze = std::make_shared<ov::opset1::Squeeze>(input->output(0));
+        operations.push_back(squeeze);
+        return squeeze.get();
+    }
+
+    /**
+     * @brief create a new squeeze operation
+     *
+     * @param input tensor to be squeezed.
+     * @param axis tensor with axes to unsqueeze
+     * @return ov::op::Op*
+     */
+    ov::op::Op* unsqueeze(ov::op::Op* input, ov::op::Op* axis) {
+        auto unsqueeze = std::make_shared<ov::opset1::Unsqueeze>(input->output(0), axis->output(0));
+        operations.push_back(unsqueeze);
+        return unsqueeze.get();
+    }
+
+    /**
      * @brief Create a new absolute activation operation
      *
      * @param input operation's input node

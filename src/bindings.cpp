@@ -337,6 +337,16 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* transpose(intel_npu_accelerat
     return factory->transpose(input, input_order);
 }
 
+intel_npu_acceleration_library_DLL_API ov::op::Op* squeeze(intel_npu_acceleration_library::ModelFactory* factory,
+                                                           ov::op::Op* input) {
+    return factory->squeeze(input);
+}
+
+intel_npu_acceleration_library_DLL_API ov::op::Op* unsqueeze(intel_npu_acceleration_library::ModelFactory* factory,
+                                                             ov::op::Op* input, ov::op::Op* axis) {
+    return factory->unsqueeze(input, axis);
+}
+
 intel_npu_acceleration_library_DLL_API ov::op::Op* convert_to_fp16(
         intel_npu_acceleration_library::ModelFactory* factory, ov::op::Op* in0) {
     return factory->convert_to(in0, ov::element::Type_t::f16);
