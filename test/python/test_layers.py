@@ -184,6 +184,56 @@ def test_mlp(
 
 @pytest.mark.parametrize("batch", [16, 128])
 @pytest.mark.parametrize("hidden_dim", [256, 512])
+def test_data_movement(batch, hidden_dim):
+    X = (torch.rand((1, batch, hidden_dim)).to(torch.float16) - 0.5).numpy()
+
+    # Test reshape
+    model = NNFactory()
+    input = model.parameter(X.shape)
+    output = model.reshape(input, [1, hidden_dim, 1, batch])
+    model.compile(output)
+    out = model.run(X)
+    assert out.shape == (1, hidden_dim, 1, batch)
+
+    # Test transpose
+    model = NNFactory()
+    input = model.parameter(out.shape)
+    output = model.transpose(input, [0, 3, 1, 2])
+    model.compile(output)
+    out = model.run(out)
+
+    assert out.shape == (1, batch, hidden_dim, 1)
+
+    # Test squeeze
+    model = NNFactory()
+    input = model.parameter(out.shape)
+    output = model.squeeze(input)
+    model.compile(output)
+    out = model.run(out)
+
+    assert out.shape == (batch, hidden_dim)
+
+    # Test unsqueeze
+    model = NNFactory()
+    input = model.parameter(out.shape)
+    output = model.unsqueeze(input, -1)
+    model.compile(output)
+    out = model.run(out)
+
+    assert out.shape == (batch, hidden_dim, 1)
+
+    # Test negative shape
+    model = NNFactory()
+    input = model.parameter(out.shape)
+    output = model.reshape(input, [1, -1])
+    model.compile(output)
+    out = model.run(out)
+
+    assert out.shape == (1, batch * hidden_dim)
+
+
+@pytest.mark.parametrize("batch", [16, 128])
+@pytest.mark.parametrize("hidden_dim", [256, 512])
 @pytest.mark.parametrize(
     "activation",
     [

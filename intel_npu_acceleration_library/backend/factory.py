@@ -36,11 +36,12 @@ class NNFactory(BaseNPUBackendWithPrefetch):
         self.elapsed = None
 
         for op in get_supported_ops():
-            setattr(
-                self,
-                op.name.replace("_act", ""),
-                partial(self._call_backend_op, op.name),
-            )
+            if not hasattr(self, op.name.replace("_act", "")):
+                setattr(
+                    self,
+                    op.name.replace("_act", ""),
+                    partial(self._call_backend_op, op.name),
+                )
 
     def _call_backend_op(self, op_name: str, *parameters: Any) -> Any:
         """Dynamically call a backend operation.
@@ -186,6 +187,51 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             self.get_backend_dtype(act_dtype),
             self.get_backend_dtype(wt_dtype),
         )
+
+    def reshape(
+        self, input_node: ctypes._Pointer, shape: Sequence[int]
+    ) -> ctypes._Pointer:
+        """Generate a reshape layer.
+
+        Args:
+            input_node (ctypes._Pointer): layer input node
+            shape (Sequence[int]): shape
+
+        Returns:
+            ctypes._Pointer: output node
+        """
+        shape_node = self.constant(shape)
+        return backend_lib.reshape(self._mm, input_node, shape_node)
+
+    def transpose(
+        self, input_node: ctypes._Pointer, input_order: Sequence[int]
+    ) -> ctypes._Pointer:
+        """Generate a transpose layer.
+
+        Args:
+            input_node (ctypes._Pointer): layer input node
+            input_order (Sequence[int]): input order
+
+        Returns:
+            ctypes._Pointer: output node
+        """
+        input_order_node = self.constant(input_order)
+        return backend_lib.transpose(self._mm, input_node, input_order_node)
+
+    def unsqueeze(
+        self, input_node: ctypes._Pointer, axis: Sequence[int]
+    ) -> ctypes._Pointer:
+        """Generate an unsqueeze layer.
+
+        Args:
+            input_node (ctypes._Pointer): layer input node
+            axis (Sequence[int]): axis
+
+        Returns:
+            ctypes._Pointer: output node
+        """
+        axis_node = self.constant(axis)
+        return backend_lib.unsqueeze(self._mm, input_node, axis_node)
 
     def get_output_tensor_shape(self):
         """Get output tensor shape.
