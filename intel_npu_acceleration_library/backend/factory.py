@@ -72,6 +72,10 @@ class NNFactory(BaseNPUBackendWithPrefetch):
         elif dtype == np.uint8:
             # u8 represents packed i4 dtypes
             str_dtype = "int4"
+        elif dtype == np.int32:
+            str_dtype = "int32"
+        elif dtype == np.int64:
+            str_dtype = "int64"
         elif dtype == np.float16:
             str_dtype = "float16"
         else:

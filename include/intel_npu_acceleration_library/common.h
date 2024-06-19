@@ -47,6 +47,10 @@ ov::element::Type_t dtype_from_string(const std::string& dtype) {
         return ov::element::Type_t::i8;
     } else if (dtype == "int4" || dtype == "i4") {
         return ov::element::Type_t::i4;
+    } else if (dtype == "int32" || dtype == "i32") {
+        return ov::element::Type_t::i32;
+    } else if (dtype == "int64" || dtype == "i64") {
+        return ov::element::Type_t::i64;
     }
     if (dtype == "float16" || dtype == "half" || dtype == "f16") {
         return ov::element::Type_t::f16;
