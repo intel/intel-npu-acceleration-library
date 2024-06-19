@@ -124,6 +124,48 @@ public:
     }
 
     /**
+     * @brief Create a new gather operation
+     *
+     * @param input tensor from which slices are gathered
+     * @param indices tensor with indexes to gather
+     * @param axis The tensor is a dimension index to gather data from
+     * @param batch_dims The number of batch dimension in data and indices tensors.
+     * @return ov::op::Op*
+     */
+    ov::op::Op* gather(ov::op::Op* input, ov::op::Op* indices, ov::op::Op* axis, const size_t batch_dims = 0) {
+        auto gather =
+                std::make_shared<ov::opset8::Gather>(input->output(0), indices->output(0), axis->output(0), batch_dims);
+        operations.push_back(gather);
+        return gather.get();
+    }
+
+    /**
+     * @brief create a new reshape operation
+     *
+     * @param input tensor to be reshaped.
+     * @param shape new shape tensor, -1 is allowed for one dimension, it will be calculated automatically.
+     * @return ov::op::Op*
+     */
+    ov::op::Op* reshape(ov::op::Op* input, ov::op::Op* shape) {
+        auto reshape = std::make_shared<ov::opset1::Reshape>(input->output(0), shape->output(0), true);
+        operations.push_back(reshape);
+        return reshape.get();
+    }
+
+    /**
+     * @brief create a new transpose operation
+     *
+     * @param input tensor to be transposed.
+     * @param shape permutation tensor, the new order of dimensions.
+     * @return ov::op::Op*
+     */
+    ov::op::Op* transpose(ov::op::Op* input, ov::op::Op* input_order) {
+        auto reshape = std::make_shared<ov::opset1::Transpose>(input->output(0), input_order->output(0));
+        operations.push_back(reshape);
+        return reshape.get();
+    }
+
+    /**
      * @brief Create a new absolute activation operation
      *
      * @param input operation's input node

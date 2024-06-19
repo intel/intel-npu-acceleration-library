@@ -321,6 +321,22 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* softmax(intel_npu_acceleratio
     return factory->softmax(in0);
 }
 
+intel_npu_acceleration_library_DLL_API ov::op::Op* gather(intel_npu_acceleration_library::ModelFactory* factory,
+                                                          ov::op::Op* input, ov::op::Op* indices, ov::op::Op* axis,
+                                                          const size_t batch_dims) {
+    return factory->gather(input, indices, axis, batch_dims);
+}
+
+intel_npu_acceleration_library_DLL_API ov::op::Op* reshape(intel_npu_acceleration_library::ModelFactory* factory,
+                                                           ov::op::Op* input, ov::op::Op* shape) {
+    return factory->reshape(input, shape);
+}
+
+intel_npu_acceleration_library_DLL_API ov::op::Op* transpose(intel_npu_acceleration_library::ModelFactory* factory,
+                                                             ov::op::Op* input, ov::op::Op* input_order) {
+    return factory->transpose(input, input_order);
+}
+
 intel_npu_acceleration_library_DLL_API ov::op::Op* convert_to_fp16(
         intel_npu_acceleration_library::ModelFactory* factory, ov::op::Op* in0) {
     return factory->convert_to(in0, ov::element::Type_t::f16);
