@@ -350,6 +350,7 @@ def generate_with_static_shape(
         out = model(
             input_ids=input_ids,
             attention_mask=attention_mask,
+            position_ids=position_ids,
             past_key_values=past_key_values,
         )
 
