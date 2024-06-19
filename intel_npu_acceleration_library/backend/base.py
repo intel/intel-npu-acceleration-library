@@ -25,7 +25,7 @@ def adapt_weight(w: np.ndarray) -> np.ndarray:
     elif len(w.shape) == 2:
         return w, w.shape
     else:
-        w_adapted = w.flatten().reshape((1, -1))
+        w_adapted = w.reshape((1, -1))
         return w_adapted, w_adapted.shape
 
 

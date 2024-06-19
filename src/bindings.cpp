@@ -355,6 +355,46 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* linear(intel_npu_acceleration
     return mm;
 }
 
+intel_npu_acceleration_library_DLL_API ov::op::Op* convolution(
+        intel_npu_acceleration_library::ModelFactory* factory, ov::op::Op* in0, size_t weight_shape_size,
+        unsigned int* weight_shape_data, size_t strides_size, unsigned int* strides_data, size_t pad_begins_size,
+        unsigned int* pad_begins_data, size_t pad_ends_size, unsigned int* pad_ends_data, size_t dilations_size,
+        unsigned int* dilations_data, size_t groups, bool bias, char* act_dtype, char* wt_dtype) {
+    ov::element::Type_t act_ov_dtype = intel_npu_acceleration_library::dtype_from_string(std::string(act_dtype));
+    ov::element::Type_t wt_ov_dtype = intel_npu_acceleration_library::dtype_from_string(std::string(wt_dtype));
+
+    // Create vectors from the input data
+    std::vector<size_t> weight_shape(weight_shape_data, weight_shape_data + weight_shape_size);
+    std::vector<size_t> strides(strides_data, strides_data + strides_size);
+    std::vector<size_t> pad_begins(pad_begins_data, pad_begins_data + pad_begins_size);
+    std::vector<size_t> pad_ends(pad_ends_data, pad_ends_data + pad_ends_size);
+    std::vector<size_t> dilations(dilations_data, dilations_data + dilations_size);
+
+    bool quantized = wt_ov_dtype == ov::element::Type_t::i8 || wt_ov_dtype == ov::element::Type_t::i4;
+
+    auto weights = factory->parameter(weight_shape, wt_ov_dtype);
+
+    if (quantized) {
+        weights = factory->convert_to(weights, act_ov_dtype);
+        auto scale =
+                factory->constant<double>(act_ov_dtype, std::vector<size_t>({1, 1, 1, 1}), sqrt(1.0 / weight_shape[1]));
+        in0 = factory->eltwise_mul(in0, scale);
+    }
+
+    auto mm = factory->convolution(in0, weights, strides, pad_begins, pad_ends, dilations, groups);
+
+    if (quantized) {
+        auto scale = factory->parameter({1, weight_shape[0], 1, 1}, act_ov_dtype);
+        mm = factory->eltwise_mul(mm, scale);
+    }
+
+    if (bias) {
+        auto bias = factory->parameter({1, weight_shape[0], 1, 1}, act_ov_dtype);
+        return factory->eltwise_add(mm, bias);
+    }
+    return mm;
+}
+
 intel_npu_acceleration_library_DLL_API ov::op::Op* scaled_dot_product_attention(
         intel_npu_acceleration_library::ModelFactory* factory, ov::op::Op* query, ov::op::Op* key, ov::op::Op* value,
         ov::op::Op* attn_mask, bool is_causal) {
