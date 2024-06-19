@@ -171,10 +171,10 @@ public:
      * @param input operation's input node
      * @return ov::op::Op*
      */
-    ov::op::Op* abs_act(ov::op::Op* input) {
-        auto abs_act = std::make_shared<ov::opset1::Abs>(input->output(0));
-        operations.push_back(abs_act);
-        return abs_act.get();
+    ov::op::Op* abs(ov::op::Op* input) {
+        auto abs = std::make_shared<ov::opset1::Abs>(input->output(0));
+        operations.push_back(abs);
+        return abs.get();
     }
 
     /**
@@ -183,10 +183,10 @@ public:
      * @param input operation's input node
      * @return ov::op::Op*
      */
-    ov::op::Op* acos_act(ov::op::Op* input) {
-        auto acos_act = std::make_shared<ov::opset1::Acos>(input->output(0));
-        operations.push_back(acos_act);
-        return acos_act.get();
+    ov::op::Op* acos(ov::op::Op* input) {
+        auto acos = std::make_shared<ov::opset1::Acos>(input->output(0));
+        operations.push_back(acos);
+        return acos.get();
     }
 
     /**
@@ -195,10 +195,10 @@ public:
      * @param input operation's input node
      * @return ov::op::Op*
      */
-    ov::op::Op* asin_act(ov::op::Op* input) {
-        auto asin_act = std::make_shared<ov::opset1::Asin>(input->output(0));
-        operations.push_back(asin_act);
-        return asin_act.get();
+    ov::op::Op* asin(ov::op::Op* input) {
+        auto asin = std::make_shared<ov::opset1::Asin>(input->output(0));
+        operations.push_back(asin);
+        return asin.get();
     }
 
     /**
@@ -207,10 +207,10 @@ public:
      * @param input operation's input node
      * @return ov::op::Op*
      */
-    ov::op::Op* atan_act(ov::op::Op* input) {
-        auto atan_act = std::make_shared<ov::opset1::Atan>(input->output(0));
-        operations.push_back(atan_act);
-        return atan_act.get();
+    ov::op::Op* atan(ov::op::Op* input) {
+        auto atan = std::make_shared<ov::opset1::Atan>(input->output(0));
+        operations.push_back(atan);
+        return atan.get();
     }
 
     /**
@@ -245,10 +245,10 @@ public:
      * @param input operation's input node
      * @return ov::op::Op*
      */
-    ov::op::Op* cos_act(ov::op::Op* input) {
-        auto cos_act = std::make_shared<ov::opset1::Cos>(input->output(0));
-        operations.push_back(cos_act);
-        return cos_act.get();
+    ov::op::Op* cos(ov::op::Op* input) {
+        auto cos = std::make_shared<ov::opset1::Cos>(input->output(0));
+        operations.push_back(cos);
+        return cos.get();
     }
 
     /**
@@ -257,10 +257,10 @@ public:
      * @param input operation's input node
      * @return ov::op::Op*
      */
-    ov::op::Op* cosh_act(ov::op::Op* input) {
-        auto cosh_act = std::make_shared<ov::opset1::Cosh>(input->output(0));
-        operations.push_back(cosh_act);
-        return cosh_act.get();
+    ov::op::Op* cosh(ov::op::Op* input) {
+        auto cosh = std::make_shared<ov::opset1::Cosh>(input->output(0));
+        operations.push_back(cosh);
+        return cosh.get();
     }
 
     /**
@@ -282,10 +282,10 @@ public:
      * @param input operation's input node
      * @return ov::op::Op*
      */
-    ov::op::Op* erf_act(ov::op::Op* input) {
-        auto erf_act = std::make_shared<ov::opset1::Erf>(input->output(0));
-        operations.push_back(erf_act);
-        return erf_act.get();
+    ov::op::Op* erf(ov::op::Op* input) {
+        auto erf = std::make_shared<ov::opset1::Erf>(input->output(0));
+        operations.push_back(erf);
+        return erf.get();
     }
 
     /**
@@ -294,10 +294,10 @@ public:
      * @param input operation's input node
      * @return ov::op::Op*
      */
-    ov::op::Op* exp_act(ov::op::Op* input) {
-        auto exp_act = std::make_shared<ov::opset1::Exp>(input->output(0));
-        operations.push_back(exp_act);
-        return exp_act.get();
+    ov::op::Op* exp(ov::op::Op* input) {
+        auto exp = std::make_shared<ov::opset1::Exp>(input->output(0));
+        operations.push_back(exp);
+        return exp.get();
     }
 
     /**
@@ -306,10 +306,10 @@ public:
      * @param input operation's input node
      * @return ov::op::Op*
      */
-    ov::op::Op* floor_act(ov::op::Op* input) {
-        auto floor_act = std::make_shared<ov::opset1::Floor>(input->output(0));
-        operations.push_back(floor_act);
-        return floor_act.get();
+    ov::op::Op* floor(ov::op::Op* input) {
+        auto floor = std::make_shared<ov::opset1::Floor>(input->output(0));
+        operations.push_back(floor);
+        return floor.get();
     }
 
     /**
@@ -343,10 +343,10 @@ public:
      * @param input operation's input node
      * @return ov::op::Op*
      */
-    ov::op::Op* log_act(ov::op::Op* input) {
-        auto log_act = std::make_shared<ov::opset1::Log>(input->output(0));
-        operations.push_back(log_act);
-        return log_act.get();
+    ov::op::Op* log(ov::op::Op* input) {
+        auto log = std::make_shared<ov::opset1::Log>(input->output(0));
+        operations.push_back(log);
+        return log.get();
     }
 
     /**
@@ -403,10 +403,10 @@ public:
      * @param input operation's input node
      * @return ov::op::Op*
      */
-    ov::op::Op* sin_act(ov::op::Op* input) {
-        auto sin_act = std::make_shared<ov::opset1::Sin>(input->output(0));
-        operations.push_back(sin_act);
-        return sin_act.get();
+    ov::op::Op* sin(ov::op::Op* input) {
+        auto sin = std::make_shared<ov::opset1::Sin>(input->output(0));
+        operations.push_back(sin);
+        return sin.get();
     }
 
     /**
@@ -415,10 +415,10 @@ public:
      * @param input operation's input node
      * @return ov::op::Op*
      */
-    ov::op::Op* sinh_act(ov::op::Op* input) {
-        auto sinh_act = std::make_shared<ov::opset1::Sinh>(input->output(0));
-        operations.push_back(sinh_act);
-        return sinh_act.get();
+    ov::op::Op* sinh(ov::op::Op* input) {
+        auto sinh = std::make_shared<ov::opset1::Sinh>(input->output(0));
+        operations.push_back(sinh);
+        return sinh.get();
     }
 
     /**
@@ -427,10 +427,10 @@ public:
      * @param input operation's input node
      * @return ov::op::Op*
      */
-    ov::op::Op* sqrt_act(ov::op::Op* input) {
-        auto sqrt_act = std::make_shared<ov::opset1::Sqrt>(input->output(0));
-        operations.push_back(sqrt_act);
-        return sqrt_act.get();
+    ov::op::Op* sqrt(ov::op::Op* input) {
+        auto sqrt = std::make_shared<ov::opset1::Sqrt>(input->output(0));
+        operations.push_back(sqrt);
+        return sqrt.get();
     }
 
     /**
@@ -439,10 +439,10 @@ public:
      * @param input operation's input node
      * @return ov::op::Op*
      */
-    ov::op::Op* tan_act(ov::op::Op* input) {
-        auto tan_act = std::make_shared<ov::opset1::Tan>(input->output(0));
-        operations.push_back(tan_act);
-        return tan_act.get();
+    ov::op::Op* tan(ov::op::Op* input) {
+        auto tan = std::make_shared<ov::opset1::Tan>(input->output(0));
+        operations.push_back(tan);
+        return tan.get();
     }
 
     /**
@@ -451,10 +451,10 @@ public:
      * @param input operation's input node
      * @return ov::op::Op*
      */
-    ov::op::Op* tanh_act(ov::op::Op* input) {
-        auto tanh_act = std::make_shared<ov::opset1::Tanh>(input->output(0));
-        operations.push_back(tanh_act);
-        return tanh_act.get();
+    ov::op::Op* tanh(ov::op::Op* input) {
+        auto tanh = std::make_shared<ov::opset1::Tanh>(input->output(0));
+        operations.push_back(tanh);
+        return tanh.get();
     }
 
     /**
@@ -463,10 +463,10 @@ public:
      * @param input operation's input node
      * @return ov::op::Op*
      */
-    ov::op::Op* acosh_act(ov::op::Op* input) {
-        auto acosh_act = std::make_shared<ov::opset4::Acosh>(input->output(0));
-        operations.push_back(acosh_act);
-        return acosh_act.get();
+    ov::op::Op* acosh(ov::op::Op* input) {
+        auto acosh = std::make_shared<ov::opset4::Acosh>(input->output(0));
+        operations.push_back(acosh);
+        return acosh.get();
     }
 
     /**
@@ -475,10 +475,10 @@ public:
      * @param input operation's input node
      * @return ov::op::Op*
      */
-    ov::op::Op* asinh_act(ov::op::Op* input) {
-        auto asinh_act = std::make_shared<ov::opset4::Asinh>(input->output(0));
-        operations.push_back(asinh_act);
-        return asinh_act.get();
+    ov::op::Op* asinh(ov::op::Op* input) {
+        auto asinh = std::make_shared<ov::opset4::Asinh>(input->output(0));
+        operations.push_back(asinh);
+        return asinh.get();
     }
 
     /**
@@ -487,10 +487,10 @@ public:
      * @param input operation's input node
      * @return ov::op::Op*
      */
-    ov::op::Op* atanh_act(ov::op::Op* input) {
-        auto atanh_act = std::make_shared<ov::opset4::Atanh>(input->output(0));
-        operations.push_back(atanh_act);
-        return atanh_act.get();
+    ov::op::Op* atanh(ov::op::Op* input) {
+        auto atanh = std::make_shared<ov::opset4::Atanh>(input->output(0));
+        operations.push_back(atanh);
+        return atanh.get();
     }
 
     /**
@@ -547,11 +547,10 @@ public:
      * @param input operation's input node
      * @return ov::op::Op*
      */
-    ov::op::Op* round_act(ov::op::Op* input) {
-        auto round_act =
-                std::make_shared<ov::opset5::Round>(input->output(0), ov::op::v5::Round::RoundMode::HALF_TO_EVEN);
-        operations.push_back(round_act);
-        return round_act.get();
+    ov::op::Op* round(ov::op::Op* input) {
+        auto round = std::make_shared<ov::opset5::Round>(input->output(0), ov::op::v5::Round::RoundMode::HALF_TO_EVEN);
+        operations.push_back(round);
+        return round.get();
     }
 
     /**

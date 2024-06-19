@@ -148,22 +148,22 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* eltwise_div(intel_npu_acceler
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* abs_act(intel_npu_acceleration_library::ModelFactory* factory,
                                                            ov::op::Op* in0) {
-    return factory->abs_act(in0);
+    return factory->abs(in0);
 }
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* acos_act(intel_npu_acceleration_library::ModelFactory* factory,
                                                             ov::op::Op* in0) {
-    return factory->acos_act(in0);
+    return factory->acos(in0);
 }
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* asin_act(intel_npu_acceleration_library::ModelFactory* factory,
                                                             ov::op::Op* in0) {
-    return factory->asin_act(in0);
+    return factory->asin(in0);
 }
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* atan_act(intel_npu_acceleration_library::ModelFactory* factory,
                                                             ov::op::Op* in0) {
-    return factory->atan_act(in0);
+    return factory->atan(in0);
 }
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* ceiling(intel_npu_acceleration_library::ModelFactory* factory,
@@ -178,17 +178,17 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* clamp(intel_npu_acceleration_
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* cos_act(intel_npu_acceleration_library::ModelFactory* factory,
                                                            ov::op::Op* in0) {
-    return factory->cos_act(in0);
+    return factory->cos(in0);
 }
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* cosh_act(intel_npu_acceleration_library::ModelFactory* factory,
                                                             ov::op::Op* in0) {
-    return factory->cosh_act(in0);
+    return factory->cosh(in0);
 }
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* erf_act(intel_npu_acceleration_library::ModelFactory* factory,
                                                            ov::op::Op* in0) {
-    return factory->erf_act(in0);
+    return factory->erf(in0);
 }
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* elu(intel_npu_acceleration_library::ModelFactory* factory,
@@ -198,7 +198,7 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* elu(intel_npu_acceleration_li
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* floor_act(intel_npu_acceleration_library::ModelFactory* factory,
                                                              ov::op::Op* in0) {
-    return factory->floor_act(in0);
+    return factory->floor(in0);
 }
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* grn(intel_npu_acceleration_library::ModelFactory* factory,
@@ -208,7 +208,7 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* grn(intel_npu_acceleration_li
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* exp_act(intel_npu_acceleration_library::ModelFactory* factory,
                                                            ov::op::Op* in0) {
-    return factory->exp_act(in0);
+    return factory->exp(in0);
 }
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* gelu(intel_npu_acceleration_library::ModelFactory* factory,
@@ -218,7 +218,7 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* gelu(intel_npu_acceleration_l
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* log_act(intel_npu_acceleration_library::ModelFactory* factory,
                                                            ov::op::Op* in0) {
-    return factory->log_act(in0);
+    return factory->log(in0);
 }
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* negative(intel_npu_acceleration_library::ModelFactory* factory,
@@ -243,42 +243,42 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* sign(intel_npu_acceleration_l
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* sin_act(intel_npu_acceleration_library::ModelFactory* factory,
                                                            ov::op::Op* in0) {
-    return factory->sin_act(in0);
+    return factory->sin(in0);
 }
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* sinh_act(intel_npu_acceleration_library::ModelFactory* factory,
                                                             ov::op::Op* in0) {
-    return factory->sinh_act(in0);
+    return factory->sinh(in0);
 }
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* sqrt_act(intel_npu_acceleration_library::ModelFactory* factory,
                                                             ov::op::Op* in0) {
-    return factory->sqrt_act(in0);
+    return factory->sqrt(in0);
 }
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* tan_act(intel_npu_acceleration_library::ModelFactory* factory,
                                                            ov::op::Op* in0) {
-    return factory->tan_act(in0);
+    return factory->tan(in0);
 }
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* tanh_act(intel_npu_acceleration_library::ModelFactory* factory,
                                                             ov::op::Op* in0) {
-    return factory->tanh_act(in0);
+    return factory->tanh(in0);
 }
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* acosh_act(intel_npu_acceleration_library::ModelFactory* factory,
                                                              ov::op::Op* in0) {
-    return factory->acosh_act(in0);
+    return factory->acosh(in0);
 }
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* asinh_act(intel_npu_acceleration_library::ModelFactory* factory,
                                                              ov::op::Op* in0) {
-    return factory->asinh_act(in0);
+    return factory->asinh(in0);
 }
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* atanh_act(intel_npu_acceleration_library::ModelFactory* factory,
                                                              ov::op::Op* in0) {
-    return factory->atanh_act(in0);
+    return factory->atanh(in0);
 }
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* hswish(intel_npu_acceleration_library::ModelFactory* factory,
@@ -303,7 +303,7 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* hsigmoid(intel_npu_accelerati
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* round_act(intel_npu_acceleration_library::ModelFactory* factory,
                                                              ov::op::Op* in0) {
-    return factory->round_act(in0);
+    return factory->round(in0);
 }
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* softsign(intel_npu_acceleration_library::ModelFactory* factory,
