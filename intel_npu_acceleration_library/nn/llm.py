@@ -33,10 +33,9 @@ class PhiMLP(torch.nn.Module):
         super().__init__()
         self.op_parameters = parameters
         self.op_id = str(uuid.uuid4())
-        intermediate_size, hidden_size = parameters[0].shape
+        intermediate_size, _ = parameters[0].shape
         self.backend_cls = partial(
             MLP,
-            hidden_size=hidden_size,
             intermediate_size=intermediate_size,
             activation="gelu",
             bias=True,
@@ -88,10 +87,8 @@ class FusedLlamaMLP(torch.nn.Module):
         super().__init__()
         self.op_parameters = parameters
         self.op_id = str(uuid.uuid4())
-        intermediate_size, hidden_size = parameters[0].shape
-        self.backend_cls = partial(
-            MLP, hidden_size=hidden_size, intermediate_size=intermediate_size
-        )
+        intermediate_size, _ = parameters[0].shape
+        self.backend_cls = partial(MLP, intermediate_size=intermediate_size)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """Torch module forward method.
@@ -353,6 +350,7 @@ def generate_with_static_shape(
         out = model(
             input_ids=input_ids,
             attention_mask=attention_mask,
+            position_ids=position_ids,
             past_key_values=past_key_values,
         )
 

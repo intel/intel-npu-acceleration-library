@@ -4,20 +4,20 @@
 #
 
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline, TextStreamer
-import intel_npu_acceleration_library
+from transformers import AutoTokenizer, pipeline, TextStreamer
+import intel_npu_acceleration_library as npu_lib
 import warnings
 
 torch.random.manual_seed(0)
 
-model = AutoModelForCausalLM.from_pretrained(
+model = npu_lib.NPUModelForCausalLM.from_pretrained(
     "microsoft/Phi-3-mini-4k-instruct",
     torch_dtype="auto",
-    trust_remote_code=True,
+    dtype=npu_lib.int4,
 )
-model = intel_npu_acceleration_library.compile(model, torch.float16)
+
 tokenizer = AutoTokenizer.from_pretrained("microsoft/Phi-3-mini-4k-instruct")
-streamer = TextStreamer(tokenizer)
+streamer = TextStreamer(tokenizer, skip_prompt=True)
 
 messages = [
     {
@@ -39,8 +39,8 @@ pipe = pipeline(
 generation_args = {
     "max_new_tokens": 500,
     "return_full_text": False,
-    "temperature": 0.0,
-    "do_sample": False,
+    "temperature": 0.7,
+    "do_sample": True,
     "streamer": streamer,
 }
 

@@ -25,10 +25,10 @@ class NN(torch.nn.Module):
 @pytest.mark.parametrize("inC", [256, 512])
 @pytest.mark.parametrize("outC", [256, 512])
 def test_explicit_quantization(batch, inC, outC):
-    module = intel_npu_acceleration_library.backend.NNFactory(inC, outC, batch)
+    module = intel_npu_acceleration_library.backend.NNFactory()
     assert module
 
-    input = module.input
+    input = module.parameter((batch, inC))
     assert input
 
     output = module.linear(input, outC, inC)
@@ -52,10 +52,10 @@ def test_explicit_quantization(batch, inC, outC):
 @pytest.mark.parametrize("inC", [256, 512])
 @pytest.mark.parametrize("outC", [256, 512])
 def test_i8_quantization(batch, inC, outC):
-    module = intel_npu_acceleration_library.backend.NNFactory(inC, outC, batch)
+    module = intel_npu_acceleration_library.backend.NNFactory()
     assert module
 
-    input = module.input
+    input = module.parameter((batch, inC))
     assert input
 
     output = module.linear(input, outC, inC, False, wt_dtype=np.int8)
@@ -70,7 +70,7 @@ def test_i8_quantization(batch, inC, outC):
     w_float = W.astype(np.float16) * S
     y_ref = np.matmul(X, w_float.T)
 
-    y = module.run(X, (W, S), op_id="0000")
+    y = module.run(X, (W, S * np.sqrt(inC)), op_id="0000")
 
     assert 1 - r2_score(y_ref, y) < 0.01
 
@@ -101,10 +101,10 @@ def test_compiled_quantized(batch, inC, outC):
 @pytest.mark.parametrize("outC", [256, 512])
 def test_i4_quantization(batch, inC, outC):
 
-    module = intel_npu_acceleration_library.backend.NNFactory(inC, outC, batch)
+    module = intel_npu_acceleration_library.backend.NNFactory()
     assert module
 
-    input = module.input
+    input = module.parameter((batch, inC))
     assert input
     # u8 represents packed i4 dtypes
     output = module.linear(input, outC, inC, False, wt_dtype=np.uint8)
@@ -124,7 +124,7 @@ def test_i4_quantization(batch, inC, outC):
         torch.from_numpy(W)
     ).numpy()
 
-    y = module.run(X, (W_npu, S), op_id="0000")
+    y = module.run(X, (W_npu, S * np.sqrt(inC)), op_id="0000")
 
     # assert y has no NaN
     assert not np.isnan(y).any()

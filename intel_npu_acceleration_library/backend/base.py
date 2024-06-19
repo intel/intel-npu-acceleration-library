@@ -16,18 +16,17 @@ def adapt_weight(w: np.ndarray) -> np.ndarray:
     Args:
         w (np.ndarray): weights array
 
-    Raises:
-        RuntimeError: Unsupported shape
-
     Returns:
         np.ndarray: The adapted array
     """
     if len(w.shape) == 1:
-        return w.reshape((1, -1))
+        w_adapted = w.reshape((1, -1))
+        return w_adapted, w_adapted.shape
     elif len(w.shape) == 2:
-        return w
+        return w, w.shape
     else:
-        raise RuntimeError(f"Unnupported shape > 2: {w.shape}")
+        w_adapted = w.reshape((1, -1))
+        return w_adapted, w_adapted.shape
 
 
 class BaseNPUBackend:
@@ -122,41 +121,39 @@ class BaseNPUBackendWithPrefetch(BaseNPUBackend):
                         raise RuntimeError(
                             "Quantized weights needs to be in int8 or uint8 format"
                         )
-                    shape = data.shape if len(data.shape) > 1 else [data.shape[0], 1]
+                    adapted_weights, shape = adapt_weight(data)
                     if scale.dtype == np.float16:
                         # Mixed precision matmul
                         if data.dtype == np.int8:
                             backend_lib.addIntParameter(
                                 param,
-                                adapt_weight(data),
-                                adapt_weight(scale),
+                                adapted_weights,
+                                adapt_weight(scale)[0],
                                 *shape,
                             )
                         else:
                             backend_lib.addInt4Parameter(
                                 param,
-                                adapt_weight(data),
-                                adapt_weight(scale),
+                                adapted_weights,
+                                adapt_weight(scale)[0],
                                 *shape,
                             )
                     elif scale.dtype == np.float32:
                         # FP16 matmul with CPU conversion
                         backend_lib.addIntParameterConversion(
                             param,
-                            adapt_weight(data),
-                            adapt_weight(scale),
+                            adapted_weights,
+                            adapt_weight(scale)[0],
                             *shape,
                         )
                     else:
                         raise ValueError(f"Invalid dtype for scale: {scale.dtype}")
                 else:
-                    shape = (
-                        weight.shape if len(weight.shape) > 1 else [weight.shape[0], 1]
-                    )
-                    backend_lib.addFloatParameter(param, adapt_weight(weight), *shape)
+                    adapted_weights, shape = adapt_weight(weight)
+                    backend_lib.addFloatParameter(param, adapted_weights, *shape)
         elif isinstance(weights, np.ndarray):
-            shape = weights.shape if len(weights.shape) > 1 else [weights.shape[0], 1]
-            backend_lib.addFloatParameter(param, adapt_weight(weights), *shape)
+            adapted_weights, shape = adapt_weight(weights)
+            backend_lib.addFloatParameter(param, adapted_weights, *shape)
         return param
 
     def add_to_map(

@@ -3,20 +3,18 @@
 # SPDX-License-Identifier: Apache 2.0
 #
 
-from transformers import AutoTokenizer, TextStreamer, AutoModelForCausalLM
-import intel_npu_acceleration_library
-import torch
+from transformers import AutoTokenizer, TextStreamer
+from intel_npu_acceleration_library import NPUModelForCausalLM, int4
 
 model_id = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
 
-model = AutoModelForCausalLM.from_pretrained(model_id, use_cache=True).eval()
+model = NPUModelForCausalLM.from_pretrained(
+    model_id, use_cache=True, dtype=int4, attn_implementation="sdpa"
+).eval()
 tokenizer = AutoTokenizer.from_pretrained(model_id, use_default_system_prompt=True)
 tokenizer.pad_token_id = tokenizer.eos_token_id
 streamer = TextStreamer(tokenizer, skip_special_tokens=True)
 
-
-print("Compile model for the NPU")
-model = intel_npu_acceleration_library.compile(model, dtype=torch.int8)
 
 query = input("Ask something: ")
 prefix = tokenizer(query, return_tensors="pt")["input_ids"]

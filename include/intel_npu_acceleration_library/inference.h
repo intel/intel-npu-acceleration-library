@@ -34,9 +34,6 @@ private:
 
 protected:
     std::shared_ptr<ov::Model> model;  ///< @brief OpenVINO model
-    size_t inC;                        ///< @brief Model input channels
-    size_t outC;                       ///< @brief Model output channels
-    size_t batch;                      ///< @brief Model batch szie
     std::string device;                ///< @brief Target device
     bool profile;                      ///< @brief Enable/disable profiling
 
@@ -87,13 +84,9 @@ public:
      * @brief Construct a new OVInferenceModel object
      *
      * @param device target device
-     * @param inC number of input channels
-     * @param outC number of output channels
-     * @param batch batch size
      * @param profile enable/disable profiling
      */
-    OVInferenceModel(std::string device, size_t inC, size_t outC, size_t batch, bool profile = false)
-            : inC(inC), outC(outC), batch(batch), device(device), profile(profile) {
+    OVInferenceModel(std::string device, bool profile = false): device(device), profile(profile) {
     }
 
     virtual ~OVInferenceModel() {
@@ -143,17 +136,60 @@ public:
     }
 
     /**
+     * @brief Get model input tensor
+     *
+     * @param idx input tensor index
+     *
+     * @return ov::Tensor
+     */
+    ov::Tensor getInputTensors(size_t idx) {
+        return infer_request.get_input_tensor(idx);
+    }
+
+    /**
+     * @brief Get model output tensor
+     *
+     * @param idx output tensor index
+     *
+     * @return ov::Tensor
+     */
+    ov::Tensor getOutputTensors(size_t idx) {
+        return infer_request.get_output_tensor(idx);
+    }
+
+    /**
+     * @brief Set the input activations
+     *
+     * @param _X pointer to the float16 input activation buffer
+     * @param idx input tensor index
+     */
+    void setInputTensor(half_ptr _X, size_t idx) {
+        auto tensor = infer_request.get_input_tensor(idx);
+        X = ov::Tensor(tensor.get_element_type(), tensor.get_shape(), (void*)_X);
+        infer_request.set_input_tensor(idx, X);
+    }
+
+    /**
+     * @brief Set the output activations
+     *
+     * @param _X pointer to the float16 output activation buffer
+     * @param idx output tensor index
+     */
+    void setOutputTensor(half_ptr _X, size_t idx) {
+        auto tensor = infer_request.get_output_tensor(idx);
+        X = ov::Tensor(tensor.get_element_type(), tensor.get_shape(), (void*)_X);
+        infer_request.set_output_tensor(idx, X);
+    }
+
+    /**
      * @brief Set the input and output activations
      *
      * @param _X pointer to the float16 input activation
      * @param _Out pointer to the float16 output activation
      */
     void setActivations(half_ptr _X, half_ptr _Out) {
-        X = ov::Tensor(ov::element::f16, ov::Shape({batch, inC}), (void*)_X);
-        Out = ov::Tensor(ov::element::f16, ov::Shape({batch, outC}), (void*)_Out);
-
-        infer_request.set_input_tensor(0, X);
-        infer_request.set_output_tensor(Out);
+        setInputTensor(_X, 0);
+        setOutputTensor(_Out, 0);
     }
 
     /**

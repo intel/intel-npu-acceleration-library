@@ -3,12 +3,15 @@
 # SPDX-License-Identifier: Apache 2.0
 #
 
+from functools import lru_cache
 from .bindings import lib
-import subprocess  # nosec B404
+import warnings
 import sys
-import re
+
+__min_npu_driver_version__ = 2408
 
 
+@lru_cache
 def npu_available() -> bool:
     """Return if the NPU is available.
 
@@ -18,41 +21,50 @@ def npu_available() -> bool:
     return lib.isNPUAvailable()
 
 
-def get_driver_version() -> str:
+def get_driver_installation_url() -> str:
+    """Get the driver installation URL.
+
+    Returns:
+        std: Return the driver installation url
+    """
+    if sys.platform == "win32":
+        return "Driver Update URL: https://www.intel.com/content/www/us/en/download/794734/intel-npu-driver-windows.html"
+    elif sys.platform == "linux":
+        return "Driver Update URL: https://github.com/intel/linux-npu-driver"
+    else:
+        return ""
+
+
+@lru_cache
+def get_driver_version() -> int:
     """Get the driver version for the Intel® NPU Acceleration Library.
 
     Raises:
         RuntimeError: an error is raised if the platform is not supported. Currently supported platforms are Windows and Linux
 
     Returns:
-        str: _description_
+        int: NPU driver version
     """
     if not npu_available():
         raise RuntimeError("NPU is not available on this system")
 
-    if sys.platform == "win32":
-        out = (
-            subprocess.check_output(  # nosec
-                'powershell -Command " Get-WmiObject Win32_PnPSignedDriver | select devicename, driverversion',
-                shell=True,
-            )
-            .decode("utf-8")
-            .strip()
-        )
+    return lib.getNPUDriverVersion()
 
-        npu_drivers = [
-            driver for driver in out.split("\n") if "Intel(R) AI Boost" in driver
-        ]
-        if len(npu_drivers) == 0:
-            raise RuntimeError("Cannot get driver version")
-        elif len(npu_drivers) > 1:
-            raise RuntimeError("Multiple drivers found")
-        else:
-            driver_info = re.search(r"(\d+\.\d+\.\d+\.\d+)", npu_drivers[0])
-            if driver_info:
-                driver_version = driver_info.group(1)
-                return driver_version
-            else:
-                raise RuntimeError("Cannot get driver version")
-    else:
-        raise RuntimeError(f"Cannot get driver version for {sys.platform}")
+
+def check_npu_and_driver_version():
+    """Check NPU and driver version."""
+    if not npu_available():
+        warnings.warn(
+            "NPU is not available in your system. Library will fallback to AUTO device selection mode",
+            stacklevel=2,
+        )
+    elif get_driver_version() < __min_npu_driver_version__:
+
+        warnings.warn(
+            f"\nWarning: Outdated Driver Detected!!!\n"
+            f"Current Driver Version: {get_driver_version()}, Minimum Required Version: {__min_npu_driver_version__}\n"
+            f"Using an outdated driver may result in reduced performance and unexpected errors and crashes"
+            f"To avoid these issues, please update your driver to the latest version.\n"
+            f"{get_driver_installation_url()}\n",
+            stacklevel=2,
+        )

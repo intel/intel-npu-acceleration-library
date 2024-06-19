@@ -12,7 +12,6 @@ from intel_npu_acceleration_library.dtypes import int8, int4
 import intel_npu_acceleration_library.nn as nn
 from torch._dynamo import register_backend
 from typing import Union, Callable, Any
-from packaging.version import Version
 from typing import List
 import torch
 
@@ -38,27 +37,41 @@ def compile(
             f"intel-npu-acceleration-library library do not support yet the requeste datatype: {dtype}"
         )
 
-    # Convert model to half precision if torch version is greater or equal to 2.3.0
-    if Version(torch.__version__) >= Version("2.3.0") and dtype != torch.float32:
-        model = model.half()
-
     # Prepare and optimize model for NPU
     with torch.no_grad():
         # General optimizations
-        apply_horizontal_fusion(model)
-        optimize_llama_attention(model, dtype)
+        apply_general_optimizations(model)
         if dtype in (int8, int4):
             # Quantize model
             model = quantize_model(model, dtype)
 
         # Model lowering to NPU ops
-        lower_linear(model, dtype)
+        create_npu_kernels(model)
 
     if dtype.is_floating_point and training:
         # Set model to evaluation only as quantized training is not supported yet
         return model
 
     return model.eval()
+
+
+def apply_general_optimizations(model: torch.nn.Module):
+    """Apply general optimizations to a torch.nn.Module.
+
+    Args:
+        model (torch.nn.Module): a pytorch nn.Module to compile and optimize for the npu
+    """
+    apply_horizontal_fusion(model)
+    optimize_llama_attention(model)
+
+
+def create_npu_kernels(model: torch.nn.Module):
+    """Create NPU kernels.
+
+    Args:
+        model (torch.nn.Module): a pytorch nn.Module to compile and optimize for the npu
+    """
+    lower_linear(model)
 
 
 def module_optimization(func: Callable) -> torch.nn.Module:
@@ -94,15 +107,12 @@ def module_optimization(func: Callable) -> torch.nn.Module:
 
 
 @module_optimization
-def lower_linear(
-    name: str, layer: torch.nn.Module, dtype: torch.dtype
-) -> Union[torch.nn.Module, None]:
+def lower_linear(name: str, layer: torch.nn.Module) -> Union[torch.nn.Module, None]:
     """Lower torch.nn.Linear layer to NPU equivalent operators.
 
     Args:
         name (str): Layer name
         layer (torch.nn.Module): Original torch.nn.Linear module
-        dtype (torch.dtype): Target datatype
 
     Raises:
         RuntimeError: unsupported quantization bits
@@ -111,9 +121,9 @@ def lower_linear(
         Union[torch.nn.Module, None]: Return the new NPU operator or None
     """
     if isinstance(layer, torch.nn.Linear):
-        return nn.Linear.fromTorch(layer, dtype)
+        return nn.Linear.fromTorch(layer)
     if isinstance(layer, torch.nn.Conv2d):
-        return nn.Conv2d.fromTorch(layer, dtype)
+        return nn.Conv2d.fromTorch(layer)
     if isinstance(layer, WeightOnlyLinear):
         if layer.bits == 4:
             return nn.QuantizedLinear(
@@ -148,20 +158,19 @@ def apply_horizontal_fusion(
 
 @module_optimization
 def optimize_llama_attention(
-    name: str, layer: torch.nn.Module, dtype: torch.dtype
+    name: str, layer: torch.nn.Module
 ) -> Union[torch.nn.Module, None]:
     """Optimize LLAMA attention block.
 
     Args:
         name (str): Module name
         layer (torch.nn.Module): Original Module
-        dtype (torch.dtype): Target datatype
 
     Returns:
         Union[torch.nn.Module, None]: optimized llama module
     """
     if isinstance(layer, (LlamaAttention, GemmaAttention)):
-        return nn.LlamaAttention.fromTorch(layer, dtype)
+        return nn.LlamaAttention.fromTorch(layer)
     return None
 
 

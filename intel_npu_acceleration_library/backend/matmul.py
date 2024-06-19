@@ -27,8 +27,11 @@ class MatMul(NNFactory):
             profile (bool): Enable/Disable profiling. Defaults to False.
             device (str): Target device, default to "NPU".
         """
-        super().__init__(inC, outC, batch, profile, device)
-        out = self.linear(self.input, outC, inC, bias=False)
+        super().__init__(profile, device)
+        self.inC, self.outC = inC, outC
+        self.batch = batch
+        input = self.parameter((self.batch, self.inC))
+        out = self.linear(input, outC, inC, bias=False)
         self.compile(out)
 
     def run(self, X: np.ndarray, W: np.ndarray) -> np.ndarray:

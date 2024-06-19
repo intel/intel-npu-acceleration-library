@@ -4,7 +4,7 @@
 #
 
 from intel_npu_acceleration_library.backend.factory import NNFactory
-from typing import Optional
+from typing import Optional, Sequence
 
 
 class MLP(NNFactory):
@@ -12,35 +12,47 @@ class MLP(NNFactory):
 
     def __init__(
         self,
-        hidden_size: int,
+        input_shape: Sequence[int],
         intermediate_size: int,
-        batch: int,
         activation: str = "swiglu",
         bias: Optional[bool] = False,
         profile: bool = False,
         device: str = "NPU",
+        **additional_args
     ):
         """Initialize the Linear class.
 
         Args:
-            hidden_size (int): hidden_size channels
+            input_shape (Sequence[int]): input shape channels
             intermediate_size (int): intermediate_size
-            batch (int): batch
             activation (str): activation function to use
             bias (Optional[bool], optional): Enable/Disable bias. Defaults to False.
             profile (bool): Enable/Disable profiling. Defaults to False.
             device (str): Target device, default to "NPU".
+            additional_args: additional arguments
         """
-        super().__init__(hidden_size, hidden_size, batch, profile, device)
+        super().__init__(profile, device)
+        self.intermediate_size = intermediate_size
+        self.batch, self.hidden_size = input_shape
+        input = self.parameter((self.batch, self.hidden_size))
 
-        mm1 = self.linear(self.input, intermediate_size, hidden_size, bias=bias)
+        mm1 = self.linear(input, self.intermediate_size, self.hidden_size, bias=bias)
 
         if activation == "swiglu":
-            mm2 = self.linear(self.input, intermediate_size, hidden_size, bias=bias)  # type: ignore[attr-defined]
+            mm2 = self.linear(input, self.intermediate_size, self.hidden_size, bias=bias)  # type: ignore[attr-defined]
             mm1 = self.eltwise_mul(self.swish(mm1), mm2)  # type: ignore[attr-defined]
+        elif activation == "clamp":
+            atc_fn = getattr(self, activation)
+            mm1 = atc_fn(mm1, additional_args.get("min"), additional_args.get("max"))
+        elif activation == "elu":
+            atc_fn = getattr(self, activation)
+            mm1 = atc_fn(mm1, additional_args.get("alpha", 1.0))
+        elif activation == "grn":
+            atc_fn = getattr(self, activation)
+            mm1 = atc_fn(mm1, additional_args.get("grn_bias"))
         else:
             atc_fn = getattr(self, activation)
             mm1 = atc_fn(mm1)
 
-        out = self.linear(mm1, hidden_size, intermediate_size, bias=bias)
+        out = self.linear(mm1, self.hidden_size, self.intermediate_size, bias=bias)
         self.compile(out)

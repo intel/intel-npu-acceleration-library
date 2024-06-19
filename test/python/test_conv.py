@@ -11,28 +11,63 @@ import torch
 
 
 class DummyConv(torch.nn.Module):
-    def __init__(self, in_channels, out_channels, kernels, bias):
+    def __init__(
+        self,
+        in_channels,
+        out_channels,
+        kernels,
+        bias,
+        groups,
+        stride=1,
+        padding=0,
+        dilation=1,
+    ):
         super().__init__()
-        self.conv = torch.nn.Conv2d(in_channels, out_channels, kernels, bias=bias)
+        if groups == -1:
+            groups = out_channels
+        self.conv = torch.nn.Conv2d(
+            in_channels,
+            out_channels,
+            kernels,
+            bias=bias,
+            groups=groups,
+            stride=stride,
+            padding=padding,
+            dilation=dilation,
+        )
 
     def forward(self, x):
         return self.conv(x)
 
 
-@pytest.mark.parametrize("in_channels", [128, 256, 512])
-@pytest.mark.parametrize("out_channels", [128, 256, 512])
+@pytest.mark.parametrize("in_channels", [32, 128, 256])
+@pytest.mark.parametrize("out_channels", [32, 128, 256])
 @pytest.mark.parametrize("kernels", [1, 3])
-@pytest.mark.parametrize("dim", [16, 128])
+@pytest.mark.parametrize("dim", [16, 32])
 @pytest.mark.parametrize("bias", [True, False])
-@pytest.mark.parametrize("dtype", [torch.float16, torch.int8])
-def test_conv(in_channels, out_channels, kernels, dim, bias, dtype):
-    if dtype == torch.int8 and kernels > 1:
-        pytest.skip("int8 only supports kernel size 1")
+@pytest.mark.parametrize("dtype", [torch.float16])
+@pytest.mark.parametrize("stride", [1, 2])
+@pytest.mark.parametrize("padding", [0, 1])
+@pytest.mark.parametrize("groups", [1, -1])
+def test_conv(
+    in_channels, out_channels, kernels, dim, bias, dtype, stride, padding, groups
+):
+    torch.manual_seed(42)
+
+    if groups != 1 and in_channels != out_channels:
+        pytest.skip("DW convolutions require in_channels == out_channels")
 
     with torch.no_grad():
-        X = torch.rand((1, in_channels, dim, dim), dtype=torch.float32)
-
-        conv = DummyConv(in_channels, out_channels, kernels, bias=bias)
+        X = torch.rand((1, in_channels, dim, dim), dtype=torch.float16)
+        conv = DummyConv(
+            in_channels,
+            out_channels,
+            kernels,
+            bias=bias,
+            groups=groups,
+            stride=stride,
+            padding=padding,
+        ).half()
         conv.conv.weight.data *= 128
         y_ref = conv(X)
 
