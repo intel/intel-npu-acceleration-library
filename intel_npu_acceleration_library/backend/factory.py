@@ -36,7 +36,11 @@ class NNFactory(BaseNPUBackendWithPrefetch):
         self.elapsed = None
 
         for op in get_supported_ops():
-            setattr(self, op.name, partial(self._call_backend_op, op.name))
+            setattr(
+                self,
+                op.name.replace("_act", ""),
+                partial(self._call_backend_op, op.name),
+            )
 
     def _call_backend_op(self, op_name: str, *parameters: Any) -> Any:
         """Dynamically call a backend operation.
