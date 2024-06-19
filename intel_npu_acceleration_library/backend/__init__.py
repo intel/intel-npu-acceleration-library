@@ -5,6 +5,7 @@
 from .bindings import lib
 from .utils import npu_available, get_driver_version, check_npu_and_driver_version
 from .mlp import MLP
+from .convolution import Convolution
 from .matmul import MatMul
 from .linear import Linear
 from .qmatmul import QMatMul
@@ -22,6 +23,7 @@ __all__ = [
     "Linear",
     "QMatMul",
     "QLinear",
+    "Convolution",
     "SDPA",
     "run_matmul",
     "run_factory",

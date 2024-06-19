@@ -37,10 +37,12 @@ def profile(inC, outC, batch, dtype, n_iters=500, skip_first=10):
         args = [W]
     elif dtype == "int8":
         weights, scale = quantize_tensor(torch.tensor(W))
+        scale *= np.sqrt(inC)
         matmul_csl = partial(QLinear, dtype=np.int8)
         args = [weights.numpy(), scale.numpy()]
     elif dtype == "int4":
         weights, scale = quantize_tensor(torch.tensor(W), (int4.min, int4.max))
+        scale *= np.sqrt(inC)
         weights = compress_to_i4(weights)
         matmul_csl = partial(QLinear, dtype=np.uint8)
         args = [weights.numpy(), scale.numpy()]
