@@ -79,5 +79,14 @@ def get_supported_ops() -> List[SupportedOp]:
             inputs=4,
             parameters=[ctypes.c_bool],
         ),
+        SupportedOp(
+            name="gather",
+            inputs=3,
+            parameters=[ctypes.c_int],
+        ),
+        SupportedOp(name="reshape", inputs=2),
+        SupportedOp(name="transpose", inputs=2),
+        SupportedOp(name="squeeze", inputs=1),
+        SupportedOp(name="unsqueeze", inputs=2),
     ]
     return supported_ops

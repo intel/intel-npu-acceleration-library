@@ -6,11 +6,16 @@
 from intel_npu_acceleration_library.backend.base import BaseNPUBackendWithPrefetch
 from intel_npu_acceleration_library.backend.ops import get_supported_ops
 from intel_npu_acceleration_library.backend.bindings import lib as backend_lib
-from typing import Optional, Tuple, Any, Union, Sequence
+from intel_npu_acceleration_library.backend.tensor import Tensor
+from intel_npu_acceleration_library.dtypes import int4, bfloat16
+from typing import Optional, Tuple, Any, Union, Sequence, TypeVar, Callable, cast
 from functools import partial
 import numpy.typing as npt
 import numpy as np
 import ctypes
+
+
+F = TypeVar("F", bound=Callable[..., Any])
 
 
 class NNFactory(BaseNPUBackendWithPrefetch):
@@ -36,8 +41,46 @@ class NNFactory(BaseNPUBackendWithPrefetch):
         self.elapsed = None
 
         for op in get_supported_ops():
-            setattr(self, op.name, partial(self._call_backend_op, op.name))
+            if not hasattr(self, op.name.replace("_act", "")):
+                setattr(
+                    self,
+                    op.name.replace("_act", ""),
+                    partial(self._call_backend_op, op.name),
+                )
 
+    def return_tensor(fn: F) -> F:  # type: ignore
+        """Wrap the output of a function in a Tensor object.
+
+        Args:
+            fn (function): Function
+
+        Returns:
+            function: A function that wraps the output in a Tensor object
+        """
+
+        def wrapper(self, *args: Any, **kwargs: Any) -> Tensor:
+            """Wrap the output of a function in a Tensor object.
+
+            Args:
+                args (Any): Variable length argument list
+                kwargs (Any): Arbitrary keyword arguments
+
+            Returns:
+                Tensor: Tensor object
+            """
+            # Convert Tensor objects to their underlying node
+            args = tuple(arg.node if isinstance(arg, Tensor) else arg for arg in args)
+            kwargs = {
+                k: v.node if isinstance(v, Tensor) else v for k, v in kwargs.items()
+            }
+            # Call the function
+            node = fn(self, *args, **kwargs)
+            # Wrap the node in a Tensor object
+            return Tensor(factory=self, node=node)
+
+        return cast(F, wrapper)
+
+    @return_tensor
     def _call_backend_op(self, op_name: str, *parameters: Any) -> Any:
         """Dynamically call a backend operation.
 
@@ -65,15 +108,28 @@ class NNFactory(BaseNPUBackendWithPrefetch):
         """
         if dtype == np.int8:
             str_dtype = "int8"
-        elif dtype == np.uint8:
+        elif dtype == np.uint8 or dtype == int4:
             # u8 represents packed i4 dtypes
             str_dtype = "int4"
+        elif dtype == np.int16:
+            str_dtype = "int16"
+        elif dtype == np.int32:
+            str_dtype = "int32"
+        elif dtype == np.int64:
+            str_dtype = "int64"
         elif dtype == np.float16:
             str_dtype = "float16"
+        elif dtype == np.float32:
+            str_dtype = "float32"
+        elif dtype == np.float64:
+            str_dtype = "float64"
+        elif dtype == bfloat16:
+            str_dtype = "bfloat16"
         else:
             raise RuntimeError(f"DType is not supported {dtype}")
         return ctypes.c_char_p(str_dtype.encode())
 
+    @return_tensor
     def parameter(
         self, shape: Sequence[int], dtype: npt.DTypeLike = np.float16
     ) -> ctypes._Pointer:
@@ -92,25 +148,51 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             self._mm, shape_ptr.size, shape_ptr, self.get_backend_dtype(dtype)
         )
 
+    @return_tensor
+    def to(self, tensor: ctypes._Pointer, dtype: npt.DTypeLike) -> ctypes._Pointer:
+        """Convert a tensor to a different dtype.
+
+        Args:
+            tensor (ctypes._Pointer): input tensor
+            dtype (npt.DTypeLike): target dtype
+
+        Returns:
+            ctypes._Pointer: output tensor
+        """
+        dtype_ptr = self.get_backend_dtype(dtype)
+        return backend_lib.to(self._mm, tensor, dtype_ptr)
+
+    @return_tensor
     def constant(
         self,
-        data: np.array,
+        data: Union[np.array, Sequence[int], Sequence[float], int, float],
     ) -> ctypes._Pointer:
         """Generate a model input constant.
 
         Args:
-            data (np.array): Input numpy data array
+            data (Union[np.array, Sequence[int], Sequence[float], int, float]): constant data
 
         Returns:
             ctypes._Pointer: an instance to a constant object
 
         """
+        if isinstance(data, (list, tuple)):
+            if all(isinstance(i, int) for i in data):
+                data = np.array(data, dtype=np.int64)
+            else:
+                data = np.array(data, dtype=np.float32)
+        elif isinstance(data, int):
+            data = np.array([data], dtype=np.int64)
+        elif isinstance(data, float):
+            data = np.array([data], dtype=np.float32)
+
         dst = data.ctypes.data_as(ctypes.c_void_p)
         shape_ptr = np.array(data.shape, dtype=np.uint32)
         return backend_lib.constant(
             self._mm, shape_ptr.size, shape_ptr, self.get_backend_dtype(data.dtype), dst
         )
 
+    @return_tensor
     def convolution(
         self,
         input_node: ctypes._Pointer,
@@ -166,6 +248,7 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             self.get_backend_dtype(wt_dtype),
         )
 
+    @return_tensor
     def linear(
         self,
         input_node: ctypes._Pointer,
@@ -198,6 +281,101 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             self.get_backend_dtype(wt_dtype),
         )
 
+    @return_tensor
+    def reshape(
+        self, input_node: ctypes._Pointer, shape: Sequence[int]
+    ) -> ctypes._Pointer:
+        """Generate a reshape layer.
+
+        Args:
+            input_node (ctypes._Pointer): layer input node
+            shape (Sequence[int]): shape
+
+        Returns:
+            ctypes._Pointer: output node
+        """
+        shape_node = self.constant(shape).node  # type: ignore
+        return backend_lib.reshape(self._mm, input_node, shape_node)
+
+    @return_tensor
+    def transpose(
+        self, input_node: ctypes._Pointer, input_order: Sequence[int]
+    ) -> ctypes._Pointer:
+        """Generate a transpose layer.
+
+        Args:
+            input_node (ctypes._Pointer): layer input node
+            input_order (Sequence[int]): input order
+
+        Returns:
+            ctypes._Pointer: output node
+        """
+        input_order_node = self.constant(input_order).node  # type: ignore
+        return backend_lib.transpose(self._mm, input_node, input_order_node)
+
+    @return_tensor
+    def unsqueeze(
+        self, input_node: ctypes._Pointer, axis: Sequence[int]
+    ) -> ctypes._Pointer:
+        """Generate an unsqueeze layer.
+
+        Args:
+            input_node (ctypes._Pointer): layer input node
+            axis (Sequence[int]): axis
+
+        Returns:
+            ctypes._Pointer: output node
+        """
+        axis_node = self.constant(axis).node  # type: ignore
+        return backend_lib.unsqueeze(self._mm, input_node, axis_node)
+
+    @return_tensor
+    def slice(
+        self,
+        input_node: ctypes._Pointer,
+        begin: Sequence[int],
+        end: Sequence[int],
+        stride: Optional[Sequence[int]] = None,
+    ) -> ctypes._Pointer:
+        """Generate an unsqueeze layer.
+
+        Args:
+            input_node (ctypes._Pointer): layer input node
+            begin (Sequence[int]): begin
+            end (Sequence[int]): end
+            stride (Optional[Sequence[int]]): stride
+
+        Raises:
+            ValueError: begin and end must have the same length
+
+        Returns:
+            ctypes._Pointer: output node
+        """
+        if len(begin) != len(end):
+            raise ValueError("begin and end must have the same length")
+
+        if stride is None:
+            stride = [1] * len(begin)
+
+        begin_mask_ptr = np.zeros([len(begin)], dtype=np.uint32)
+        end_mask_ptr = np.zeros([len(begin)], dtype=np.uint32)
+
+        begin = self.constant(begin).node  # type: ignore
+        end = self.constant(end).node  # type: ignore
+        stride = self.constant(stride).node  # type: ignore
+
+        return backend_lib.slice(
+            self._mm,
+            input_node,
+            begin,
+            end,
+            stride,
+            begin_mask_ptr.size,
+            begin_mask_ptr,
+            end_mask_ptr.size,
+            end_mask_ptr,
+        )
+
     def get_output_tensor_shape(self):
         """Get output tensor shape.
 
@@ -212,12 +390,15 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             ]
         )
 
-    def compile(self, output_node: ctypes._Pointer):
+    def compile(self, output_node: Union[ctypes._Pointer, Tensor]):
         """Finalize and compile a model.
 
         Args:
             output_node (ctypes._Pointer): Model output node
         """
+        if isinstance(output_node, Tensor):
+            output_node = output_node.node
+
         backend_lib.compile(self._mm, output_node)
         self.output_shape = self.get_output_tensor_shape()
         if len(self.output_shape) != 2:
