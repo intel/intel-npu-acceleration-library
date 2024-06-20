@@ -3,7 +3,6 @@
 # SPDX-License-Identifier: Apache 2.0
 #
 
-from intel_npu_acceleration_library.backend import NNFactory
 from intel_npu_acceleration_library.backend import lib as backend_lib
 from intel_npu_acceleration_library.dtypes import (
     float16,
@@ -21,23 +20,6 @@ from dataclasses import dataclass
 from typing import Sequence, Any
 import numpy as np
 import ctypes
-
-
-def create_tensor(factory: NNFactory, shape: Sequence[int], dtype: np.dtype):
-    """
-    Create a tensor using the given factory, shape, and dtype.
-
-    Args:
-        factory (NNFactory): The NNFactory object used to create the tensor.
-        shape (Sequence[int]): A sequence of integers representing the shape of the tensor.
-        dtype (np.dtype): The data type of the tensor.
-
-    Returns:
-        Tensor: The created tensor.
-
-    """
-    node = factory.parameter(shape, dtype)
-    return Tensor(factory=factory, node=node)
 
 
 @dataclass
@@ -67,7 +49,7 @@ class Tensor:
         __matmul__(self, other): Performs matrix multiplication between two tensors.
     """
 
-    factory: NNFactory
+    factory: "NNFactory"  # type: ignore # noqa: F821
     node: ctypes._Pointer
 
     @property
@@ -304,8 +286,5 @@ def generate_op(
         raise ValueError("All tensors must be from the same factory")
 
     factory = tensors[0].factory
-    nodes = [tensor.node for tensor in tensors]
     # Create the operation
-    new_node = factory.__getattribute__(op)(*nodes, *args, **kwargs)
-
-    return Tensor(factory=factory, node=new_node)
+    return factory.__getattribute__(op)(*tensors, *args, **kwargs)
