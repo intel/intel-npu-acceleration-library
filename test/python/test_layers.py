@@ -307,8 +307,6 @@ def test_constant(batch, hidden_dim):
     out = model.run(X.numpy())
 
     reference = data + X.numpy()
-    print(out)
-    print(reference)
 
     assert out.shape == reference.shape, "Output shape mismatch"
     assert np.isfinite(reference).all(), "Pytorch Reference contains NaN or Inf"
