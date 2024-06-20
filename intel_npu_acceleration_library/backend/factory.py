@@ -69,7 +69,7 @@ class NNFactory(BaseNPUBackendWithPrefetch):
                 Tensor: Tensor object
             """
             # Convert Tensor objects to their underlying node
-            args = [arg.node if isinstance(arg, Tensor) else arg for arg in args]  # type: ignore
+            args = tuple(arg.node if isinstance(arg, Tensor) else arg for arg in args)
             kwargs = {
                 k: v.node if isinstance(v, Tensor) else v for k, v in kwargs.items()
             }
