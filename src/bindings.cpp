@@ -141,6 +141,13 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* parameter(intel_npu_accelerat
     return factory->parameter(shape, ov_dtype);
 }
 
+intel_npu_acceleration_library_DLL_API ov::op::Op* constant(intel_npu_acceleration_library::ModelFactory* factory,
+                                                            size_t size, unsigned int* data, char* dtype, void* dst) {
+    ov::element::Type_t ov_dtype = intel_npu_acceleration_library::dtype_from_string(std::string(dtype));
+    std::vector<size_t> shape(data, data + size);
+    return factory->constant(ov_dtype, shape, dst);
+}
+
 intel_npu_acceleration_library_DLL_API ov::op::Op* matmul(intel_npu_acceleration_library::ModelFactory* factory,
                                                           ov::op::Op* in0, ov::op::Op* in1) {
     return factory->matmul(in0, in1);

@@ -123,6 +123,35 @@ class NNFactory(BaseNPUBackendWithPrefetch):
         dtype_ptr = self.get_backend_dtype(dtype)
         return backend_lib.to(self._mm, tensor, dtype_ptr)
 
+    def constant(
+        self,
+        data: Union[np.array, Sequence[int], Sequence[float], int, float],
+    ) -> ctypes._Pointer:
+        """Generate a model input constant.
+
+        Args:
+            data (Union[np.array, Sequence[int], Sequence[float], int, float]): constant data
+
+        Returns:
+            ctypes._Pointer: an instance to a constant object
+
+        """
+        if isinstance(data, (list, tuple)):
+            if all(isinstance(i, int) for i in data):
+                data = np.array(data, dtype=np.int64)
+            else:
+                data = np.array(data, dtype=np.float32)
+        elif isinstance(data, int):
+            data = np.array([data], dtype=np.int64)
+        elif isinstance(data, float):
+            data = np.array([data], dtype=np.float32)
+
+        dst = data.ctypes.data_as(ctypes.c_void_p)
+        shape_ptr = np.array(data.shape, dtype=np.uint32)
+        return backend_lib.constant(
+            self._mm, shape_ptr.size, shape_ptr, self.get_backend_dtype(data.dtype), dst
+        )
+
     def convolution(
         self,
         input_node: ctypes._Pointer,
