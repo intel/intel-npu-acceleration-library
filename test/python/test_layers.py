@@ -8,6 +8,7 @@ from sklearn.metrics import r2_score
 import numpy as np
 import pytest
 import torch
+import ctypes
 
 
 class MLP_PT(torch.nn.Module):
@@ -235,6 +236,58 @@ def test_activation(batch, hidden_dim, activation):
 
     out = model.run(X.numpy())
 
+    assert out.shape == reference.shape, "Output shape mismatch"
+    assert np.isfinite(reference).all(), "Pytorch Reference contains NaN or Inf"
+    assert np.isfinite(out).all(), "NPU output contains NaN or Inf"
+
+    assert 1 - r2_score(reference, out) < 0.001
+
+
+@pytest.mark.parametrize("batch", [16, 128])
+@pytest.mark.parametrize("hidden_dim", [256, 512])
+@pytest.mark.parametrize(
+    "activation",
+    [
+        "log_act",
+        # "tanh_act",
+        # "sqrt_act",
+        # "abs_act",
+        # "acos_act",
+        # "asin_act",
+    ],
+)
+def test_constant(batch, hidden_dim, activation):
+
+    # X in the range [-0.5, 0.5]
+    X = torch.rand((batch, hidden_dim)).to(torch.float16) - 0.5
+
+    if activation == "acosh_act":
+        # acosh is only defined for x >= 1
+        X += 1.5
+    elif activation in ["sqrt_act", "tanh_act"]:
+        # sqrt and tanh are only defined for x >= 0
+        X += 0.5
+    elif activation == "log_act":
+        # log needs a bigger input to avoid negative overflow in fp16
+        # log in range [0.5, 1.5]
+        X += 1
+
+    data = X.numpy()
+    reference = eval(f"torch.{activation.replace('_act', '')}")(X).numpy()
+    print(reference)
+    model = NNFactory()
+    # input = model.parameter(X.shape)
+    dst = data.ctypes.data_as(ctypes.c_void_p)
+    print(dst)
+    print(len(data.shape))
+    input = model.constant(data.shape, dst, data.dtype)
+    output = eval(f"model.{activation}")(input)
+    model.compile(output)
+
+    out = model.run(X=data)
+
+    print(out)
+    print(reference)
     assert out.shape == reference.shape, "Output shape mismatch"
     assert np.isfinite(reference).all(), "Pytorch Reference contains NaN or Inf"
     assert np.isfinite(out).all(), "NPU output contains NaN or Inf"
