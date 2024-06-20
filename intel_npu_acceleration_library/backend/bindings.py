@@ -115,6 +115,9 @@ def init_network_factory(lib: ctypes.CDLL):
     lib.parameter.argtypes = [handler, ctypes.c_int, c_u32_array, ctypes.c_char_p]
     lib.parameter.restype = handler
 
+    lib.to.argtypes = [handler, handler, ctypes.c_char_p]
+    lib.to.restype = handler
+
     lib.compile.argtypes = [handler, handler]
     lib.compile.restype = handler
 

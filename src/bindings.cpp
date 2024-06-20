@@ -367,6 +367,12 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* convert_to_fp16(
     return factory->convert_to(in0, ov::element::Type_t::f16);
 }
 
+intel_npu_acceleration_library_DLL_API ov::op::Op* to(intel_npu_acceleration_library::ModelFactory* factory,
+                                                      ov::op::Op* in0, char* dtype) {
+    ov::element::Type_t ov_dtype = intel_npu_acceleration_library::dtype_from_string(std::string(dtype));
+    return factory->convert_to(in0, ov_dtype);
+}
+
 intel_npu_acceleration_library_DLL_API ov::op::Op* linear(intel_npu_acceleration_library::ModelFactory* factory,
                                                           ov::op::Op* in0, size_t dim0, size_t dim1, bool bias,
                                                           char* act_dtype, char* wt_dtype) {

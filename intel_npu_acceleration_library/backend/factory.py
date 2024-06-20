@@ -110,6 +110,19 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             self._mm, shape_ptr.size, shape_ptr, self.get_backend_dtype(dtype)
         )
 
+    def to(self, tensor: ctypes._Pointer, dtype: npt.DTypeLike) -> ctypes._Pointer:
+        """Convert a tensor to a different dtype.
+
+        Args:
+            tensor (ctypes._Pointer): input tensor
+            dtype (npt.DTypeLike): target dtype
+
+        Returns:
+            ctypes._Pointer: output tensor
+        """
+        dtype_ptr = self.get_backend_dtype(dtype)
+        return backend_lib.to(self._mm, tensor, dtype_ptr)
+
     def convolution(
         self,
         input_node: ctypes._Pointer,

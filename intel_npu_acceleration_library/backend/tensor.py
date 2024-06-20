@@ -124,7 +124,7 @@ class Tensor:
         Returns:
             Tensor: The result of the addition.
         """
-        return __generate_op([self, other], "eltwise_add")
+        return generate_op([self, other], "eltwise_add")
 
     def __sub__(self, other) -> "Tensor":
         """
@@ -136,7 +136,7 @@ class Tensor:
         Returns:
             Tensor: The result of the subtraction.
         """
-        return __generate_op([self, -other], "eltwise_add")
+        return generate_op([self, -other], "eltwise_add")
 
     def __mul__(self, other) -> "Tensor":
         """
@@ -148,7 +148,7 @@ class Tensor:
         Returns:
             Tensor: The result of the multiplication.
         """
-        return __generate_op([self, other], "eltwise_mul")
+        return generate_op([self, other], "eltwise_mul")
 
     def __truediv__(self, other) -> "Tensor":
         """
@@ -160,7 +160,7 @@ class Tensor:
         Returns:
             Tensor: The result of the division.
         """
-        return __generate_op([self, other], "eltwise_div")
+        return generate_op([self, other], "eltwise_div")
 
     def __neg__(self) -> "Tensor":
         """
@@ -169,7 +169,7 @@ class Tensor:
         Returns:
             Tensor: The negated tensor.
         """
-        return __generate_op([self], "negative")
+        return generate_op([self], "negative")
 
     def __repr__(self) -> str:
         """
@@ -208,7 +208,31 @@ class Tensor:
         """
         input_order = list(range(len(self.shape)))
         input_order[-1], input_order[-2] = input_order[-2], input_order[-1]
-        return __generate_op([self], "transpose", input_order)
+        return generate_op([self], "transpose", input_order)
+
+    def transpose(self, input_order: Sequence[int]) -> "Tensor":
+        """
+        Return the transpose of the tensor.
+
+        Args:
+            input_order (Sequence[int]): The order of the dimensions in the transposed tensor.
+
+        Returns:
+            Tensor: The transposed tensor.
+        """
+        return generate_op([self], "transpose", input_order)
+
+    def reshape(self, shape: Sequence[int]) -> "Tensor":
+        """
+        Return the transpose of the tensor.
+
+        Args:
+            shape (Sequence[int]): The new shape of the tensor.
+
+        Returns:
+            Tensor: The transposed tensor.
+        """
+        return generate_op([self], "reshape", shape)
 
     def squeeze(self) -> "Tensor":
         """
@@ -217,7 +241,7 @@ class Tensor:
         Returns:
             Tensor: The squeezed tensor.
         """
-        return __generate_op([self], "squeeze")
+        return generate_op([self], "squeeze")
 
     def unsqueeze(self, axis) -> "Tensor":
         """
@@ -229,7 +253,7 @@ class Tensor:
         Returns:
             Tensor: The unsqueezed tensor.
         """
-        return __generate_op([self], "unsqueeze", axis)
+        return generate_op([self], "unsqueeze", axis)
 
     def __matmul__(self, other) -> "Tensor":
         """
@@ -241,10 +265,22 @@ class Tensor:
         Returns:
             Tensor: The result of the matrix multiplication.
         """
-        return __generate_op([self, other], "matmul")
+        return generate_op([self, other], "matmul")
+
+    def to(self, dtype: NPUDtype) -> "Tensor":
+        """
+        Convert the tensor to the specified data type.
+
+        Args:
+            dtype (NPUDtype): The data type to convert the tensor to.
+
+        Returns:
+            Tensor: The converted tensor.
+        """
+        return generate_op([self], "to", dtype)
 
 
-def __generate_op(
+def generate_op(
     tensors: Sequence[Tensor], op: str, *args: Any, **kwargs: Any
 ) -> "Tensor":
     """
