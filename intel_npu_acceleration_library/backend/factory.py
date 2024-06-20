@@ -329,6 +329,53 @@ class NNFactory(BaseNPUBackendWithPrefetch):
         axis_node = self.constant(axis).node  # type: ignore
         return backend_lib.unsqueeze(self._mm, input_node, axis_node)
 
+    @return_tensor
+    def slice(
+        self,
+        input_node: ctypes._Pointer,
+        begin: Sequence[int],
+        end: Sequence[int],
+        stride: Optional[Sequence[int]] = None,
+    ) -> ctypes._Pointer:
+        """Generate an unsqueeze layer.
+
+        Args:
+            input_node (ctypes._Pointer): layer input node
+            begin (Sequence[int]): begin
+            end (Sequence[int]): end
+            stride (Optional[Sequence[int]]): stride
+
+        Raises:
+            ValueError: begin and end must have the same length
+
+        Returns:
+            ctypes._Pointer: output node
+        """
+        if len(begin) != len(end):
+            raise ValueError("begin and end must have the same length")
+
+        if stride is None:
+            stride = [1] * len(begin)
+
+        begin_mask_ptr = np.zeros([len(begin)], dtype=np.uint32)
+        end_mask_ptr = np.zeros([len(begin)], dtype=np.uint32)
+
+        begin = self.constant(begin).node  # type: ignore
+        end = self.constant(end).node  # type: ignore
+        stride = self.constant(stride).node  # type: ignore
+
+        return backend_lib.slice(
+            self._mm,
+            input_node,
+            begin,
+            end,
+            stride,
+            begin_mask_ptr.size,
+            begin_mask_ptr,
+            end_mask_ptr.size,
+            end_mask_ptr,
+        )
+
     def get_output_tensor_shape(self):
         """Get output tensor shape.
 

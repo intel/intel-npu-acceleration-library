@@ -354,6 +354,17 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* reshape(intel_npu_acceleratio
     return factory->reshape(input, shape);
 }
 
+intel_npu_acceleration_library_DLL_API ov::op::Op* slice(intel_npu_acceleration_library::ModelFactory* factory,
+                                                         ov::op::Op* input, ov::op::Op* begin, ov::op::Op* end,
+                                                         ov::op::Op* strides, size_t begin_mask_size,
+                                                         unsigned int* begin_mask_ptr, size_t end_mask_size,
+                                                         unsigned int* end_mask_ptr) {
+    std::vector<int64_t> begin_mask(begin_mask_ptr, begin_mask_ptr + begin_mask_size);
+    std::vector<int64_t> end_mask(end_mask_ptr, end_mask_ptr + end_mask_size);
+
+    return factory->slice(input, begin, end, strides, begin_mask, end_mask);
+}
+
 intel_npu_acceleration_library_DLL_API ov::op::Op* transpose(intel_npu_acceleration_library::ModelFactory* factory,
                                                              ov::op::Op* input, ov::op::Op* input_order) {
     return factory->transpose(input, input_order);

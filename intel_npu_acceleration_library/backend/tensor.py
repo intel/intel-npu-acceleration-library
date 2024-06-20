@@ -180,6 +180,82 @@ class Tensor:
         """
         return np.product(self.shape)
 
+    def __getitem__(self, key) -> "Tensor":
+        """
+        Return a slice of the tensor.
+
+        Args:
+            key: The slice key.
+
+        Raises:
+            ValueError: If the slice key is invalid.
+
+        Returns:
+            Tensor: The sliced tensor.
+        """
+        shape_len = len(self.shape)
+
+        begin, end, stride = [], [], []
+        if isinstance(key, slice):
+            key = (key,)
+        if not isinstance(key, tuple):
+            raise ValueError(
+                f"Invalid slice key: must be a tuple instead of {type(key)}"
+            )
+
+        if any(k is Ellipsis for k in key):
+            # if ellispis is at the start
+            if key[0] is Ellipsis:
+                key = tuple([slice(None)] * (shape_len - len(key) + 1)) + key[1:]
+            # if ellispis is at the end
+            if key[-1] is Ellipsis:
+                key = key[:-1] + tuple([slice(None)] * (shape_len - len(key) + 1))
+            # if ellispis is in the middle
+            if any(k is Ellipsis for k in key):
+                raise ValueError("Ellipsis must be at the start or end of the slice")
+
+        if len(key) != shape_len or len(key) < 1:
+            raise ValueError(f"Invalid slice key: {key}")
+
+        def get_index(idx: int, shape: int) -> int:
+            """
+            Get the index of the slice.
+
+            Args:
+                idx (int): The index of the slice.
+                shape (int): The shape of the tensor.
+
+            Raises:
+                IndexError: If the index is out of bounds.
+
+            Returns:
+                int: The index of the slice.
+            """
+            if idx < 0:
+                idx += shape
+            if idx < 0 or idx > shape:
+                raise IndexError(f"Index {idx} out of bounds for shape {shape}")
+            return idx
+
+        for i, k in enumerate(key):
+            if isinstance(k, slice):
+                begin.append(get_index(k.start or 0, self.shape[i]))
+                end.append(get_index(k.stop or self.shape[i], self.shape[i]))
+                stride.append(k.step or 1)
+            elif k is None:
+                begin.append(0)
+                end.append(self.shape[i])
+                stride.append(1)
+            else:
+                begin.append(k)
+                end.append(k + 1)
+                stride.append(1)
+
+        if any(s <= 0 for s in stride):
+            raise ValueError("Stride must be positive")
+
+        return generate_op([self], "slice", begin, end, stride)
+
     @property
     def T(self) -> "Tensor":
         """

@@ -77,3 +77,19 @@ def test_model_creation():
     sum = t1 + t2
 
     model.compile(sum.node)
+
+
+def test_slice():
+
+    model = NNFactory()
+    tensor = model.parameter([1, 128, 32, 64], float16)
+
+    assert tensor[:, 0:64, :, :].shape == [1, 64, 32, 64]
+
+    assert tensor[0, 0:64:2, :, :].shape == [1, 32, 32, 64]
+
+    assert tensor[:, :-2, :, :].shape == [1, 126, 32, 64]
+
+    assert tensor[..., :-2, :].shape == [1, 128, 30, 64]
+
+    assert tensor[:, 10:20, ...].shape == [1, 10, 32, 64]

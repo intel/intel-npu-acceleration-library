@@ -152,6 +152,25 @@ public:
     }
 
     /**
+     * @brief create a new strided slice
+     *
+     * @param input tensor to be strides.
+     * @param begin tensor with begin indices for each dimension.
+     * @param end tensor with end indices for each dimension.
+     * @param strides tensor with strides for each dimension.
+     * @param begin_mask mask for begin indices
+     * @param end_mask mask for end indices
+     * @return ov::op::Op*
+     */
+    ov::op::Op* slice(ov::op::Op* input, ov::op::Op* begin, ov::op::Op* end, ov::op::Op* strides,
+                      const std::vector<int64_t> begin_mask, const std::vector<int64_t> end_mask) {
+        auto reshape = std::make_shared<ov::opset1::StridedSlice>(input->output(0), begin->output(0), end->output(0),
+                                                                  strides->output(0), begin_mask, end_mask);
+        operations.push_back(reshape);
+        return reshape.get();
+    }
+
+    /**
      * @brief create a new transpose operation
      *
      * @param input tensor to be transposed.
