@@ -94,24 +94,21 @@ class NNFactory(BaseNPUBackendWithPrefetch):
 
     def constant(
         self,
-        shape: Sequence[int],
-        data: ctypes.c_void_p,
-        dtype: npt.DTypeLike = np.float16,
+        data: np.array,
     ) -> ctypes._Pointer:
         """Generate a model input constant.
 
         Args:
-            shape (Sequence[int]): Constant shape
-            data (ctypes.c_void_p): Constant data pointer
-            dtype (np.dtype, optional): Constant type np.int8, np.uint8 and np.float16 supported. Defaults to np.float16. Unit8 represents packed i4 dtypes
+            data (np.array): Input numpy data array
 
         Returns:
             ctypes._Pointer: an instance to a constant object
 
         """
-        shape_ptr = np.array(shape, dtype=np.uint32)
+        dst = data.ctypes.data_as(ctypes.c_void_p)
+        shape_ptr = np.array(data.shape, dtype=np.uint32)
         return backend_lib.constant(
-            self._mm, shape_ptr.size, shape_ptr, self.get_backend_dtype(dtype), data
+            self._mm, shape_ptr.size, shape_ptr, self.get_backend_dtype(data.dtype), dst
         )
 
     def convolution(

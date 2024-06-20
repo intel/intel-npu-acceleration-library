@@ -3,12 +3,12 @@
 # SPDX-License-Identifier: Apache 2.0
 #
 
-from intel_npu_acceleration_library.backend import MLP, NNFactory
+from intel_npu_acceleration_library.backend import MLP, NNFactory, MatMul
 from sklearn.metrics import r2_score
 import numpy as np
 import pytest
 import torch
-import ctypes
+import itertools
 
 
 class MLP_PT(torch.nn.Module):
@@ -245,49 +245,22 @@ def test_activation(batch, hidden_dim, activation):
 
 @pytest.mark.parametrize("batch", [16, 128])
 @pytest.mark.parametrize("hidden_dim", [256, 512])
-@pytest.mark.parametrize(
-    "activation",
-    [
-        "log_act",
-        # "tanh_act",
-        # "sqrt_act",
-        # "abs_act",
-        # "acos_act",
-        # "asin_act",
-    ],
-)
-def test_constant(batch, hidden_dim, activation):
+def test_constant(batch, hidden_dim):
 
-    # X in the range [-0.5, 0.5]
+    data = np.random.rand(batch, hidden_dim).astype(np.float16)
     X = torch.rand((batch, hidden_dim)).to(torch.float16) - 0.5
 
-    if activation == "acosh_act":
-        # acosh is only defined for x >= 1
-        X += 1.5
-    elif activation in ["sqrt_act", "tanh_act"]:
-        # sqrt and tanh are only defined for x >= 0
-        X += 0.5
-    elif activation == "log_act":
-        # log needs a bigger input to avoid negative overflow in fp16
-        # log in range [0.5, 1.5]
-        X += 1
-
-    data = X.numpy()
-    reference = eval(f"torch.{activation.replace('_act', '')}")(X).numpy()
-    print(reference)
     model = NNFactory()
-    # input = model.parameter(X.shape)
-    dst = data.ctypes.data_as(ctypes.c_void_p)
-    print(dst)
-    print(len(data.shape))
-    input = model.constant(data.shape, dst, data.dtype)
-    output = eval(f"model.{activation}")(input)
+    cc = model.constant(data=data)
+    input = model.parameter(X.shape)
+    output = model.eltwise_add(cc, input)
     model.compile(output)
+    out = model.run(X.numpy())
 
-    out = model.run(X=data)
-
+    reference = data + X.numpy()
     print(out)
     print(reference)
+
     assert out.shape == reference.shape, "Output shape mismatch"
     assert np.isfinite(reference).all(), "Pytorch Reference contains NaN or Inf"
     assert np.isfinite(out).all(), "NPU output contains NaN or Inf"
