@@ -50,12 +50,11 @@ public:
      *
      * @param dtype element type of the tensor constant
      * @param shape shape of the tensor constant
-     * @param values vector of literals for initializing the tensor constant
+     * @param dst data pointer of the tensor constant
      * @return ov::op::Op*
      */
-    template <typename T>
-    ov::op::Op* constant(ov::element::Type_t dtype, std::vector<size_t> shape, std::vector<T>& values) {
-        auto constant = std::make_shared<ov::opset1::Constant>(dtype, ov::Shape(shape), values);
+    ov::op::Op* constant(ov::element::Type_t dtype, std::vector<size_t> shape, const void* dst) {
+        auto constant = std::make_shared<ov::opset1::Constant>(dtype, ov::Shape(shape), dst);
         operations.push_back(constant);
         return constant.get();
     }

@@ -3,11 +3,12 @@
 # SPDX-License-Identifier: Apache 2.0
 #
 
-from intel_npu_acceleration_library.backend import MLP, NNFactory
+from intel_npu_acceleration_library.backend import MLP, NNFactory, MatMul
 from sklearn.metrics import r2_score
 import numpy as np
 import pytest
 import torch
+import itertools
 
 
 class MLP_PT(torch.nn.Module):
@@ -234,6 +235,31 @@ def test_activation(batch, hidden_dim, activation):
     model.compile(output)
 
     out = model.run(X.numpy())
+
+    assert out.shape == reference.shape, "Output shape mismatch"
+    assert np.isfinite(reference).all(), "Pytorch Reference contains NaN or Inf"
+    assert np.isfinite(out).all(), "NPU output contains NaN or Inf"
+
+    assert 1 - r2_score(reference, out) < 0.001
+
+
+@pytest.mark.parametrize("batch", [16, 128])
+@pytest.mark.parametrize("hidden_dim", [256, 512])
+def test_constant(batch, hidden_dim):
+
+    data = np.random.rand(batch, hidden_dim).astype(np.float16)
+    X = torch.rand((batch, hidden_dim)).to(torch.float16) - 0.5
+
+    model = NNFactory()
+    cc = model.constant(data=data)
+    input = model.parameter(X.shape)
+    output = model.eltwise_add(cc, input)
+    model.compile(output)
+    out = model.run(X.numpy())
+
+    reference = data + X.numpy()
+    print(out)
+    print(reference)
 
     assert out.shape == reference.shape, "Output shape mismatch"
     assert np.isfinite(reference).all(), "Pytorch Reference contains NaN or Inf"
