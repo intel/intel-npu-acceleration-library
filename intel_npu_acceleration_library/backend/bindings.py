@@ -103,6 +103,15 @@ def init_network_factory(lib: ctypes.CDLL):
 
     lib.setNNFactoryWeights.argtypes = [handler, handler]
 
+    lib.op_shape_size.argtypes = [handler]
+    lib.op_shape_size.restype = ctypes.c_int
+
+    lib.op_shape.argtypes = [handler, ctypes.c_int]
+    lib.op_shape.restype = ctypes.c_int
+
+    lib.op_dtype.argtypes = [handler]
+    lib.op_dtype.restype = ctypes.c_int
+
     lib.parameter.argtypes = [handler, ctypes.c_int, c_u32_array, ctypes.c_char_p]
     lib.parameter.restype = handler
 

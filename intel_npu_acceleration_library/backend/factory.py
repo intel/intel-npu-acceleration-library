@@ -6,6 +6,7 @@
 from intel_npu_acceleration_library.backend.base import BaseNPUBackendWithPrefetch
 from intel_npu_acceleration_library.backend.ops import get_supported_ops
 from intel_npu_acceleration_library.backend.bindings import lib as backend_lib
+from intel_npu_acceleration_library.dtypes import int4, bfloat16
 from typing import Optional, Tuple, Any, Union, Sequence
 from functools import partial
 import numpy.typing as npt
@@ -70,15 +71,23 @@ class NNFactory(BaseNPUBackendWithPrefetch):
         """
         if dtype == np.int8:
             str_dtype = "int8"
-        elif dtype == np.uint8:
+        elif dtype == np.uint8 or dtype == int4:
             # u8 represents packed i4 dtypes
             str_dtype = "int4"
+        elif dtype == np.int16:
+            str_dtype = "int16"
         elif dtype == np.int32:
             str_dtype = "int32"
         elif dtype == np.int64:
             str_dtype = "int64"
         elif dtype == np.float16:
             str_dtype = "float16"
+        elif dtype == np.float32:
+            str_dtype = "float32"
+        elif dtype == np.float64:
+            str_dtype = "float64"
+        elif dtype == bfloat16:
+            str_dtype = "bfloat16"
         else:
             raise RuntimeError(f"DType is not supported {dtype}")
         return ctypes.c_char_p(str_dtype.encode())

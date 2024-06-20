@@ -117,6 +117,21 @@ intel_npu_acceleration_library_DLL_API float run(intel_npu_acceleration_library:
     return static_cast<float>(elapsed.count()) / static_cast<float>(1000.0);
 }
 
+// ######################### NN Factory ops #########################
+
+intel_npu_acceleration_library_DLL_API size_t op_shape_size(ov::op::Op* in0) {
+    return in0->get_shape().size();
+}
+
+intel_npu_acceleration_library_DLL_API size_t op_shape(ov::op::Op* in0, size_t idx) {
+    return in0->get_shape()[idx];
+}
+
+intel_npu_acceleration_library_DLL_API size_t op_dtype(ov::op::Op* in0) {
+    auto dtype = static_cast<ov::element::Type_t>(in0->get_element_type());
+    return static_cast<size_t>(dtype);
+}
+
 // ######################### NN Factory layers #########################
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* parameter(intel_npu_acceleration_library::ModelFactory* factory,
