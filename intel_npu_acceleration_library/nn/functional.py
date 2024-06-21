@@ -9,7 +9,7 @@ from intel_npu_acceleration_library.backend.tensor import (
     generate_op,
     Tensor,
 )
-from typing import Optional
+from typing import Optional, Sequence
 import torch
 
 
@@ -393,3 +393,48 @@ def dropout(
         raise NotImplementedError("Inplace mode is not supported yet")
 
     return input
+
+
+@implements(torch.nn.functional.layer_norm)
+def layer_norm(
+    input: Tensor,
+    normalized_shape: Sequence[int],
+    weight: Optional[Tensor] = None,
+    bias: Optional[Tensor] = None,
+    eps: float = 1e-05,
+) -> Tensor:
+    """Return layer normalization operation.
+
+    Args:
+        input (Tensor): The input tensor.
+        normalized_shape (Sequence[int]): The shape of the normalized tensor.
+        weight (Optional[Tensor], optional): The weight tensor. Defaults to None.
+        bias (Optional[Tensor], optional): The bias tensor. Defaults to None.
+        eps (float): The epsilon value. Defaults to 1e-05.
+
+    Returns:
+        Tensor: Output tensor.
+    """
+    axis = input.shape.index(normalized_shape[0])
+    ln = generate_op([input], "normL2", axis, eps)
+    if weight:
+        ln = ln * weight
+
+    if bias:
+        ln = ln + bias
+
+    return ln
+
+
+@implements(torch.nn.functional.gelu)
+def gelu(x: Tensor, out: Optional[Tensor] = None) -> Tensor:
+    """Return the gelu of a tensor element-wise.
+
+    Args:
+        x (Tensor): The input tensor.
+        out (Optional[Tensor], optional): Output tensor. Defaults to None.
+
+    Returns:
+        Tensor: Output tensor.
+    """
+    return __generate_activation(x, "gelu", out)
