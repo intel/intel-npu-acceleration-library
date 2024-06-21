@@ -84,6 +84,7 @@ def get_supported_ops() -> List[SupportedOp]:
             inputs=2,
             parameters=[ctypes.c_float],
         ),
+        SupportedOp(
             name="gather",
             inputs=3,
             parameters=[ctypes.c_int],

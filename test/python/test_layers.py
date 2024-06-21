@@ -321,18 +321,16 @@ def test_normalisation(batch, hidden_dim, eps):
 
     X = torch.rand((batch, hidden_dim)).to(torch.float16) - 0.5
     rank = X.dim()
-    dim_range = list(range(-rank, rank - 1))
-    axes = np.array(dim_range, dtype=np.int8)
+    axis = list(range(-rank, rank - 1))
 
     model = NNFactory()
-    c_axes = model.constant(axes)
     input = model.parameter(X.shape)
-    output = model.normL2(input, c_axes, eps)
+    output = model.normL2(input, axis, eps)
     model.compile(output)
     out = model.run(X.numpy())
 
     reference = torch.nn.functional.normalize(X, p=2.0, dim=-2, eps=eps).numpy()
-    
+
     assert out.shape == reference.shape, "Output shape mismatch"
     assert np.isfinite(reference).all(), "Pytorch Reference contains NaN or Inf"
     assert np.isfinite(out).all(), "NPU output contains NaN or Inf"
