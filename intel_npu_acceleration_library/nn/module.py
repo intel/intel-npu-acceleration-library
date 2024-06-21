@@ -92,13 +92,13 @@ def patch_modules(module: torch.nn.Module, model: NNFactory):
     """
     modules = list(module.named_children())
     for _, module in modules:
-        if isinstance(module, NPUModule):
+        if isinstance(module, Module):
             module.npu_top_level_module = False
         patch_parameters(module, model)
         patch_modules(module, model)
 
 
-class NPUModule(torch.nn.Module):
+class Module(torch.nn.Module):
     """A PyTorch module that runs on the NPU."""
 
     def __init__(self) -> None:
@@ -236,3 +236,40 @@ class NPUModule(torch.nn.Module):
         """
         raise NotImplementedError
         return torch.empty(0)
+
+
+class NPUModule(Module):
+    """A PyTorch module that runs on the NPU."""
+
+    def __init__(self, module: torch.nn.Module) -> None:
+        """Initialize the module.
+
+        Args:
+            module (torch.nn.Module): The PyTorch module.
+        """
+        super().__init__()
+        self.module = module
+
+    def forward(self, *args, **kwargs) -> torch.Tensor:
+        """Run the forward pass of the module.
+
+        Args:
+            args (Any): The positional arguments.
+            kwargs (Any): The keyword arguments.
+
+        Returns:
+            torch.Tensor: The output tensor.
+        """
+        return self.module(*args, **kwargs)
+
+
+def convert_to_npu_module(module: torch.nn.Module) -> Module:
+    """Convert a PyTorch module to an NPU Module.
+
+    Args:
+        module (torch.nn.Module): The PyTorch module.
+
+    Returns:
+        Module: The NPU enabled Module.
+    """
+    return NPUModule(module)

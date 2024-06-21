@@ -2,13 +2,13 @@
 # Copyright © 2024 Intel Corporation
 # SPDX-License-Identifier: Apache 2.0
 #
-from intel_npu_acceleration_library.nn.module import NPUModule
+from intel_npu_acceleration_library.nn.module import convert_to_npu_module, NPUModule
 from sklearn.metrics import r2_score
 import pytest
 import torch
 
 
-class DummyModule(NPUModule):
+class DummyModule(torch.nn.Module):
     def __init__(self):
         super().__init__()
         self.w = torch.nn.Parameter(torch.rand(128, 128).to(torch.float16))
@@ -22,7 +22,7 @@ class DummyModule(NPUModule):
         return self.l1(z) * self.w
 
 
-class DummyModule2(NPUModule):
+class DummyModule2(torch.nn.Module):
     def __init__(self):
         super().__init__()
         self.l1 = DummyModule()
@@ -36,6 +36,14 @@ class DummyModule2(NPUModule):
 def test_torch_nested_module(sum):
 
     model = DummyModule2()
+
+    assert isinstance(model, torch.nn.Module)
+
+    model = convert_to_npu_module(model)
+
+    assert isinstance(model, torch.nn.Module)
+    assert isinstance(model, NPUModule)
+
     x = torch.rand(128, 256).to(torch.float16)
     y = torch.rand(128, 256).to(torch.float16)
 
