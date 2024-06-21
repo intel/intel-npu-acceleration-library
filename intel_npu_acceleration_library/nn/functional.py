@@ -306,3 +306,21 @@ def sign(x: Tensor, out: Optional[Tensor] = None) -> Tensor:
         Tensor: Output tensor.
     """
     return __generate_activation(x, "sign", out)
+
+
+@implements(torch.nn.functional.linear)
+def linear(input: Tensor, weight: Tensor, bias: Optional[Tensor] = None) -> Tensor:
+    """Return the sign of a tensor element-wise.
+
+    Args:
+        input (Tensor): The input tensor.
+        weight (Tensor): The weight tensor.
+        bias (Optional[Tensor], optional): the bias tensor. Defaults to None.
+
+    Returns:
+        Tensor: Output tensor.
+    """
+    mm = generate_op([input, weight], "matmul")
+    if bias:
+        return generate_op([mm, bias], "eltwise_add")
+    return mm
