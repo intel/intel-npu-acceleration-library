@@ -324,3 +324,72 @@ def linear(input: Tensor, weight: Tensor, bias: Optional[Tensor] = None) -> Tens
     if bias:
         return generate_op([mm, bias], "eltwise_add")
     return mm
+
+
+@implements(torch.nn.functional.scaled_dot_product_attention)
+def scaled_dot_product_attention(
+    query: torch.Tensor,
+    key: torch.Tensor,
+    value: torch.Tensor,
+    attn_mask: torch.Tensor = None,
+    dropout_p: float = 0.0,
+    is_causal: bool = False,
+    scale: Optional[float] = None,
+) -> torch.Tensor:
+    """Compute scaled dot product attention on query, key and value tensors, using an optional attention mask if passed, and applying dropout if a probability greater than 0.0 is specified.
+
+    Args:
+        query (Tensor): query tensor
+        key (Tensor): key tensor
+        value (Tensor): value tensor
+        attn_mask (Tensor, optional): attention mask tensor. Defaults to None.
+        dropout_p (float, optional): optional dropout. Defaults to 0.0.
+        is_causal (bool, optional): enable causal mask. Defaults to False.
+        scale (Optional[float], optional): custom scale. Defaults to None.
+
+    Raises:
+        RuntimeError: dropout_p != 0 is not supported yet, scale != 0 is not supported yet
+
+    Returns:
+        Tensor: output tensor
+    """
+    if dropout_p != 0:
+        raise RuntimeError("dropout_p != 0 is not supported yet")
+    if scale is not None:
+        raise RuntimeError("scale != 0 is not supported yet")
+
+    if attn_mask is None:
+        return generate_op(
+            [query, key, value], "scaled_dot_product_attention_simple", is_causal
+        )
+
+    return generate_op(
+        [query, key, value, attn_mask], "scaled_dot_product_attention", is_causal
+    )
+
+
+@implements(torch.nn.functional.dropout)
+def dropout(
+    input: Tensor, p: float = 0.5, training: bool = True, inplace: bool = False
+) -> Tensor:
+    """Return dropout operation.
+
+    Args:
+        input (Tensor): The input tensor.
+        p (float): The probability of an element to be zeroed. Defaults to 0.5.
+        training (bool): apply dropout if True. Defaults to True.
+        inplace (bool): apply dropout in place. Defaults to False.
+
+    Raises:
+        NotImplementedError: Training mode is not supported yet, Inplace mode is not supported yet
+
+    Returns:
+        Tensor: Output tensor.
+    """
+    if training:
+        raise NotImplementedError("Training mode is not supported yet")
+
+    if inplace:
+        raise NotImplementedError("Inplace mode is not supported yet")
+
+    return input

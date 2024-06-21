@@ -695,11 +695,19 @@ public:
      */
     ov::op::Op* scaled_dot_product_attention(ov::op::Op* query, ov::op::Op* key, ov::op::Op* value,
                                              ov::op::Op* attn_mask, bool is_causal) {
-        auto sdpa = std::make_shared<ov::opset13::ScaledDotProductAttention>(
-                query->output(0), key->output(0), value->output(0), attn_mask->output(0), is_causal);
+        if (attn_mask == nullptr) {
+            auto sdpa = std::make_shared<ov::opset13::ScaledDotProductAttention>(query->output(0), key->output(0),
+                                                                                 value->output(0), is_causal);
 
-        operations.push_back(sdpa);
-        return sdpa.get();
+            operations.push_back(sdpa);
+            return sdpa.get();
+        } else {
+            auto sdpa = std::make_shared<ov::opset13::ScaledDotProductAttention>(
+                    query->output(0), key->output(0), value->output(0), attn_mask->output(0), is_causal);
+
+            operations.push_back(sdpa);
+            return sdpa.get();
+        }
     }
 
     /**

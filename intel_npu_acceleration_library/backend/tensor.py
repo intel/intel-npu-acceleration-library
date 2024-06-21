@@ -98,6 +98,20 @@ class Tensor:
         else:
             raise RuntimeError("Unsupported dtype")
 
+    def size(self, dim=None) -> Union[int, Sequence[int]]:
+        """
+        Return the size of the tensor.
+
+        Args:
+            dim (int, optional): The dimension to return the size of. Defaults to None.
+
+        Returns:
+            Union[int, Sequence[int]]: The size of the tensor.
+        """
+        if dim is None:
+            return torch.Size(self.shape)
+        return self.shape[dim]
+
     def __add__(self, other) -> "Tensor":
         """
         Add two tensors element-wise.
@@ -270,7 +284,23 @@ class Tensor:
         input_order[-1], input_order[-2] = input_order[-2], input_order[-1]
         return generate_op([self], "transpose", input_order)
 
-    def transpose(self, input_order: Sequence[int]) -> "Tensor":
+    def transpose(self, dim0: int, dim1: int) -> "Tensor":
+        """
+        Return the transpose of the tensor.
+
+        Args:
+            dim0 (int): The first dimension to transpose.
+            dim1 (int): The second dimension to transpose.
+
+        Returns:
+            Tensor: The transposed tensor.
+        """
+        input_order = list(range(len(self.shape)))
+        input_order[dim0], input_order[dim1] = input_order[dim1], input_order[dim0]
+
+        return generate_op([self], "transpose", input_order)
+
+    def permute(self, *input_order: int) -> "Tensor":
         """
         Return the transpose of the tensor.
 
@@ -282,7 +312,19 @@ class Tensor:
         """
         return generate_op([self], "transpose", input_order)
 
-    def reshape(self, shape: Sequence[int]) -> "Tensor":
+    def reshape(self, *shape: int) -> "Tensor":
+        """
+        Return the transpose of the tensor.
+
+        Args:
+            shape (int): The new shape of the tensor.
+
+        Returns:
+            Tensor: The transposed tensor.
+        """
+        return generate_op([self], "reshape", shape)
+
+    def view(self, shape: Sequence[int]) -> "Tensor":
         """
         Return the transpose of the tensor.
 
@@ -292,7 +334,7 @@ class Tensor:
         Returns:
             Tensor: The transposed tensor.
         """
-        return generate_op([self], "reshape", shape)
+        return self.reshape(*shape)
 
     def squeeze(self) -> "Tensor":
         """

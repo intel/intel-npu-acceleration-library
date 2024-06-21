@@ -75,7 +75,7 @@ def test_model_creation():
 
     assert t2.dtype == float16
 
-    t2 = t2.reshape([128, 64, 32])
+    t2 = t2.reshape(128, 64, 32)
 
     assert t2.shape == [128, 64, 32]
 
@@ -88,6 +88,10 @@ def test_model_creation():
     assert t2.shape == [1, 128, 32, 64]
 
     sum = t1 + t2
+
+    dd = sum.transpose(1, 2)
+
+    assert dd.shape == [1, 32, 128, 64]
 
     model.compile(sum)
 

@@ -80,6 +80,11 @@ def get_supported_ops() -> List[SupportedOp]:
             parameters=[ctypes.c_bool],
         ),
         SupportedOp(
+            name="scaled_dot_product_attention_simple",
+            inputs=3,
+            parameters=[ctypes.c_bool],
+        ),
+        SupportedOp(
             name="normL2",
             inputs=2,
             parameters=[ctypes.c_float],
