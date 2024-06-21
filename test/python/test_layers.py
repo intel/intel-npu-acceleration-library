@@ -316,12 +316,11 @@ def test_constant(batch, hidden_dim):
 
 @pytest.mark.parametrize("batch", [16, 128])
 @pytest.mark.parametrize("hidden_dim", [256, 512])
+@pytest.mark.parametrize("axis", [0, 1])
 @pytest.mark.parametrize("eps", [1e-12])
-def test_normalisation(batch, hidden_dim, eps):
+def test_normalisation(batch, hidden_dim, axis, eps):
 
     X = torch.rand((batch, hidden_dim)).to(torch.float16) - 0.5
-    rank = X.dim()
-    axis = list(range(-rank, rank - 1))
 
     model = NNFactory()
     input = model.parameter(X.shape)
@@ -329,8 +328,9 @@ def test_normalisation(batch, hidden_dim, eps):
     model.compile(output)
     out = model.run(X.numpy())
 
-    reference = torch.nn.functional.normalize(X, p=2.0, dim=-2, eps=eps).numpy()
-
+    reference = torch.nn.functional.normalize(X, p=2.0, dim=axis, eps=eps).numpy()
+    print(out)
+    print(reference)
     assert out.shape == reference.shape, "Output shape mismatch"
     assert np.isfinite(reference).all(), "Pytorch Reference contains NaN or Inf"
     assert np.isfinite(out).all(), "NPU output contains NaN or Inf"
