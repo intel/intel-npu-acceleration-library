@@ -166,7 +166,6 @@ class NPUModule(torch.nn.Module):
 
         out = self.forward(*npu_args, **npu_kwargs)
         model.compile(out)
-        model.save("example.xml")
         return model, out
 
     def _call_impl(self, *args: Any, **kwargs: Any) -> Any:
