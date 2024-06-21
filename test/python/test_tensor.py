@@ -93,7 +93,11 @@ def test_model_creation():
 
     assert dd.shape == [1, 32, 128, 64]
 
-    model.compile(sum)
+    ff = dd.reshape([32, 128, 64])
+
+    assert ff.shape == [32, 128, 64]
+
+    model.compile(ff)
 
 
 def test_slice():
