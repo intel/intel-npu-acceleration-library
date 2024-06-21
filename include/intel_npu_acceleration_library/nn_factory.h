@@ -703,6 +703,21 @@ public:
     }
 
     /**
+     * @brief Create a new L2 normalization operation
+     *
+     * @param data operation's input node
+     * @param axes node indicating axes along which reduction is calculated
+     * @param eps the epsilon added to L2 norm
+     * @return ov::op::Op*
+     */
+    ov::op::Op* normL2(ov::op::Op* data, ov::op::Op* axes, float eps) {
+        auto normL2 =
+                std::make_shared<ov::opset1::NormalizeL2>(data->output(0), axes->output(0), eps, ov::op::EpsMode::MAX);
+        operations.push_back(normL2);
+        return normL2.get();
+    }
+
+    /**
      * @brief Compile the model
      *
      * @param result the last operation in the network. Must have a [batch, output_channel] shape

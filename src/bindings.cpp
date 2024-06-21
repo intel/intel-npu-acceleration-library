@@ -465,4 +465,9 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* scaled_dot_product_attention(
         ov::op::Op* attn_mask, bool is_causal) {
     return factory->scaled_dot_product_attention(query, key, value, attn_mask, is_causal);
 }
+
+intel_npu_acceleration_library_DLL_API ov::op::Op* normL2(intel_npu_acceleration_library::ModelFactory* factory,
+                                                          ov::op::Op* data, ov::op::Op* axes, float eps) {
+    return factory->normL2(data, axes, eps);
+}
 }

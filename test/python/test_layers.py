@@ -8,7 +8,6 @@ from sklearn.metrics import r2_score
 import numpy as np
 import pytest
 import torch
-import itertools
 
 
 class MLP_PT(torch.nn.Module):
@@ -308,6 +307,29 @@ def test_constant(batch, hidden_dim):
 
     reference = data + X.numpy()
 
+    assert out.shape == reference.shape, "Output shape mismatch"
+    assert np.isfinite(reference).all(), "Pytorch Reference contains NaN or Inf"
+    assert np.isfinite(out).all(), "NPU output contains NaN or Inf"
+
+    assert 1 - r2_score(reference, out) < 0.001
+
+
+@pytest.mark.parametrize("batch", [16, 128])
+@pytest.mark.parametrize("hidden_dim", [256, 512])
+@pytest.mark.parametrize("axis", [0, 1])
+def test_normalisation(batch, hidden_dim, axis):
+
+    X = torch.rand((batch, hidden_dim)).to(torch.float16) - 0.5
+
+    model = NNFactory()
+    input = model.parameter(X.shape)
+    output = model.normL2(input, axis)
+    model.compile(output)
+    out = model.run(X.numpy())
+
+    reference = torch.nn.functional.normalize(X, p=2.0, dim=axis).numpy()
+    print(out)
+    print(reference)
     assert out.shape == reference.shape, "Output shape mismatch"
     assert np.isfinite(reference).all(), "Pytorch Reference contains NaN or Inf"
     assert np.isfinite(out).all(), "NPU output contains NaN or Inf"

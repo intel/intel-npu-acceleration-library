@@ -80,6 +80,11 @@ def get_supported_ops() -> List[SupportedOp]:
             parameters=[ctypes.c_bool],
         ),
         SupportedOp(
+            name="normL2",
+            inputs=2,
+            parameters=[ctypes.c_float],
+        ),
+        SupportedOp(
             name="gather",
             inputs=3,
             parameters=[ctypes.c_int],

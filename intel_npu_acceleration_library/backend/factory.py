@@ -376,6 +376,25 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             end_mask_ptr,
         )
 
+    @return_tensor
+    def normL2(
+        self, input_node: ctypes._Pointer, axis: int, eps: Optional[float] = 1e-12
+    ) -> ctypes._Pointer:
+        """Generate an L2 normalization layer.
+
+        Args:
+            input_node (ctypes._Pointer): layer input node
+            axis (int): axis
+            eps (float): epsilon added to L2 norm
+
+        Returns:
+            ctypes._Pointer: output node
+        """
+        if axis < 0:
+            axis = abs(axis)
+        axis_node = self.constant(axis).node  # type: ignore
+        return backend_lib.normL2(self._mm, input_node, axis_node, eps)
+
     def get_output_tensor_shape(self):
         """Get output tensor shape.
 
