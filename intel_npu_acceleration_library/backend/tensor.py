@@ -4,6 +4,7 @@
 #
 
 from intel_npu_acceleration_library.backend import lib as backend_lib
+from typing import Sequence, Any, Optional, MutableMapping, Union
 from intel_npu_acceleration_library.dtypes import (
     float16,
     bfloat16,
@@ -17,9 +18,10 @@ from intel_npu_acceleration_library.dtypes import (
     NPUDtype,
 )
 from dataclasses import dataclass
-from typing import Sequence, Any
+import functools
 import numpy as np
 import ctypes
+import torch
 
 
 @dataclass
@@ -337,15 +339,74 @@ class Tensor:
         """
         return generate_op([self], "to", dtype)
 
+    @classmethod
+    def __torch_function__(
+        cls: Any,
+        func: Any,
+        types: Any,
+        args: Sequence[Any] = (),
+        kwargs: Optional[MutableMapping[Any, Any]] = None,
+    ) -> Any:
+        """Python function to override torch functions for Tensor class.
+
+        Args:
+            func (Any): the function to override.
+            types (Any): the types of the arguments.
+            args (Sequence[Any], optional): the arguments. Defaults to ().
+            kwargs (Optional[MutableMapping[Any, Any]], optional): the keyword arguments. Defaults to None.
+
+        Returns:
+            Any: the result of the function.
+        """
+        if kwargs is None:
+            kwargs = {}
+        if func not in HANDLED_FUNCTIONS or not all(
+            issubclass(t, (torch.Tensor, Tensor)) for t in types
+        ):
+            return NotImplemented
+        return HANDLED_FUNCTIONS[func](*args, **kwargs)
+
+
+HANDLED_FUNCTIONS: MutableMapping[Any, Any] = {}
+
+
+def implements(torch_function: Any) -> Any:
+    """Implement a decorator to override torch functions for Tensor class.
+
+    Args:
+        torch_function (Any): the function to override.
+
+    Returns:
+        Any: the result of the function.
+    """
+
+    def decorator(func: Any) -> Any:
+        """Implement a decorator to override torch functions for Tensor class.
+
+        Args:
+            func (Any): the function to override.
+
+        Returns:
+            Any: the result of the function.
+        """
+        functools.update_wrapper(func, torch_function)
+        HANDLED_FUNCTIONS[torch_function] = func
+        return func
+
+    return decorator
+
 
 def generate_op(
-    tensors: Sequence[Tensor], op: str, *args: Any, **kwargs: Any
+    tensors: Union[Sequence[Union[Tensor, torch.Tensor]], Union[Tensor, torch.Tensor]],
+    op: str,
+    *args: Any,
+    **kwargs: Any,
 ) -> "Tensor":
     """
     Generate a new tensor by applying the specified operation to a sequence of tensors.
 
     Args:
-        tensors (Sequence[Tensor]): A sequence of tensors.
+        tensors (Union[Sequence[Union[Tensor, torch.Tensor]], Union[Tensor, torch.Tensor]]): A sequence or a single tensor.
         op (str): The name of the operation to apply.
         args (Any): Variable length argument list.
         kwargs (Any): Arbitrary keyword arguments.
@@ -357,10 +418,23 @@ def generate_op(
         ValueError: If the tensors are not from the same factory.
 
     """
+    if not isinstance(tensors, (list, tuple)):
+        tensors = [tensors]
+
     # Check that all tensors are from the same factory
-    if not len({tensor.factory for tensor in tensors}) == 1:
+    if (
+        not len({tensor.factory for tensor in tensors if isinstance(tensor, Tensor)})
+        == 1
+    ):
         raise ValueError("All tensors must be from the same factory")
 
     factory = tensors[0].factory
+
+    # Replace the tensors that are not from the factory with constant tensors if they are coming from pytorch
+    tensors = [
+        tensor if isinstance(tensor, Tensor) else factory.constant(tensor)
+        for tensor in tensors
+    ]
+
     # Create the operation
     return factory.__getattribute__(op)(*tensors, *args, **kwargs)

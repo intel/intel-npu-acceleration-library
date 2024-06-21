@@ -49,6 +49,19 @@ def test_tensor_creation(shape, dtype):
     assert tensor.dtype == dtype
 
 
+def test_matmul():
+    model = NNFactory()
+    tensor = model.parameter([16, 256], np.float16)
+    weights = model.constant(np.ones([128, 256], dtype=np.float16))
+
+    out = tensor @ weights
+    model.compile(out)
+
+    assert isinstance(out, Tensor)
+    assert out.shape == [16, 128]
+    assert out.dtype == np.float16
+
+
 def test_model_creation():
     model = NNFactory()
     t1 = model.parameter([1, 128, 32, 64], float16)
@@ -76,7 +89,7 @@ def test_model_creation():
 
     sum = t1 + t2
 
-    model.compile(sum.node)
+    model.compile(sum)
 
 
 def test_slice():

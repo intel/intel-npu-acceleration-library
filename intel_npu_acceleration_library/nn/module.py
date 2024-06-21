@@ -97,9 +97,6 @@ def patch_modules(module: torch.nn.Module, model: NNFactory):
         patch_parameters(module, model)
         patch_modules(module, model)
 
-        if isinstance(module, torch.nn.Linear):
-            module.forward = lambda x: model.matmul(x, module.weight) + module.bias  # type: ignore # noqa
-
 
 class NPUModule(torch.nn.Module):
     """A PyTorch module that runs on the NPU."""
