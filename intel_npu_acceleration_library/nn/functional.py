@@ -509,16 +509,13 @@ def gelu(x: Tensor, approximate: str = "none") -> Tensor:
         x (Tensor): The input tensor.
         approximate (str): The approximation method. Defaults to 'none'. When the approximate argument is 'tanh', Gelu is estimated with tanh approximation. When the approximate argument is 'erf', Gelu is estimated with erf approximation. When the approximate argument is 'none', Gelu is estimated with the original formula.
 
-    Raises:
-        NotImplementedError: Only tanh approximation is supported
-
     Returns:
         Tensor: Output tensor.
     """
     if approximate == "tanh":
         return __generate_activation(x, "gelu")
     else:
-        raise NotImplementedError("Only tanh approximation is supported")
+        return __generate_activation(x, "gelu_erf")
 
 
 @implements(torch.nn.functional.relu)

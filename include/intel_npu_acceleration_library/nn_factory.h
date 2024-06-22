@@ -374,8 +374,8 @@ public:
      * @param input operation's input node
      * @return ov::op::Op*
      */
-    ov::op::Op* gelu(ov::op::Op* input) {
-        auto gelu = std::make_shared<ov::opset7::Gelu>(input->output(0), ov::op::GeluApproximationMode::TANH);
+    ov::op::Op* gelu(ov::op::Op* input, ov::op::GeluApproximationMode mode) {
+        auto gelu = std::make_shared<ov::opset7::Gelu>(input->output(0), mode);
         operations.push_back(gelu);
         return gelu.get();
     }

@@ -235,7 +235,12 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* exp_act(intel_npu_acceleratio
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* gelu(intel_npu_acceleration_library::ModelFactory* factory,
                                                         ov::op::Op* in0) {
-    return factory->gelu(in0);
+    return factory->gelu(in0, ov::op::GeluApproximationMode::TANH);
+}
+
+intel_npu_acceleration_library_DLL_API ov::op::Op* gelu_erf(intel_npu_acceleration_library::ModelFactory* factory,
+                                                            ov::op::Op* in0) {
+    return factory->gelu(in0, ov::op::GeluApproximationMode::ERF);
 }
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* log_act(intel_npu_acceleration_library::ModelFactory* factory,

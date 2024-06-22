@@ -119,10 +119,21 @@ def test_clamp(batch, hidden_dim, min_val, max_val):
 )
 def test_functional_activation(batch, hidden_dim, activation):
 
+    if activation == "gelu":
+        torch_function = lambda x: torch.nn.functional.gelu(x, approximate="none")
+        run_activation_test(torch_function, batch, hidden_dim)
+
+        torch_function = lambda x: torch.nn.functional.gelu(x, approximate="tanh")
+        run_activation_test(torch_function, batch, hidden_dim)
+    else:
+        torch_function = eval(f"torch.nn.functional.{activation}")
+        run_activation_test(torch_function, batch, hidden_dim)
+
+
+def run_activation_test(torch_function, batch, hidden_dim):
+
     # X in the range [-0.5, 0.5]
     X = torch.rand((batch, hidden_dim)).to(torch.float16) - 0.5
-
-    torch_function = eval(f"torch.nn.functional.{activation}")
 
     reference = torch_function(X).numpy()
 

@@ -52,6 +52,7 @@ def get_supported_ops() -> List[SupportedOp]:
         SupportedOp(name="floor_act", inputs=1),
         SupportedOp(name="grn", inputs=1, parameters=[ctypes.c_float]),
         SupportedOp(name="gelu", inputs=1),
+        SupportedOp(name="gelu_erf", inputs=1),
         SupportedOp(name="log_act", inputs=1),
         SupportedOp(name="negative", inputs=1),
         SupportedOp(name="relu", inputs=1),
