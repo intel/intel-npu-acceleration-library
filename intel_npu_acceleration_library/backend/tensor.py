@@ -371,6 +371,15 @@ class Tensor:
         """
         return generate_op([self, other], "matmul")
 
+    def sigmoid(self) -> "Tensor":
+        """
+        Apply the sigmoid function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the sigmoid function.
+        """
+        return generate_op([self], "sigmoid")
+
     def to(self, dtype: NPUDtype) -> "Tensor":
         """
         Convert the tensor to the specified data type.

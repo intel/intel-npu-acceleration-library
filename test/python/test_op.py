@@ -35,6 +35,8 @@ import pytest
         "atanh",
         "round",
         "sign",
+        "ceil",
+        "neg",
     ],
 )
 def test_activation(batch, hidden_dim, activation):
@@ -54,6 +56,73 @@ def test_activation(batch, hidden_dim, activation):
         X += 1
 
     torch_function = eval(f"torch.{activation}")
+
+    reference = torch_function(X).numpy()
+
+    model = NNFactory()
+    input = model.parameter(X.shape)
+    output = torch_function(input)
+    model.compile(output)
+
+    out = model.run(X.numpy())
+
+    assert out.shape == reference.shape, "Output shape mismatch"
+    assert np.isfinite(reference).all(), "Pytorch Reference contains NaN or Inf"
+    assert np.isfinite(out).all(), "NPU output contains NaN or Inf"
+
+    assert 1 - r2_score(reference, out) < 0.001
+
+
+@pytest.mark.parametrize("batch", [16, 128])
+@pytest.mark.parametrize("hidden_dim", [256, 512])
+@pytest.mark.parametrize("min_val", [-1, -0.5, None])
+@pytest.mark.parametrize("max_val", [1, 0.5, None])
+def test_clamp(batch, hidden_dim, min_val, max_val):
+
+    if min_val is None and max_val is None:
+        pytest.skip("min_val and max_val cannot be both None")
+
+    # X in the range [-0.5, 0.5]
+    X = torch.rand((batch, hidden_dim)).to(torch.float16) - 0.5
+
+    reference = torch.clamp(X, min_val, max_val).numpy()
+
+    model = NNFactory()
+    input = model.parameter(X.shape)
+    output = torch.clamp(input, min_val, max_val)
+    model.compile(output)
+
+    out = model.run(X.numpy())
+
+    assert out.shape == reference.shape, "Output shape mismatch"
+    assert np.isfinite(reference).all(), "Pytorch Reference contains NaN or Inf"
+    assert np.isfinite(out).all(), "NPU output contains NaN or Inf"
+
+    assert 1 - r2_score(reference, out) < 0.001
+
+
+@pytest.mark.parametrize("batch", [16, 128])
+@pytest.mark.parametrize("hidden_dim", [256, 512])
+@pytest.mark.parametrize(
+    "activation",
+    [
+        "elu",
+        "gelu",
+        "relu",
+        "sigmoid",
+        "hardswish",
+        "mish",
+        "softplus",
+        "hardsigmoid",
+        "silu",
+    ],
+)
+def test_functional_activation(batch, hidden_dim, activation):
+
+    # X in the range [-0.5, 0.5]
+    X = torch.rand((batch, hidden_dim)).to(torch.float16) - 0.5
+
+    torch_function = eval(f"torch.nn.functional.{activation}")
 
     reference = torch_function(X).numpy()
 

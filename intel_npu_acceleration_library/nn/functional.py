@@ -426,9 +426,9 @@ def layer_norm(
     return ln
 
 
-@implements(torch.nn.functional.gelu)
-def gelu(x: Tensor, out: Optional[Tensor] = None) -> Tensor:
-    """Return the gelu of a tensor element-wise.
+@implements(torch.ceil)
+def ceil(x: Tensor, out: Optional[Tensor] = None) -> Tensor:
+    """Return the ceil of a tensor element-wise.
 
     Args:
         x (Tensor): The input tensor.
@@ -437,4 +437,204 @@ def gelu(x: Tensor, out: Optional[Tensor] = None) -> Tensor:
     Returns:
         Tensor: Output tensor.
     """
-    return __generate_activation(x, "gelu", out)
+    return __generate_activation(x, "ceiling", out)
+
+
+@implements(torch.clamp)
+def clamp(
+    x: Tensor,
+    min: Optional[float] = None,
+    max: Optional[float] = None,
+    out: Optional[Tensor] = None,
+) -> Tensor:
+    """Return the clamp of a tensor element-wise.
+
+    Args:
+        x (Tensor): The input tensor.
+        min (Optional[float], optional): The minimum value. Defaults to None.
+        max (Optional[float], optional): The maximum value. Defaults to None.
+        out (Optional[Tensor], optional): Output tensor. Defaults to None.
+
+    Returns:
+        Tensor: Output tensor.
+    """
+    if min is None:
+        min = x.dtype.min
+    if max is None:
+        max = x.dtype.max
+    out = generate_op(x, "clamp", min, max)
+    return out
+
+
+@implements(torch.neg)
+def neg(x: Tensor, out: Optional[Tensor] = None) -> Tensor:
+    """Return the negative of a tensor element-wise.
+
+    Args:
+        x (Tensor): The input tensor.
+        out (Optional[Tensor], optional): Output tensor. Defaults to None.
+
+    Returns:
+        Tensor: Output tensor.
+    """
+    return __generate_activation(x, "negative", out)
+
+
+# Functional activations
+
+
+@implements(torch.nn.functional.elu)
+def elu(x: Tensor, alpha: float = 1.0, inplace=False) -> Tensor:
+    """Return the clamp of a tensor element-wise.
+
+    Args:
+        x (Tensor): The input tensor.
+        alpha (float): The alpha value. Defaults to 1.0.
+        inplace (bool): apply elu in place. Defaults to False.
+
+    Returns:
+        Tensor: Output tensor.
+    """
+    out = generate_op(x, "elu", alpha)
+    if inplace:
+        x = out
+    return out
+
+
+@implements(torch.nn.functional.gelu)
+def gelu(x: Tensor, approximate: str = "none") -> Tensor:
+    """Return the gelu of a tensor element-wise.
+
+    Args:
+        x (Tensor): The input tensor.
+        approximate (str): The approximation method. Defaults to 'none'. When the approximate argument is 'tanh', Gelu is estimated with tanh approximation. When the approximate argument is 'erf', Gelu is estimated with erf approximation. When the approximate argument is 'none', Gelu is estimated with the original formula.
+
+    Raises:
+        NotImplementedError: Only tanh approximation is supported
+
+    Returns:
+        Tensor: Output tensor.
+    """
+    if approximate == "tanh":
+        return __generate_activation(x, "gelu")
+    else:
+        raise NotImplementedError("Only tanh approximation is supported")
+
+
+@implements(torch.nn.functional.relu)
+def relu(x: Tensor, inplace=False) -> Tensor:
+    """Return the relu of a tensor element-wise.
+
+    Args:
+        x (Tensor): The input tensor.
+        inplace (bool): apply elu in place. Defaults to False.
+
+    Returns:
+        Tensor: Output tensor.
+    """
+    out = generate_op(x, "relu")
+    if inplace:
+        x = out
+    return out
+
+
+@implements(torch.nn.functional.sigmoid)
+def sigmoid(x: Tensor) -> Tensor:
+    """Return the sigmoid of a tensor element-wise.
+
+    Args:
+        x (Tensor): The input tensor.
+
+    Returns:
+        Tensor: Output tensor.
+    """
+    return generate_op(x, "sigmoid")
+
+
+@implements(torch.nn.functional.hardswish)
+def hardswish(x: Tensor, inplace=False) -> Tensor:
+    """Return the hardswish of a tensor element-wise.
+
+    Args:
+        x (Tensor): The input tensor.
+        inplace (bool): apply elu in place. Defaults to False.
+
+    Returns:
+        Tensor: Output tensor.
+    """
+    out = generate_op(x, "hswish")
+    if inplace:
+        x = out
+    return out
+
+
+@implements(torch.nn.functional.mish)
+def mish(x: Tensor, inplace=False) -> Tensor:
+    """Return the mish of a tensor element-wise.
+
+    Args:
+        x (Tensor): The input tensor.
+        inplace (bool): apply elu in place. Defaults to False.
+
+    Returns:
+        Tensor: Output tensor.
+    """
+    out = generate_op(x, "mish")
+    if inplace:
+        x = out
+    return out
+
+
+@implements(torch.nn.functional.softplus)
+def softplus(x: Tensor, beta: float = 1, threshold: float = 20) -> Tensor:
+    """Return the softplus of a tensor element-wise.
+
+    Args:
+        x (Tensor): The input tensor.
+        beta (float): The beta value. Defaults to 1.
+        threshold (float): The threshold value. Defaults to 20.
+
+    Raises:
+        NotImplementedError: Only default values are supported
+
+    Returns:
+        Tensor: Output tensor.
+    """
+    if beta == 1 and threshold == 20:
+        return generate_op(x, "softplus")
+    else:
+        raise NotImplementedError("Only default values are supported")
+
+
+@implements(torch.nn.functional.hardsigmoid)
+def hardsigmoid(x: Tensor, inplace=False) -> Tensor:
+    """Return the hardsigmoid of a tensor element-wise.
+
+    Args:
+        x (Tensor): The input tensor.
+        inplace (bool): apply elu in place. Defaults to False.
+
+    Returns:
+        Tensor: Output tensor.
+    """
+    out = generate_op(x, "hsigmoid")
+    if inplace:
+        x = out
+    return out
+
+
+@implements(torch.nn.functional.silu)
+def silu(x: Tensor, inplace=False) -> Tensor:
+    """Return the silu of a tensor element-wise.
+
+    Args:
+        x (Tensor): The input tensor.
+        inplace (bool): apply elu in place. Defaults to False.
+
+    Returns:
+        Tensor: Output tensor.
+    """
+    out = x * generate_op(x, "sigmoid")
+    if inplace:
+        x = out
+    return out
