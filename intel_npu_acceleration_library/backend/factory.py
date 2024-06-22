@@ -467,6 +467,67 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             auto_pad,  # auto_pad
         )
 
+    @return_tensor
+    def max_pooling(
+        self,
+        input: ctypes._Pointer,
+        kernel_size: Union[int, Sequence[int]],
+        strides: Optional[Union[int, Sequence[int]]] = None,
+        padding: int = 0,
+        ceil_mode: bool = False,
+        n_spatial_dims: int = 2,
+    ) -> ctypes._Pointer:
+        """Generate an average pooling layer.
+
+        Args:
+            input (ctypes._Pointer): layer input node
+            kernel_size (Sequence[int]): kernel size
+            strides (Sequence[int]): strides
+            padding (int): padding
+            ceil_mode (bool): ceil mode
+            n_spatial_dims (int): number of spatial dimensions
+
+        Returns:
+            ctypes._Pointer: output node
+        """
+        if isinstance(kernel_size, int):
+            kernel_size = [kernel_size] * n_spatial_dims
+
+        if strides is None:
+            strides = kernel_size
+        elif isinstance(strides, int):
+            strides = [strides] * n_spatial_dims
+
+        if isinstance(padding, int):
+            padding_begins = [padding] * n_spatial_dims
+            padding_ends = [padding] * n_spatial_dims
+        else:
+            padding_begins = list(padding)
+            padding_ends = list(padding)
+
+        strides_ptr = np.array(strides, dtype=np.uint32)
+        padding_begins_ptr = np.array(padding_begins, dtype=np.uint32)
+        padding_ends_ptr = np.array(padding_ends, dtype=np.uint32)
+        kernel_size_ptr = np.array(kernel_size, dtype=np.uint32)
+
+        rounding_type = 1 if ceil_mode else 0
+        auto_pad = 0  # Hardcoded to explicit padding
+
+        return backend_lib.max_pooling(
+            self._mm,
+            input,
+            strides_ptr.size,
+            strides_ptr,
+            padding_begins_ptr.size,
+            padding_begins_ptr,
+            padding_ends_ptr.size,
+            padding_ends_ptr,
+            kernel_size_ptr.size,
+            kernel_size_ptr,
+            rounding_type,  # rounding_type
+            auto_pad,  # auto_pad
+        )
+
     def get_output_tensor_shape(self):
         """Get output tensor shape.
 

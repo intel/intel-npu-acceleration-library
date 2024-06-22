@@ -198,22 +198,51 @@ def test_adaptive_pooling(channel, xydim, fn, target_shape):
 
 @pytest.mark.parametrize("channel", [16, 128])
 @pytest.mark.parametrize("xydim", [16, 32])
-@pytest.mark.parametrize(
-    "fn", [torch.nn.functional.avg_pool2d]  # , torch.nn.functional.max_pool2d],
-)
 @pytest.mark.parametrize("kernels", [1, 2, (2, 2), (4, 4)])
 @pytest.mark.parametrize("stride", [1, 2])
 @pytest.mark.parametrize("padding", [0])
 @pytest.mark.parametrize("ceil_mode", [False, True])
 @pytest.mark.parametrize("count_include_pad", [False, True])
 def test_avg_pooling(
-    channel, xydim, fn, kernels, stride, padding, ceil_mode, count_include_pad
+    channel, xydim, kernels, stride, padding, ceil_mode, count_include_pad
 ):
 
     if kernels == 1 and stride > 1:
         pytest.skip("Stride > 1 not supported for kernel size 1")
 
-    pool = lambda x: fn(x, kernels, stride, padding, ceil_mode, count_include_pad)
+    pool = lambda x: torch.nn.functional.avg_pool2d(
+        x, kernels, stride, padding, ceil_mode, count_include_pad
+    )
+
+    x = torch.rand(1, channel, xydim, xydim).to(torch.float16)
+    reference = pool(x).detach().numpy()
+
+    model = NNFactory()
+    par = model.parameter([1, channel, xydim, xydim], np.float16)
+    out = pool(par)
+    model.compile(out)
+
+    assert out.shape == list(reference.shape)
+
+    result = model.run(x.numpy())
+
+    assert 1 - r2_score(reference.flatten(), result.flatten()) < 0.01
+
+
+@pytest.mark.parametrize("channel", [16, 128])
+@pytest.mark.parametrize("xydim", [16, 32])
+@pytest.mark.parametrize("kernels", [1, 2, (2, 2), (4, 4)])
+@pytest.mark.parametrize("stride", [1, 2])
+@pytest.mark.parametrize("padding", [0])
+@pytest.mark.parametrize("ceil_mode", [False, True])
+def test_max_pooling(channel, xydim, kernels, stride, padding, ceil_mode):
+
+    if kernels == 1 and stride > 1:
+        pytest.skip("Stride > 1 not supported for kernel size 1")
+
+    pool = lambda x: torch.nn.functional.max_pool2d(
+        x, kernels, stride, padding, dilation=1, ceil_mode=ceil_mode
+    )
 
     x = torch.rand(1, channel, xydim, xydim).to(torch.float16)
     reference = pool(x).detach().numpy()

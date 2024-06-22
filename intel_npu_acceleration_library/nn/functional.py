@@ -724,3 +724,47 @@ def avg_pool2d(
         divisor_override,
         2,
     )
+
+
+@implements(torch.nn.functional.max_pool2d)
+def max_pool2d(
+    input,
+    kernel_size,
+    stride=None,
+    padding=0,
+    dilation=1,
+    ceil_mode=False,
+    return_indices=False,
+):
+    """Generate an average pooling layer.
+
+    Args:
+        input (ctypes._Pointer): layer input node
+        kernel_size (Sequence[int]): kernel size
+        stride (Sequence[int]): strides
+        padding (int): padding
+        dilation (int): dilation
+        ceil_mode (bool): ceil mode
+        return_indices (bool): return indices
+
+    Raises:
+        NotImplementedError: return_indices and dilation are not supported
+
+    Returns:
+        ctypes._Pointer: output node
+    """
+    if return_indices:
+        raise NotImplementedError("return_indices is not supported yet")
+
+    if dilation != 1:
+        raise NotImplementedError("dilation is not supported yet")
+
+    return generate_op(
+        [input],
+        "max_pooling",
+        kernel_size,
+        stride,
+        padding,
+        ceil_mode,
+        2,
+    )
