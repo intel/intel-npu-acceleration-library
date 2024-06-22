@@ -347,6 +347,26 @@ class Tensor:
         """
         return self.reshape(*shape)
 
+    def flatten(self, start_dim=0, end_dim=-1) -> "Tensor":
+        """
+        Flatten the tensor.
+
+        Args:
+            start_dim (int): The first dim to flatten. Defaults to 0.
+            end_dim (int): The last dim to flatten. Defaults to -1.
+
+        Returns:
+            Tensor: The flattened tensor.
+        """
+        if end_dim < 0:
+            end_dim = len(self.shape) + end_dim + 1
+
+        flattened_dim = self.shape[start_dim:end_dim]
+        size = int(np.prod(flattened_dim))
+        new_shape = list(self.shape[:start_dim]) + [size] + list(self.shape[end_dim:])
+
+        return self.reshape(*new_shape)
+
     def squeeze(self) -> "Tensor":
         """
         Remove dimensions of size 1 from the tensor.

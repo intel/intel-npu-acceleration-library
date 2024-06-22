@@ -120,15 +120,15 @@ intel_npu_acceleration_library_DLL_API float run(intel_npu_acceleration_library:
 // ######################### NN Factory ops #########################
 
 intel_npu_acceleration_library_DLL_API size_t op_shape_size(ov::op::Op* in0) {
-    return in0->get_shape().size();
+    return in0->get_output_shape(0).size();
 }
 
 intel_npu_acceleration_library_DLL_API size_t op_shape(ov::op::Op* in0, size_t idx) {
-    return in0->get_shape()[idx];
+    return in0->get_output_shape(0)[idx];
 }
 
 intel_npu_acceleration_library_DLL_API size_t op_dtype(ov::op::Op* in0) {
-    auto dtype = static_cast<ov::element::Type_t>(in0->get_element_type());
+    auto dtype = static_cast<ov::element::Type_t>(in0->get_output_element_type(0));
     return static_cast<size_t>(dtype);
 }
 
@@ -463,6 +463,49 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* convolution(
         return factory->eltwise_add(mm, bias);
     }
     return mm;
+}
+
+intel_npu_acceleration_library_DLL_API ov::op::Op* avg_pooling(intel_npu_acceleration_library::ModelFactory* factory,
+                                                               ov::op::Op* in0, size_t strides_size,
+                                                               unsigned int* strides_data, size_t pad_begins_size,
+                                                               unsigned int* pad_begins_data, size_t pad_ends_size,
+                                                               unsigned int* pad_ends_data, size_t kernel_size,
+                                                               unsigned int* kernel_data, bool exclude_pad,
+                                                               int rounding_type, int auto_pad) {
+    // Create vectors from the input data
+    std::vector<size_t> strides(strides_data, strides_data + strides_size);
+    std::vector<size_t> pad_begins(pad_begins_data, pad_begins_data + pad_begins_size);
+    std::vector<size_t> pad_ends(pad_ends_data, pad_ends_data + pad_ends_size);
+    std::vector<size_t> kernel(kernel_data, kernel_data + kernel_size);
+
+    return factory->average_pooling(in0, strides, pad_begins, pad_ends, kernel, exclude_pad,
+                                    static_cast<ov::op::RoundingType>(rounding_type),
+                                    static_cast<ov::op::PadType>(auto_pad));
+}
+
+intel_npu_acceleration_library_DLL_API ov::op::Op* adaptive_avg_pool(
+        intel_npu_acceleration_library::ModelFactory* factory, ov::op::Op* in0, ov::op::Op* shape) {
+    return factory->adaptive_average_pool(in0, shape);
+}
+
+intel_npu_acceleration_library_DLL_API ov::op::Op* max_pooling(
+        intel_npu_acceleration_library::ModelFactory* factory, ov::op::Op* in0, size_t strides_size,
+        unsigned int* strides_data, size_t pad_begins_size, unsigned int* pad_begins_data, size_t pad_ends_size,
+        unsigned int* pad_ends_data, size_t kernel_size, unsigned int* kernel_data, int rounding_type, int auto_pad) {
+    // Create vectors from the input data
+    std::vector<size_t> strides(strides_data, strides_data + strides_size);
+    std::vector<size_t> pad_begins(pad_begins_data, pad_begins_data + pad_begins_size);
+    std::vector<size_t> pad_ends(pad_ends_data, pad_ends_data + pad_ends_size);
+    std::vector<size_t> kernel(kernel_data, kernel_data + kernel_size);
+
+    return factory->max_pooling(in0, strides, pad_begins, pad_ends, kernel,
+                                static_cast<ov::op::RoundingType>(rounding_type),
+                                static_cast<ov::op::PadType>(auto_pad));
+}
+
+intel_npu_acceleration_library_DLL_API ov::op::Op* adaptive_max_pool(
+        intel_npu_acceleration_library::ModelFactory* factory, ov::op::Op* in0, ov::op::Op* shape) {
+    return factory->adaptive_max_pool(in0, shape);
 }
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* scaled_dot_product_attention(

@@ -123,6 +123,75 @@ public:
     }
 
     /**
+     * @brief Create a new average pooling operation
+     * @param input pooling input
+     * @param strides pooling strides
+     * @param pads_begin pooling padding begin
+     * @param pads_ends pooling padding end
+     * @param kernel pooling kernel
+     * @param exclude_pad exclude padding from the average calculation
+     * @param rounding_type rounding type
+     * @param auto_pad padding type
+     * @return ov::op::Op*
+     */
+    ov::op::Op* average_pooling(ov::op::Op* input, std::vector<size_t> strides, std::vector<size_t> pads_begin,
+                                std::vector<size_t> pads_ends, std::vector<size_t> kernel, bool exclude_pad = false,
+                                ov::op::RoundingType rounding_type = ov::op::RoundingType::FLOOR,
+                                ov::op::PadType auto_pad = ov::op::PadType::EXPLICIT) {
+        auto pool = std::make_shared<ov::opset1::AvgPool>(input->output(0), ov::Strides(strides), pads_begin, pads_ends,
+                                                          kernel, exclude_pad, rounding_type, auto_pad);
+        operations.push_back(pool);
+        return pool.get();
+    }
+
+    /**
+     * @brief Create a new adaptive average pooling operation
+     * @param input pooling input
+     * @param output_shape output shape
+     * @return ov::op::Op*
+     */
+    ov::op::Op* adaptive_average_pool(ov::op::Op* input, ov::op::Op* output_shape) {
+        auto pool = std::make_shared<ov::opset8::AdaptiveAvgPool>(input->output(0), output_shape->output(0));
+        operations.push_back(pool);
+        return pool.get();
+    }
+
+    /**
+     * @brief Create a new max pooling operation
+     * @param input pooling input
+     * @param strides pooling strides
+     * @param pads_begin pooling padding begin
+     * @param pads_ends pooling padding end
+     * @param kernel pooling kernel
+     * @param exclude_pad exclude padding from the max calculation
+     * @param rounding_type rounding type
+     * @param auto_pad padding type
+     * @return ov::op::Op*
+     */
+    ov::op::Op* max_pooling(ov::op::Op* input, std::vector<size_t> strides, std::vector<size_t> pads_begin,
+                            std::vector<size_t> pads_ends, std::vector<size_t> kernel,
+                            ov::op::RoundingType rounding_type = ov::op::RoundingType::FLOOR,
+                            ov::op::PadType auto_pad = ov::op::PadType::EXPLICIT) {
+        auto pool = std::make_shared<ov::opset1::MaxPool>(input->output(0), ov::Strides(strides), pads_begin, pads_ends,
+                                                          kernel, rounding_type, auto_pad);
+        operations.push_back(pool);
+        return pool.get();
+    }
+
+    /**
+     * @brief Create a new adaptive max pooling operation
+     * @param input pooling input
+     * @param output_shape output shape
+     * @return ov::op::Op*
+     */
+    ov::op::Op* adaptive_max_pool(ov::op::Op* input, ov::op::Op* output_shape) {
+        auto pool = std::make_shared<ov::opset8::AdaptiveMaxPool>(input->output(0), output_shape->output(0),
+                                                                  ov::element::i64);
+        operations.push_back(pool);
+        return pool.get();
+    }
+
+    /**
      * @brief Create a new gather operation
      *
      * @param input tensor from which slices are gathered

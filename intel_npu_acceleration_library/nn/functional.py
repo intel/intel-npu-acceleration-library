@@ -480,6 +480,22 @@ def neg(x: Tensor, out: Optional[Tensor] = None) -> Tensor:
     return __generate_activation(x, "negative", out)
 
 
+@implements(torch.flatten)
+def flatten(x, start_dim=0, end_dim=-1) -> "Tensor":
+    """
+    Flatten the tensor.
+
+    Args:
+        x (Tensor): The input tensor.
+        start_dim (int): The first dim to flatten. Defaults to 0.
+        end_dim (int): The last dim to flatten. Defaults to -1.
+
+    Returns:
+        Tensor: The flattened tensor.
+    """
+    return x.flatten(start_dim, end_dim)
+
+
 # Functional activations
 
 
@@ -635,3 +651,39 @@ def silu(x: Tensor, inplace=False) -> Tensor:
     if inplace:
         x = out
     return out
+
+
+@implements(torch.nn.functional.adaptive_avg_pool2d)
+def adaptive_avg_pool2d(input: Tensor, output_size: Sequence[int]):
+    """Return the adaptive average pool2d of a tensor given the desired output shape.
+
+    Args:
+        input (Tensor): The input tensor.
+        output_size (Sequence[int]): The desired output shape.
+
+    Returns:
+        Tensor: Output tensor.
+    """
+    return generate_op([input, output_size], "adaptive_avg_pool")
+
+
+@implements(torch.nn.functional.adaptive_max_pool2d)
+def adaptive_max_pool2d(
+    input: Tensor, output_size: Sequence[int], return_indices: bool = False
+):
+    """Return the adaptive_max_pool2d of a tensor given the desired output shape.
+
+    Args:
+        input (Tensor): The input tensor.
+        output_size (Sequence[int]): The desired output shape.
+        return_indices (bool): Not supported yet. Defaults to False.
+
+    Raises:
+        NotImplementedError: return_indices is not supported yet
+
+    Returns:
+        Tensor: Output tensor.
+    """
+    if return_indices:
+        raise NotImplementedError("return_indices is not supported yet")
+    return generate_op([input, output_size], "adaptive_max_pool")

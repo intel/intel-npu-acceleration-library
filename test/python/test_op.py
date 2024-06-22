@@ -149,3 +149,50 @@ def run_activation_test(torch_function, batch, hidden_dim):
     assert np.isfinite(out).all(), "NPU output contains NaN or Inf"
 
     assert 1 - r2_score(reference, out) < 0.001
+
+
+@pytest.mark.parametrize("batch", [16, 128])
+@pytest.mark.parametrize("hidden_dim", [256, 512])
+@pytest.mark.parametrize("start_dim", [0, 1])
+@pytest.mark.parametrize("end_dim", [-1])
+def test_flatten(batch, hidden_dim, start_dim, end_dim):
+
+    x = torch.rand((batch, hidden_dim)).to(torch.float16)
+    reference = torch.flatten(x, start_dim, end_dim).numpy()
+
+    model = NNFactory()
+    par = model.parameter(x.shape, np.float16)
+    out = torch.flatten(par, start_dim, end_dim)
+    model.compile(out)
+
+    assert out.shape == list(reference.shape)
+
+    result = model.run(x.numpy())
+
+    assert 1 - r2_score(reference.flatten(), result.flatten()) < 0.01
+
+
+@pytest.mark.parametrize("channel", [16, 128])
+@pytest.mark.parametrize("xydim", [4, 16])
+@pytest.mark.parametrize(
+    "fn",
+    [torch.nn.functional.adaptive_avg_pool2d, torch.nn.functional.adaptive_max_pool2d],
+)
+@pytest.mark.parametrize("target_shape", [(1, 1), (2, 2), (4, 4)])
+def test_adaptive_pooling(channel, xydim, fn, target_shape):
+
+    x = torch.rand(1, channel, xydim, xydim).to(torch.float16)
+    reference = fn(x, target_shape).detach().numpy()
+
+    model = NNFactory()
+    par = model.parameter([1, channel, xydim, xydim], np.float16)
+    out = fn(par, target_shape)
+    model.compile(out)
+
+    model.save("model.xml")
+
+    assert out.shape == list(reference.shape)
+
+    result = model.run(x.numpy())
+
+    assert 1 - r2_score(reference.flatten(), result.flatten()) < 0.01
