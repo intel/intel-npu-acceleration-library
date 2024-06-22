@@ -480,6 +480,120 @@ def neg(x: Tensor, out: Optional[Tensor] = None) -> Tensor:
     return __generate_activation(x, "negative", out)
 
 
+@implements(torch.add)
+def add(
+    x: Tensor,
+    other: Union[Tensor, torch.Tensor, int, float],
+    alpha: float = 1,
+    out: Optional[Tensor] = None,
+) -> Tensor:
+    """Return the sum of two tensors element-wise.
+
+    Args:
+        x (Tensor): The input tensor.
+        other (Union[Tensor, torch.Tensor, int, float]): The other tensor.
+        alpha (float): The alpha value. Defaults to 1.
+        out (Optional[Tensor], optional): Output tensor. Defaults to None.
+
+    Returns:
+        Tensor: Output tensor.
+    """
+    if alpha != 1:
+        other = torch.mul(other, alpha)
+
+    out = generate_op([x, other], "eltwise_add")
+    return out
+
+
+@implements(torch.sub)
+def sub(
+    x: Tensor,
+    other: Union[Tensor, torch.Tensor, int, float],
+    alpha: float = 1,
+    out: Optional[Tensor] = None,
+) -> Tensor:
+    """Return the subtraction of two tensors element-wise.
+
+    Args:
+        x (Tensor): The input tensor.
+        other (Union[Tensor, torch.Tensor, int, float]): The other tensor.
+        alpha (float): The alpha value. Defaults to 1.
+        out (Optional[Tensor], optional): Output tensor. Defaults to None.
+
+    Returns:
+        Tensor: Output tensor.
+    """
+    if alpha != 1:
+        other = torch.mul(other, alpha)
+
+    return torch.add(x, torch.neg(other), out=out)
+
+
+@implements(torch.mul)
+def mul(
+    x: Tensor,
+    other: Union[Tensor, torch.Tensor, int, float],
+    out: Optional[Tensor] = None,
+) -> Tensor:
+    """Return the elementwise multiplication of two tensors.
+
+    Args:
+        x (Tensor): The input tensor.
+        other (Union[Tensor, torch.Tensor, int, float]): The other tensor.
+        out (Optional[Tensor], optional): Output tensor. Defaults to None.
+
+    Returns:
+        Tensor: Output tensor.
+    """
+    out = generate_op([x, other], "eltwise_mul")
+    return out
+
+
+@implements(torch.div)
+def div(
+    x: Tensor,
+    other: Union[Tensor, torch.Tensor, int, float],
+    rounding_mode: Optional[str] = None,
+    out: Optional[Tensor] = None,
+) -> Tensor:
+    """Return the elementwise division of two tensors.
+
+    Args:
+        x (Tensor): The input tensor.
+        other (Union[Tensor, torch.Tensor, int, float]): The other tensor.
+        rounding_mode (Optional[str]): The rounding mode. Defaults to None. Options are 'trunc', 'floor'.
+        out (Optional[Tensor], optional): Output tensor. Defaults to None.
+
+    Raises:
+        NotImplementedError: trunc is not supported yet
+
+    Returns:
+        Tensor: Output tensor.
+    """
+    out = generate_op([x, other], "eltwise_div")
+
+    if rounding_mode == "trunc":
+        raise NotImplementedError("trunc is not supported yet")
+    elif rounding_mode == "floor":
+        return torch.floor(out)
+    else:
+        return out
+
+
+@implements(torch.unsqueeze)
+def unsqueeze(x, dim: int) -> Tensor:
+    """Return the unsqueezed tensor.
+
+    Args:
+        x (Tensor): The input tensor.
+        dim (int): The dim to unsqueeze
+
+    Returns:
+        Tensor: The squeezed tensor.
+    """
+    return generate_op([x], "unsqueeze", dim)
+
+
 @implements(torch.flatten)
 def flatten(x, start_dim=0, end_dim=-1) -> "Tensor":
     """

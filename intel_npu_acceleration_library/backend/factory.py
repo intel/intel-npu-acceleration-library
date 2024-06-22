@@ -13,6 +13,7 @@ from functools import partial
 import numpy.typing as npt
 import numpy as np
 import ctypes
+import torch
 
 
 F = TypeVar("F", bound=Callable[..., Any])
@@ -165,12 +166,12 @@ class NNFactory(BaseNPUBackendWithPrefetch):
     @return_tensor
     def constant(
         self,
-        data: Union[np.array, Sequence[int], Sequence[float], int, float],
+        data: Union[np.array, Sequence[int], Sequence[float], int, float, torch.Tensor],
     ) -> ctypes._Pointer:
         """Generate a model input constant.
 
         Args:
-            data (Union[np.array, Sequence[int], Sequence[float], int, float]): constant data
+            data (Union[np.array, Sequence[int], Sequence[float], int, float, torch.Tensor]): constant data
 
         Returns:
             ctypes._Pointer: an instance to a constant object
@@ -185,6 +186,8 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             data = np.array([data], dtype=np.int64)
         elif isinstance(data, float):
             data = np.array([data], dtype=np.float32)
+        elif isinstance(data, torch.Tensor):
+            data = data.detach().numpy()
 
         dst = data.ctypes.data_as(ctypes.c_void_p)
         shape_ptr = np.array(data.shape, dtype=np.uint32)

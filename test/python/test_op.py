@@ -257,3 +257,29 @@ def test_max_pooling(channel, xydim, kernels, stride, padding, ceil_mode):
     result = model.run(x.numpy())
 
     assert 1 - r2_score(reference.flatten(), result.flatten()) < 0.01
+
+
+@pytest.mark.parametrize(
+    "shape", [(1, 3, 16, 16), (1, 16, 32, 32), (1, 64, 16, 16), (1, 128, 256)]
+)
+@pytest.mark.parametrize("op", [torch.add, torch.sub, torch.mul, torch.div])
+@pytest.mark.parametrize("broadcast", [False, True])
+def test_operations(shape, op, broadcast):
+    x = torch.rand(shape).to(torch.float16)
+    if broadcast:
+        y = torch.rand(shape[0]).to(torch.float16)
+    else:
+        y = torch.rand(shape).to(torch.float16)
+
+    reference = op(x, y).detach().numpy()
+
+    model = NNFactory()
+    par = model.parameter(shape, np.float16)
+    out = op(par, y)
+    model.compile(out)
+
+    assert out.shape == list(reference.shape)
+
+    result = model.run(x.numpy())
+
+    assert 1 - r2_score(reference.flatten(), result.flatten()) < 0.01
