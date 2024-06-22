@@ -97,6 +97,8 @@ def test_model_creation():
 
     assert ff.shape == [32, 128, 64]
 
+    assert ff.dim() == 3
+
     model.compile(ff)
 
 

@@ -78,7 +78,8 @@ def patch_parameters(module: torch.nn.Module, model: NNFactory, recurse: bool = 
         del module._parameters[name]
         setattr(module, name, model.constant(param.data.detach().numpy()))
 
-    for name, param in module.named_buffers(recurse=recurse):
+    buffers = list(module.named_buffers(recurse=recurse))
+    for name, param in buffers:
         del module._buffers[name]
         setattr(module, name, model.constant(param.data.detach().numpy()))
 
@@ -272,4 +273,4 @@ def convert_to_npu_module(module: torch.nn.Module) -> Module:
     Returns:
         Module: The NPU enabled Module.
     """
-    return NPUModule(module)
+    return NPUModule(module).eval()

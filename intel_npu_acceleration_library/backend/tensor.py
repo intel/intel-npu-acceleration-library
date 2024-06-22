@@ -98,6 +98,15 @@ class Tensor:
         else:
             raise RuntimeError("Unsupported dtype")
 
+    def dim(self) -> int:
+        """
+        Return the number of dimensions of the tensor.
+
+        Returns:
+            int: The number of dimensions of the tensor.
+        """
+        return len(self.shape)
+
     def size(self, dim=None) -> Union[int, Sequence[int]]:
         """
         Return the size of the tensor.
