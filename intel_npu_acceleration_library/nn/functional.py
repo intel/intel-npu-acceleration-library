@@ -9,7 +9,7 @@ from intel_npu_acceleration_library.backend.tensor import (
     generate_op,
     Tensor,
 )
-from typing import Optional, Sequence
+from typing import Optional, Sequence, Union
 import torch
 
 
@@ -687,3 +687,40 @@ def adaptive_max_pool2d(
     if return_indices:
         raise NotImplementedError("return_indices is not supported yet")
     return generate_op([input, output_size], "adaptive_max_pool")
+
+
+@implements(torch.nn.functional.avg_pool2d)
+def avg_pool2d(
+    input: Tensor,
+    kernel_size: Union[int, Sequence[int]],
+    stride: Optional[Union[int, Sequence[int]]] = None,
+    padding: int = 0,
+    ceil_mode: bool = False,
+    count_include_pad: bool = True,
+    divisor_override: Optional[int] = None,
+):
+    """Generate an average pooling layer.
+
+    Args:
+        input (Tensor): layer input node
+        kernel_size (Sequence[int]): kernel size
+        stride (Sequence[int]): strides
+        padding (int): padding
+        ceil_mode (bool): ceil mode
+        count_include_pad (bool): count include pad
+        divisor_override (int): divisor override
+
+    Returns:
+        Tensor: output node
+    """
+    return generate_op(
+        [input],
+        "avg_pooling",
+        kernel_size,
+        stride,
+        padding,
+        ceil_mode,
+        count_include_pad,
+        divisor_override,
+        2,
+    )

@@ -180,6 +180,39 @@ def init_network_factory(lib: ctypes.CDLL):
     ]
     lib.convolution.restype = handler
 
+    lib.avg_pooling.argtypes = [
+        handler,
+        handler,
+        ctypes.c_int,
+        c_u32_array,
+        ctypes.c_int,
+        c_u32_array,
+        ctypes.c_int,
+        c_u32_array,
+        ctypes.c_int,
+        c_u32_array,
+        ctypes.c_bool,
+        ctypes.c_int,
+        ctypes.c_int,
+    ]
+    lib.avg_pooling.restype = handler
+
+    lib.max_pooling.argtypes = [
+        handler,
+        handler,
+        ctypes.c_int,
+        c_u32_array,
+        ctypes.c_int,
+        c_u32_array,
+        ctypes.c_int,
+        c_u32_array,
+        ctypes.c_int,
+        c_u32_array,
+        ctypes.c_int,
+        ctypes.c_int,
+    ]
+    lib.max_pooling.restype = handler
+
     for op in get_supported_ops():
         fn = getattr(lib, op.name)
         fn.argtypes = [handler] * (op.inputs + 1) + list(op.parameters)
