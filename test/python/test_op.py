@@ -289,3 +289,36 @@ def test_operations(shape, op, broadcast):
     result = model.run(x.numpy())
 
     assert 1 - r2_score(reference.flatten(), result.flatten()) < 0.01
+
+
+@pytest.mark.parametrize("shape", [(1, 16, 16, 16), (1, 16, 32, 32), (1, 64, 16, 16)])
+@pytest.mark.parametrize("mean", [0, 10, 120])
+@pytest.mark.parametrize("variance", [1, 1.3])
+@pytest.mark.parametrize("weight", [False, True])
+@pytest.mark.parametrize("bias", [False, True])
+def test_batch_norm(shape, mean, variance, weight, bias):
+    x = torch.rand(shape).to(torch.float16) * 10 + 3
+
+    weight = torch.rand(shape[1]).to(torch.float16) if weight else None
+
+    bias = torch.rand(shape[1]).to(torch.float16) if bias else None
+
+    mean = torch.Tensor(shape[1] * [mean]).to(torch.float16)
+    variance = torch.Tensor(shape[1] * [variance]).to(torch.float16)
+
+    reference = (
+        torch.nn.functional.batch_norm(x, mean, variance, weight=weight, bias=bias)
+        .detach()
+        .numpy()
+    )
+
+    model = NNFactory()
+    par = model.parameter(shape, np.float16)
+    out = torch.nn.functional.batch_norm(par, mean, variance, weight=weight, bias=bias)
+    model.compile(out)
+
+    assert out.shape == list(reference.shape)
+
+    result = model.run(x.numpy())
+
+    assert 1 - r2_score(reference.flatten(), result.flatten()) < 0.01

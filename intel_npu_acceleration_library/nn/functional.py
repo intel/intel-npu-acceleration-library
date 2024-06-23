@@ -882,3 +882,49 @@ def max_pool2d(
         ceil_mode,
         2,
     )
+
+
+@implements(torch.nn.functional.batch_norm)
+def batch_norm(
+    input,
+    running_mean,
+    running_var,
+    weight=None,
+    bias=None,
+    training=False,
+    momentum=0.1,
+    eps=1e-05,
+):
+    """Generate a batch normalization layer.
+
+    Args:
+        input (Tensor): layer input node
+        running_mean (Tensor): running mean
+        running_var (Tensor): running variance
+        weight (Tensor): weight
+        bias (Tensor): bias
+        training (bool): training
+        momentum (float): momentum
+        eps (float): epsilon
+
+    Raises:
+        NotImplementedError: Training mode is not supported yet
+
+    Returns:
+        Tensor: output node
+    """
+    if training:
+        raise NotImplementedError("Training mode is not supported yet")
+
+    running_mean = running_mean.view(1, -1, 1, 1)
+    running_var = running_var.view(1, -1, 1, 1)
+
+    result = (input - running_mean) / torch.sqrt(running_var + 1e-5)
+
+    if weight is not None:
+        result = result * weight.view(1, -1, 1, 1)
+
+    if bias is not None:
+        result = result + bias.view(1, -1, 1, 1)
+
+    return result
