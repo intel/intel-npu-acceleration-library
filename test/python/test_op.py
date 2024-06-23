@@ -4,6 +4,7 @@
 #
 
 from intel_npu_acceleration_library.backend import NNFactory
+import intel_npu_acceleration_library
 from sklearn.metrics import r2_score
 import numpy as np
 import torch
@@ -180,6 +181,11 @@ def test_flatten(batch, hidden_dim, start_dim, end_dim):
 )
 @pytest.mark.parametrize("target_shape", [(1, 1), (2, 2), (4, 4)])
 def test_adaptive_pooling(channel, xydim, fn, target_shape):
+
+    if not intel_npu_acceleration_library.backend.npu_available() and any(
+        shape > 1 for shape in target_shape
+    ):
+        pytest.xfail("Configuration unsupported on CPU")
 
     x = torch.rand(1, channel, xydim, xydim).to(torch.float16)
     reference = fn(x, target_shape).detach().numpy()
