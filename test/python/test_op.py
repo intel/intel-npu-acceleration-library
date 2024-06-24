@@ -322,3 +322,49 @@ def test_batch_norm(shape, mean, variance, weight, bias):
     result = model.run(x.numpy())
 
     assert 1 - r2_score(reference.flatten(), result.flatten()) < 0.01
+
+
+@pytest.mark.parametrize("in_channels", [32, 128, 256])
+@pytest.mark.parametrize("out_channels", [32, 128, 256])
+@pytest.mark.parametrize("kernels", [1, 3])
+@pytest.mark.parametrize("dim", [16, 32])
+@pytest.mark.parametrize("bias", [True, False])
+@pytest.mark.parametrize("dtype", [torch.float16])
+@pytest.mark.parametrize("stride", [1, 2])
+@pytest.mark.parametrize("padding", [0, 1])
+@pytest.mark.parametrize("groups", [1, -1])
+def test_conv(
+    in_channels, out_channels, kernels, dim, bias, dtype, stride, padding, groups
+):
+    torch.manual_seed(42)
+
+    if groups != 1 and in_channels != out_channels:
+        pytest.skip("DW convolutions require in_channels == out_channels")
+
+    if groups == -1:
+        groups = in_channels
+
+    x = torch.rand((1, in_channels, dim, dim)).to(torch.float16)
+
+    weight = torch.rand((out_channels, in_channels // groups, kernels, kernels)).to(
+        torch.float16
+    )
+    bias = torch.rand((out_channels,)).to(torch.float16) if bias else None
+
+    reference = (
+        torch.nn.functional.conv2d(x, weight, bias, stride, padding, groups=groups)
+        .detach()
+        .numpy()
+    )
+
+    model = NNFactory()
+    par = model.parameter(x.shape, np.float16)
+
+    out = torch.nn.functional.conv2d(par, weight, bias, stride, padding, groups=groups)
+    model.compile(out)
+
+    assert out.shape == list(reference.shape)
+
+    result = model.run(x.numpy())
+
+    assert 1 - r2_score(reference.flatten(), result.flatten()) < 0.01

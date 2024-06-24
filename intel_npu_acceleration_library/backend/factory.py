@@ -188,6 +188,8 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             data = np.array([data], dtype=np.float32)
         elif isinstance(data, torch.Tensor):
             data = data.detach().numpy()
+        elif data is None:
+            return ctypes.cast(ctypes.c_void_p(0), ctypes.POINTER(ctypes.c_char))
 
         dst = data.ctypes.data_as(ctypes.c_void_p)
         shape_ptr = np.array(data.shape, dtype=np.uint32)
