@@ -176,7 +176,7 @@ def test_flatten(batch, hidden_dim, start_dim, end_dim):
 @pytest.mark.parametrize("batch", [16, 128])
 @pytest.mark.parametrize("hidden_dim", [256, 512])
 @pytest.mark.parametrize("tensors", [2, 3, 4])
-@pytest.mark.parametrize("axis", [0, 1])
+@pytest.mark.parametrize("axis", [0, 1, -1, -2])
 def test_concatenation(batch, hidden_dim, tensors, axis):
     x = [torch.rand((batch, hidden_dim)).to(torch.float16) for _ in range(tensors)]
 

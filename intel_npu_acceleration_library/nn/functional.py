@@ -11,7 +11,6 @@ from intel_npu_acceleration_library.backend.tensor import (
 )
 from typing import Optional, Sequence, Union
 import torch
-import numpy as np
 
 
 def __generate_activation(x: Tensor, op: str, out: Optional[Tensor] = None) -> Tensor:
@@ -623,9 +622,6 @@ def cat(input: Sequence[Tensor], dim: int, out: Optional[Tensor] = None) -> Tens
     Returns:
         Tensor: Output tensor.
     """
-    if dim < 0:
-        dim = abs(dim)
-    dim = np.int64(dim)
     if len(input) == 2:
         tensor = generate_op([input[0], input[1]], "concat", axis=dim)
     else:

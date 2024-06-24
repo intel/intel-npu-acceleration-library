@@ -394,7 +394,8 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             ctypes._Pointer: output node
         """
         if axis < 0:
-            axis = abs(axis)
+            shape_size = backend_lib.op_shape_size(input_node_1)
+            axis = (axis + shape_size) % shape_size
         axis = np.int64(axis)
         return backend_lib.concat(self._mm, input_node_1, input_node_2, axis)
 

@@ -338,7 +338,7 @@ def test_normalisation(batch, hidden_dim, axis):
 
 @pytest.mark.parametrize("batch", [16, 128])
 @pytest.mark.parametrize("hidden_dim", [256, 512])
-@pytest.mark.parametrize("axis", [0, 1])
+@pytest.mark.parametrize("axis", [0, 1, -1, -2])
 def test_concatenation(batch, hidden_dim, axis):
 
     tensor_1 = torch.rand((batch, hidden_dim)).to(torch.float16) - 0.5
