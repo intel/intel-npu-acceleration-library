@@ -199,44 +199,59 @@ class NNFactory(BaseNPUBackendWithPrefetch):
     def convolution(
         self,
         input_node: ctypes._Pointer,
-        weights_shape: Sequence[int],
-        bias: bool,
-        strides: Sequence[int] = (1, 1),
-        padding_begins: Sequence[int] = (0, 0),
-        padding_ends: Sequence[int] = (0, 0),
-        dilation: Sequence[int] = (1, 1),
+        weights_node: ctypes._Pointer,
+        bias: Optional[ctypes._Pointer] = None,
+        strides: Union[int, Sequence[int]] = 1,
+        padding: Union[int, Sequence[int]] = 0,
+        dilation: Union[int, Sequence[int]] = 1,
         groups: int = 1,
         act_dtype: npt.DTypeLike = np.float16,
-        wt_dtype: npt.DTypeLike = np.float16,
+        n_spatial_dims: int = 2,
     ) -> ctypes._Pointer:
         """Generate a convolution layer.
 
         Args:
             input_node (ctypes._Pointer): layer input node
-            weights_shape (Sequence[int]): weights shape
+            weights_node (ctypes._Pointer): weights node
+            bias (Optional[ctypes._Pointer}): bias node
             strides (Sequence[int]): strides
-            padding_begins (Sequence[int]): padding
-            padding_ends (Sequence[int]): padding
+            padding (Sequence[int]): padding
             dilation (Sequence[int]): dilation
             groups (int): groups
-            bias (bool): enable/disable bias
             act_dtype (npt.DTypeLike, optional): activation dtype. Defaults to np.float16.
-            wt_dtype (npt.DTypeLike, optional): weight dtype. Defaults to np.float16.
+            n_spatial_dims (int): number of spatial dimensions
 
         Returns:
             ctypes._Pointer: output node
         """
-        weights_shape_ptr = np.array(weights_shape, dtype=np.uint32)
+        if isinstance(strides, int):
+            strides = [strides] * n_spatial_dims
+
+        if isinstance(padding, int):
+            padding_begins = [padding] * n_spatial_dims
+            padding_ends = [padding] * n_spatial_dims
+        else:
+            padding_begins = list(padding)
+            padding_ends = list(padding)
+
+        if isinstance(dilation, int):
+            dilation = [dilation] * n_spatial_dims
+
         strides_ptr = np.array(strides, dtype=np.uint32)
         padding_begins_ptr = np.array(padding_begins, dtype=np.uint32)
         padding_ends_ptr = np.array(padding_ends, dtype=np.uint32)
         dilation_ptr = np.array(dilation, dtype=np.uint32)
 
+        if bias is not None:
+            bias_node = bias
+        else:
+            bias_node = ctypes.cast(ctypes.c_void_p(0), ctypes.POINTER(ctypes.c_char))
+
         return backend_lib.convolution(
             self._mm,
             input_node,
-            weights_shape_ptr.size,
-            weights_shape_ptr,
+            weights_node,
+            bias_node,
             strides_ptr.size,
             strides_ptr,
             padding_begins_ptr.size,
@@ -246,9 +261,7 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             dilation_ptr.size,
             dilation_ptr,
             groups,
-            bias,
             self.get_backend_dtype(act_dtype),
-            self.get_backend_dtype(wt_dtype),
         )
 
     @return_tensor
