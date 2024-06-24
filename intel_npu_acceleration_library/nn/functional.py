@@ -916,10 +916,12 @@ def batch_norm(
     if training:
         raise NotImplementedError("Training mode is not supported yet")
 
-    running_mean = running_mean.view(1, -1, 1, 1)
-    running_var = running_var.view(1, -1, 1, 1)
+    running_mean = running_mean.view(1, -1, 1, 1).to(input.dtype)
+    running_var = running_var.view(1, -1, 1, 1).to(input.dtype)
 
-    result = (input - running_mean) / torch.sqrt(running_var + 1e-5)
+    result = input - running_mean / torch.sqrt(
+        running_var + torch.tensor([eps]).to(input.dtype.torch_dtype)
+    ).to(input.dtype)
 
     if weight is not None:
         result = result * weight.view(1, -1, 1, 1)
