@@ -385,7 +385,7 @@ class NNFactory(BaseNPUBackendWithPrefetch):
         Args:
             input_node_1 (ctypes._Pointer): first layer input node
             input_node_2 (ctypes._Pointer): second layer input node
-            axis (ctypes.c_int64): axis
+            axis (int): axis
 
         Returns:
             ctypes._Pointer: output node

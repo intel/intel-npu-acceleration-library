@@ -353,8 +353,6 @@ def test_concatenation(batch, hidden_dim, axis):
 
     reference = torch.cat((tensor_1, tensor_2), dim=axis).numpy()
 
-    print(out)
-    print(reference)
     assert out.shape == reference.shape, "Output shape mismatch"
     assert np.isfinite(reference).all(), "Pytorch Reference contains NaN or Inf"
     assert np.isfinite(out).all(), "NPU output contains NaN or Inf"
