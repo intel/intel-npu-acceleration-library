@@ -239,7 +239,7 @@ class Module(torch.nn.Module):
         return torch.empty(0)
 
 
-class NPUModule(Module):
+class NPUModuleWrapper(Module):
     """A PyTorch module that runs on the NPU."""
 
     def __init__(self, module: torch.nn.Module) -> None:
@@ -273,4 +273,4 @@ def convert_to_npu_module(module: torch.nn.Module) -> Module:
     Returns:
         Module: The NPU enabled Module.
     """
-    return NPUModule(module).eval()
+    return NPUModuleWrapper(module).eval()

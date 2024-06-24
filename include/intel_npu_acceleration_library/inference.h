@@ -23,12 +23,43 @@
 namespace intel_npu_acceleration_library {
 
 /**
+ * @brief OpenVINO core object
+ *
+ */
+static ov::Core core;
+
+/**
+ * @brief Create a remote tensor
+ *
+ * @param dtype tensor data type
+ * @param shape tensor shape
+ * @param buffer tensor buffer
+ *
+ * @return ov::Tensor
+ */
+void* create_remote_tensor(const ov::element::Type dtype, const ov::Shape& shape, void* buffer) {
+    size_t n_elements = std::accumulate(shape.begin(), shape.end(), static_cast<size_t>(1), std::multiplies<size_t>());
+    size_t size = n_elements * dtype.bitwidth() / 8;
+
+    void* new_buffer = static_cast<void*>(new char[size]);
+    std::memcpy(new_buffer, buffer, size);
+
+    ov::Tensor remote_tensor(dtype, shape, new_buffer);
+
+    // ov::intel_npu::level_zero::ZeroContext context =
+    // core.get_default_context(device).as<ov::intel_npu::level_zero::ZeroContext>();
+
+    // return context.create_tensor(dtype, shape, buffer);
+
+    return new_buffer;
+}
+
+/**
  * @brief The OVInferenceModel implements the basic of NN inference on NPU
  *
  */
 class OVInferenceModel {
 private:
-    ov::Core core;
     ov::CompiledModel compiled_model;
     ov::InferRequest infer_request;
 
@@ -50,6 +81,7 @@ protected:
         // set letency hint
         core.set_property(ov::cache_dir("cache"));
         core.set_property(device, ov::hint::performance_mode(ov::hint::PerformanceMode::THROUGHPUT));
+        // core.set_property("NPU", ov::log::level(ov::log::Level::DEBUG));
         if (device == "NPU") {
             core.set_property(device, intel_npu_acceleration_library::npu_compiler_type("DRIVER"));
             if (profile) {

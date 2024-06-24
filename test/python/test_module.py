@@ -2,7 +2,10 @@
 # Copyright © 2024 Intel Corporation
 # SPDX-License-Identifier: Apache 2.0
 #
-from intel_npu_acceleration_library.nn.module import convert_to_npu_module, NPUModule
+from intel_npu_acceleration_library.nn.module import (
+    convert_to_npu_module,
+    NPUModuleWrapper,
+)
 from sklearn.metrics import r2_score
 import pytest
 import torch
@@ -42,7 +45,7 @@ def test_torch_nested_module(sum):
     model = convert_to_npu_module(model)
 
     assert isinstance(model, torch.nn.Module)
-    assert isinstance(model, NPUModule)
+    assert isinstance(model, NPUModuleWrapper)
 
     x = torch.rand(128, 256).to(torch.float16)
     y = torch.rand(128, 256).to(torch.float16)
@@ -70,7 +73,7 @@ def test_batch_norm(channels, dim):
     model = convert_to_npu_module(model)
 
     assert isinstance(model, torch.nn.Module)
-    assert isinstance(model, NPUModule)
+    assert isinstance(model, NPUModuleWrapper)
 
     reference = model(x)
 
@@ -86,3 +89,25 @@ def test_batch_norm(channels, dim):
         )
         < 0.001
     )
+
+
+def test_resnet():
+
+    model = (
+        torch.hub.load("pytorch/vision:v0.9.0", "resnet18", pretrained=True)
+        .half()
+        .eval()
+    )
+    x = torch.randint(0, 256, (1, 3, 224, 224)).to(torch.float16)
+
+    reference = model(x)
+
+    model = model.to("npu")
+
+    result = model(x.to("npu"))
+
+    r2 = r2_score(
+        reference.flatten().detach().numpy(), result.flatten().detach().numpy()
+    )
+
+    assert 1 - r2 < 0.01
