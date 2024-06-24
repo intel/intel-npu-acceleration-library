@@ -99,7 +99,11 @@ def test_model_creation():
 
     assert ff.dim() == 3
 
-    model.compile(ff)
+    gg = ff.view(1, -1, 1, 1)
+
+    assert gg.shape == [1, 32 * 128 * 64, 1, 1]
+
+    model.compile(gg)
 
 
 def test_slice():

@@ -163,6 +163,8 @@ def init_network_factory(lib: ctypes.CDLL):
     lib.convolution.argtypes = [
         handler,
         handler,
+        handler,
+        handler,
         ctypes.c_int,
         c_u32_array,
         ctypes.c_int,
@@ -172,10 +174,6 @@ def init_network_factory(lib: ctypes.CDLL):
         ctypes.c_int,
         c_u32_array,
         ctypes.c_int,
-        c_u32_array,
-        ctypes.c_int,
-        ctypes.c_bool,
-        ctypes.c_char_p,
         ctypes.c_char_p,
     ]
     lib.convolution.restype = handler

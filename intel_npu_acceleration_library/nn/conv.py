@@ -189,7 +189,7 @@ class Conv2d(torch.nn.Module):
         self.backend_cls = partial(
             Convolution,
             weights_shape=weights.shape,
-            bias=bias is not None,
+            bias=bias,
             strides=strides,
             padding=padding,
             dilation=dilation,

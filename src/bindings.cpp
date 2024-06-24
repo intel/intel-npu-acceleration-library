@@ -430,24 +430,25 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* linear(intel_npu_acceleration
     return mm;
 }
 
-intel_npu_acceleration_library_DLL_API ov::op::Op* convolution(
-        intel_npu_acceleration_library::ModelFactory* factory, ov::op::Op* in0, size_t weight_shape_size,
-        unsigned int* weight_shape_data, size_t strides_size, unsigned int* strides_data, size_t pad_begins_size,
-        unsigned int* pad_begins_data, size_t pad_ends_size, unsigned int* pad_ends_data, size_t dilations_size,
-        unsigned int* dilations_data, size_t groups, bool bias, char* act_dtype, char* wt_dtype) {
+intel_npu_acceleration_library_DLL_API ov::op::Op* convolution(intel_npu_acceleration_library::ModelFactory* factory,
+                                                               ov::op::Op* in0, ov::op::Op* weights, ov::op::Op* bias,
+                                                               size_t strides_size, unsigned int* strides_data,
+                                                               size_t pad_begins_size, unsigned int* pad_begins_data,
+                                                               size_t pad_ends_size, unsigned int* pad_ends_data,
+                                                               size_t dilations_size, unsigned int* dilations_data,
+                                                               size_t groups, char* act_dtype) {
     ov::element::Type_t act_ov_dtype = intel_npu_acceleration_library::dtype_from_string(std::string(act_dtype));
-    ov::element::Type_t wt_ov_dtype = intel_npu_acceleration_library::dtype_from_string(std::string(wt_dtype));
 
     // Create vectors from the input data
-    std::vector<size_t> weight_shape(weight_shape_data, weight_shape_data + weight_shape_size);
     std::vector<size_t> strides(strides_data, strides_data + strides_size);
     std::vector<size_t> pad_begins(pad_begins_data, pad_begins_data + pad_begins_size);
     std::vector<size_t> pad_ends(pad_ends_data, pad_ends_data + pad_ends_size);
     std::vector<size_t> dilations(dilations_data, dilations_data + dilations_size);
 
-    bool quantized = wt_ov_dtype == ov::element::Type_t::i8 || wt_ov_dtype == ov::element::Type_t::i4;
+    auto weight_shape = weights->get_output_shape(0);
+    auto wt_ov_dtype = static_cast<ov::element::Type_t>(weights->get_output_element_type(0));
 
-    auto weights = factory->parameter(weight_shape, wt_ov_dtype);
+    bool quantized = wt_ov_dtype == ov::element::Type_t::i8 || wt_ov_dtype == ov::element::Type_t::i4;
 
     if (quantized) {
         weights = factory->convert_to(weights, act_ov_dtype);
@@ -464,7 +465,6 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* convolution(
     }
 
     if (bias) {
-        auto bias = factory->parameter({1, weight_shape[0], 1, 1}, act_ov_dtype);
         return factory->eltwise_add(mm, bias);
     }
     return mm;
