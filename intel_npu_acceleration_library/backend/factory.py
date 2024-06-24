@@ -395,6 +395,26 @@ class NNFactory(BaseNPUBackendWithPrefetch):
         )
 
     @return_tensor
+    def concat(
+        self, input_node_1: ctypes._Pointer, input_node_2: ctypes._Pointer, axis: int
+    ) -> ctypes._Pointer:
+        """Generate a concatenation layer.
+
+        Args:
+            input_node_1 (ctypes._Pointer): first layer input node
+            input_node_2 (ctypes._Pointer): second layer input node
+            axis (int): axis
+
+        Returns:
+            ctypes._Pointer: output node
+        """
+        if axis < 0:
+            shape_size = backend_lib.op_shape_size(input_node_1)
+            axis = (axis + shape_size) % shape_size
+        axis = np.int64(axis)
+        return backend_lib.concat(self._mm, input_node_1, input_node_2, axis)
+
+    @return_tensor
     def normL2(
         self, input_node: ctypes._Pointer, axis: int, eps: Optional[float] = 1e-12
     ) -> ctypes._Pointer:
@@ -403,13 +423,14 @@ class NNFactory(BaseNPUBackendWithPrefetch):
         Args:
             input_node (ctypes._Pointer): layer input node
             axis (int): axis
-            eps (float): epsilon added to L2 norm
+            eps (float, optional): epsilon added to L2 norm. Defaults to 1e-12
 
         Returns:
             ctypes._Pointer: output node
         """
         if axis < 0:
-            axis = abs(axis)
+            shape_size = backend_lib.op_shape_size(input_node)
+            axis = (axis + shape_size) % shape_size
         axis_node = self.constant(axis).node  # type: ignore
         return backend_lib.normL2(self._mm, input_node, axis_node, eps)
 

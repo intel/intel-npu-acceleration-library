@@ -278,6 +278,20 @@ public:
     }
 
     /**
+     * @brief create a new concatenation operation
+     *
+     * @param x1 first concat input node
+     * @param x2 second concat input node
+     * @param axis axis along which to concatenate the input tensors
+     * @return ov::op::Op*
+     */
+    ov::op::Op* concat(ov::op::Op* x1, ov::op::Op* x2, int64_t axis) {
+        auto concat = std::make_shared<ov::opset1::Concat>(std::vector<OVNode>{x1->output(0), x2->output(0)}, axis);
+        operations.push_back(concat);
+        return concat.get();
+    }
+
+    /**
      * @brief Create a new absolute activation operation
      *
      * @param input operation's input node

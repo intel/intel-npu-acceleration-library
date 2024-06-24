@@ -99,6 +99,11 @@ def get_supported_ops() -> List[SupportedOp]:
         SupportedOp(name="transpose", inputs=2),
         SupportedOp(name="squeeze", inputs=1),
         SupportedOp(name="unsqueeze", inputs=2),
+        SupportedOp(
+            name="concat",
+            inputs=2,
+            parameters=[ctypes.c_int64],
+        ),
         SupportedOp(name="adaptive_avg_pool", inputs=2),
         SupportedOp(name="adaptive_max_pool", inputs=2),
     ]

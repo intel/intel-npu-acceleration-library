@@ -173,6 +173,27 @@ def test_flatten(batch, hidden_dim, start_dim, end_dim):
     assert 1 - r2_score(reference.flatten(), result.flatten()) < 0.01
 
 
+@pytest.mark.parametrize("batch", [16, 128])
+@pytest.mark.parametrize("hidden_dim", [256, 512])
+@pytest.mark.parametrize("tensors", [2, 3, 4])
+@pytest.mark.parametrize("axis", [0, 1, -1, -2])
+def test_concatenation(batch, hidden_dim, tensors, axis):
+    x = [torch.rand((batch, hidden_dim)).to(torch.float16) for _ in range(tensors)]
+
+    reference = torch.cat(x, dim=axis).numpy()
+
+    model = NNFactory()
+    par = [model.parameter(x[i].shape, np.float16) for i in range(tensors)]
+    out = torch.cat(par, dim=axis)
+    model.compile(out)
+
+    assert out.shape == list(reference.shape)
+
+    result = model.run(*[x[i].numpy() for i in range(len(x))])
+
+    assert 1 - r2_score(reference, result) < 0.01
+
+
 @pytest.mark.parametrize("channel", [16, 128])
 @pytest.mark.parametrize("xydim", [4, 16])
 @pytest.mark.parametrize(
