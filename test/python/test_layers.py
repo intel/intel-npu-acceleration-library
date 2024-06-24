@@ -328,6 +328,31 @@ def test_normalisation(batch, hidden_dim, axis):
     out = model.run(X.numpy())
 
     reference = torch.nn.functional.normalize(X, p=2.0, dim=axis).numpy()
+
+    assert out.shape == reference.shape, "Output shape mismatch"
+    assert np.isfinite(reference).all(), "Pytorch Reference contains NaN or Inf"
+    assert np.isfinite(out).all(), "NPU output contains NaN or Inf"
+
+    assert 1 - r2_score(reference, out) < 0.001
+
+
+@pytest.mark.parametrize("batch", [16, 128])
+@pytest.mark.parametrize("hidden_dim", [256, 512])
+@pytest.mark.parametrize("axis", [0, 1])
+def test_concatenation(batch, hidden_dim, axis):
+
+    tensor_1 = torch.rand((batch, hidden_dim)).to(torch.float16) - 0.5
+    tensor_2 = torch.rand((batch, hidden_dim)).to(torch.float16) - 0.5
+
+    model = NNFactory()
+    input_1 = model.parameter(tensor_1.shape)
+    input_2 = model.parameter(tensor_2.shape)
+    output = model.concat(input_1, input_2, axis=axis)
+    model.compile(output)
+    out = model.run(tensor_1.numpy(), tensor_2.numpy())
+
+    reference = torch.cat((tensor_1, tensor_2), dim=axis).numpy()
+
     print(out)
     print(reference)
     assert out.shape == reference.shape, "Output shape mismatch"
