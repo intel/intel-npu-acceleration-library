@@ -125,6 +125,27 @@ def parse_to_arguments(*args: Any, **kwargs: Any):
     return npu_device, new_args, kwargs
 
 
+@implements_factory(torch.device)
+def device(super_fn: Any, device, *args: Any, **kwargs: Any):
+    """
+    Return the device based on the input device name.
+
+    Args:
+        super_fn (Any): The super function to call.
+        device (str): The name of the device.
+        args (Any): Additional positional arguments to pass to the super function.
+        kwargs (Any): Additional keyword arguments to pass to the super function.
+
+    Returns:
+        torch.device: The device object.
+
+    """
+    if device == "npu":
+        # Patch the device to return the NPU device
+        return torch.device("cpu")
+    return super_fn(device, *args, **kwargs)
+
+
 @implements_factory(torch.Tensor.to)
 def to(super_fn: Any, self: Any, *args: Any, **kwargs: Any):
     """
