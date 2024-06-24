@@ -123,6 +123,75 @@ public:
     }
 
     /**
+     * @brief Create a new average pooling operation
+     * @param input pooling input
+     * @param strides pooling strides
+     * @param pads_begin pooling padding begin
+     * @param pads_ends pooling padding end
+     * @param kernel pooling kernel
+     * @param exclude_pad exclude padding from the average calculation
+     * @param rounding_type rounding type
+     * @param auto_pad padding type
+     * @return ov::op::Op*
+     */
+    ov::op::Op* average_pooling(ov::op::Op* input, std::vector<size_t> strides, std::vector<size_t> pads_begin,
+                                std::vector<size_t> pads_ends, std::vector<size_t> kernel, bool exclude_pad = false,
+                                ov::op::RoundingType rounding_type = ov::op::RoundingType::FLOOR,
+                                ov::op::PadType auto_pad = ov::op::PadType::EXPLICIT) {
+        auto pool = std::make_shared<ov::opset1::AvgPool>(input->output(0), ov::Strides(strides), pads_begin, pads_ends,
+                                                          kernel, exclude_pad, rounding_type, auto_pad);
+        operations.push_back(pool);
+        return pool.get();
+    }
+
+    /**
+     * @brief Create a new adaptive average pooling operation
+     * @param input pooling input
+     * @param output_shape output shape
+     * @return ov::op::Op*
+     */
+    ov::op::Op* adaptive_average_pool(ov::op::Op* input, ov::op::Op* output_shape) {
+        auto pool = std::make_shared<ov::opset8::AdaptiveAvgPool>(input->output(0), output_shape->output(0));
+        operations.push_back(pool);
+        return pool.get();
+    }
+
+    /**
+     * @brief Create a new max pooling operation
+     * @param input pooling input
+     * @param strides pooling strides
+     * @param pads_begin pooling padding begin
+     * @param pads_ends pooling padding end
+     * @param kernel pooling kernel
+     * @param exclude_pad exclude padding from the max calculation
+     * @param rounding_type rounding type
+     * @param auto_pad padding type
+     * @return ov::op::Op*
+     */
+    ov::op::Op* max_pooling(ov::op::Op* input, std::vector<size_t> strides, std::vector<size_t> pads_begin,
+                            std::vector<size_t> pads_ends, std::vector<size_t> kernel,
+                            ov::op::RoundingType rounding_type = ov::op::RoundingType::FLOOR,
+                            ov::op::PadType auto_pad = ov::op::PadType::EXPLICIT) {
+        auto pool = std::make_shared<ov::opset1::MaxPool>(input->output(0), ov::Strides(strides), pads_begin, pads_ends,
+                                                          kernel, rounding_type, auto_pad);
+        operations.push_back(pool);
+        return pool.get();
+    }
+
+    /**
+     * @brief Create a new adaptive max pooling operation
+     * @param input pooling input
+     * @param output_shape output shape
+     * @return ov::op::Op*
+     */
+    ov::op::Op* adaptive_max_pool(ov::op::Op* input, ov::op::Op* output_shape) {
+        auto pool = std::make_shared<ov::opset8::AdaptiveMaxPool>(input->output(0), output_shape->output(0),
+                                                                  ov::element::i64);
+        operations.push_back(pool);
+        return pool.get();
+    }
+
+    /**
      * @brief Create a new gather operation
      *
      * @param input tensor from which slices are gathered
@@ -374,8 +443,8 @@ public:
      * @param input operation's input node
      * @return ov::op::Op*
      */
-    ov::op::Op* gelu(ov::op::Op* input) {
-        auto gelu = std::make_shared<ov::opset7::Gelu>(input->output(0), ov::op::GeluApproximationMode::TANH);
+    ov::op::Op* gelu(ov::op::Op* input, ov::op::GeluApproximationMode mode) {
+        auto gelu = std::make_shared<ov::opset7::Gelu>(input->output(0), mode);
         operations.push_back(gelu);
         return gelu.get();
     }
@@ -695,11 +764,19 @@ public:
      */
     ov::op::Op* scaled_dot_product_attention(ov::op::Op* query, ov::op::Op* key, ov::op::Op* value,
                                              ov::op::Op* attn_mask, bool is_causal) {
-        auto sdpa = std::make_shared<ov::opset13::ScaledDotProductAttention>(
-                query->output(0), key->output(0), value->output(0), attn_mask->output(0), is_causal);
+        if (attn_mask == nullptr) {
+            auto sdpa = std::make_shared<ov::opset13::ScaledDotProductAttention>(query->output(0), key->output(0),
+                                                                                 value->output(0), is_causal);
 
-        operations.push_back(sdpa);
-        return sdpa.get();
+            operations.push_back(sdpa);
+            return sdpa.get();
+        } else {
+            auto sdpa = std::make_shared<ov::opset13::ScaledDotProductAttention>(
+                    query->output(0), key->output(0), value->output(0), attn_mask->output(0), is_causal);
+
+            operations.push_back(sdpa);
+            return sdpa.get();
+        }
     }
 
     /**

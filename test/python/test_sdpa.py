@@ -11,7 +11,7 @@ import torch
 
 
 @pytest.mark.parametrize("heads", [16, 32])
-@pytest.mark.parametrize("sequence", [16, 32, 128, 256])
+@pytest.mark.parametrize("sequence", [16, 32, 256, 512])
 @pytest.mark.parametrize("dim", [512, 1024])
 @pytest.mark.parametrize("kv_cache", [True, False])
 @pytest.mark.parametrize("is_causal", [False, True])
@@ -55,7 +55,7 @@ def test_sdpa(heads, sequence, dim, kv_cache, is_causal):
 
 
 @pytest.mark.parametrize("heads", [16, 32])
-@pytest.mark.parametrize("sequence", [16, 32, 128, 256])
+@pytest.mark.parametrize("sequence", [16, 32, 256, 512])
 @pytest.mark.parametrize("dim", [512, 1024])
 @pytest.mark.parametrize("kv_cache", [True, False])
 @pytest.mark.parametrize("is_causal", [False, True])

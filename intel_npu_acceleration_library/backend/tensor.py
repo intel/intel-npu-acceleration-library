@@ -4,6 +4,7 @@
 #
 
 from intel_npu_acceleration_library.backend import lib as backend_lib
+from typing import Sequence, Any, Optional, MutableMapping, Union
 from intel_npu_acceleration_library.dtypes import (
     float16,
     bfloat16,
@@ -17,9 +18,10 @@ from intel_npu_acceleration_library.dtypes import (
     NPUDtype,
 )
 from dataclasses import dataclass
-from typing import Sequence, Any
+import functools
 import numpy as np
 import ctypes
+import torch
 
 
 @dataclass
@@ -95,6 +97,29 @@ class Tensor:
             return int64
         else:
             raise RuntimeError("Unsupported dtype")
+
+    def dim(self) -> int:
+        """
+        Return the number of dimensions of the tensor.
+
+        Returns:
+            int: The number of dimensions of the tensor.
+        """
+        return len(self.shape)
+
+    def size(self, dim=None) -> Union[int, Sequence[int]]:
+        """
+        Return the size of the tensor.
+
+        Args:
+            dim (int, optional): The dimension to return the size of. Defaults to None.
+
+        Returns:
+            Union[int, Sequence[int]]: The size of the tensor.
+        """
+        if dim is None:
+            return torch.Size(self.shape)
+        return self.shape[dim]
 
     def __add__(self, other) -> "Tensor":
         """
@@ -268,7 +293,23 @@ class Tensor:
         input_order[-1], input_order[-2] = input_order[-2], input_order[-1]
         return generate_op([self], "transpose", input_order)
 
-    def transpose(self, input_order: Sequence[int]) -> "Tensor":
+    def transpose(self, dim0: int, dim1: int) -> "Tensor":
+        """
+        Return the transpose of the tensor.
+
+        Args:
+            dim0 (int): The first dimension to transpose.
+            dim1 (int): The second dimension to transpose.
+
+        Returns:
+            Tensor: The transposed tensor.
+        """
+        input_order = list(range(len(self.shape)))
+        input_order[dim0], input_order[dim1] = input_order[dim1], input_order[dim0]
+
+        return generate_op([self], "transpose", input_order)
+
+    def permute(self, *input_order: int) -> "Tensor":
         """
         Return the transpose of the tensor.
 
@@ -280,7 +321,21 @@ class Tensor:
         """
         return generate_op([self], "transpose", input_order)
 
-    def reshape(self, shape: Sequence[int]) -> "Tensor":
+    def reshape(self, *shape: Union[int, Sequence[int]]) -> "Tensor":
+        """
+        Return the transpose of the tensor.
+
+        Args:
+            shape (Union[int, Sequence[int]]): The new shape of the tensor.
+
+        Returns:
+            Tensor: The transposed tensor.
+        """
+        if len(shape) == 1 and isinstance(shape[0], (list, tuple)):
+            shape = shape[0]  # type: ignore
+        return generate_op([self], "reshape", shape)
+
+    def view(self, shape: Sequence[int]) -> "Tensor":
         """
         Return the transpose of the tensor.
 
@@ -290,7 +345,27 @@ class Tensor:
         Returns:
             Tensor: The transposed tensor.
         """
-        return generate_op([self], "reshape", shape)
+        return self.reshape(*shape)
+
+    def flatten(self, start_dim=0, end_dim=-1) -> "Tensor":
+        """
+        Flatten the tensor.
+
+        Args:
+            start_dim (int): The first dim to flatten. Defaults to 0.
+            end_dim (int): The last dim to flatten. Defaults to -1.
+
+        Returns:
+            Tensor: The flattened tensor.
+        """
+        if end_dim < 0:
+            end_dim = len(self.shape) + end_dim + 1
+
+        flattened_dim = self.shape[start_dim:end_dim]
+        size = int(np.prod(flattened_dim))
+        new_shape = list(self.shape[:start_dim]) + [size] + list(self.shape[end_dim:])
+
+        return self.reshape(*new_shape)
 
     def squeeze(self) -> "Tensor":
         """
@@ -325,6 +400,15 @@ class Tensor:
         """
         return generate_op([self, other], "matmul")
 
+    def sigmoid(self) -> "Tensor":
+        """
+        Apply the sigmoid function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the sigmoid function.
+        """
+        return generate_op([self], "sigmoid")
+
     def to(self, dtype: NPUDtype) -> "Tensor":
         """
         Convert the tensor to the specified data type.
@@ -337,15 +421,74 @@ class Tensor:
         """
         return generate_op([self], "to", dtype)
 
+    @classmethod
+    def __torch_function__(
+        cls: Any,
+        func: Any,
+        types: Any,
+        args: Sequence[Any] = (),
+        kwargs: Optional[MutableMapping[Any, Any]] = None,
+    ) -> Any:
+        """Python function to override torch functions for Tensor class.
+
+        Args:
+            func (Any): the function to override.
+            types (Any): the types of the arguments.
+            args (Sequence[Any], optional): the arguments. Defaults to ().
+            kwargs (Optional[MutableMapping[Any, Any]], optional): the keyword arguments. Defaults to None.
+
+        Returns:
+            Any: the result of the function.
+        """
+        if kwargs is None:
+            kwargs = {}
+        if func not in HANDLED_FUNCTIONS or not all(
+            issubclass(t, (torch.Tensor, Tensor)) for t in types
+        ):
+            return NotImplemented
+        return HANDLED_FUNCTIONS[func](*args, **kwargs)
+
+
+HANDLED_FUNCTIONS: MutableMapping[Any, Any] = {}
+
+
+def implements(torch_function: Any) -> Any:
+    """Implement a decorator to override torch functions for Tensor class.
+
+    Args:
+        torch_function (Any): the function to override.
+
+    Returns:
+        Any: the result of the function.
+    """
+
+    def decorator(func: Any) -> Any:
+        """Implement a decorator to override torch functions for Tensor class.
+
+        Args:
+            func (Any): the function to override.
+
+        Returns:
+            Any: the result of the function.
+        """
+        functools.update_wrapper(func, torch_function)
+        HANDLED_FUNCTIONS[torch_function] = func
+        return func
+
+    return decorator
+
 
 def generate_op(
-    tensors: Sequence[Tensor], op: str, *args: Any, **kwargs: Any
+    tensors: Union[Sequence[Union[Tensor, torch.Tensor]], Union[Tensor, torch.Tensor]],
+    op: str,
+    *args: Any,
+    **kwargs: Any,
 ) -> "Tensor":
     """
     Generate a new tensor by applying the specified operation to a sequence of tensors.
 
     Args:
-        tensors (Sequence[Tensor]): A sequence of tensors.
+        tensors (Union[Sequence[Union[Tensor, torch.Tensor]], Union[Tensor, torch.Tensor]]): A sequence or a single tensor.
         op (str): The name of the operation to apply.
         args (Any): Variable length argument list.
         kwargs (Any): Arbitrary keyword arguments.
@@ -357,10 +500,23 @@ def generate_op(
         ValueError: If the tensors are not from the same factory.
 
     """
+    if not isinstance(tensors, (list, tuple)):
+        tensors = [tensors]
+
     # Check that all tensors are from the same factory
-    if not len({tensor.factory for tensor in tensors}) == 1:
+    if (
+        not len({tensor.factory for tensor in tensors if isinstance(tensor, Tensor)})
+        == 1
+    ):
         raise ValueError("All tensors must be from the same factory")
 
     factory = tensors[0].factory
+
+    # Replace the tensors that are not from the factory with constant tensors if they are coming from pytorch
+    tensors = [
+        tensor if isinstance(tensor, Tensor) else factory.constant(tensor)
+        for tensor in tensors
+    ]
+
     # Create the operation
     return factory.__getattribute__(op)(*tensors, *args, **kwargs)

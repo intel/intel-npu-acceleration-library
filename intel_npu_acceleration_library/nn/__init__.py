@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: Apache 2.0
 #
 
+from .functional import *  # noqa
 from .linear import Linear, QuantizedLinear  # noqa
 from .conv import Conv2d  # noqa
 

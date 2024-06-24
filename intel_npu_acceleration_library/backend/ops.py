@@ -52,6 +52,7 @@ def get_supported_ops() -> List[SupportedOp]:
         SupportedOp(name="floor_act", inputs=1),
         SupportedOp(name="grn", inputs=1, parameters=[ctypes.c_float]),
         SupportedOp(name="gelu", inputs=1),
+        SupportedOp(name="gelu_erf", inputs=1),
         SupportedOp(name="log_act", inputs=1),
         SupportedOp(name="negative", inputs=1),
         SupportedOp(name="relu", inputs=1),
@@ -80,6 +81,11 @@ def get_supported_ops() -> List[SupportedOp]:
             parameters=[ctypes.c_bool],
         ),
         SupportedOp(
+            name="scaled_dot_product_attention_simple",
+            inputs=3,
+            parameters=[ctypes.c_bool],
+        ),
+        SupportedOp(
             name="normL2",
             inputs=2,
             parameters=[ctypes.c_float],
@@ -93,5 +99,7 @@ def get_supported_ops() -> List[SupportedOp]:
         SupportedOp(name="transpose", inputs=2),
         SupportedOp(name="squeeze", inputs=1),
         SupportedOp(name="unsqueeze", inputs=2),
+        SupportedOp(name="adaptive_avg_pool", inputs=2),
+        SupportedOp(name="adaptive_max_pool", inputs=2),
     ]
     return supported_ops
