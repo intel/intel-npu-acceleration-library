@@ -11,6 +11,7 @@ from intel_npu_acceleration_library.backend.tensor import (
 )
 from typing import Optional, Sequence, Union
 import torch
+import numpy as np
 
 
 def __generate_activation(x: Tensor, op: str, out: Optional[Tensor] = None) -> Tensor:
@@ -608,6 +609,30 @@ def flatten(x, start_dim=0, end_dim=-1) -> "Tensor":
         Tensor: The flattened tensor.
     """
     return x.flatten(start_dim, end_dim)
+
+
+@implements(torch.cat)
+def cat(input: Sequence[Tensor], dim: int, out: Optional[Tensor] = None) -> Tensor:
+    """Return the concatenation of tensors given the desired output shape.
+
+    Args:
+        input (Sequence[Tensor]): The input tensors.
+        dim (int): The dimension to concatenation tensors along.
+        out (Optional[Tensor], optional): Output tensor. Defaults to None.
+
+    Returns:
+        Tensor: Output tensor.
+    """
+    if dim < 0:
+        dim = abs(dim)
+    dim = np.int64(dim)
+    if len(input) == 2:
+        tensor = generate_op([input[0], input[1]], "concat", axis=dim)
+    else:
+        tensor = torch.cat([input[0], input[1]], dim=dim)
+        for x in range(2, len(input)):
+            tensor = torch.cat([tensor, input[x]], dim=dim)
+    return tensor
 
 
 # Functional activations
