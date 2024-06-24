@@ -86,3 +86,25 @@ def test_batch_norm(channels, dim):
         )
         < 0.001
     )
+
+
+def test_resnet():
+
+    model = (
+        torch.hub.load("pytorch/vision:v0.9.0", "resnet18", pretrained=True)
+        .half()
+        .eval()
+    )
+    x = torch.randint(0, 256, (1, 3, 224, 224)).to(torch.float16)
+
+    reference = model(x)
+
+    model = model.to("npu")
+
+    result = model(x.to("npu"))
+
+    r2 = r2_score(
+        reference.flatten().detach().numpy(), result.flatten().detach().numpy()
+    )
+
+    assert 1 - r2 < 0.01
