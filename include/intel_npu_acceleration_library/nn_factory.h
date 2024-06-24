@@ -20,6 +20,7 @@ class ModelFactory : public intel_npu_acceleration_library::OVInferenceModel {
 private:
     ov::ParameterVector parameters;
     std::vector<std::shared_ptr<ov::op::Op>> operations;
+    ov::OutputVector results;
 
 public:
     /**
@@ -808,14 +809,18 @@ public:
         return normL2.get();
     }
 
+    void result(ov::op::Op* op) {
+        auto res = std::make_shared<ov::opset8::Result>(op->output(0));
+        results.push_back(res);
+    }
+
     /**
      * @brief Compile the model
      *
      * @param result the last operation in the network. Must have a [batch, output_channel] shape
      */
-    void compile(ov::op::Op* result) {
-        model = std::make_shared<ov::Model>(std::make_shared<ov::opset8::Result>(result->output(0)), parameters,
-                                            "NNFactory");
+    void compile() {
+        model = std::make_shared<ov::Model>(results, parameters, "NNFactory");
 
         compile_model(device);
     }

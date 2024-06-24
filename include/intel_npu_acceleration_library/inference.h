@@ -195,9 +195,9 @@ public:
      * @param _X pointer to the float16 input activation buffer
      * @param idx input tensor index
      */
-    void setInputTensor(half_ptr _X, size_t idx) {
+    void setInputTensor(void* _X, size_t idx) {
         auto tensor = infer_request.get_input_tensor(idx);
-        X = ov::Tensor(tensor.get_element_type(), tensor.get_shape(), (void*)_X);
+        X = ov::Tensor(tensor.get_element_type(), tensor.get_shape(), _X);
         infer_request.set_input_tensor(idx, X);
     }
 
@@ -207,9 +207,9 @@ public:
      * @param _X pointer to the float16 output activation buffer
      * @param idx output tensor index
      */
-    void setOutputTensor(half_ptr _X, size_t idx) {
+    void setOutputTensor(void* _X, size_t idx) {
         auto tensor = infer_request.get_output_tensor(idx);
-        X = ov::Tensor(tensor.get_element_type(), tensor.get_shape(), (void*)_X);
+        X = ov::Tensor(tensor.get_element_type(), tensor.get_shape(), _X);
         infer_request.set_output_tensor(idx, X);
     }
 

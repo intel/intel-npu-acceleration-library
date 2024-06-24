@@ -80,9 +80,13 @@ intel_npu_acceleration_library_DLL_API void setNNFactoryWeights(
                                 parameters->get_parameters());
 }
 
-intel_npu_acceleration_library_DLL_API void compile(intel_npu_acceleration_library::ModelFactory* factory,
-                                                    ov::op::Op* result) {
-    factory->compile(result);
+intel_npu_acceleration_library_DLL_API void compile(intel_npu_acceleration_library::ModelFactory* factory) {
+    factory->compile();
+}
+
+intel_npu_acceleration_library_DLL_API void result(intel_npu_acceleration_library::ModelFactory* factory,
+                                                   ov::op::Op* result) {
+    factory->result(result);
 }
 
 intel_npu_acceleration_library_DLL_API size_t

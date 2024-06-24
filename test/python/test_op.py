@@ -399,3 +399,24 @@ def test_conv(
     result = model(x).detach().numpy()
 
     assert 1 - r2_score(reference.flatten(), result.flatten()) < 0.01
+
+
+def test_multiple_outputs():
+    x = torch.rand((1, 16, 16, 16)).to(torch.float16)
+
+    ref1 = torch.nn.functional.relu(x).detach().numpy()
+    ref2 = torch.nn.functional.sigmoid(x).detach().numpy()
+
+    model = NNFactory()
+    par = model.parameter(x.shape, np.float16)
+    _ = torch.nn.functional.relu(par)
+    _ = torch.nn.functional.sigmoid(par)
+    model.compile()
+
+    result0, result1 = model(x)
+
+    assert result0.shape == ref1.shape
+    assert result1.shape == ref2.shape
+
+    assert 1 - r2_score(result0.detach().numpy().flatten(), ref1.flatten()) < 0.01
+    assert 1 - r2_score(result1.detach().numpy().flatten(), ref2.flatten()) < 0.01

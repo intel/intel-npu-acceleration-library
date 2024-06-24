@@ -631,19 +631,15 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             raise RuntimeError("Unsupported dtype")
 
     def compile(self):
-        """Finalize and compile a model.
-
-        Raises:
-            ValueError: Only models with one output shape are supported for now
-        """
-        if len(self.output_nodes) != 1:
-            raise ValueError("Only models with one output shape are supported for now")
-
+        """Finalize and compile a model."""
         self.out = []
-        for idx, node in enumerate(self.output_nodes):
-            # TODO: support multiple outputs
-            backend_lib.compile(self._mm, node)
+        for node in self.output_nodes:
+            backend_lib.result(self._mm, node)
 
+        # Compile the model
+        backend_lib.compile(self._mm, node)
+
+        for idx, node in enumerate(self.output_nodes):
             output_shape = self.get_tensor_shape(node)
             output_dtype = self.get_tensor_dtype(node)
 
@@ -719,4 +715,6 @@ class NNFactory(BaseNPUBackendWithPrefetch):
         }
 
         out = self.run(*args, **kwargs)
+        if isinstance(out, list):
+            return [torch.tensor(o, device=torch.device("npu")) for o in out]
         return torch.tensor(out, device=torch.device("npu"))
