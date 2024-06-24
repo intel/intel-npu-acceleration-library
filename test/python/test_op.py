@@ -168,7 +168,7 @@ def test_flatten(batch, hidden_dim, start_dim, end_dim):
 
     assert out.shape == list(reference.shape)
 
-    result = model.run(x.numpy())
+    result = model(x).detach().numpy()
 
     assert 1 - r2_score(reference.flatten(), result.flatten()) < 0.01
 
@@ -218,7 +218,7 @@ def test_adaptive_pooling(channel, xydim, fn, target_shape):
 
     assert out.shape == list(reference.shape)
 
-    result = model.run(x.numpy())
+    result = model(x).detach().numpy()
 
     assert 1 - r2_score(reference.flatten(), result.flatten()) < 0.01
 
@@ -251,7 +251,7 @@ def test_avg_pooling(
 
     assert out.shape == list(reference.shape)
 
-    result = model.run(x.numpy())
+    result = model(x).detach().numpy()
 
     assert 1 - r2_score(reference.flatten(), result.flatten()) < 0.01
 
@@ -281,7 +281,7 @@ def test_max_pooling(channel, xydim, kernels, stride, padding, ceil_mode):
 
     assert out.shape == list(reference.shape)
 
-    result = model.run(x.numpy())
+    result = model(x).detach().numpy()
 
     assert 1 - r2_score(reference.flatten(), result.flatten()) < 0.01
 
@@ -314,7 +314,7 @@ def test_operations(shape, op, broadcast):
 
     assert out.shape == list(reference.shape)
 
-    result = model.run(x.numpy())
+    result = model(x).detach().numpy()
 
     assert 1 - r2_score(reference.flatten(), result.flatten()) < 0.01
 
@@ -347,7 +347,7 @@ def test_batch_norm(shape, mean, variance, weight, bias):
 
     assert out.shape == list(reference.shape)
 
-    result = model.run(x.numpy())
+    result = model(x).detach().numpy()
 
     assert 1 - r2_score(reference.flatten(), result.flatten()) < 0.01
 
@@ -396,6 +396,6 @@ def test_conv(
 
     assert out.shape == list(reference.shape)
 
-    result = model.run(x.numpy())
+    result = model(x).detach().numpy()
 
     assert 1 - r2_score(reference.flatten(), result.flatten()) < 0.01

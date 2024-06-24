@@ -642,3 +642,27 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             self.prefetchWeights()
 
         return self.out.reshape(self.output_shape)
+
+    def __call__(self, *args: Any, **kwargs: Any) -> np.ndarray:
+        """Run the model using the factory.
+
+        Args:
+            args (Any): The positional arguments.
+            kwargs (Any): The keyword arguments.
+
+        Returns:
+            np.ndarray: The output tensor.
+        """
+        args = tuple(
+            [
+                arg.detach().numpy() if isinstance(arg, torch.Tensor) else arg
+                for arg in args
+            ]
+        )
+        kwargs = {
+            k: arg.detach().numpy() if isinstance(arg, torch.Tensor) else arg
+            for k, arg in kwargs.items()
+        }
+
+        out = self.run(*args, **kwargs)
+        return torch.tensor(out, device=torch.device("npu"))
