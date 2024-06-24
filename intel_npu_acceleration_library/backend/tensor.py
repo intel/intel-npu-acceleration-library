@@ -335,16 +335,19 @@ class Tensor:
             shape = shape[0]  # type: ignore
         return generate_op([self], "reshape", shape)
 
-    def view(self, shape: Sequence[int]) -> "Tensor":
+    def view(self, *shape: Union[Sequence[int], int]) -> "Tensor":
         """
         Return the transpose of the tensor.
 
         Args:
-            shape (Sequence[int]): The new shape of the tensor.
+            shape (Union[Sequence[int], int]): The new shape of the tensor.
 
         Returns:
             Tensor: The transposed tensor.
         """
+        if len(shape) == 1 and isinstance(shape[0], (list, tuple)):
+            shape = shape[0]  # type: ignore
+
         return self.reshape(*shape)
 
     def flatten(self, start_dim=0, end_dim=-1) -> "Tensor":

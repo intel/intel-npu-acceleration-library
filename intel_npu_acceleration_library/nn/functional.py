@@ -928,3 +928,57 @@ def batch_norm(
         result = result + bias.view(1, -1, 1, 1)
 
     return result
+
+
+@implements(torch.nn.functional.conv2d)
+def conv2d(
+    input: Tensor,
+    weight: Union[Tensor, torch.Tensor],
+    bias: Optional[Union[Tensor, torch.Tensor]] = None,
+    stride: int = 1,
+    padding: Union[int, str] = 0,
+    dilation: int = 1,
+    groups: int = 1,
+) -> Tensor:
+    """Generate a convolution layer.
+
+    Args:
+        input (Tensor): layer input node
+        weight (Union[Tensor, torch.Tensor]): weight
+        bias (Union[Tensor, torch.Tensor]): bias
+        stride (int): stride
+        padding (Union[int, str]): padding
+        dilation (int): dilation
+        groups (int): groups
+
+    Raises:
+        ValueError: Padding mode not supported
+
+    Returns:
+        Tensor: output node
+    """
+    if isinstance(padding, str):
+        if padding == "valid":
+            padding = 0
+        elif padding == "same":
+            padding = weight.shape[2] // 2
+        else:
+            raise ValueError(f"Padding mode {padding} not supported")
+
+    if bias is not None:
+        bias = bias.view((1, weight.shape[0], 1, 1))
+
+    if groups > 1:
+        new_shape = [groups, weight.shape[0] // groups] + list(weight.shape[1:])
+        weight = weight.view(new_shape)
+
+    conv = generate_op(
+        [input, weight, bias],
+        "convolution",
+        strides=stride,
+        padding=padding,
+        dilation=dilation,
+        groups=groups,
+    )
+
+    return conv
