@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache 2.0
 #
 
-from intel_npu_acceleration_library.nn.module import NPUModule
+from intel_npu_acceleration_library.nn.module import NPUModuleWrapper
 import torch
 
 
@@ -23,7 +23,7 @@ def test_device():
     model = NN().half().to("npu")
 
     assert isinstance(model, torch.nn.Module)
-    assert isinstance(model, NPUModule)
+    assert isinstance(model, NPUModuleWrapper)
 
     y = model(x)
 
