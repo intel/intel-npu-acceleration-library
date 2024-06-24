@@ -55,3 +55,34 @@ def test_torch_nested_module(sum):
     result = model(x, y=y, sum=sum)
 
     assert 1 - r2_score(reference.detach().numpy(), result.detach().numpy()) < 0.001
+
+
+@pytest.mark.parametrize("channels", [16, 128, 256])
+@pytest.mark.parametrize("dim", [16, 32, 64])
+def test_batch_norm(channels, dim):
+
+    x = torch.rand(1, channels, dim, dim).to(torch.float16)
+
+    model = torch.nn.BatchNorm2d(channels).half().eval()
+
+    assert isinstance(model, torch.nn.Module)
+
+    model = convert_to_npu_module(model)
+
+    assert isinstance(model, torch.nn.Module)
+    assert isinstance(model, NPUModule)
+
+    reference = model(x)
+
+    # Run on NPU
+    model.to("NPU")
+
+    result = model(x)
+
+    assert (
+        1
+        - r2_score(
+            reference.flatten().detach().numpy(), result.flatten().detach().numpy()
+        )
+        < 0.001
+    )

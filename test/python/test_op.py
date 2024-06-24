@@ -271,11 +271,18 @@ def test_max_pooling(channel, xydim, kernels, stride, padding, ceil_mode):
 @pytest.mark.parametrize("op", [torch.add, torch.sub, torch.mul, torch.div])
 @pytest.mark.parametrize("broadcast", [False, True])
 def test_operations(shape, op, broadcast):
+    torch.manual_seed(42)
+
     x = torch.rand(shape).to(torch.float16)
     if broadcast:
         y = torch.rand(shape[0]).to(torch.float16)
     else:
         y = torch.rand(shape).to(torch.float16)
+
+    if torch.div == op:
+        # Avoid NaNs and overflows
+        y[y == 0] = 1
+        y *= 10
 
     reference = op(x, y).detach().numpy()
 
