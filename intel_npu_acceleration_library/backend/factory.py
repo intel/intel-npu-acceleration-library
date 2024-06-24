@@ -13,6 +13,7 @@ from functools import partial
 import numpy.typing as npt
 import numpy as np
 import ctypes
+import torch
 
 
 F = TypeVar("F", bound=Callable[..., Any])
@@ -165,12 +166,12 @@ class NNFactory(BaseNPUBackendWithPrefetch):
     @return_tensor
     def constant(
         self,
-        data: Union[np.array, Sequence[int], Sequence[float], int, float],
+        data: Union[np.array, Sequence[int], Sequence[float], int, float, torch.Tensor],
     ) -> ctypes._Pointer:
         """Generate a model input constant.
 
         Args:
-            data (Union[np.array, Sequence[int], Sequence[float], int, float]): constant data
+            data (Union[np.array, Sequence[int], Sequence[float], int, float, torch.Tensor]): constant data
 
         Returns:
             ctypes._Pointer: an instance to a constant object
@@ -185,6 +186,8 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             data = np.array([data], dtype=np.int64)
         elif isinstance(data, float):
             data = np.array([data], dtype=np.float32)
+        elif isinstance(data, torch.Tensor):
+            data = data.detach().numpy()
 
         dst = data.ctypes.data_as(ctypes.c_void_p)
         shape_ptr = np.array(data.shape, dtype=np.uint32)
@@ -413,6 +416,139 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             axis = abs(axis)
         axis_node = self.constant(axis).node  # type: ignore
         return backend_lib.normL2(self._mm, input_node, axis_node, eps)
+
+    @return_tensor
+    def avg_pooling(
+        self,
+        input: ctypes._Pointer,
+        kernel_size: Union[int, Sequence[int]],
+        strides: Optional[Union[int, Sequence[int]]] = None,
+        padding: int = 0,
+        ceil_mode: bool = False,
+        count_include_pad: bool = True,
+        divisor_override: Optional[int] = None,
+        n_spatial_dims: int = 2,
+    ) -> ctypes._Pointer:
+        """Generate an average pooling layer.
+
+        Args:
+            input (ctypes._Pointer): layer input node
+            kernel_size (Sequence[int]): kernel size
+            strides (Sequence[int]): strides
+            padding (int): padding
+            ceil_mode (bool): ceil mode
+            count_include_pad (bool): count include pad
+            divisor_override (int): divisor override
+            n_spatial_dims (int): number of spatial dimensions
+
+        Raises:
+            NotImplementedError: divisor_override is not supported
+
+        Returns:
+            ctypes._Pointer: output node
+        """
+        if isinstance(kernel_size, int):
+            kernel_size = [kernel_size] * n_spatial_dims
+
+        if strides is None:
+            strides = kernel_size
+        elif isinstance(strides, int):
+            strides = [strides] * n_spatial_dims
+
+        if isinstance(padding, int):
+            padding_begins = [padding] * n_spatial_dims
+            padding_ends = [padding] * n_spatial_dims
+        else:
+            padding_begins = list(padding)
+            padding_ends = list(padding)
+
+        strides_ptr = np.array(strides, dtype=np.uint32)
+        padding_begins_ptr = np.array(padding_begins, dtype=np.uint32)
+        padding_ends_ptr = np.array(padding_ends, dtype=np.uint32)
+        kernel_size_ptr = np.array(kernel_size, dtype=np.uint32)
+
+        rounding_type = 1 if ceil_mode else 0
+        auto_pad = 0  # Hardcoded to explicit padding
+
+        if divisor_override:
+            raise NotImplementedError("divisor_override is not supported")
+
+        return backend_lib.avg_pooling(
+            self._mm,
+            input,
+            strides_ptr.size,
+            strides_ptr,
+            padding_begins_ptr.size,
+            padding_begins_ptr,
+            padding_ends_ptr.size,
+            padding_ends_ptr,
+            kernel_size_ptr.size,
+            kernel_size_ptr,
+            not count_include_pad,  # exclude_pad
+            rounding_type,  # rounding_type
+            auto_pad,  # auto_pad
+        )
+
+    @return_tensor
+    def max_pooling(
+        self,
+        input: ctypes._Pointer,
+        kernel_size: Union[int, Sequence[int]],
+        strides: Optional[Union[int, Sequence[int]]] = None,
+        padding: int = 0,
+        ceil_mode: bool = False,
+        n_spatial_dims: int = 2,
+    ) -> ctypes._Pointer:
+        """Generate an average pooling layer.
+
+        Args:
+            input (ctypes._Pointer): layer input node
+            kernel_size (Sequence[int]): kernel size
+            strides (Sequence[int]): strides
+            padding (int): padding
+            ceil_mode (bool): ceil mode
+            n_spatial_dims (int): number of spatial dimensions
+
+        Returns:
+            ctypes._Pointer: output node
+        """
+        if isinstance(kernel_size, int):
+            kernel_size = [kernel_size] * n_spatial_dims
+
+        if strides is None:
+            strides = kernel_size
+        elif isinstance(strides, int):
+            strides = [strides] * n_spatial_dims
+
+        if isinstance(padding, int):
+            padding_begins = [padding] * n_spatial_dims
+            padding_ends = [padding] * n_spatial_dims
+        else:
+            padding_begins = list(padding)
+            padding_ends = list(padding)
+
+        strides_ptr = np.array(strides, dtype=np.uint32)
+        padding_begins_ptr = np.array(padding_begins, dtype=np.uint32)
+        padding_ends_ptr = np.array(padding_ends, dtype=np.uint32)
+        kernel_size_ptr = np.array(kernel_size, dtype=np.uint32)
+
+        rounding_type = 1 if ceil_mode else 0
+        auto_pad = 0  # Hardcoded to explicit padding
+
+        return backend_lib.max_pooling(
+            self._mm,
+            input,
+            strides_ptr.size,
+            strides_ptr,
+            padding_begins_ptr.size,
+            padding_begins_ptr,
+            padding_ends_ptr.size,
+            padding_ends_ptr,
+            kernel_size_ptr.size,
+            kernel_size_ptr,
+            rounding_type,  # rounding_type
+            auto_pad,  # auto_pad
+        )
 
     def get_output_tensor_shape(self):
         """Get output tensor shape.
