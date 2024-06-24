@@ -39,7 +39,8 @@ def test_factory_bindings(inC, outC, batch, run_op):
     dtype = ctypes.c_char_p("float16".encode())
     p0 = backend_lib.parameter(factory, shape_ptr.size, shape_ptr, dtype)
     linear = backend_lib.linear(factory, p0, outC, inC, False, dtype, dtype)
-    backend_lib.compile(factory, linear)
+    backend_lib.result(factory, linear)
+    backend_lib.compile(factory)
     backend_lib.set_output(factory, out.ctypes.data_as(ctypes.c_void_p), 0)
 
     # Set parameters

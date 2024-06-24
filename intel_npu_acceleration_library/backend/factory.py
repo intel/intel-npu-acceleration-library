@@ -637,7 +637,7 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             backend_lib.result(self._mm, node)
 
         # Compile the model
-        backend_lib.compile(self._mm, node)
+        backend_lib.compile(self._mm)
 
         for idx, node in enumerate(self.output_nodes):
             output_shape = self.get_tensor_shape(node)

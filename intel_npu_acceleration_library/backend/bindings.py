@@ -140,7 +140,7 @@ def init_network_factory(lib: ctypes.CDLL):
     ]
     lib.slice.restype = handler
 
-    lib.compile.argtypes = [handler, handler]
+    lib.compile.argtypes = [handler]
     lib.compile.restype = handler
 
     lib.get_output_tensor_shape_size.argtypes = [handler, ctypes.c_int]
