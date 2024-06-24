@@ -920,7 +920,7 @@ def batch_norm(
     running_mean = running_mean.view(1, -1, 1, 1).to(dtype)
     running_var = running_var.view(1, -1, 1, 1).to(dtype)
 
-    result = input - running_mean / torch.sqrt(
+    result = (input - running_mean) / torch.sqrt(
         running_var + torch.tensor([eps]).to(dtype)
     ).to(dtype)
 
