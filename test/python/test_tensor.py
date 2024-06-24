@@ -39,6 +39,14 @@ import torch
         int16,
         int32,
         int64,
+        torch.float16,
+        torch.float32,
+        torch.float64,
+        torch.int8,
+        torch.int16,
+        torch.int32,
+        torch.int64,
+        torch.bfloat16,
     ],
 )
 def test_tensor_creation(shape, dtype):

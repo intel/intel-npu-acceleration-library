@@ -107,24 +107,24 @@ class NNFactory(BaseNPUBackendWithPrefetch):
         Returns:
             ctypes.c_char_p: string representation of the dtype
         """
-        if dtype == np.int8:
+        if dtype in [np.int8, torch.int8]:
             str_dtype = "int8"
         elif dtype == np.uint8 or dtype == int4:
             # u8 represents packed i4 dtypes
             str_dtype = "int4"
-        elif dtype == np.int16:
+        elif dtype in [np.int16, torch.int16]:
             str_dtype = "int16"
-        elif dtype == np.int32:
+        elif dtype in [np.int32, torch.int32]:
             str_dtype = "int32"
-        elif dtype == np.int64:
+        elif dtype in [np.int64, torch.int64]:
             str_dtype = "int64"
-        elif dtype == np.float16:
+        elif dtype in [np.float16, torch.float16]:
             str_dtype = "float16"
-        elif dtype == np.float32:
+        elif dtype in [np.float32, torch.float32]:
             str_dtype = "float32"
-        elif dtype == np.float64:
+        elif dtype in [np.float64, torch.float64]:
             str_dtype = "float64"
-        elif dtype == bfloat16:
+        elif dtype in [bfloat16, torch.bfloat16]:
             str_dtype = "bfloat16"
         else:
             raise RuntimeError(f"DType is not supported {dtype}")
