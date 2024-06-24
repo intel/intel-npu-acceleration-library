@@ -936,7 +936,7 @@ def conv2d(
     weight: Union[Tensor, torch.Tensor],
     bias: Optional[Union[Tensor, torch.Tensor]] = None,
     stride: int = 1,
-    padding: int = 0,
+    padding: Union[int, str] = 0,
     dilation: int = 1,
     groups: int = 1,
 ) -> Tensor:
@@ -947,13 +947,24 @@ def conv2d(
         weight (Union[Tensor, torch.Tensor]): weight
         bias (Union[Tensor, torch.Tensor]): bias
         stride (int): stride
-        padding (int): padding
+        padding (Union[int, str]): padding
         dilation (int): dilation
         groups (int): groups
+
+    Raises:
+        ValueError: Padding mode not supported
 
     Returns:
         Tensor: output node
     """
+    if isinstance(padding, str):
+        if padding == "valid":
+            padding = 0
+        elif padding == "same":
+            padding = weight.shape[2] // 2
+        else:
+            raise ValueError(f"Padding mode {padding} not supported")
+
     if bias is not None:
         bias = bias.view((1, weight.shape[0], 1, 1))
 

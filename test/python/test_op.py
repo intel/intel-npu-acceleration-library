@@ -331,7 +331,7 @@ def test_batch_norm(shape, mean, variance, weight, bias):
 @pytest.mark.parametrize("bias", [True, False])
 @pytest.mark.parametrize("dtype", [torch.float16])
 @pytest.mark.parametrize("stride", [1, 2])
-@pytest.mark.parametrize("padding", [0, 1])
+@pytest.mark.parametrize("padding", [0, 1, "same", "valid"])
 @pytest.mark.parametrize("groups", [1, -1])
 def test_conv(
     in_channels, out_channels, kernels, dim, bias, dtype, stride, padding, groups
@@ -340,6 +340,9 @@ def test_conv(
 
     if groups != 1 and in_channels != out_channels:
         pytest.skip("DW convolutions require in_channels == out_channels")
+
+    if padding == "same" and stride > 1:
+        pytest.skip("padding='same' is not supported for strided convolutions")
 
     if groups == -1:
         groups = in_channels
