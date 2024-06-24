@@ -98,12 +98,12 @@ get_output_tensor_shape(intel_npu_acceleration_library::ModelFactory* factory, s
 }
 
 intel_npu_acceleration_library_DLL_API void set_activation(intel_npu_acceleration_library::OVInferenceModel* mm,
-                                                           half_ptr X, size_t idx) {
+                                                           void* X, size_t idx) {
     mm->setInputTensor(X, idx);
 }
 
-intel_npu_acceleration_library_DLL_API void set_output(intel_npu_acceleration_library::OVInferenceModel* mm,
-                                                       half_ptr Out, size_t idx) {
+intel_npu_acceleration_library_DLL_API void set_output(intel_npu_acceleration_library::OVInferenceModel* mm, void* Out,
+                                                       size_t idx) {
     mm->setOutputTensor(Out, idx);
 }
 

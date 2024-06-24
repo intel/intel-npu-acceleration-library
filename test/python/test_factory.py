@@ -34,9 +34,9 @@ def test_factory(batch, inC, outC, dtype, activation):
     output = act_fn(mm)
     assert output
 
-    module.compile(output)
+    module.compile()
 
-    output_shape = module.get_output_tensor_shape()
+    output_shape = module.get_tensor_shape(output.node)
     assert output_shape == (batch, outC)
 
     filename = f"test_factory_mm_{batch}_{inC}_{outC}_{dtype.__name__}_{activation}"

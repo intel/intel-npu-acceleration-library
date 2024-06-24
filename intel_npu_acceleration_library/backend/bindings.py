@@ -71,10 +71,10 @@ def init_common(lib: ctypes.CDLL):
     lib.saveCompiledModel.argtypes = [handler, ctypes.c_char_p]
 
     # Set input activations
-    lib.set_activation.argtypes = [handler, c_fp16_array, ctypes.c_int]
+    lib.set_activation.argtypes = [handler, ctypes.c_void_p, ctypes.c_int]
 
     # Set outputs activations
-    lib.set_output.argtypes = [handler, c_fp16_array, ctypes.c_int]
+    lib.set_output.argtypes = [handler, ctypes.c_void_p, ctypes.c_int]
 
     # Run a linar layer
     lib.run.argtypes = [handler]

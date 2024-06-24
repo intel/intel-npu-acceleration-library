@@ -62,8 +62,8 @@ def test_activation(batch, hidden_dim, activation):
 
     model = NNFactory()
     input = model.parameter(X.shape)
-    output = torch_function(input)
-    model.compile(output)
+    _ = torch_function(input)
+    model.compile()
 
     out = model.run(X.numpy())
 
@@ -90,8 +90,8 @@ def test_clamp(batch, hidden_dim, min_val, max_val):
 
     model = NNFactory()
     input = model.parameter(X.shape)
-    output = torch.clamp(input, min_val, max_val)
-    model.compile(output)
+    _ = torch.clamp(input, min_val, max_val)
+    model.compile()
 
     out = model.run(X.numpy())
 
@@ -140,8 +140,8 @@ def run_activation_test(torch_function, batch, hidden_dim):
 
     model = NNFactory()
     input = model.parameter(X.shape)
-    output = torch_function(input)
-    model.compile(output)
+    _ = torch_function(input)
+    model.compile()
 
     out = model.run(X.numpy())
 
@@ -164,7 +164,7 @@ def test_flatten(batch, hidden_dim, start_dim, end_dim):
     model = NNFactory()
     par = model.parameter(x.shape, np.float16)
     out = torch.flatten(par, start_dim, end_dim)
-    model.compile(out)
+    model.compile()
 
     assert out.shape == list(reference.shape)
 
@@ -185,7 +185,7 @@ def test_concatenation(batch, hidden_dim, tensors, axis):
     model = NNFactory()
     par = [model.parameter(x[i].shape, np.float16) for i in range(tensors)]
     out = torch.cat(par, dim=axis)
-    model.compile(out)
+    model.compile()
 
     assert out.shape == list(reference.shape)
 
@@ -214,7 +214,7 @@ def test_adaptive_pooling(channel, xydim, fn, target_shape):
     model = NNFactory()
     par = model.parameter([1, channel, xydim, xydim], np.float16)
     out = fn(par, target_shape)
-    model.compile(out)
+    model.compile()
 
     assert out.shape == list(reference.shape)
 
@@ -247,7 +247,7 @@ def test_avg_pooling(
     model = NNFactory()
     par = model.parameter([1, channel, xydim, xydim], np.float16)
     out = pool(par)
-    model.compile(out)
+    model.compile()
 
     assert out.shape == list(reference.shape)
 
@@ -277,7 +277,7 @@ def test_max_pooling(channel, xydim, kernels, stride, padding, ceil_mode):
     model = NNFactory()
     par = model.parameter([1, channel, xydim, xydim], np.float16)
     out = pool(par)
-    model.compile(out)
+    model.compile()
 
     assert out.shape == list(reference.shape)
 
@@ -310,7 +310,7 @@ def test_operations(shape, op, broadcast):
     model = NNFactory()
     par = model.parameter(shape, np.float16)
     out = op(par, y)
-    model.compile(out)
+    model.compile()
 
     assert out.shape == list(reference.shape)
 
@@ -343,7 +343,7 @@ def test_batch_norm(shape, mean, variance, weight, bias):
     model = NNFactory()
     par = model.parameter(shape, np.float16)
     out = torch.nn.functional.batch_norm(par, mean, variance, weight=weight, bias=bias)
-    model.compile(out)
+    model.compile()
 
     assert out.shape == list(reference.shape)
 
@@ -392,7 +392,7 @@ def test_conv(
     par = model.parameter(x.shape, np.float16)
 
     out = torch.nn.functional.conv2d(par, weight, bias, stride, padding, groups=groups)
-    model.compile(out)
+    model.compile()
 
     assert out.shape == list(reference.shape)
 

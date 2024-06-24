@@ -166,7 +166,7 @@ class Module(torch.nn.Module):
         patch_parameters(self, model)
 
         out = self.forward(*npu_args, **npu_kwargs)
-        model.compile(out)
+        model.compile()
         return model, out
 
     def _call_impl(self, *args: Any, **kwargs: Any) -> Any:

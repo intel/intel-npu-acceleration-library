@@ -34,7 +34,7 @@ def test_explicit_quantization(batch, inC, outC):
     output = module.linear(input, outC, inC)
     assert output
 
-    module.compile(output)
+    module.compile()
 
     X = np.random.random((batch, inC)).astype(np.float16)
     W = np.random.randint(-127, 127, (outC, inC)).astype(np.int8)
@@ -61,7 +61,7 @@ def test_i8_quantization(batch, inC, outC):
     output = module.linear(input, outC, inC, False, wt_dtype=np.int8)
     assert output
 
-    module.compile(output)
+    module.compile()
 
     X = np.random.random((batch, inC)).astype(np.float16)
     W = np.random.randint(-127, 127, (outC, inC)).astype(np.int8)
@@ -110,7 +110,7 @@ def test_i4_quantization(batch, inC, outC):
     output = module.linear(input, outC, inC, False, wt_dtype=np.uint8)
     assert output
 
-    module.compile(output)
+    module.compile()
 
     X = np.random.random((batch, inC)).astype(np.float16)
     S = np.random.random((outC, 1)).astype(np.float16)
