@@ -40,6 +40,7 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             profile,
         )
         self.elapsed = None
+        self.output_nodes: Sequence[ctypes._Pointer] = []
 
         for op in get_supported_ops():
             if not hasattr(self, op.name.replace("_act", "")):
@@ -74,8 +75,21 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             kwargs = {
                 k: v.node if isinstance(v, Tensor) else v for k, v in kwargs.items()
             }
+
+            input_nodes = [arg for arg in args if isinstance(arg, ctypes._Pointer)] + [
+                v for v in kwargs.values() if isinstance(v, ctypes._Pointer)
+            ]
             # Call the function
             node = fn(self, *args, **kwargs)
+
+            # remove input nodes from output_nodes
+            self.output_nodes = [
+                node for node in self.output_nodes if node not in input_nodes
+            ]
+            # add output node to output_nodes
+            if fn.__name__ != "constant":
+                self.output_nodes.append(node)
+
             # Wrap the node in a Tensor object
             return Tensor(factory=self, node=node)
 
@@ -667,37 +681,72 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             auto_pad,  # auto_pad
         )
 
-    def get_output_tensor_shape(self):
-        """Get output tensor shape.
-
-        Returns:
-            tuple[int]: output tensor shape
-        """
-        size = backend_lib.get_output_tensor_shape_size(self._mm, 0)
-        return tuple(
-            [
-                backend_lib.get_output_tensor_shape(self._mm, 0, idx)
-                for idx in range(size)
-            ]
-        )
-
-    def compile(self, output_node: Union[ctypes._Pointer, Tensor]):
-        """Finalize and compile a model.
+    def get_tensor_shape(self, node):
+        """Get tensor shape.
 
         Args:
-            output_node (ctypes._Pointer): Model output node
-        """
-        if isinstance(output_node, Tensor):
-            output_node = output_node.node
+            node: network node
 
-        backend_lib.compile(self._mm, output_node)
-        self.output_shape = self.get_output_tensor_shape()
-        if len(self.output_shape) != 2:
-            out_shape_1d = np.prod(self.output_shape)
-            self.out = np.empty((1, out_shape_1d), dtype=np.float16)
+        Returns:
+            tuple[int]: tensor shape
+        """
+        size = backend_lib.op_shape_size(node)
+        return tuple([backend_lib.op_shape(node, idx) for idx in range(size)])
+
+    def get_tensor_dtype(self, node):
+        """Get tensor dtype.
+
+        Args:
+            node: network node
+
+        Raises:
+            RuntimeError: Unsupported dtype
+
+        Returns:
+            str: tensor dtype
+        """
+        dtype_int = backend_lib.op_dtype(node)
+
+        if dtype_int == 2:
+            return np.bool
+        # elif dtype_int == 3:
+        #     return bfloat16
+        elif dtype_int == 4:
+            return np.float16
+        elif dtype_int == 5:
+            return np.float32
+        elif dtype_int == 6:
+            return np.float64
+        # elif dtype_int == 7:
+        #     return int4
+        elif dtype_int == 8:
+            return np.int8
+        elif dtype_int == 9:
+            return np.int16
+        elif dtype_int == 10:
+            return np.int32
+        elif dtype_int == 11:
+            return np.int64
         else:
-            self.out = np.empty(self.output_shape, dtype=np.float16)
-        backend_lib.set_output(self._mm, self.out, 0)
+            raise RuntimeError("Unsupported dtype")
+
+    def compile(self):
+        """Finalize and compile a model."""
+        self.out = []
+        for node in self.output_nodes:
+            backend_lib.result(self._mm, node)
+
+        # Compile the model
+        backend_lib.compile(self._mm)
+
+        for idx, node in enumerate(self.output_nodes):
+            output_shape = self.get_tensor_shape(node)
+            output_dtype = self.get_tensor_dtype(node)
+
+            tensor = np.empty(output_shape, dtype=output_dtype)
+            ptr = tensor.ctypes.data_as(ctypes.c_void_p)
+            backend_lib.set_output(self._mm, ptr, idx)
+            self.out.append(tensor)
 
     def set_input_tensor(self, tensor: np.ndarray, idx: int):
         """Set input tensor.
@@ -706,10 +755,9 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             tensor (np.ndarray): Input tensor
             idx (int): tensor index
         """
-        if len(tensor.shape) != 2:
-            backend_lib.set_activation(self._mm, tensor.reshape(1, -1), idx)
-        else:
-            backend_lib.set_activation(self._mm, tensor, idx)
+        backend_lib.set_activation(
+            self._mm, tensor.ctypes.data_as(ctypes.c_void_p), idx
+        )
 
     def run(
         self,
@@ -741,4 +789,32 @@ class NNFactory(BaseNPUBackendWithPrefetch):
         if prefetch:
             self.prefetchWeights()
 
-        return self.out.reshape(self.output_shape)
+        if len(self.out) == 1:
+            return self.out[0]
+        return self.out
+
+    def __call__(self, *args: Any, **kwargs: Any) -> np.ndarray:
+        """Run the model using the factory.
+
+        Args:
+            args (Any): The positional arguments.
+            kwargs (Any): The keyword arguments.
+
+        Returns:
+            np.ndarray: The output tensor.
+        """
+        args = tuple(
+            [
+                arg.detach().numpy() if isinstance(arg, torch.Tensor) else arg
+                for arg in args
+            ]
+        )
+        kwargs = {
+            k: arg.detach().numpy() if isinstance(arg, torch.Tensor) else arg
+            for k, arg in kwargs.items()
+        }
+
+        out = self.run(*args, **kwargs)
+        if isinstance(out, list):
+            return [torch.tensor(o, device=torch.device("npu")) for o in out]
+        return torch.tensor(out, device=torch.device("npu"))

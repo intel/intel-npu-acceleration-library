@@ -80,9 +80,13 @@ intel_npu_acceleration_library_DLL_API void setNNFactoryWeights(
                                 parameters->get_parameters());
 }
 
-intel_npu_acceleration_library_DLL_API void compile(intel_npu_acceleration_library::ModelFactory* factory,
-                                                    ov::op::Op* result) {
-    factory->compile(result);
+intel_npu_acceleration_library_DLL_API void compile(intel_npu_acceleration_library::ModelFactory* factory) {
+    factory->compile();
+}
+
+intel_npu_acceleration_library_DLL_API void result(intel_npu_acceleration_library::ModelFactory* factory,
+                                                   ov::op::Op* result) {
+    factory->result(result);
 }
 
 intel_npu_acceleration_library_DLL_API size_t
@@ -98,12 +102,12 @@ get_output_tensor_shape(intel_npu_acceleration_library::ModelFactory* factory, s
 }
 
 intel_npu_acceleration_library_DLL_API void set_activation(intel_npu_acceleration_library::OVInferenceModel* mm,
-                                                           half_ptr X, size_t idx) {
+                                                           void* X, size_t idx) {
     mm->setInputTensor(X, idx);
 }
 
-intel_npu_acceleration_library_DLL_API void set_output(intel_npu_acceleration_library::OVInferenceModel* mm,
-                                                       half_ptr Out, size_t idx) {
+intel_npu_acceleration_library_DLL_API void set_output(intel_npu_acceleration_library::OVInferenceModel* mm, void* Out,
+                                                       size_t idx) {
     mm->setOutputTensor(Out, idx);
 }
 
@@ -344,8 +348,8 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* swish(intel_npu_acceleration_
 }
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* softmax(intel_npu_acceleration_library::ModelFactory* factory,
-                                                           ov::op::Op* in0) {
-    return factory->softmax(in0);
+                                                           ov::op::Op* in0, int axis) {
+    return factory->softmax(in0, axis);
 }
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* gather(intel_npu_acceleration_library::ModelFactory* factory,

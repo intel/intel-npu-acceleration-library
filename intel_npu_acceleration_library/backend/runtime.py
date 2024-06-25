@@ -203,4 +203,4 @@ def run_factory(
     with record_function(f"npu_factory_mul_{key}"):
         ret = model.run(*x_np, *op_args, **op_kwargs)
 
-    return adapt_output_tensor(ret, model.output_shape, input_dtype)
+    return adapt_output_tensor(ret, ret.shape, input_dtype)

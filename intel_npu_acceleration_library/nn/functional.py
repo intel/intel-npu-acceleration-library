@@ -808,6 +808,34 @@ def mish(x: Tensor, inplace=False) -> Tensor:
     return out
 
 
+@implements(torch.nn.functional.softmax)
+def softmax(
+    x: Tensor,
+    dim: Optional[int] = None,
+    _stacklevel=3,
+    dtype: Optional[torch.dtype] = None,
+) -> Tensor:
+    """Return the softmax of a tensor element-wise.
+
+    Args:
+        x (Tensor): The input tensor.
+        dim (int): The dim to apply softmax. Defaults to -1.
+        _stacklevel (int): The stack level. Defaults to 3.
+        dtype (torch.dtype): The data type. Defaults to None.
+
+
+    Returns:
+        Tensor: Output tensor.
+    """
+    if dim is None:
+        dim = -1
+    smax = generate_op(x, "softmax", dim)
+
+    if dtype:
+        smax = smax.to(dtype)
+    return smax
+
+
 @implements(torch.nn.functional.softplus)
 def softplus(x: Tensor, beta: float = 1, threshold: float = 20) -> Tensor:
     """Return the softplus of a tensor element-wise.

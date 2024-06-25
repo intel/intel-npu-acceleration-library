@@ -31,8 +31,8 @@ class Linear(NNFactory):
         self.inC, self.outC = inC, outC
         self.batch = batch
         input = self.parameter((self.batch, self.inC))
-        out = self.linear(input, outC, inC, bias=False)
-        self.compile(out)
+        _ = self.linear(input, outC, inC, bias=False)
+        self.compile()
 
     def run(self, X: np.ndarray, W: np.ndarray, op_id: str) -> np.ndarray:
         """Run the layer: X * W^T.

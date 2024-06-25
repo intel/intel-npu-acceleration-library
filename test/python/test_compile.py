@@ -122,6 +122,3 @@ def test_compile_inference(dtype):
 
     for name, layer in compiled_model.named_children():
         assert layer.training == False
-
-
-test_torch_compile()
