@@ -432,19 +432,22 @@ class NNFactory(BaseNPUBackendWithPrefetch):
     def reduce_max(
         self,
         input_node: ctypes._Pointer,
-        reduction_axes: Union[int, Sequence[int]],
+        reduction_axes: Optional[Union[int, Sequence[int]]] = None,
         keep_dims: Optional[bool] = False,
     ) -> ctypes._Pointer:
         """Generate a reduce max layer.
 
         Args:
             input_node (ctypes._Pointer): layer input node
-            reduction_axes (Union[int, Sequence[int]]): the axis positions to be reduced
-            keep_dims (Optional[bool] ): if set to 1 it holds axes that are used for reduction. Defaults to False
+            reduction_axes (Optional[Union[int, Sequence[int]]]): the axis positions to be reduced
+            keep_dims (Optional[bool]): if set to 1 it holds axes that are used for reduction. Defaults to False
 
         Returns:
             ctypes._Pointer: output node
         """
+        if reduction_axes is None:
+            shape_size = backend_lib.op_shape_size(input_node)
+            reduction_axes = list(range(shape_size - 1, -1, -1))
         axis_node = self.constant(reduction_axes).node  # type: ignore
         return backend_lib.reduce_max(self._mm, input_node, axis_node, keep_dims)
 
@@ -452,19 +455,22 @@ class NNFactory(BaseNPUBackendWithPrefetch):
     def reduce_mean(
         self,
         input_node: ctypes._Pointer,
-        reduction_axes: Union[int, Sequence[int]],
+        reduction_axes: Optional[Union[int, Sequence[int]]] = None,
         keep_dims: Optional[bool] = False,
     ) -> ctypes._Pointer:
         """Generate a reduce mean layer.
 
         Args:
             input_node (ctypes._Pointer): layer input node
-            reduction_axes (Union[int, Sequence[int]]): the axis positions to be reduced
+            reduction_axes (Optional[Union[int, Sequence[int]]]): the axis positions to be reduced
             keep_dims (Optional[bool] ): if set to 1 it holds axes that are used for reduction. Defaults to False
 
         Returns:
             ctypes._Pointer: output node
         """
+        if reduction_axes is None:
+            shape_size = backend_lib.op_shape_size(input_node)
+            reduction_axes = list(range(shape_size - 1, -1, -1))
         axis_node = self.constant(reduction_axes).node  # type: ignore
         return backend_lib.reduce_mean(self._mm, input_node, axis_node, keep_dims)
 
@@ -472,19 +478,22 @@ class NNFactory(BaseNPUBackendWithPrefetch):
     def reduce_min(
         self,
         input_node: ctypes._Pointer,
-        reduction_axes: Union[int, Sequence[int]],
+        reduction_axes: Optional[Union[int, Sequence[int]]] = None,
         keep_dims: Optional[bool] = False,
     ) -> ctypes._Pointer:
         """Generate a reduce min layer.
 
         Args:
             input_node (ctypes._Pointer): layer input node
-            reduction_axes (Union[int, Sequence[int]]): the axis positions to be reduced
+            reduction_axes (Optional[Union[int, Sequence[int]]]): the axis positions to be reduced
             keep_dims (Optional[bool] ): if set to 1 it holds axes that are used for reduction. Defaults to False
 
         Returns:
             ctypes._Pointer: output node
         """
+        if reduction_axes is None:
+            shape_size = backend_lib.op_shape_size(input_node)
+            reduction_axes = list(range(shape_size - 1, -1, -1))
         axis_node = self.constant(reduction_axes).node  # type: ignore
         return backend_lib.reduce_min(self._mm, input_node, axis_node, keep_dims)
 
@@ -492,19 +501,22 @@ class NNFactory(BaseNPUBackendWithPrefetch):
     def reduce_prod(
         self,
         input_node: ctypes._Pointer,
-        reduction_axes: Union[int, Sequence[int]],
+        reduction_axes: Optional[Union[int, Sequence[int]]] = None,
         keep_dims: Optional[bool] = False,
     ) -> ctypes._Pointer:
         """Generate a reduce product layer.
 
         Args:
             input_node (ctypes._Pointer): layer input node
-            reduction_axes (Union[int, Sequence[int]]): the axis positions to be reduced
+            reduction_axes (Optional[Union[int, Sequence[int]]]): the axis positions to be reduced
             keep_dims (Optional[bool] ): if set to 1 it holds axes that are used for reduction. Defaults to False
 
         Returns:
             ctypes._Pointer: output node
         """
+        if reduction_axes is None:
+            shape_size = backend_lib.op_shape_size(input_node)
+            reduction_axes = list(range(shape_size - 1, -1, -1))
         axis_node = self.constant(reduction_axes).node  # type: ignore
         return backend_lib.reduce_prod(self._mm, input_node, axis_node, keep_dims)
 
@@ -512,19 +524,22 @@ class NNFactory(BaseNPUBackendWithPrefetch):
     def reduce_sum(
         self,
         input_node: ctypes._Pointer,
-        reduction_axes: Union[int, Sequence[int]],
+        reduction_axes: Optional[Union[int, Sequence[int]]] = None,
         keep_dims: Optional[bool] = False,
     ) -> ctypes._Pointer:
         """Generate a reduce sum layer.
 
         Args:
             input_node (ctypes._Pointer): layer input node
-            reduction_axes (Union[int, Sequence[int]]): the axis positions to be reduced
+            reduction_axes (Optional[Union[int, Sequence[int]]]): the axis positions to be reduced
             keep_dims (Optional[bool] ): if set to 1 it holds axes that are used for reduction. Defaults to False
 
         Returns:
             ctypes._Pointer: output node
         """
+        if reduction_axes is None:
+            shape_size = backend_lib.op_shape_size(input_node)
+            reduction_axes = list(range(shape_size - 1, -1, -1))
         axis_node = self.constant(reduction_axes).node  # type: ignore
         return backend_lib.reduce_sum(self._mm, input_node, axis_node, keep_dims)
 

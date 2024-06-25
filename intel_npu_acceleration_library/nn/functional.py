@@ -632,13 +632,13 @@ def cat(input: Sequence[Tensor], dim: int, out: Optional[Tensor] = None) -> Tens
 
 
 @implements(torch.max)
-def max(x, dim: Union[int, Sequence[int]], keep_dims: bool = False) -> Tensor:
+def max(x, dim: Optional[int] = None, keep_dims: Optional[bool] = False) -> Tensor:
     """Return the reduced max tensor.
 
     Args:
         x (Tensor): The input tensor.
-        dim (Union[int, Sequence[int]]): The dims to reduce.
-        keep_dims (bool): If set to 1 it holds axes that are used for reduction. Defaults to False.
+        dim (Optional[int]): The dim to reduce.
+        keep_dims (Optional[bool]): If set to 1 it holds axes that are used for reduction. Defaults to False.
 
     Returns:
         Tensor: The the reduced max tensor.
@@ -647,13 +647,13 @@ def max(x, dim: Union[int, Sequence[int]], keep_dims: bool = False) -> Tensor:
 
 
 @implements(torch.mean)
-def mean(x, dim: Union[int, Sequence[int]], keep_dims: bool = False) -> Tensor:
+def mean(x, dim: Optional[int] = None, keep_dims: Optional[bool] = False) -> Tensor:
     """Return the reduced mean tensor.
 
     Args:
         x (Tensor): The input tensor.
-        dim (Union[int, Sequence[int]]): The dims to reduce.
-        keep_dims (bool): If set to 1 it holds axes that are used for reduction. Defaults to False.
+        dim (Optional[int]): The dim to reduce.
+        keep_dims (Optional[bool]): If set to 1 it holds axes that are used for reduction. Defaults to False.
 
     Returns:
         Tensor: The the reduced mean tensor.
@@ -662,13 +662,13 @@ def mean(x, dim: Union[int, Sequence[int]], keep_dims: bool = False) -> Tensor:
 
 
 @implements(torch.min)
-def min(x, dim: Union[int, Sequence[int]], keep_dims: bool = False) -> Tensor:
+def min(x, dim: Optional[int] = None, keep_dims: Optional[bool] = False) -> Tensor:
     """Return the reduced min tensor.
 
     Args:
         x (Tensor): The input tensor.
-        dim (Union[int, Sequence[int]]): The dims to reduce.
-        keep_dims (bool): If set to 1 it holds axes that are used for reduction. Defaults to False.
+        dim (Optional[int]): The dim to reduce.
+        keep_dims (Optional[bool]): If set to 1 it holds axes that are used for reduction. Defaults to False.
 
     Returns:
         Tensor: The the reduced min tensor.
@@ -677,13 +677,13 @@ def min(x, dim: Union[int, Sequence[int]], keep_dims: bool = False) -> Tensor:
 
 
 @implements(torch.prod)
-def prod(x, dim: Union[int, Sequence[int]], keep_dims: bool = False) -> Tensor:
+def prod(x, dim: Optional[int] = None, keep_dims: Optional[bool] = False) -> Tensor:
     """Return the reduced product tensor.
 
     Args:
         x (Tensor): The input tensor.
-        dim (Union[int, Sequence[int]]): The dims to reduce.
-        keep_dims (bool): If set to 1 it holds axes that are used for reduction. Defaults to False.
+        dim (Optional[int]): The dim to reduce.
+        keep_dims (Optional[bool]): If set to 1 it holds axes that are used for reduction. Defaults to False.
 
     Returns:
         Tensor: The the reduced product tensor.
@@ -692,13 +692,13 @@ def prod(x, dim: Union[int, Sequence[int]], keep_dims: bool = False) -> Tensor:
 
 
 @implements(torch.sum)
-def sum(x, dim: Union[int, Sequence[int]], keep_dims: bool = False) -> Tensor:
+def sum(x, dim: Optional[int] = None, keep_dims: Optional[bool] = False) -> Tensor:
     """Return the reduced sum tensor.
 
     Args:
         x (Tensor): The input tensor.
-        dim (Union[int, Sequence[int]]): The dims to reduce.
-        keep_dims (bool): If set to 1 it holds axes that are used for reduction. Defaults to False.
+        dim (Optional[int]): The dim to reduce.
+        keep_dims (Optional[bool]): If set to 1 it holds axes that are used for reduction. Defaults to False.
 
     Returns:
         Tensor: The the reduced sum tensor.
