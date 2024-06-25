@@ -710,8 +710,8 @@ public:
      * @param input operation's input node
      * @return ov::op::Op*
      */
-    ov::op::Op* softmax(ov::op::Op* input) {
-        auto smax = std::make_shared<ov::opset8::Softmax>(input->output(0), -1);
+    ov::op::Op* softmax(ov::op::Op* input, int64_t axis = -1) {
+        auto smax = std::make_shared<ov::opset8::Softmax>(input->output(0), axis);
         operations.push_back(smax);
         return smax.get();
     }

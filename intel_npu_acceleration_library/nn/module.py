@@ -274,3 +274,59 @@ def convert_to_npu_module(module: torch.nn.Module) -> Module:
         Module: The NPU enabled Module.
     """
     return NPUModuleWrapper(module).eval()
+
+
+class NPUContextManager(NNFactory):
+    """NPU context manager."""
+
+    def __enter__(self):
+        """Enter the context.
+
+        Returns:
+            NPUContextManager: self
+        """
+        return self
+
+    def Constant(self, tensor: torch.Tensor) -> Tensor:
+        """Create a tensor.
+
+        Args:
+            tensor (torch.Tensor): tensor
+
+        Returns:
+            torch.Tensor: tensor
+        """
+        return self.constant(tensor)  # type: ignore
+
+    def Tensor(
+        self, shape: Sequence[int], dtype: torch.dtype = torch.float16
+    ) -> Tensor:
+        """Create a tensor.
+
+        Args:
+            shape (Sequence[int]): tensor shape
+            dtype (torch.dtype): tensor dtype, default to torch.float16
+
+        Returns:
+            Tensor: tensor
+        """
+        return self.parameter(shape, dtype=dtype)  # type: ignore
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        """Exit the context.
+
+        Args:
+            exc_type: exception type
+            exc_value: exception value
+            traceback: traceback
+
+        Raises:
+            RuntimeError: If an exception is raised.
+        """
+        # If there is no exception, call the compile
+        if exc_type is None:
+            self.compile()
+        else:
+            # raise the exception
+            print(exc_type, exc_value, traceback)
+            raise RuntimeError(exc_value)  # .with_traceback(traceback)

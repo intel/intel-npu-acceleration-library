@@ -31,7 +31,10 @@ def test_factory(batch, inC, outC, dtype, activation):
     assert mm
 
     act_fn = getattr(module, activation)
-    output = act_fn(mm)
+    if activation == "softmax":
+        output = act_fn(mm, axis=-1)
+    else:
+        output = act_fn(mm)
     assert output
 
     module.compile()

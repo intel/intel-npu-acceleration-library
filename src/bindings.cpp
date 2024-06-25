@@ -348,8 +348,8 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* swish(intel_npu_acceleration_
 }
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* softmax(intel_npu_acceleration_library::ModelFactory* factory,
-                                                           ov::op::Op* in0) {
-    return factory->softmax(in0);
+                                                           ov::op::Op* in0, int axis) {
+    return factory->softmax(in0, axis);
 }
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* gather(intel_npu_acceleration_library::ModelFactory* factory,
