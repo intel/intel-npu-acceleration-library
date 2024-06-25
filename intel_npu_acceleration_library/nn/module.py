@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache 2.0
 #
 from intel_npu_acceleration_library.backend import NNFactory, Tensor
-from typing import MutableMapping, Mapping, Tuple, Sequence, Any
+from typing import MutableMapping, Mapping, Sequence, Any
 import numpy as np
 import torch
 
@@ -105,7 +105,7 @@ class Module(torch.nn.Module):
     def __init__(self) -> None:
         """Initialize the module."""
         super().__init__()
-        self._nn_factory_cache: MutableMapping[str, Tuple[NNFactory, Tensor]] = {}
+        self._nn_factory_cache: MutableMapping[str, NNFactory] = {}
         self._npu_inference = False
         self.npu_top_level_module = True
 
@@ -120,9 +120,7 @@ class Module(torch.nn.Module):
             torch.Tensor: The output tensor.
         """
         signature = compute_input_signature(args, kwargs)
-        model, out = self._nn_factory_cache[signature]
-
-        out_shape, out_dtype = out.shape, out.dtype
+        model = self._nn_factory_cache[signature]
 
         tensor_args = [
             arg.detach().numpy() for arg in args if isinstance(arg, torch.Tensor)
@@ -132,13 +130,9 @@ class Module(torch.nn.Module):
             for k, arg in kwargs.items()
             if isinstance(arg, torch.Tensor)
         ]
-        out = model.run(*tensor_args, **kwargs)
+        return model(*tensor_args, **kwargs)
 
-        return torch.tensor(out, dtype=out_dtype.torch_dtype).reshape(out_shape)
-
-    def create_model(
-        self, args: Sequence[Any], kwargs: Mapping[str, Any]
-    ) -> Tuple[NNFactory, Tensor]:
+    def create_model(self, args: Sequence[Any], kwargs: Mapping[str, Any]) -> NNFactory:
         """Create a model from the module.
 
         Args:
@@ -146,7 +140,7 @@ class Module(torch.nn.Module):
             kwargs (Mapping[str, Any]): keyword arguments
 
         Returns:
-            Tuple[NNFactory, Tensor]: The model and the output tensor.
+            NNFactory: The model.
         """
         model = NNFactory()
         npu_args, npu_kwargs = [], {}
@@ -165,9 +159,9 @@ class Module(torch.nn.Module):
         patch_modules(self, model)
         patch_parameters(self, model)
 
-        out = self.forward(*npu_args, **npu_kwargs)
+        _ = self.forward(*npu_args, **npu_kwargs)
         model.compile()
-        return model, out
+        return model
 
     def _call_impl(self, *args: Any, **kwargs: Any) -> Any:
         """Call the module.
