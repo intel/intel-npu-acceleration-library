@@ -32,6 +32,7 @@ def get_supported_ops() -> List[SupportedOp]:
         List[SupportedOp]: list fo supported NPU operations
     """
     supported_ops = [
+        SupportedOp(name="result", inputs=1),
         SupportedOp(name="matmul", inputs=2),
         SupportedOp(name="eltwise_add", inputs=2),
         SupportedOp(name="eltwise_mul", inputs=2),
@@ -72,7 +73,7 @@ def get_supported_ops() -> List[SupportedOp]:
         SupportedOp(name="hsigmoid", inputs=1),
         SupportedOp(name="round_act", inputs=1),
         SupportedOp(name="softsign", inputs=1),
-        SupportedOp(name="softmax", inputs=1),
+        SupportedOp(name="softmax", inputs=1, parameters=[ctypes.c_int]),
         SupportedOp(name="swish", inputs=1),
         SupportedOp(name="convert_to_fp16", inputs=1),
         SupportedOp(

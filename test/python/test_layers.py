@@ -190,16 +190,16 @@ def test_data_movement(batch, hidden_dim):
     # Test reshape
     model = NNFactory()
     input = model.parameter(X.shape)
-    output = model.reshape(input, [1, hidden_dim, 1, batch])
-    model.compile(output)
+    _ = model.reshape(input, [1, hidden_dim, 1, batch])
+    model.compile()
     out = model.run(X)
     assert out.shape == (1, hidden_dim, 1, batch)
 
     # Test transpose
     model = NNFactory()
     input = model.parameter(out.shape)
-    output = model.transpose(input, [0, 3, 1, 2])
-    model.compile(output)
+    _ = model.transpose(input, [0, 3, 1, 2])
+    model.compile()
     out = model.run(out)
 
     assert out.shape == (1, batch, hidden_dim, 1)
@@ -207,8 +207,8 @@ def test_data_movement(batch, hidden_dim):
     # Test squeeze
     model = NNFactory()
     input = model.parameter(out.shape)
-    output = model.squeeze(input)
-    model.compile(output)
+    _ = model.squeeze(input)
+    model.compile()
     out = model.run(out)
 
     assert out.shape == (batch, hidden_dim)
@@ -216,8 +216,8 @@ def test_data_movement(batch, hidden_dim):
     # Test unsqueeze
     model = NNFactory()
     input = model.parameter(out.shape)
-    output = model.unsqueeze(input, -1)
-    model.compile(output)
+    _ = model.unsqueeze(input, -1)
+    model.compile()
     out = model.run(out)
 
     assert out.shape == (batch, hidden_dim, 1)
@@ -225,8 +225,8 @@ def test_data_movement(batch, hidden_dim):
     # Test negative shape
     model = NNFactory()
     input = model.parameter(out.shape)
-    output = model.reshape(input, [1, -1])
-    model.compile(output)
+    _ = model.reshape(input, [1, -1])
+    model.compile()
     out = model.run(out)
 
     assert out.shape == (1, batch * hidden_dim)
@@ -279,8 +279,8 @@ def test_activation(batch, hidden_dim, activation):
 
     model = NNFactory()
     input = model.parameter(X.shape)
-    output = eval(f"model.{activation}")(input)
-    model.compile(output)
+    _ = eval(f"model.{activation}")(input)
+    model.compile()
 
     out = model.run(X.numpy())
 
@@ -301,8 +301,8 @@ def test_constant(batch, hidden_dim):
     model = NNFactory()
     cc = model.constant(data=data)
     input = model.parameter(X.shape)
-    output = model.eltwise_add(cc, input)
-    model.compile(output)
+    _ = model.eltwise_add(cc, input)
+    model.compile()
     out = model.run(X.numpy())
 
     reference = data + X.numpy()
@@ -323,8 +323,8 @@ def test_normalisation(batch, hidden_dim, axis):
 
     model = NNFactory()
     input = model.parameter(X.shape)
-    output = model.normL2(input, axis)
-    model.compile(output)
+    _ = model.normL2(input, axis)
+    model.compile()
     out = model.run(X.numpy())
 
     reference = torch.nn.functional.normalize(X, p=2.0, dim=axis).numpy()
@@ -347,8 +347,8 @@ def test_concatenation(batch, hidden_dim, axis):
     model = NNFactory()
     input_1 = model.parameter(tensor_1.shape)
     input_2 = model.parameter(tensor_2.shape)
-    output = model.concat(input_1, input_2, axis=axis)
-    model.compile(output)
+    _ = model.concat(input_1, input_2, axis=axis)
+    model.compile()
     out = model.run(tensor_1.numpy(), tensor_2.numpy())
 
     reference = torch.cat((tensor_1, tensor_2), dim=axis).numpy()

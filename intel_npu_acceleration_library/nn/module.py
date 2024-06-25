@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache 2.0
 #
 from intel_npu_acceleration_library.backend import NNFactory, Tensor
-from typing import MutableMapping, Mapping, Tuple, Sequence, Any
+from typing import MutableMapping, Mapping, Sequence, Any
 import numpy as np
 import torch
 
@@ -105,7 +105,7 @@ class Module(torch.nn.Module):
     def __init__(self) -> None:
         """Initialize the module."""
         super().__init__()
-        self._nn_factory_cache: MutableMapping[str, Tuple[NNFactory, Tensor]] = {}
+        self._nn_factory_cache: MutableMapping[str, NNFactory] = {}
         self._npu_inference = False
         self.npu_top_level_module = True
 
@@ -120,9 +120,7 @@ class Module(torch.nn.Module):
             torch.Tensor: The output tensor.
         """
         signature = compute_input_signature(args, kwargs)
-        model, out = self._nn_factory_cache[signature]
-
-        out_shape, out_dtype = out.shape, out.dtype
+        model = self._nn_factory_cache[signature]
 
         tensor_args = [
             arg.detach().numpy() for arg in args if isinstance(arg, torch.Tensor)
@@ -132,13 +130,9 @@ class Module(torch.nn.Module):
             for k, arg in kwargs.items()
             if isinstance(arg, torch.Tensor)
         ]
-        out = model.run(*tensor_args, **kwargs)
+        return model(*tensor_args, **kwargs)
 
-        return torch.tensor(out, dtype=out_dtype.torch_dtype).reshape(out_shape)
-
-    def create_model(
-        self, args: Sequence[Any], kwargs: Mapping[str, Any]
-    ) -> Tuple[NNFactory, Tensor]:
+    def create_model(self, args: Sequence[Any], kwargs: Mapping[str, Any]) -> NNFactory:
         """Create a model from the module.
 
         Args:
@@ -146,7 +140,7 @@ class Module(torch.nn.Module):
             kwargs (Mapping[str, Any]): keyword arguments
 
         Returns:
-            Tuple[NNFactory, Tensor]: The model and the output tensor.
+            NNFactory: The model.
         """
         model = NNFactory()
         npu_args, npu_kwargs = [], {}
@@ -165,9 +159,9 @@ class Module(torch.nn.Module):
         patch_modules(self, model)
         patch_parameters(self, model)
 
-        out = self.forward(*npu_args, **npu_kwargs)
-        model.compile(out)
-        return model, out
+        _ = self.forward(*npu_args, **npu_kwargs)
+        model.compile()
+        return model
 
     def _call_impl(self, *args: Any, **kwargs: Any) -> Any:
         """Call the module.
@@ -239,7 +233,7 @@ class Module(torch.nn.Module):
         return torch.empty(0)
 
 
-class NPUModule(Module):
+class NPUModuleWrapper(Module):
     """A PyTorch module that runs on the NPU."""
 
     def __init__(self, module: torch.nn.Module) -> None:
@@ -273,4 +267,60 @@ def convert_to_npu_module(module: torch.nn.Module) -> Module:
     Returns:
         Module: The NPU enabled Module.
     """
-    return NPUModule(module).eval()
+    return NPUModuleWrapper(module).eval()
+
+
+class NPUContextManager(NNFactory):
+    """NPU context manager."""
+
+    def __enter__(self):
+        """Enter the context.
+
+        Returns:
+            NPUContextManager: self
+        """
+        return self
+
+    def Constant(self, tensor: torch.Tensor) -> Tensor:
+        """Create a tensor.
+
+        Args:
+            tensor (torch.Tensor): tensor
+
+        Returns:
+            torch.Tensor: tensor
+        """
+        return self.constant(tensor)  # type: ignore
+
+    def Tensor(
+        self, shape: Sequence[int], dtype: torch.dtype = torch.float16
+    ) -> Tensor:
+        """Create a tensor.
+
+        Args:
+            shape (Sequence[int]): tensor shape
+            dtype (torch.dtype): tensor dtype, default to torch.float16
+
+        Returns:
+            Tensor: tensor
+        """
+        return self.parameter(shape, dtype=dtype)  # type: ignore
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        """Exit the context.
+
+        Args:
+            exc_type: exception type
+            exc_value: exception value
+            traceback: traceback
+
+        Raises:
+            RuntimeError: If an exception is raised.
+        """
+        # If there is no exception, call the compile
+        if exc_type is None:
+            self.compile()
+        else:
+            # raise the exception
+            print(exc_type, exc_value, traceback)
+            raise RuntimeError(exc_value)  # .with_traceback(traceback)
