@@ -194,15 +194,15 @@ def test_concatenation(batch, hidden_dim, tensors, axis):
     assert 1 - r2_score(reference, result) < 0.01
 
 
-@pytest.mark.parametrize("batch", [16, 32])
-@pytest.mark.parametrize("hidden_dim", [16, 32])
+@pytest.mark.parametrize("batch", [16, 128])
+@pytest.mark.parametrize("hidden_dim", [256, 512])
 @pytest.mark.parametrize("axis", [0, 1, -1, -2, None])
 @pytest.mark.parametrize(
     "op", [torch.max, torch.mean, torch.min, torch.prod, torch.sum]
 )
 def test_reduce_operations(batch, hidden_dim, axis, op):
 
-    x = torch.rand((batch, hidden_dim, 4)).to(torch.float16)
+    x = torch.rand((batch, hidden_dim)).to(torch.float16)
     if axis is None:
         reference = op(x)
     else:
