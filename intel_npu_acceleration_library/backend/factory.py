@@ -415,6 +415,106 @@ class NNFactory(BaseNPUBackendWithPrefetch):
         return backend_lib.concat(self._mm, input_node_1, input_node_2, axis)
 
     @return_tensor
+    def reduce_max(
+        self,
+        input_node: ctypes._Pointer,
+        reduction_axes: Union[int, Sequence[int]],
+        keep_dims: Optional[bool] = False,
+    ) -> ctypes._Pointer:
+        """Generate a reduce max layer.
+
+        Args:
+            input_node (ctypes._Pointer): layer input node
+            reduction_axes (Union[int, Sequence[int]]): the axis positions to be reduced
+            keep_dims (Optional[bool] ): if set to 1 it holds axes that are used for reduction. Defaults to False
+
+        Returns:
+            ctypes._Pointer: output node
+        """
+        axis_node = self.constant(reduction_axes).node  # type: ignore
+        return backend_lib.reduce_max(self._mm, input_node, axis_node, keep_dims)
+
+    @return_tensor
+    def reduce_mean(
+        self,
+        input_node: ctypes._Pointer,
+        reduction_axes: Union[int, Sequence[int]],
+        keep_dims: Optional[bool] = False,
+    ) -> ctypes._Pointer:
+        """Generate a reduce mean layer.
+
+        Args:
+            input_node (ctypes._Pointer): layer input node
+            reduction_axes (Union[int, Sequence[int]]): the axis positions to be reduced
+            keep_dims (Optional[bool] ): if set to 1 it holds axes that are used for reduction. Defaults to False
+
+        Returns:
+            ctypes._Pointer: output node
+        """
+        axis_node = self.constant(reduction_axes).node  # type: ignore
+        return backend_lib.reduce_mean(self._mm, input_node, axis_node, keep_dims)
+
+    @return_tensor
+    def reduce_min(
+        self,
+        input_node: ctypes._Pointer,
+        reduction_axes: Union[int, Sequence[int]],
+        keep_dims: Optional[bool] = False,
+    ) -> ctypes._Pointer:
+        """Generate a reduce min layer.
+
+        Args:
+            input_node (ctypes._Pointer): layer input node
+            reduction_axes (Union[int, Sequence[int]]): the axis positions to be reduced
+            keep_dims (Optional[bool] ): if set to 1 it holds axes that are used for reduction. Defaults to False
+
+        Returns:
+            ctypes._Pointer: output node
+        """
+        axis_node = self.constant(reduction_axes).node  # type: ignore
+        return backend_lib.reduce_min(self._mm, input_node, axis_node, keep_dims)
+
+    @return_tensor
+    def reduce_prod(
+        self,
+        input_node: ctypes._Pointer,
+        reduction_axes: Union[int, Sequence[int]],
+        keep_dims: Optional[bool] = False,
+    ) -> ctypes._Pointer:
+        """Generate a reduce product layer.
+
+        Args:
+            input_node (ctypes._Pointer): layer input node
+            reduction_axes (Union[int, Sequence[int]]): the axis positions to be reduced
+            keep_dims (Optional[bool] ): if set to 1 it holds axes that are used for reduction. Defaults to False
+
+        Returns:
+            ctypes._Pointer: output node
+        """
+        axis_node = self.constant(reduction_axes).node  # type: ignore
+        return backend_lib.reduce_prod(self._mm, input_node, axis_node, keep_dims)
+
+    @return_tensor
+    def reduce_sum(
+        self,
+        input_node: ctypes._Pointer,
+        reduction_axes: Union[int, Sequence[int]],
+        keep_dims: Optional[bool] = False,
+    ) -> ctypes._Pointer:
+        """Generate a reduce sum layer.
+
+        Args:
+            input_node (ctypes._Pointer): layer input node
+            reduction_axes (Union[int, Sequence[int]]): the axis positions to be reduced
+            keep_dims (Optional[bool] ): if set to 1 it holds axes that are used for reduction. Defaults to False
+
+        Returns:
+            ctypes._Pointer: output node
+        """
+        axis_node = self.constant(reduction_axes).node  # type: ignore
+        return backend_lib.reduce_sum(self._mm, input_node, axis_node, keep_dims)
+
+    @return_tensor
     def normL2(
         self, input_node: ctypes._Pointer, axis: int, eps: Optional[float] = 1e-12
     ) -> ctypes._Pointer:

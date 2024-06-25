@@ -631,6 +631,81 @@ def cat(input: Sequence[Tensor], dim: int, out: Optional[Tensor] = None) -> Tens
     return tensor
 
 
+@implements(torch.max)
+def max(x, dim: Union[int, Sequence[int]], keep_dims: bool = False) -> Tensor:
+    """Return the reduced max tensor.
+
+    Args:
+        x (Tensor): The input tensor.
+        dim (Union[int, Sequence[int]]): The dims to reduce.
+        keep_dims (bool): If set to 1 it holds axes that are used for reduction. Defaults to False.
+
+    Returns:
+        Tensor: The the reduced max tensor.
+    """
+    return generate_op(x, "reduce_max", reduction_axes=dim, keep_dims=keep_dims)
+
+
+@implements(torch.mean)
+def mean(x, dim: Union[int, Sequence[int]], keep_dims: bool = False) -> Tensor:
+    """Return the reduced mean tensor.
+
+    Args:
+        x (Tensor): The input tensor.
+        dim (Union[int, Sequence[int]]): The dims to reduce.
+        keep_dims (bool): If set to 1 it holds axes that are used for reduction. Defaults to False.
+
+    Returns:
+        Tensor: The the reduced mean tensor.
+    """
+    return generate_op(x, "reduce_mean", reduction_axes=dim, keep_dims=keep_dims)
+
+
+@implements(torch.min)
+def min(x, dim: Union[int, Sequence[int]], keep_dims: bool = False) -> Tensor:
+    """Return the reduced min tensor.
+
+    Args:
+        x (Tensor): The input tensor.
+        dim (Union[int, Sequence[int]]): The dims to reduce.
+        keep_dims (bool): If set to 1 it holds axes that are used for reduction. Defaults to False.
+
+    Returns:
+        Tensor: The the reduced min tensor.
+    """
+    return generate_op(x, "reduce_min", reduction_axes=dim, keep_dims=keep_dims)
+
+
+@implements(torch.prod)
+def prod(x, dim: Union[int, Sequence[int]], keep_dims: bool = False) -> Tensor:
+    """Return the reduced product tensor.
+
+    Args:
+        x (Tensor): The input tensor.
+        dim (Union[int, Sequence[int]]): The dims to reduce.
+        keep_dims (bool): If set to 1 it holds axes that are used for reduction. Defaults to False.
+
+    Returns:
+        Tensor: The the reduced product tensor.
+    """
+    return generate_op(x, "reduce_prod", reduction_axes=dim, keep_dims=keep_dims)
+
+
+@implements(torch.sum)
+def sum(x, dim: Union[int, Sequence[int]], keep_dims: bool = False) -> Tensor:
+    """Return the reduced sum tensor.
+
+    Args:
+        x (Tensor): The input tensor.
+        dim (Union[int, Sequence[int]]): The dims to reduce.
+        keep_dims (bool): If set to 1 it holds axes that are used for reduction. Defaults to False.
+
+    Returns:
+        Tensor: The the reduced sum tensor.
+    """
+    return generate_op(x, "reduce_sum", reduction_axes=dim, keep_dims=keep_dims)
+
+
 # Functional activations
 
 

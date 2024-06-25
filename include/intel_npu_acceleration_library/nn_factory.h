@@ -292,6 +292,81 @@ public:
     }
 
     /**
+     * @brief create a new reduce max operation
+     *
+     * @param input operation's input node
+     * @param reduction_axes the axis positions to be reduced
+     * @param keep_dims if set to 1 it holds axes that are used for reduction
+     * @return ov::op::Op*
+     */
+    ov::op::Op* reduce_max(ov::op::Op* input, ov::op::Op* reduction_axes, bool keep_dims) {
+        auto reduce_max =
+                std::make_shared<ov::opset1::ReduceMax>(input->output(0), reduction_axes->output(0), keep_dims);
+        operations.push_back(reduce_max);
+        return reduce_max.get();
+    }
+
+    /**
+     * @brief create a new reduce mean operation
+     *
+     * @param input operation's input node
+     * @param reduction_axes the axis positions to be reduced
+     * @param keep_dims if set to 1 it holds axes that are used for reduction
+     * @return ov::op::Op*
+     */
+    ov::op::Op* reduce_mean(ov::op::Op* input, ov::op::Op* reduction_axes, bool keep_dims) {
+        auto reduce_mean =
+                std::make_shared<ov::opset1::ReduceMean>(input->output(0), reduction_axes->output(0), keep_dims);
+        operations.push_back(reduce_mean);
+        return reduce_mean.get();
+    }
+
+    /**
+     * @brief create a new reduce min operation
+     *
+     * @param input operation's input node
+     * @param reduction_axes the axis positions to be reduced
+     * @param keep_dims if set to 1 it holds axes that are used for reduction
+     * @return ov::op::Op*
+     */
+    ov::op::Op* reduce_min(ov::op::Op* input, ov::op::Op* reduction_axes, bool keep_dims) {
+        auto reduce_min =
+                std::make_shared<ov::opset1::ReduceMin>(input->output(0), reduction_axes->output(0), keep_dims);
+        operations.push_back(reduce_min);
+        return reduce_min.get();
+    }
+
+    /**
+     * @brief create a new reduce product operation
+     *
+     * @param input operation's input node
+     * @param reduction_axes the axis positions to be reduced
+     * @param keep_dims if set to 1 it holds axes that are used for reduction
+     * @return ov::op::Op*
+     */
+    ov::op::Op* reduce_prod(ov::op::Op* input, ov::op::Op* reduction_axes, bool keep_dims) {
+        auto reduce_prod =
+                std::make_shared<ov::opset1::ReduceProd>(input->output(0), reduction_axes->output(0), keep_dims);
+        operations.push_back(reduce_prod);
+        return reduce_prod.get();
+    }
+
+    /**
+     * @brief create a new reduce sum operation
+     *
+     * @param input operation's input node
+     * @param reduction_axes the axis positions to be reduced
+     * @param keep_dims if set to 1 it holds axes that are used for reduction
+     * @return ov::op::Op*
+     */
+    ov::op::Op* reduce_sum(ov::op::Op* input, ov::op::Op* reduction_axes, bool keep_dims) {
+        auto reduce_sum =
+                std::make_shared<ov::opset1::ReduceSum>(input->output(0), reduction_axes->output(0), keep_dims);
+        operations.push_back(reduce_sum);
+        return reduce_sum.get();
+    }
+
+    /**
      * @brief Create a new absolute activation operation
      *
      * @param input operation's input node

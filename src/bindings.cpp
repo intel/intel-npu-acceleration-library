@@ -390,6 +390,36 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* concat(intel_npu_acceleration
     return factory->concat(x1, x2, axis);
 }
 
+intel_npu_acceleration_library_DLL_API ov::op::Op* reduce_max(intel_npu_acceleration_library::ModelFactory* factory,
+                                                              ov::op::Op* input, ov::op::Op* reduction_axes,
+                                                              bool keep_dims) {
+    return factory->reduce_max(input, reduction_axes, keep_dims);
+}
+
+intel_npu_acceleration_library_DLL_API ov::op::Op* reduce_mean(intel_npu_acceleration_library::ModelFactory* factory,
+                                                               ov::op::Op* input, ov::op::Op* reduction_axes,
+                                                               bool keep_dims) {
+    return factory->reduce_mean(input, reduction_axes, keep_dims);
+}
+
+intel_npu_acceleration_library_DLL_API ov::op::Op* reduce_min(intel_npu_acceleration_library::ModelFactory* factory,
+                                                              ov::op::Op* input, ov::op::Op* reduction_axes,
+                                                              bool keep_dims) {
+    return factory->reduce_min(input, reduction_axes, keep_dims);
+}
+
+intel_npu_acceleration_library_DLL_API ov::op::Op* reduce_prod(intel_npu_acceleration_library::ModelFactory* factory,
+                                                               ov::op::Op* input, ov::op::Op* reduction_axes,
+                                                               bool keep_dims) {
+    return factory->reduce_prod(input, reduction_axes, keep_dims);
+}
+
+intel_npu_acceleration_library_DLL_API ov::op::Op* reduce_sum(intel_npu_acceleration_library::ModelFactory* factory,
+                                                              ov::op::Op* input, ov::op::Op* reduction_axes,
+                                                              bool keep_dims) {
+    return factory->reduce_sum(input, reduction_axes, keep_dims);
+}
+
 intel_npu_acceleration_library_DLL_API ov::op::Op* convert_to_fp16(
         intel_npu_acceleration_library::ModelFactory* factory, ov::op::Op* in0) {
     return factory->convert_to(in0, ov::element::Type_t::f16);
