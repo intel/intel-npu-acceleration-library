@@ -5,7 +5,7 @@
 
 from intel_npu_acceleration_library.backend import NNFactory
 import intel_npu_acceleration_library
-from sklearn.metrics import r2_score, root_mean_squared_error
+from sklearn.metrics import r2_score
 import numpy as np
 import torch
 import pytest
