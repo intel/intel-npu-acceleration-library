@@ -105,6 +105,31 @@ def get_supported_ops() -> List[SupportedOp]:
             inputs=2,
             parameters=[ctypes.c_int64],
         ),
+        SupportedOp(
+            name="reduce_max",
+            inputs=2,
+            parameters=[ctypes.c_bool],
+        ),
+        SupportedOp(
+            name="reduce_mean",
+            inputs=2,
+            parameters=[ctypes.c_bool],
+        ),
+        SupportedOp(
+            name="reduce_min",
+            inputs=2,
+            parameters=[ctypes.c_bool],
+        ),
+        SupportedOp(
+            name="reduce_prod",
+            inputs=2,
+            parameters=[ctypes.c_bool],
+        ),
+        SupportedOp(
+            name="reduce_sum",
+            inputs=2,
+            parameters=[ctypes.c_bool],
+        ),
         SupportedOp(name="adaptive_avg_pool", inputs=2),
         SupportedOp(name="adaptive_max_pool", inputs=2),
     ]
