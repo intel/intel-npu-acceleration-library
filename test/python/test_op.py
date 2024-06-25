@@ -195,7 +195,7 @@ def test_concatenation(batch, hidden_dim, tensors, axis):
 
 
 @pytest.mark.parametrize("batch", [16, 128])
-@pytest.mark.parametrize("hidden_dim", [256, 512])
+@pytest.mark.parametrize("hidden_dim", [128, 256])
 @pytest.mark.parametrize("axis", [0, 1, -1, -2, None])
 @pytest.mark.parametrize(
     "op", [torch.max, torch.mean, torch.min, torch.prod, torch.sum]
