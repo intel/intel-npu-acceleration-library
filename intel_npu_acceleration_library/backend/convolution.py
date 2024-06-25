@@ -44,7 +44,7 @@ class Convolution(NNFactory):
         else:
             bias_node = None
 
-        conv = self.convolution(
+        _ = self.convolution(
             input,
             weights,
             bias=bias_node,
@@ -55,4 +55,4 @@ class Convolution(NNFactory):
             act_dtype=np.float16,
         )
 
-        self.compile(conv)
+        self.compile()

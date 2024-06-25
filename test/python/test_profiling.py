@@ -48,6 +48,7 @@ def test_profiling_matmul():
     assert os.path.isfile("profiling.json")
     check_no_sw_layer("profiling.json")
     os.remove("profiling.json")
+    os.remove("qmatmul.xml")
 
     Linear(W.shape[1], W.shape[0], X.shape[0], profile=True).run(X, W, op_id=0)
     assert os.path.isfile("profiling.json")

@@ -54,5 +54,5 @@ class MLP(NNFactory):
             atc_fn = getattr(self, activation)
             mm1 = atc_fn(mm1)
 
-        out = self.linear(mm1, self.hidden_size, self.intermediate_size, bias=bias)
-        self.compile(out)
+        _ = self.linear(mm1, self.hidden_size, self.intermediate_size, bias=bias)
+        self.compile()

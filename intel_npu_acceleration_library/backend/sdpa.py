@@ -38,10 +38,10 @@ class SDPA(NNFactory):
         self.value = self.parameter(value_shapes)
         self.mask = self.parameter(mask_shapes)
 
-        out = self.scaled_dot_product_attention(  # type: ignore[attr-defined]
+        _ = self.scaled_dot_product_attention(  # type: ignore[attr-defined]
             self.query, self.key, self.value, self.mask, is_causal
         )
-        self.compile(out)
+        self.compile()
 
     def run(
         self, query: np.ndarray, key: np.ndarray, value: np.ndarray, mask: np.ndarray

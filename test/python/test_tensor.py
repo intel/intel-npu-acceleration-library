@@ -63,7 +63,7 @@ def test_matmul():
     weights = model.constant(np.ones([128, 256], dtype=np.float16))
 
     out = tensor @ weights
-    model.compile(out)
+    model.compile()
 
     assert isinstance(out, Tensor)
     assert out.shape == [16, 128]
@@ -111,7 +111,7 @@ def test_model_creation():
 
     assert gg.shape == [1, 32 * 128 * 64, 1, 1]
 
-    model.compile(gg)
+    model.compile()
 
 
 def test_slice():
