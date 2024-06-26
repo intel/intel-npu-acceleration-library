@@ -26,6 +26,31 @@ class LinearModule(torch.nn.Module):
         return self.l1(z)
 
 
+class LinearTupleModule(torch.nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.l1 = torch.nn.Linear(256, 128).half()
+
+    def forward(self, x, y, z=None, sum=False):
+        x0 = x[0]
+        x1 = x[1]
+
+        y0 = y["a"]
+        y1 = y["b"]
+
+        if sum:
+            x0 = x0 + y0
+            x1 = x1 + y1
+        else:
+            x0 = x0 - y0
+            x1 = x1 - y1
+
+        if z is not None:
+            x0 = x0 + z
+
+        return self.l1(x0) + self.l1(x1)
+
+
 class DummyModule(torch.nn.Module):
     def __init__(self):
         super().__init__()
@@ -122,6 +147,32 @@ def test_torch_recompile_module():
         assert ref.shape == result.shape
         assert ref.dtype == result.dtype
         assert 1 - r2_score(ref.detach().numpy(), result.detach().numpy()) < 0.001
+
+
+@pytest.mark.parametrize("sum", [True, False])
+@pytest.mark.parametrize("use_z", [True, False])
+def test_torch_tuple_module(sum, use_z):
+
+    model = LinearTupleModule()
+
+    assert isinstance(model, torch.nn.Module)
+
+    x = torch.rand(128, 256).to(torch.float16)
+    y = torch.rand(128, 256).to(torch.float16)
+    k = torch.rand(128, 256).to(torch.float16)
+    w = torch.rand(128, 256).to(torch.float16)
+    z = torch.rand(128, 256).to(torch.float16) if use_z else None
+
+    reference = model((x, y), {"a": k, "b": w}, z, sum=sum)
+
+    model = convert_to_npu_module(model).to("NPU")
+
+    assert isinstance(model, torch.nn.Module)
+    assert isinstance(model, NPUModuleWrapper)
+
+    result = model((x, y), {"a": k, "b": w}, z, sum=sum)
+
+    assert 1 - r2_score(reference.detach().numpy(), result.detach().numpy()) < 0.001
 
 
 @pytest.mark.parametrize("channels", [16, 128, 256])
