@@ -95,7 +95,7 @@ def patch_modules(module: torch.nn.Module, model: NNFactory):
     for _, module in modules:
         if isinstance(module, Module):
             module.npu_top_level_module = False
-        patch_parameters(module, model)
+        # patch_parameters(module, model)
         patch_modules(module, model)
 
 
@@ -125,12 +125,13 @@ class Module(torch.nn.Module):
         tensor_args = [
             arg.detach().numpy() for arg in args if isinstance(arg, torch.Tensor)
         ]
+        non_tensor_args = [arg for arg in args if not isinstance(arg, torch.Tensor)]
         tensor_args += [
             arg.detach().numpy()
             for k, arg in kwargs.items()
             if isinstance(arg, torch.Tensor)
         ]
-        return model(*tensor_args, **kwargs)
+        return model(*tensor_args, *non_tensor_args, **kwargs)
 
     def create_model(self, args: Sequence[Any], kwargs: Mapping[str, Any]) -> NNFactory:
         """Create a model from the module.
@@ -157,7 +158,7 @@ class Module(torch.nn.Module):
                 npu_kwargs[k] = arg
 
         patch_modules(self, model)
-        patch_parameters(self, model)
+        # patch_parameters(self, model)
 
         _ = self.forward(*npu_args, **npu_kwargs)
         model.compile()

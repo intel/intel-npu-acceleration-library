@@ -791,8 +791,9 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             np.ndarray: result
         """
         op_id = kwargs.get("op_id", None)
-        if op_id is None and all(isinstance(tensor, np.ndarray) for tensor in weights):
-            for idx, weight in enumerate(weights):
+        if op_id is None:
+            ww = [t for t in weights if isinstance(t, np.ndarray)]
+            for idx, weight in enumerate(ww):
                 self.set_input_tensor(weight, idx + 1)
             prefetch = False
         else:

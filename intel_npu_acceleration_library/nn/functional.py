@@ -321,7 +321,7 @@ def linear(input: Tensor, weight: Tensor, bias: Optional[Tensor] = None) -> Tens
         Tensor: Output tensor.
     """
     mm = generate_op([input, weight], "matmul")
-    if bias:
+    if bias is not None:
         return generate_op([mm, bias], "eltwise_add")
     return mm
 
