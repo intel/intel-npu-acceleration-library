@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache 2.0
 #
 from intel_npu_acceleration_library.backend import NNFactory, Tensor
-from typing import MutableMapping, Mapping, Sequence, Any
+from typing import MutableMapping, Sequence, Any, List
 import numpy as np
 import torch
 
@@ -38,12 +38,14 @@ def pt_to_np_dtype(torch_dtype: torch.dtype) -> np.dtype:
         raise ValueError(f"Unsupported dtype {torch_dtype}")
 
 
-def compute_input_signature(args: Sequence[Any], kwargs: Mapping[str, Any]) -> str:
+def compute_input_signature(
+    args: Sequence[Any], kwargs: MutableMapping[str, Any]
+) -> str:
     """Compute the input signature of a function call.
 
     Args:
         args (Sequence[Any]): The positional arguments.
-        kwargs (Mapping[str, Any]): The keyword arguments.
+        kwargs (MutableMapping[str, Any]): The keyword arguments.
 
     Returns:
         str: The input signature.
@@ -95,7 +97,7 @@ def patch_modules(module: torch.nn.Module, model: NNFactory):
     for _, module in modules:
         if isinstance(module, Module):
             module.npu_top_level_module = False
-        patch_parameters(module, model)
+        # patch_parameters(module, model)
         patch_modules(module, model)
 
 
@@ -108,6 +110,33 @@ class Module(torch.nn.Module):
         self._nn_factory_cache: MutableMapping[str, NNFactory] = {}
         self._npu_inference = False
         self.npu_top_level_module = True
+
+    def extract_tensors_from_arguments(
+        self, args: Sequence[Any]
+    ) -> Sequence[torch.Tensor]:
+        """Extract the tensors from the arguments.
+
+        Args:
+            args (Sequence[Any]): The positional arguments.
+
+        Returns:
+            Sequence[torch.Tensor]: The tensors.
+        """
+        tensors, non_tensors = [], []
+        for arg in args:
+            if isinstance(arg, torch.Tensor):
+                tensors.append(arg)
+            elif isinstance(arg, (list, tuple)):
+                tensor_list, non_tensor_list = self.extract_tensors_from_arguments(arg)
+                tensors.extend(tensor_list)
+                non_tensors.extend(non_tensor_list)
+            elif isinstance(arg, dict):
+                tensor_list, non_tensor_list = self.extract_tensors_from_arguments(
+                    list(arg.values())
+                )
+                tensors.extend(tensor_list)
+                non_tensors.extend(non_tensor_list)
+        return tensors, non_tensors
 
     def factory_forward(self, *args: Any, **kwargs: Any):
         """Run the model using the factory.
@@ -122,42 +151,80 @@ class Module(torch.nn.Module):
         signature = compute_input_signature(args, kwargs)
         model = self._nn_factory_cache[signature]
 
-        tensor_args = [
-            arg.detach().numpy() for arg in args if isinstance(arg, torch.Tensor)
-        ]
-        tensor_args += [
-            arg.detach().numpy()
-            for k, arg in kwargs.items()
-            if isinstance(arg, torch.Tensor)
-        ]
-        return model(*tensor_args, **kwargs)
+        tensor_args, non_tensor_args = self.extract_tensors_from_arguments(args)
+        tensor_args.extend(
+            self.extract_tensors_from_arguments(list(kwargs.values()))[0]
+        )
 
-    def create_model(self, args: Sequence[Any], kwargs: Mapping[str, Any]) -> NNFactory:
+        return model(*tensor_args, *non_tensor_args, **kwargs)
+
+    def create_model(
+        self, args: Sequence[Any], kwargs: MutableMapping[str, Any]
+    ) -> NNFactory:
         """Create a model from the module.
 
         Args:
             args (Sequence[Any]): positional arguments
-            kwargs (Mapping[str, Any]): keyword arguments
+            kwargs (MutableMapping[str, Any]): keyword arguments
 
         Returns:
             NNFactory: The model.
         """
         model = NNFactory()
-        npu_args, npu_kwargs = [], {}
-        for arg in args:
-            if isinstance(arg, torch.Tensor):
-                npu_args.append(model.parameter(arg.shape, pt_to_np_dtype(arg.dtype)))
-            else:
-                npu_args.append(arg)
 
-        for k, arg in kwargs.items():
-            if isinstance(arg, torch.Tensor):
-                npu_kwargs[k] = model.parameter(arg.shape, pt_to_np_dtype(arg.dtype))
-            else:
-                npu_kwargs[k] = arg
+        def create_args_from_list(args: Sequence[Any]) -> Sequence[Any]:
+            """Create arguments from a list.
+
+            Args:
+                args (Sequence[Any]): The arguments.
+
+            Returns:
+                Sequence[Any]: The npu converted arguments.
+            """
+            npu_args: List[Any] = []
+            for arg in args:
+                if isinstance(arg, torch.Tensor):
+                    npu_args.append(
+                        model.parameter(arg.shape, pt_to_np_dtype(arg.dtype))
+                    )
+                elif isinstance(arg, (list, tuple)):
+                    npu_args.append(create_args_from_list(arg))
+                elif isinstance(arg, dict):
+                    npu_args.append(create_kwargs_from_list(arg))
+                else:
+                    npu_args.append(arg)
+            return npu_args
+
+        def create_kwargs_from_list(
+            kwargs: MutableMapping[str, Any]
+        ) -> MutableMapping[str, Any]:
+            """Create keyword arguments from a list.
+
+            Args:
+                kwargs (MutableMapping[str, Any]): The keyword arguments.
+
+            Returns:
+                MutableMapping[str, Any]: The npu converted keyword arguments.
+            """
+            npu_kwargs: MutableMapping[str, Any] = {}
+            for k, arg in kwargs.items():
+                if isinstance(arg, torch.Tensor):
+                    npu_kwargs[k] = model.parameter(
+                        arg.shape, pt_to_np_dtype(arg.dtype)
+                    )
+                elif isinstance(arg, (list, tuple)):
+                    npu_kwargs[k] = create_args_from_list(arg)
+                elif isinstance(arg, dict):
+                    npu_kwargs[k] = create_kwargs_from_list(arg)
+                else:
+                    npu_kwargs[k] = arg
+            return npu_kwargs
+
+        npu_args = create_args_from_list(args)
+        npu_kwargs = create_kwargs_from_list(kwargs)
 
         patch_modules(self, model)
-        patch_parameters(self, model)
+        # patch_parameters(self, model)
 
         _ = self.forward(*npu_args, **npu_kwargs)
         model.compile()

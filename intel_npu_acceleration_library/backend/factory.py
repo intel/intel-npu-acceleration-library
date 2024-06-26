@@ -8,7 +8,7 @@ from intel_npu_acceleration_library.backend.ops import get_supported_ops
 from intel_npu_acceleration_library.backend.bindings import lib as backend_lib
 from intel_npu_acceleration_library.backend.tensor import Tensor
 from intel_npu_acceleration_library.dtypes import int4, bfloat16
-from typing import Optional, Tuple, Any, Union, Sequence, TypeVar, Callable, cast
+from typing import Optional, Tuple, Any, Union, Sequence, TypeVar, Callable, cast, List
 from functools import partial
 import numpy.typing as npt
 import numpy as np
@@ -774,6 +774,24 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             self._mm, tensor.ctypes.data_as(ctypes.c_void_p), idx
         )
 
+    def get_tensor_recursively(self, args: Sequence[Any]) -> List[np.ndarray]:
+        """Get tensor recursively for a list of arguments.
+
+        Args:
+            args (Sequence[Any]): Sequence of tensors, tuple of tensors and additional arguments
+
+        Returns:
+            List[np.ndarray]: Sequence of tensors
+        """
+        tensors = []
+        for t in args:
+            if isinstance(t, (list, tuple)):
+                tensors.extend(self.get_tensor_recursively(t))
+            elif isinstance(t, np.ndarray):
+                tensors.append(t)
+
+        return tensors
+
     def run(
         self,
         X: np.ndarray,
@@ -791,8 +809,9 @@ class NNFactory(BaseNPUBackendWithPrefetch):
             np.ndarray: result
         """
         op_id = kwargs.get("op_id", None)
-        if op_id is None and all(isinstance(tensor, np.ndarray) for tensor in weights):
-            for idx, weight in enumerate(weights):
+        if op_id is None:
+            ww = self.get_tensor_recursively(weights)
+            for idx, weight in enumerate(ww):
                 self.set_input_tensor(weight, idx + 1)
             prefetch = False
         else:

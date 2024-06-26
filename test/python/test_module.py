@@ -8,8 +8,47 @@ from intel_npu_acceleration_library.nn.module import (
     NPUContextManager,
 )
 from sklearn.metrics import r2_score
+import itertools
 import pytest
 import torch
+
+
+class LinearModule(torch.nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.l1 = torch.nn.Linear(256, 128).half()
+
+    def forward(self, x, sum=False):
+        if sum:
+            z = x
+        else:
+            z = 10 - x
+        return self.l1(z)
+
+
+class LinearTupleModule(torch.nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.l1 = torch.nn.Linear(256, 128).half()
+
+    def forward(self, x, y, z=None, sum=False):
+        x0 = x[0]
+        x1 = x[1][0]["0"]
+
+        y0 = y["a"]
+        y1 = y["b"][0]["0"][0]
+
+        if sum:
+            x0 = x0 + y0
+            x1 = x1 + y1
+        else:
+            x0 = x0 - y0
+            x1 = x1 - y1
+
+        if z is not None:
+            x0 = x0 + z
+
+        return self.l1(x0) + self.l1(x1)
 
 
 class DummyModule(torch.nn.Module):
@@ -43,6 +82,28 @@ def test_torch_nested_module(sum):
 
     assert isinstance(model, torch.nn.Module)
 
+    x = torch.rand(128, 256).to(torch.float16)
+    y = torch.rand(128, 256).to(torch.float16)
+
+    reference = model(x, y=y, sum=sum)
+
+    model = convert_to_npu_module(model).to("NPU")
+
+    assert isinstance(model, torch.nn.Module)
+    assert isinstance(model, NPUModuleWrapper)
+
+    result = model(x, y=y, sum=sum)
+
+    assert 1 - r2_score(reference.detach().numpy(), result.detach().numpy()) < 0.001
+
+
+@pytest.mark.parametrize("sum", [True, False])
+def test_torch_nested_module_positional_parameters(sum):
+
+    model = DummyModule2()
+
+    assert isinstance(model, torch.nn.Module)
+
     model = convert_to_npu_module(model)
 
     assert isinstance(model, torch.nn.Module)
@@ -51,12 +112,65 @@ def test_torch_nested_module(sum):
     x = torch.rand(128, 256).to(torch.float16)
     y = torch.rand(128, 256).to(torch.float16)
 
-    reference = model(x, y=y, sum=sum)
+    reference = model(x, y, sum)
 
     # Run on NPU
     model.to("NPU")
 
-    result = model(x, y=y, sum=sum)
+    result = model(x, y, sum)
+
+    assert 1 - r2_score(reference.detach().numpy(), result.detach().numpy()) < 0.001
+
+
+def test_torch_recompile_module():
+
+    model = LinearModule()
+    reference, result = {}, {}
+    x_dict = {}
+
+    assert isinstance(model, torch.nn.Module)
+    for ss, batch in itertools.product([True, False], [16, 32, 64, 128, 256]):
+        x = torch.rand(batch, 256).to(torch.float16)
+        x_dict[(ss, batch)] = x
+        reference[(ss, batch)] = model(x, sum)
+
+    model = convert_to_npu_module(model).to("NPU")
+
+    assert isinstance(model, torch.nn.Module)
+    assert isinstance(model, NPUModuleWrapper)
+
+    # Run on NPU
+    for ss, batch in itertools.product([True, False], [16, 32, 64, 128, 256]):
+        result[(ss, batch)] = model(x_dict[(ss, batch)], sum)
+
+    for ref, result in zip(reference.values(), result.values()):
+        assert ref.shape == result.shape
+        assert ref.dtype == result.dtype
+        assert 1 - r2_score(ref.detach().numpy(), result.detach().numpy()) < 0.001
+
+
+@pytest.mark.parametrize("sum", [True, False])
+@pytest.mark.parametrize("use_z", [True, False])
+def test_torch_tuple_module(sum, use_z):
+
+    model = LinearTupleModule()
+
+    assert isinstance(model, torch.nn.Module)
+
+    x = torch.rand(128, 256).to(torch.float16)
+    y = torch.rand(128, 256).to(torch.float16)
+    k = torch.rand(128, 256).to(torch.float16)
+    w = torch.rand(128, 256).to(torch.float16)
+    z = torch.rand(128, 256).to(torch.float16) if use_z else None
+
+    reference = model((x, ({"0": y},)), {"a": k, "b": ({"0": (w,)},)}, z, sum=sum)
+
+    model = convert_to_npu_module(model).to("NPU")
+
+    assert isinstance(model, torch.nn.Module)
+    assert isinstance(model, NPUModuleWrapper)
+
+    result = model((x, ({"0": y},)), {"a": k, "b": ({"0": (w,)},)}, z, sum=sum)
 
     assert 1 - r2_score(reference.detach().numpy(), result.detach().numpy()) < 0.001
 
@@ -69,17 +183,14 @@ def test_batch_norm(channels, dim):
 
     model = torch.nn.BatchNorm2d(channels).half().eval()
 
+    reference = model(x)
+
     assert isinstance(model, torch.nn.Module)
 
-    model = convert_to_npu_module(model)
+    model = convert_to_npu_module(model).to("NPU")
 
     assert isinstance(model, torch.nn.Module)
     assert isinstance(model, NPUModuleWrapper)
-
-    reference = model(x)
-
-    # Run on NPU
-    model.to("NPU")
 
     result = model(x)
 
