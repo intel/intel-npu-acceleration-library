@@ -2,7 +2,7 @@
 # Copyright © 2024 Intel Corporation
 # SPDX-License-Identifier: Apache 2.0
 #
-from intel_npu_acceleration_library.backend import run_factory, SDPA
+from intel_npu_acceleration_library.backend import run_factory, SDPA, SimpleSDPA
 from typing import Optional
 from functools import partial
 import torch
@@ -34,10 +34,14 @@ def scaled_dot_product_attention(
     Returns:
         torch.Tensor: _description_
     """
-    backend_cls = partial(SDPA, is_causal=is_causal)
     if dropout_p != 0:
         raise RuntimeError("dropout_p != 0 is not supported yet")
     if scale is not None:
         raise RuntimeError("scale != 0 is not supported yet")
 
-    return run_factory([query, key, value, attn_mask], [], backend_cls)
+    if attn_mask is None:
+        backend_cls = partial(SimpleSDPA, is_causal=is_causal)  # type: ignore
+        return run_factory([query, key, value], [], backend_cls)
+    else:
+        backend_cls = partial(SDPA, is_causal=is_causal)  # type: ignore
+        return run_factory([query, key, value, attn_mask], [], backend_cls)

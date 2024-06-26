@@ -12,7 +12,7 @@ from .qmatmul import QMatMul
 from .qlinear import QLinear
 from .tensor import Tensor
 from .factory import NNFactory
-from .sdpa import SDPA
+from .sdpa import SDPA, SimpleSDPA
 from .runtime import run_matmul, run_factory, clear_cache
 
 check_npu_and_driver_version()
@@ -27,6 +27,7 @@ __all__ = [
     "QLinear",
     "Convolution",
     "SDPA",
+    "SimpleSDPA",
     "run_matmul",
     "run_factory",
     "clear_cache",
