@@ -33,10 +33,10 @@ class LinearTupleModule(torch.nn.Module):
 
     def forward(self, x, y, z=None, sum=False):
         x0 = x[0]
-        x1 = x[1]
+        x1 = x[1][0]["0"]
 
         y0 = y["a"]
-        y1 = y["b"]
+        y1 = y["b"][0]["0"][0]
 
         if sum:
             x0 = x0 + y0
@@ -163,14 +163,14 @@ def test_torch_tuple_module(sum, use_z):
     w = torch.rand(128, 256).to(torch.float16)
     z = torch.rand(128, 256).to(torch.float16) if use_z else None
 
-    reference = model((x, y), {"a": k, "b": w}, z, sum=sum)
+    reference = model((x, ({"0": y},)), {"a": k, "b": ({"0": (w,)},)}, z, sum=sum)
 
     model = convert_to_npu_module(model).to("NPU")
 
     assert isinstance(model, torch.nn.Module)
     assert isinstance(model, NPUModuleWrapper)
 
-    result = model((x, y), {"a": k, "b": w}, z, sum=sum)
+    result = model((x, ({"0": y},)), {"a": k, "b": ({"0": (w,)},)}, z, sum=sum)
 
     assert 1 - r2_score(reference.detach().numpy(), result.detach().numpy()) < 0.001
 
