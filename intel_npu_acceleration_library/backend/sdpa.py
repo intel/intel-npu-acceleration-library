@@ -58,3 +58,50 @@ class SDPA(NNFactory):
             np.ndarray: result
         """
         return super().run(query, key, value, mask)
+
+
+class SimpleSDPA(NNFactory):
+    """Implementation of a ScaledDotProductAttention NPU operation."""
+
+    def __init__(
+        self,
+        query_shapes: Tuple[int, int],
+        key_shapes: Tuple[int, int],
+        value_shapes: Tuple[int, int],
+        is_causal: bool = False,
+        profile: bool = False,
+        device: str = "NPU",
+    ):
+        """Initialize the SDPA.
+
+        Args:
+            query_shapes (Tuple[int, int]): shape of the query tensor
+            key_shapes (Tuple[int, int]): shape of the key tensor
+            value_shapes (Tuple[int, int]): shape of the value tensor
+            is_causal (bool, optional): If the SDPA mask is is_causal or not. Defaults to False.
+            profile (bool, optional): Enable/Disable profiling. Defaults to False.
+            device (str, optional): Target device, default to "NPU".
+        """
+        super().__init__(profile, device)
+
+        self.query = self.parameter(query_shapes)
+        self.key = self.parameter(key_shapes)
+        self.value = self.parameter(value_shapes)
+
+        _ = self.scaled_dot_product_attention_simple(  # type: ignore[attr-defined]
+            self.query, self.key, self.value, is_causal
+        )
+        self.compile()
+
+    def run(self, query: np.ndarray, key: np.ndarray, value: np.ndarray) -> np.ndarray:
+        """Run the scaled dot product attention kernel.
+
+        Args:
+            query (np.ndarray): sdpa query tensor
+            key (np.ndarray): sdpa key tensor
+            value (np.ndarray): sdpa value tensor
+
+        Returns:
+            np.ndarray: result
+        """
+        return super().run(query, key, value)

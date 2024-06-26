@@ -59,7 +59,8 @@ def test_sdpa(heads, sequence, dim, kv_cache, is_causal):
 @pytest.mark.parametrize("dim", [512, 1024])
 @pytest.mark.parametrize("kv_cache", [True, False])
 @pytest.mark.parametrize("is_causal", [False, True])
-def test_sdpa_runtime(heads, sequence, dim, kv_cache, is_causal):
+@pytest.mark.parametrize("use_mask", [False, True])
+def test_sdpa_runtime(heads, sequence, dim, kv_cache, is_causal, use_mask):
 
     min_value = torch.finfo(torch.float16).min
 
@@ -68,10 +69,13 @@ def test_sdpa_runtime(heads, sequence, dim, kv_cache, is_causal):
     )
     key = torch.rand(1, heads, sequence, dim // heads).to(torch.float16)
     value = torch.rand(1, heads, sequence, dim // heads).to(torch.float16)
-    mask = min_value * torch.ones(1, heads, 1 if kv_cache else sequence, sequence).to(
-        torch.float16
-    )
-    mask = torch.triu(mask)
+    if use_mask:
+        mask = min_value * torch.ones(
+            1, heads, 1 if kv_cache else sequence, sequence
+        ).to(torch.float16)
+        mask = torch.triu(mask)
+    else:
+        mask = None
 
     npu_result = scaled_dot_product_attention(
         query, key, value, mask, is_causal=is_causal
