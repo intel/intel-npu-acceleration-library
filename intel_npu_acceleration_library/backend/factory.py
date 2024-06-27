@@ -573,7 +573,7 @@ class NNFactory(BaseNPUBackendWithPrefetch):
 
         Args:
             input_node (ctypes._Pointer): layer input node
-            exponent (torch.Tensor): the exponent value
+            exponent (Union[ctypes._Pointer, torch.Tensor]): the exponent value
 
         Raises:
             ValueError: Input tensor shapes are not equal

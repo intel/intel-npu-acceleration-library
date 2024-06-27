@@ -1117,7 +1117,7 @@ def pow(input: Tensor, exponent: Union[Tensor, torch.Tensor, float]):
 
     Args:
         input (Tensor): The input tensor.
-        exponent (Union[torch.Tensor, float]): The exponent value.
+        exponent (Union[Tensor, torch.Tensor, float]): The exponent value.
 
     Returns:
         Tensor: Output tensor.
