@@ -1112,7 +1112,7 @@ def conv2d(
 
 
 @implements(torch.pow)
-def pow(input: Tensor, exponent: Union[torch.Tensor, float]):
+def pow(input: Tensor, exponent: Union[Tensor, torch.Tensor, float]):
     """Return the tensor raised to the power of the exponent.
 
     Args:

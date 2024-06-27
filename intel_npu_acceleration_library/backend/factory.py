@@ -565,7 +565,9 @@ class NNFactory(BaseNPUBackendWithPrefetch):
 
     @return_tensor
     def power(
-        self, input_node: ctypes._Pointer, exponent: torch.Tensor
+        self,
+        input_node: ctypes._Pointer,
+        exponent: Union[ctypes._Pointer, torch.Tensor],
     ) -> ctypes._Pointer:
         """Generate a power layer.
 
@@ -583,10 +585,18 @@ class NNFactory(BaseNPUBackendWithPrefetch):
         input_shape = [
             backend_lib.op_shape(input_node, i) for i in range(input_shape_size)
         ]
-        if list(exponent.shape) != input_shape:
+        if isinstance(exponent, ctypes._Pointer):
+            exponent_shape_size = backend_lib.op_shape_size(input_node)
+            exponent_shape = [
+                backend_lib.op_shape(exponent, i) for i in range(exponent_shape_size)
+            ]
+        else:
+            exponent_shape = list(exponent.shape)
+            exponent = self.constant(exponent).node  # type: ignore
+        if exponent_shape != input_shape:
             raise ValueError("Input tensor shapes are not equal")
-        exponent_node = self.constant(exponent).node  # type: ignore
-        return backend_lib.power(self._mm, input_node, exponent_node)
+
+        return backend_lib.power(self._mm, input_node, exponent)
 
     @return_tensor
     def avg_pooling(

@@ -457,7 +457,8 @@ def test_multiple_outputs():
 @pytest.mark.parametrize("batch", [16, 128])
 @pytest.mark.parametrize("hidden_dim", [128, 256])
 @pytest.mark.parametrize("exponent", ["tensor", "float"])
-def test_power(batch, hidden_dim, exponent):
+@pytest.mark.parametrize("exponent_type", ["parameter", "constant"])
+def test_power(batch, hidden_dim, exponent, exponent_type):
 
     x = torch.rand((batch, hidden_dim)).to(torch.float16)
     if exponent == "tensor":
@@ -469,10 +470,15 @@ def test_power(batch, hidden_dim, exponent):
 
     model = NNFactory()
     par = model.parameter(x.shape, np.float16)
-    _ = torch.pow(par, exponent=exponent)
-    model.compile()
-
-    out = model(x).numpy()
+    if exponent == "tensor" and exponent_type == "parameter":
+        exponent_par = model.parameter(exponent.shape, np.float16)
+        _ = torch.pow(par, exponent_par)
+        model.compile()
+        out = model(x, exponent).numpy()
+    else:
+        _ = torch.pow(par, exponent=exponent)
+        model.compile()
+        out = model(x).numpy()
 
     assert out.shape == reference.shape, "Output shape mismatch"
     assert np.isfinite(reference).all(), "Pytorch Reference contains NaN or Inf"
