@@ -452,3 +452,52 @@ def test_multiple_outputs():
 
     assert 1 - r2_score(result0.detach().numpy().flatten(), ref1.flatten()) < 0.01
     assert 1 - r2_score(result1.detach().numpy().flatten(), ref2.flatten()) < 0.01
+
+
+@pytest.mark.parametrize("batch", [16, 128])
+@pytest.mark.parametrize("hidden_dim", [128, 256])
+@pytest.mark.parametrize("exponent", ["tensor", "float"])
+def test_power(batch, hidden_dim, exponent):
+
+    x = torch.rand((batch, hidden_dim)).to(torch.float16)
+    if exponent == "tensor":
+        exponent = torch.rand((batch, hidden_dim)).to(torch.float16)
+    else:
+        exponent = torch.rand(1).to(torch.float16).item()
+
+    reference = torch.pow(x, exponent=exponent).numpy()
+
+    model = NNFactory()
+    par = model.parameter(x.shape, np.float16)
+    _ = torch.pow(par, exponent=exponent)
+    model.compile()
+
+    out = model(x).numpy()
+
+    assert out.shape == reference.shape, "Output shape mismatch"
+    assert np.isfinite(reference).all(), "Pytorch Reference contains NaN or Inf"
+    assert np.isfinite(out).all(), "NPU output contains NaN or Inf"
+
+    assert 1 - r2_score(reference, out) < 0.01
+
+
+@pytest.mark.parametrize("batch", [16, 128])
+@pytest.mark.parametrize("hidden_dim", [128, 256])
+@pytest.mark.parametrize("axis", [0, 1, -1, -2])
+def test_logsoftmax(batch, hidden_dim, axis):
+    x = torch.rand((batch, hidden_dim)).to(torch.float16)
+
+    reference = torch.nn.functional.log_softmax(x, dim=axis).numpy()
+
+    model = NNFactory()
+    par = model.parameter(x.shape, np.float16)
+    _ = torch.nn.functional.log_softmax(par, dim=axis)
+    model.compile()
+
+    out = model(x).numpy()
+
+    assert out.shape == reference.shape, "Output shape mismatch"
+    assert np.isfinite(reference).all(), "Pytorch Reference contains NaN or Inf"
+    assert np.isfinite(out).all(), "NPU output contains NaN or Inf"
+
+    assert 1 - r2_score(reference, out) < 0.01
