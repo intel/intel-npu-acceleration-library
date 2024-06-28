@@ -18,6 +18,7 @@ from intel_npu_acceleration_library.dtypes import (
 import numpy as np
 import pytest
 import torch
+from sklearn.metrics import r2_score
 
 
 @pytest.mark.parametrize("shape", [[1, 128, 13, 13], [12, 231]])
@@ -128,3 +129,76 @@ def test_slice():
     assert tensor[..., :-2, :].shape == [1, 128, 30, 64]
 
     assert tensor[:, 10:20, ...].shape == [1, 10, 32, 64]
+
+
+@pytest.mark.parametrize("batch", [16, 128])
+@pytest.mark.parametrize("hidden_dim", [256, 512])
+@pytest.mark.parametrize(
+    "activation",
+    [
+        "acos",
+        "asin",
+        "atan",
+        "acosh",
+        "asinh",
+        "atanh",
+        "cosh",
+        "sinh",
+        "tanh",
+        "cos",
+        "sin",
+        "tan",
+        "ceil",
+        "clamp",
+        "erf",
+        "exp",
+        "floor",
+        "log",
+        "round",
+        "sign",
+        "sigmoid",
+        "softmax",
+        "sqrt",
+    ],
+)
+def test_operations(batch, hidden_dim, activation):
+
+    # X in the range [-0.5, 0.5]
+    X = torch.rand((batch, hidden_dim)).to(torch.float16) - 0.5
+
+    if activation == "acosh":
+        # acosh is only defined for x >= 1
+        X += 1.5
+    elif activation in ["sqrt", "tanh"]:
+        # sqrt and tanh are only defined for x >= 0
+        X += 0.5
+    elif activation == "log":
+        # log needs a bigger input to avoid negative overflow in fp16
+        # log in range [0.5, 1.5]
+        X += 1
+
+    if activation == "softmax":
+        reference = eval(f"X.{activation}(dim=-1).numpy()")
+    elif activation == "clamp":
+        reference = eval(f"X.{activation}(min=-0.5, max=0.5).numpy()")
+    else:
+        reference = eval(f"X.{activation}().numpy()")
+
+    model = NNFactory()
+    t1 = model.parameter(X.shape)
+
+    if activation == "softmax":
+        _ = eval(f"t1.{activation}(dim=-1)")
+    elif activation == "clamp":
+        _ = eval(f"t1.{activation}(min=-0.5, max=0.5)")
+    else:
+        _ = eval(f"t1.{activation}()")
+    model.compile()
+
+    result = model(X).numpy()
+
+    assert result.shape == reference.shape, "Output shape mismatch"
+    assert np.isfinite(reference).all(), "Pytorch Reference contains NaN or Inf"
+    assert np.isfinite(result).all(), "NPU output contains NaN or Inf"
+
+    assert 1 - r2_score(reference, result) < 0.001

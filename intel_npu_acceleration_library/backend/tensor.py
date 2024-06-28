@@ -49,6 +49,29 @@ class Tensor:
         squeeze(self): Removes dimensions of size 1 from the tensor.
         unsqueeze(self, axis): Adds a dimension of size 1 to the tensor.
         __matmul__(self, other): Performs matrix multiplication between two tensors.
+        acos(self): Applies acos function to the tensor.
+        asin(self): Applies asin function to the tensor.
+        atan(self): Applies atan function to the tensor.
+        acosh(self): Applies acosh function to the tensor.
+        asinh(self): Applies asinh function to the tensor.
+        atanh(self): Applies atanh function to the tensor.
+        cosh(self): Applies cosh function to the tensor.
+        sinh(self): Applies sinh function to the tensor.
+        tanh(self): Applies tanh function to the tensor.
+        cos(self): Applies cos function to the tensor.
+        sin(self): Applies sin function to the tensor.
+        tan(self): Applies tan function to the tensor.
+        ceil(self): Applies ceil function to the tensor.
+        clamp(self, min, max): Applies clamp function to the tensor.
+        erf(self): Applies erf function to the tensor.
+        exp(self): Applies exponental function to the tensor.
+        floor(self): Applies floor function to the tensor.
+        log(self): Applies log function to the tensor.
+        round(self): Applies round function to the tensor.
+        sigmoid(self): Applies sigmoid function to the tensor.
+        sign(self): Applies sign function to the tensor.
+        softmax(self): Applies softmax function to the tensor.
+        sqrt(self): Applies sqrt function to the tensor.
     """
 
     factory: "NNFactory"  # type: ignore # noqa: F821
@@ -403,6 +426,181 @@ class Tensor:
         """
         return generate_op([self, other], "matmul")
 
+    def acos(self) -> "Tensor":
+        """
+        Apply the acos function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the acos function.
+        """
+        return torch.acos(self)
+
+    def asin(self) -> "Tensor":
+        """
+        Apply the asin function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the asin function.
+        """
+        return torch.asin(self)
+
+    def atan(self) -> "Tensor":
+        """
+        Apply the atan function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the atan function.
+        """
+        return torch.atan(self)
+
+    def acosh(self) -> "Tensor":
+        """
+        Apply the acosh function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the acosh function.
+        """
+        return torch.acosh(self)
+
+    def asinh(self) -> "Tensor":
+        """
+        Apply the asinh function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the asinh function.
+        """
+        return torch.asinh(self)
+
+    def atanh(self) -> "Tensor":
+        """
+        Apply the atanh function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the atanh function.
+        """
+        return torch.atanh(self)
+
+    def cosh(self) -> "Tensor":
+        """
+        Apply the cosh function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the cosh function.
+        """
+        return torch.cosh(self)
+
+    def sinh(self) -> "Tensor":
+        """
+        Apply the sinh function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the sinh function.
+        """
+        return torch.sinh(self)
+
+    def tanh(self) -> "Tensor":
+        """
+        Apply the tanh function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the tanh function.
+        """
+        return torch.tanh(self)
+
+    def cos(self) -> "Tensor":
+        """
+        Apply the cos function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the cos function.
+        """
+        return torch.cos(self)
+
+    def sin(self) -> "Tensor":
+        """
+        Apply the sin function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the sin function.
+        """
+        return torch.sin(self)
+
+    def tan(self) -> "Tensor":
+        """
+        Apply the tan function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the tan function.
+        """
+        return torch.tan(self)
+
+    def ceil(self) -> "Tensor":
+        """
+        Apply the ceil function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the ceil function.
+        """
+        return torch.ceil(self)
+
+    def clamp(self, min=None, max=None) -> "Tensor":
+        """
+        Apply the clamp function to the tensor.
+
+        Args:
+            min (int, float): The lower-bound of the range to be clamped
+            max (int, float): The upper-bound of the range to be clamped
+
+        Returns:
+            Tensor: The result of applying the ceil function.
+        """
+        return torch.clamp(self, min=min, max=max)
+
+    def erf(self) -> "Tensor":
+        """
+        Apply the erf function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the erf function.
+        """
+        return torch.erf(self)
+
+    def exp(self) -> "Tensor":
+        """
+        Apply the exp function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the exp function.
+        """
+        return torch.exp(self)
+
+    def floor(self) -> "Tensor":
+        """
+        Apply the floor function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the floor function.
+        """
+        return torch.floor(self)
+
+    def log(self) -> "Tensor":
+        """
+        Apply the log function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the log function.
+        """
+        return torch.log(self)
+
+    def round(self) -> "Tensor":
+        """
+        Apply the round function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the round function.
+        """
+        return torch.round(self)
+
     def sigmoid(self) -> "Tensor":
         """
         Apply the sigmoid function to the tensor.
@@ -411,6 +609,36 @@ class Tensor:
             Tensor: The result of applying the sigmoid function.
         """
         return generate_op([self], "sigmoid")
+
+    def sign(self) -> "Tensor":
+        """
+        Apply the sign function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the sign function.
+        """
+        return torch.sign(self)
+
+    def softmax(self, dim) -> "Tensor":
+        """
+        Apply the softmax function to the tensor.
+
+        Args:
+            dim (int): The dimension to apply softmax.
+
+        Returns:
+            Tensor: The result of applying the softmax function.
+        """
+        return torch.nn.functional.softmax(self, dim=dim)
+
+    def sqrt(self) -> "Tensor":
+        """
+        Apply the sqrt function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the sqrt function.
+        """
+        return torch.sqrt(self)
 
     def to(self, dtype: NPUDtype) -> "Tensor":
         """
