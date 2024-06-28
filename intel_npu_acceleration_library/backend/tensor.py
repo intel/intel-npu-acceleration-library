@@ -61,16 +61,23 @@ class Tensor:
         cos(self): Applies cos function to the tensor.
         sin(self): Applies sin function to the tensor.
         tan(self): Applies tan function to the tensor.
-        ceil(self): Applies ceil function to the tensor.
+        ceiling(self): Applies ceil function to the tensor.
         clamp(self, min, max): Applies clamp function to the tensor.
+        elu(self, alpha): Applies elu function to the tensor.
         erf(self): Applies erf function to the tensor.
         exp(self): Applies exponental function to the tensor.
         floor(self): Applies floor function to the tensor.
+        grn(self, bias): Applies grn function to the tensor.
+        hsigmoid(self): Applies hsigmoid function to the tensor.
+        hswish(self): Applies hswish function to the tensor.
         log(self): Applies log function to the tensor.
+        mish(self): Applies mish function to the tensor.
+        relu(self, bias): Applies relu function to the tensor.
         round(self): Applies round function to the tensor.
         sigmoid(self): Applies sigmoid function to the tensor.
         sign(self): Applies sign function to the tensor.
         softmax(self, dim): Applies softmax function to the tensor.
+        softplus(self): Applies softplus function to the tensor.
         sqrt(self): Applies sqrt function to the tensor.
         max(self, dim, keep_dims): Returns the reduced max tensor.
         mean(self, dim, keep_dims, dtype): Returns the reduced mean tensor.
@@ -539,14 +546,14 @@ class Tensor:
         """
         return torch.tan(self)
 
-    def ceil(self) -> "Tensor":
+    def ceiling(self) -> "Tensor":
         """
-        Apply the ceil function to the tensor.
+        Apply the ceiling function to the tensor.
 
         Returns:
-            Tensor: The result of applying the ceil function.
+            Tensor: The result of applying the ceiling function.
         """
-        return torch.ceil(self)
+        return generate_op([self], "ceiling")
 
     def clamp(self, min=None, max=None) -> "Tensor":
         """
@@ -560,6 +567,18 @@ class Tensor:
             Tensor: The result of applying the ceil function.
         """
         return torch.clamp(self, min=min, max=max)
+
+    def elu(self, alpha: float = 1.0) -> "Tensor":
+        """
+        Apply the elu function to the tensor.
+
+        Args:
+            alpha (float): The alpha value. Defaults to 1.0.
+
+        Returns:
+            Tensor: The result of applying the elu function.
+        """
+        return generate_op([self], "elu", alpha)
 
     def erf(self) -> "Tensor":
         """
@@ -588,6 +607,36 @@ class Tensor:
         """
         return torch.floor(self)
 
+    def grn(self, bias: float = 1e-12) -> "Tensor":
+        """
+        Apply the grn function to the tensor.
+
+        Args:
+            bias (float): The bias value. Defaults to 1e-12.
+
+        Returns:
+            Tensor: The result of applying the grn function.
+        """
+        return generate_op([self], "grn", bias)
+
+    def hsigmoid(self) -> "Tensor":
+        """
+        Apply the hsigmoid function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the hsigmoid function.
+        """
+        return generate_op([self], "hsigmoid")
+
+    def hswish(self) -> "Tensor":
+        """
+        Apply the hswish function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the hswish function.
+        """
+        return generate_op([self], "hswish")
+
     def log(self) -> "Tensor":
         """
         Apply the log function to the tensor.
@@ -596,6 +645,24 @@ class Tensor:
             Tensor: The result of applying the log function.
         """
         return torch.log(self)
+
+    def mish(self) -> "Tensor":
+        """
+        Apply the mish function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the mish function.
+        """
+        return generate_op([self], "mish")
+
+    def relu(self) -> "Tensor":
+        """
+        Apply the relu function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the relu function.
+        """
+        return generate_op([self], "relu")
 
     def round(self) -> "Tensor":
         """
@@ -635,6 +702,15 @@ class Tensor:
             Tensor: The result of applying the softmax function.
         """
         return torch.nn.functional.softmax(self, dim=dim)
+
+    def softplus(self) -> "Tensor":
+        """
+        Apply the softplus function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the softplus function.
+        """
+        return generate_op([self], "softplus")
 
     def sqrt(self) -> "Tensor":
         """

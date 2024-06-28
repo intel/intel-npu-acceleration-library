@@ -148,7 +148,7 @@ def test_slice():
         "cos",
         "sin",
         "tan",
-        "ceil",
+        "ceiling",
         "clamp",
         "erf",
         "exp",
@@ -161,7 +161,7 @@ def test_slice():
         "sqrt",
     ],
 )
-def test_operations(batch, hidden_dim, activation):
+def test_operations_1(batch, hidden_dim, activation):
 
     # X in the range [-0.5, 0.5]
     X = torch.rand((batch, hidden_dim)).to(torch.float16) - 0.5
@@ -181,6 +181,8 @@ def test_operations(batch, hidden_dim, activation):
         reference = eval(f"X.{activation}(dim=-1).numpy()")
     elif activation == "clamp":
         reference = eval(f"X.{activation}(min=-0.5, max=0.5).numpy()")
+    elif activation == "ceiling":
+        reference = eval(f"X.ceil().numpy()")
     else:
         reference = eval(f"X.{activation}().numpy()")
 
@@ -193,6 +195,53 @@ def test_operations(batch, hidden_dim, activation):
         _ = eval(f"t1.{activation}(min=-0.5, max=0.5)")
     else:
         _ = eval(f"t1.{activation}()")
+    model.compile()
+
+    result = model(X).numpy()
+
+    assert result.shape == reference.shape, "Output shape mismatch"
+    assert np.isfinite(reference).all(), "Pytorch Reference contains NaN or Inf"
+    assert np.isfinite(result).all(), "NPU output contains NaN or Inf"
+
+    assert 1 - r2_score(reference, result) < 0.001
+
+
+@pytest.mark.parametrize("batch", [16, 128])
+@pytest.mark.parametrize("hidden_dim", [256, 512])
+@pytest.mark.parametrize(
+    "activation",
+    [
+        "elu",
+        "grn",
+        "hsigmoid",
+        "hswish",
+        "mish",
+        "relu",
+        "softplus",
+    ],
+)
+def test_operations_2(batch, hidden_dim, activation):
+
+    # X in the range [-0.5, 0.5]
+    X = torch.rand((batch, hidden_dim)).to(torch.float16) - 0.5
+
+    if activation == "grn":
+        reference = torch.nn.functional.normalize(X, p=2.0, dim=-1, eps=1e-12).numpy()
+    elif activation == "hswish":
+        reference = torch.nn.functional.hardswish(X).numpy()
+    elif activation == "hsigmoid":
+        reference = torch.nn.functional.hardsigmoid(X).numpy()
+    else:
+        reference = eval(f"torch.nn.functional.{activation}(X)").numpy()
+
+    model = NNFactory()
+    t1 = model.parameter(X.shape)
+
+    if activation == "grn":
+        _ = eval(f"t1.{activation}(bias=1e-12)")
+    else:
+        _ = eval(f"t1.{activation}()")
+
     model.compile()
 
     result = model(X).numpy()
