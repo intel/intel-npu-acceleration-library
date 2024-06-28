@@ -202,3 +202,38 @@ def test_operations(batch, hidden_dim, activation):
     assert np.isfinite(result).all(), "NPU output contains NaN or Inf"
 
     assert 1 - r2_score(reference, result) < 0.001
+
+
+@pytest.mark.parametrize("batch", [16, 128])
+@pytest.mark.parametrize("hidden_dim", [128, 256])
+@pytest.mark.parametrize("axis", [0, 1, -1, -2, None])
+@pytest.mark.parametrize("op", ["max", "mean", "min", "prod", "sum"])
+def test_reduce_operations(batch, hidden_dim, axis, op):
+
+    X = torch.rand((batch, hidden_dim)).to(torch.float16)
+
+    if axis is None:
+        reference = eval(f"X.{op}()")
+    else:
+        if op in ["max", "min"]:
+            reference, _ = eval(f"X.{op}(dim=axis)")
+        else:
+            reference = eval(f"X.{op}(dim=axis)")
+    reference = reference.numpy()
+
+    print(X.sum())
+    model = NNFactory()
+    t1 = model.parameter(X.shape)
+    _ = eval(f"t1.{op}()") if axis is None else eval(f"t1.{op}(dim=axis)")
+    model.compile()
+
+    result = model(X).numpy()
+
+    assert result.shape == reference.shape, "Output shape mismatch"
+    assert np.isfinite(reference).all(), "Pytorch Reference contains NaN or Inf"
+    assert np.isfinite(result).all(), "NPU output contains NaN or Inf"
+
+    if not result.shape:
+        assert 1 - r2_score([reference, 1], [result, 1]) < 0.01
+    else:
+        assert 1 - r2_score(reference, result) < 0.01

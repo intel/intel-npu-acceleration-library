@@ -70,8 +70,13 @@ class Tensor:
         round(self): Applies round function to the tensor.
         sigmoid(self): Applies sigmoid function to the tensor.
         sign(self): Applies sign function to the tensor.
-        softmax(self): Applies softmax function to the tensor.
+        softmax(self, dim): Applies softmax function to the tensor.
         sqrt(self): Applies sqrt function to the tensor.
+        max(self, dim, keep_dims): Returns the reduced max tensor.
+        mean(self, dim, keep_dims, dtype): Returns the reduced mean tensor.
+        min(self, dim, keep_dims): Returns the reduced min tensor.
+        prod(self, dim, keep_dims, dtype): Returns the reduced product tensor.
+        sum(self, dim, keep_dims, dtype): Returns the reduced sum tensor.
     """
 
     factory: "NNFactory"  # type: ignore # noqa: F821
@@ -639,6 +644,104 @@ class Tensor:
             Tensor: The result of applying the sqrt function.
         """
         return torch.sqrt(self)
+
+    def max(
+        self, dim: Optional[int] = None, keep_dims: Optional[bool] = False
+    ) -> "Tensor":
+        """
+        Return the reduced max tensor.
+
+        Args:
+            dim (Optional[int], optional): The dim to reduce. Default is None, and all dimensions are reduced.
+            keep_dims (Optional[bool], optional): If set to 1 it holds axes that are used for reduction. Defaults to False.
+
+        Returns:
+            Tensor: The result of max reducing operation.
+        """
+        return generate_op(self, "reduce_max", reduction_axes=dim, keep_dims=keep_dims)
+
+    def mean(
+        self,
+        dim: Optional[Union[int, Sequence[int]]] = None,
+        keep_dims: Optional[bool] = False,
+        dtype: Optional[torch.dtype] = None,
+    ) -> "Tensor":
+        """
+        Return the reduced mean tensor.
+
+        Args:
+            dim (Optional[Union[int, Sequence[int]]], optional): The dim(s) to reduce. Default is None, and all dimensions are reduced.
+            keep_dims (Optional[bool], optional): If set to 1 it holds axes that are used for reduction. Defaults to False.
+            dtype (Optional[torch.dtype], optional): The data type. Defaults to None.
+
+        Returns:
+            Tensor: The result of mean reducing operation.
+        """
+        mean = generate_op(self, "reduce_mean", reduction_axes=dim, keep_dims=keep_dims)
+        if dtype:
+            mean = mean.to(dtype)
+        return mean
+
+    def min(
+        self,
+        dim: Optional[int] = None,
+        keep_dims: Optional[bool] = False,
+    ) -> "Tensor":
+        """
+        Return the reduced min tensor.
+
+        Args:
+            dim (Optional[int], optional): The dim to reduce. Default is None, and all dimensions are reduced.
+            keep_dims (Optional[bool], optional): If set to 1 it holds axes that are used for reduction. Defaults to False.
+
+        Returns:
+            Tensor: The result of min reducing operation.
+        """
+        return generate_op(self, "reduce_min", reduction_axes=dim, keep_dims=keep_dims)
+
+    def prod(
+        self,
+        dim: Optional[int] = None,
+        keep_dims: Optional[bool] = False,
+        dtype: Optional[torch.dtype] = None,
+    ) -> "Tensor":
+        """
+        Return the reduced product tensor.
+
+        Args:
+            dim (Optional[int], optional): The dim to reduce. Default is None, and all dimensions are reduced.
+            keep_dims (Optional[bool], optional): If set to 1 it holds axes that are used for reduction. Defaults to False.
+            dtype (Optional[torch.dtype], optional): The data type. Defaults to None.
+
+        Returns:
+            Tensor: The result of product reducing operation.
+        """
+        prod = generate_op(self, "reduce_prod", reduction_axes=dim, keep_dims=keep_dims)
+        if dtype:
+            prod = prod.to(dtype)
+        return prod
+
+    def sum(
+        self,
+        dim: Optional[Union[int, Sequence[int]]] = None,
+        keep_dims: Optional[bool] = False,
+        dtype: Optional[torch.dtype] = None,
+    ) -> "Tensor":
+        """
+        Return the reduced sum tensor.
+
+        Args:
+            dim (Optional[Union[int, Sequence[int]]], optional): The dim(s) to reduce. Default is None, and all dimensions are reduced.
+            keep_dims (Optional[bool], optional): If set to 1 it holds axes that are used for reduction. Defaults to False.
+            dtype (Optional[torch.dtype], optional): The data type. Defaults to None.
+
+        Returns:
+            Tensor: The result of sum reducing operation.
+        """
+        sum = generate_op(self, "reduce_sum", reduction_axes=dim, keep_dims=keep_dims)
+        if dtype:
+            sum = sum.to(dtype)
+        return sum
 
     def to(self, dtype: NPUDtype) -> "Tensor":
         """
