@@ -18,6 +18,7 @@ from intel_npu_acceleration_library.dtypes import (
 import numpy as np
 import pytest
 import torch
+from sklearn.metrics import r2_score
 
 
 @pytest.mark.parametrize("shape", [[1, 128, 13, 13], [12, 231]])
@@ -128,3 +129,160 @@ def test_slice():
     assert tensor[..., :-2, :].shape == [1, 128, 30, 64]
 
     assert tensor[:, 10:20, ...].shape == [1, 10, 32, 64]
+
+
+@pytest.mark.parametrize("batch", [16, 128])
+@pytest.mark.parametrize("hidden_dim", [256, 512])
+@pytest.mark.parametrize(
+    "activation",
+    [
+        "acos",
+        "asin",
+        "atan",
+        "acosh",
+        "asinh",
+        "atanh",
+        "cosh",
+        "sinh",
+        "tanh",
+        "cos",
+        "sin",
+        "tan",
+        "ceiling",
+        "clamp",
+        "erf",
+        "exp",
+        "floor",
+        "log",
+        "round",
+        "sign",
+        "sigmoid",
+        "softmax",
+        "sqrt",
+    ],
+)
+def test_operations_1(batch, hidden_dim, activation):
+
+    # X in the range [-0.5, 0.5]
+    X = torch.rand((batch, hidden_dim)).to(torch.float16) - 0.5
+
+    if activation == "acosh":
+        # acosh is only defined for x >= 1
+        X += 1.5
+    elif activation in ["sqrt", "tanh"]:
+        # sqrt and tanh are only defined for x >= 0
+        X += 0.5
+    elif activation == "log":
+        # log needs a bigger input to avoid negative overflow in fp16
+        # log in range [0.5, 1.5]
+        X += 1
+
+    if activation == "softmax":
+        reference = eval(f"X.{activation}(dim=-1).numpy()")
+    elif activation == "clamp":
+        reference = eval(f"X.{activation}(min=-0.5, max=0.5).numpy()")
+    elif activation == "ceiling":
+        reference = eval(f"X.ceil().numpy()")
+    else:
+        reference = eval(f"X.{activation}().numpy()")
+
+    model = NNFactory()
+    t1 = model.parameter(X.shape)
+
+    if activation == "softmax":
+        _ = eval(f"t1.{activation}(dim=-1)")
+    elif activation == "clamp":
+        _ = eval(f"t1.{activation}(min=-0.5, max=0.5)")
+    else:
+        _ = eval(f"t1.{activation}()")
+    model.compile()
+
+    result = model(X).numpy()
+
+    assert result.shape == reference.shape, "Output shape mismatch"
+    assert np.isfinite(reference).all(), "Pytorch Reference contains NaN or Inf"
+    assert np.isfinite(result).all(), "NPU output contains NaN or Inf"
+
+    assert 1 - r2_score(reference, result) < 0.001
+
+
+@pytest.mark.parametrize("batch", [16, 128])
+@pytest.mark.parametrize("hidden_dim", [256, 512])
+@pytest.mark.parametrize(
+    "activation",
+    [
+        "elu",
+        "grn",
+        "hsigmoid",
+        "hswish",
+        "mish",
+        "relu",
+        "softplus",
+    ],
+)
+def test_operations_2(batch, hidden_dim, activation):
+
+    # X in the range [-0.5, 0.5]
+    X = torch.rand((batch, hidden_dim)).to(torch.float16) - 0.5
+
+    if activation == "grn":
+        reference = torch.nn.functional.normalize(X, p=2.0, dim=-1, eps=1e-12).numpy()
+    elif activation == "hswish":
+        reference = torch.nn.functional.hardswish(X).numpy()
+    elif activation == "hsigmoid":
+        reference = torch.nn.functional.hardsigmoid(X).numpy()
+    else:
+        reference = eval(f"torch.nn.functional.{activation}(X)").numpy()
+
+    model = NNFactory()
+    t1 = model.parameter(X.shape)
+
+    if activation == "grn":
+        _ = eval(f"t1.{activation}(bias=1e-12)")
+    else:
+        _ = eval(f"t1.{activation}()")
+
+    model.compile()
+
+    result = model(X).numpy()
+
+    assert result.shape == reference.shape, "Output shape mismatch"
+    assert np.isfinite(reference).all(), "Pytorch Reference contains NaN or Inf"
+    assert np.isfinite(result).all(), "NPU output contains NaN or Inf"
+
+    assert 1 - r2_score(reference, result) < 0.001
+
+
+@pytest.mark.parametrize("batch", [16, 128])
+@pytest.mark.parametrize("hidden_dim", [128, 256])
+@pytest.mark.parametrize("axis", [0, 1, -1, -2, None])
+@pytest.mark.parametrize("op", ["max", "mean", "min", "prod", "sum"])
+def test_reduce_operations(batch, hidden_dim, axis, op):
+
+    X = torch.rand((batch, hidden_dim)).to(torch.float16)
+
+    if axis is None:
+        reference = eval(f"X.{op}()")
+    else:
+        if op in ["max", "min"]:
+            reference, _ = eval(f"X.{op}(dim=axis)")
+        else:
+            reference = eval(f"X.{op}(dim=axis)")
+    reference = reference.numpy()
+
+    print(X.sum())
+    model = NNFactory()
+    t1 = model.parameter(X.shape)
+    _ = eval(f"t1.{op}()") if axis is None else eval(f"t1.{op}(dim=axis)")
+    model.compile()
+
+    result = model(X).numpy()
+
+    assert result.shape == reference.shape, "Output shape mismatch"
+    assert np.isfinite(reference).all(), "Pytorch Reference contains NaN or Inf"
+    assert np.isfinite(result).all(), "NPU output contains NaN or Inf"
+
+    if not result.shape:
+        assert 1 - r2_score([reference, 1], [result, 1]) < 0.01
+    else:
+        assert 1 - r2_score(reference, result) < 0.01

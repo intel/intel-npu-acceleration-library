@@ -49,6 +49,41 @@ class Tensor:
         squeeze(self): Removes dimensions of size 1 from the tensor.
         unsqueeze(self, axis): Adds a dimension of size 1 to the tensor.
         __matmul__(self, other): Performs matrix multiplication between two tensors.
+        acos(self): Applies acos function to the tensor.
+        asin(self): Applies asin function to the tensor.
+        atan(self): Applies atan function to the tensor.
+        acosh(self): Applies acosh function to the tensor.
+        asinh(self): Applies asinh function to the tensor.
+        atanh(self): Applies atanh function to the tensor.
+        cosh(self): Applies cosh function to the tensor.
+        sinh(self): Applies sinh function to the tensor.
+        tanh(self): Applies tanh function to the tensor.
+        cos(self): Applies cos function to the tensor.
+        sin(self): Applies sin function to the tensor.
+        tan(self): Applies tan function to the tensor.
+        ceiling(self): Applies ceil function to the tensor.
+        clamp(self, min, max): Applies clamp function to the tensor.
+        elu(self, alpha): Applies elu function to the tensor.
+        erf(self): Applies erf function to the tensor.
+        exp(self): Applies exponental function to the tensor.
+        floor(self): Applies floor function to the tensor.
+        grn(self, bias): Applies grn function to the tensor.
+        hsigmoid(self): Applies hsigmoid function to the tensor.
+        hswish(self): Applies hswish function to the tensor.
+        log(self): Applies log function to the tensor.
+        mish(self): Applies mish function to the tensor.
+        relu(self, bias): Applies relu function to the tensor.
+        round(self): Applies round function to the tensor.
+        sigmoid(self): Applies sigmoid function to the tensor.
+        sign(self): Applies sign function to the tensor.
+        softmax(self, dim): Applies softmax function to the tensor.
+        softplus(self): Applies softplus function to the tensor.
+        sqrt(self): Applies sqrt function to the tensor.
+        max(self, dim, keep_dims): Returns the reduced max tensor.
+        mean(self, dim, keep_dims, dtype): Returns the reduced mean tensor.
+        min(self, dim, keep_dims): Returns the reduced min tensor.
+        prod(self, dim, keep_dims, dtype): Returns the reduced product tensor.
+        sum(self, dim, keep_dims, dtype): Returns the reduced sum tensor.
     """
 
     factory: "NNFactory"  # type: ignore # noqa: F821
@@ -403,6 +438,241 @@ class Tensor:
         """
         return generate_op([self, other], "matmul")
 
+    def acos(self) -> "Tensor":
+        """
+        Apply the acos function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the acos function.
+        """
+        return torch.acos(self)
+
+    def asin(self) -> "Tensor":
+        """
+        Apply the asin function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the asin function.
+        """
+        return torch.asin(self)
+
+    def atan(self) -> "Tensor":
+        """
+        Apply the atan function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the atan function.
+        """
+        return torch.atan(self)
+
+    def acosh(self) -> "Tensor":
+        """
+        Apply the acosh function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the acosh function.
+        """
+        return torch.acosh(self)
+
+    def asinh(self) -> "Tensor":
+        """
+        Apply the asinh function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the asinh function.
+        """
+        return torch.asinh(self)
+
+    def atanh(self) -> "Tensor":
+        """
+        Apply the atanh function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the atanh function.
+        """
+        return torch.atanh(self)
+
+    def cosh(self) -> "Tensor":
+        """
+        Apply the cosh function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the cosh function.
+        """
+        return torch.cosh(self)
+
+    def sinh(self) -> "Tensor":
+        """
+        Apply the sinh function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the sinh function.
+        """
+        return torch.sinh(self)
+
+    def tanh(self) -> "Tensor":
+        """
+        Apply the tanh function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the tanh function.
+        """
+        return torch.tanh(self)
+
+    def cos(self) -> "Tensor":
+        """
+        Apply the cos function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the cos function.
+        """
+        return torch.cos(self)
+
+    def sin(self) -> "Tensor":
+        """
+        Apply the sin function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the sin function.
+        """
+        return torch.sin(self)
+
+    def tan(self) -> "Tensor":
+        """
+        Apply the tan function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the tan function.
+        """
+        return torch.tan(self)
+
+    def ceiling(self) -> "Tensor":
+        """
+        Apply the ceiling function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the ceiling function.
+        """
+        return generate_op([self], "ceiling")
+
+    def clamp(self, min=None, max=None) -> "Tensor":
+        """
+        Apply the clamp function to the tensor.
+
+        Args:
+            min (int, float): The lower-bound of the range to be clamped
+            max (int, float): The upper-bound of the range to be clamped
+
+        Returns:
+            Tensor: The result of applying the ceil function.
+        """
+        return torch.clamp(self, min=min, max=max)
+
+    def elu(self, alpha: float = 1.0) -> "Tensor":
+        """
+        Apply the elu function to the tensor.
+
+        Args:
+            alpha (float): The alpha value. Defaults to 1.0.
+
+        Returns:
+            Tensor: The result of applying the elu function.
+        """
+        return generate_op([self], "elu", alpha)
+
+    def erf(self) -> "Tensor":
+        """
+        Apply the erf function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the erf function.
+        """
+        return torch.erf(self)
+
+    def exp(self) -> "Tensor":
+        """
+        Apply the exp function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the exp function.
+        """
+        return torch.exp(self)
+
+    def floor(self) -> "Tensor":
+        """
+        Apply the floor function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the floor function.
+        """
+        return torch.floor(self)
+
+    def grn(self, bias: float = 1e-12) -> "Tensor":
+        """
+        Apply the grn function to the tensor.
+
+        Args:
+            bias (float): The bias value. Defaults to 1e-12.
+
+        Returns:
+            Tensor: The result of applying the grn function.
+        """
+        return generate_op([self], "grn", bias)
+
+    def hsigmoid(self) -> "Tensor":
+        """
+        Apply the hsigmoid function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the hsigmoid function.
+        """
+        return generate_op([self], "hsigmoid")
+
+    def hswish(self) -> "Tensor":
+        """
+        Apply the hswish function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the hswish function.
+        """
+        return generate_op([self], "hswish")
+
+    def log(self) -> "Tensor":
+        """
+        Apply the log function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the log function.
+        """
+        return torch.log(self)
+
+    def mish(self) -> "Tensor":
+        """
+        Apply the mish function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the mish function.
+        """
+        return generate_op([self], "mish")
+
+    def relu(self) -> "Tensor":
+        """
+        Apply the relu function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the relu function.
+        """
+        return generate_op([self], "relu")
+
+    def round(self) -> "Tensor":
+        """
+        Apply the round function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the round function.
+        """
+        return torch.round(self)
+
     def sigmoid(self) -> "Tensor":
         """
         Apply the sigmoid function to the tensor.
@@ -411,6 +681,143 @@ class Tensor:
             Tensor: The result of applying the sigmoid function.
         """
         return generate_op([self], "sigmoid")
+
+    def sign(self) -> "Tensor":
+        """
+        Apply the sign function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the sign function.
+        """
+        return torch.sign(self)
+
+    def softmax(self, dim) -> "Tensor":
+        """
+        Apply the softmax function to the tensor.
+
+        Args:
+            dim (int): The dimension to apply softmax.
+
+        Returns:
+            Tensor: The result of applying the softmax function.
+        """
+        return torch.nn.functional.softmax(self, dim=dim)
+
+    def softplus(self) -> "Tensor":
+        """
+        Apply the softplus function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the softplus function.
+        """
+        return generate_op([self], "softplus")
+
+    def sqrt(self) -> "Tensor":
+        """
+        Apply the sqrt function to the tensor.
+
+        Returns:
+            Tensor: The result of applying the sqrt function.
+        """
+        return torch.sqrt(self)
+
+    def max(
+        self, dim: Optional[int] = None, keep_dims: Optional[bool] = False
+    ) -> "Tensor":
+        """
+        Return the reduced max tensor.
+
+        Args:
+            dim (Optional[int], optional): The dim to reduce. Default is None, and all dimensions are reduced.
+            keep_dims (Optional[bool], optional): If set to 1 it holds axes that are used for reduction. Defaults to False.
+
+        Returns:
+            Tensor: The result of max reducing operation.
+        """
+        return generate_op(self, "reduce_max", reduction_axes=dim, keep_dims=keep_dims)
+
+    def mean(
+        self,
+        dim: Optional[Union[int, Sequence[int]]] = None,
+        keep_dims: Optional[bool] = False,
+        dtype: Optional[torch.dtype] = None,
+    ) -> "Tensor":
+        """
+        Return the reduced mean tensor.
+
+        Args:
+            dim (Optional[Union[int, Sequence[int]]], optional): The dim(s) to reduce. Default is None, and all dimensions are reduced.
+            keep_dims (Optional[bool], optional): If set to 1 it holds axes that are used for reduction. Defaults to False.
+            dtype (Optional[torch.dtype], optional): The data type. Defaults to None.
+
+        Returns:
+            Tensor: The result of mean reducing operation.
+        """
+        mean = generate_op(self, "reduce_mean", reduction_axes=dim, keep_dims=keep_dims)
+        if dtype:
+            mean = mean.to(dtype)
+        return mean
+
+    def min(
+        self,
+        dim: Optional[int] = None,
+        keep_dims: Optional[bool] = False,
+    ) -> "Tensor":
+        """
+        Return the reduced min tensor.
+
+        Args:
+            dim (Optional[int], optional): The dim to reduce. Default is None, and all dimensions are reduced.
+            keep_dims (Optional[bool], optional): If set to 1 it holds axes that are used for reduction. Defaults to False.
+
+        Returns:
+            Tensor: The result of min reducing operation.
+        """
+        return generate_op(self, "reduce_min", reduction_axes=dim, keep_dims=keep_dims)
+
+    def prod(
+        self,
+        dim: Optional[int] = None,
+        keep_dims: Optional[bool] = False,
+        dtype: Optional[torch.dtype] = None,
+    ) -> "Tensor":
+        """
+        Return the reduced product tensor.
+
+        Args:
+            dim (Optional[int], optional): The dim to reduce. Default is None, and all dimensions are reduced.
+            keep_dims (Optional[bool], optional): If set to 1 it holds axes that are used for reduction. Defaults to False.
+            dtype (Optional[torch.dtype], optional): The data type. Defaults to None.
+
+        Returns:
+            Tensor: The result of product reducing operation.
+        """
+        prod = generate_op(self, "reduce_prod", reduction_axes=dim, keep_dims=keep_dims)
+        if dtype:
+            prod = prod.to(dtype)
+        return prod
+
+    def sum(
+        self,
+        dim: Optional[Union[int, Sequence[int]]] = None,
+        keep_dims: Optional[bool] = False,
+        dtype: Optional[torch.dtype] = None,
+    ) -> "Tensor":
+        """
+        Return the reduced sum tensor.
+
+        Args:
+            dim (Optional[Union[int, Sequence[int]]], optional): The dim(s) to reduce. Default is None, and all dimensions are reduced.
+            keep_dims (Optional[bool], optional): If set to 1 it holds axes that are used for reduction. Defaults to False.
+            dtype (Optional[torch.dtype], optional): The data type. Defaults to None.
+
+        Returns:
+            Tensor: The result of sum reducing operation.
+        """
+        sum = generate_op(self, "reduce_sum", reduction_axes=dim, keep_dims=keep_dims)
+        if dtype:
+            sum = sum.to(dtype)
+        return sum
 
     def to(self, dtype: NPUDtype) -> "Tensor":
         """
