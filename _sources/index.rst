@@ -91,7 +91,7 @@ Site map
 
 .. toctree::
    developer.md
-   adding_operation.md
+   adding_operations.md
    :maxdepth: 1
    :caption: Developements guide:
 
