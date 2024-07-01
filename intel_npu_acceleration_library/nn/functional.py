@@ -1136,3 +1136,46 @@ def conv2d(
     )
 
     return conv
+
+
+@implements(torch.pow)
+def pow(input: Tensor, exponent: Union[Tensor, torch.Tensor, float]):
+    """Return the tensor raised to the power of the exponent.
+
+    Args:
+        input (Tensor): The input tensor.
+        exponent (Union[Tensor, torch.Tensor, float]): The exponent value.
+
+    Returns:
+        Tensor: Output tensor.
+    """
+    if isinstance(exponent, float):
+        exponent = torch.full(input.shape, exponent).to(torch.float16)
+    return generate_op([input], "power", exponent=exponent)
+
+
+@implements(torch.nn.functional.log_softmax)
+def log_softmax(
+    input: Tensor,
+    dim: Optional[int] = None,
+    _stacklevel=3,
+    dtype: Optional[torch.dtype] = None,
+) -> Tensor:
+    """Return the log softmax of a tensor element-wise.
+
+    Args:
+        input (Tensor): The input tensor.
+        dim (int): The dimension along which log_softmax will be computed. Defaults to -1.
+        _stacklevel (int): The stack level. Defaults to 3.
+        dtype (torch.dtype): The data type. Defaults to None.
+
+    Returns:
+        Tensor: Output tensor.
+    """
+    if dim is None:
+        dim = -1
+    log_smax = generate_op([input], "log_softmax", dim)
+
+    if dtype:
+        log_smax = log_smax.to(dtype)
+    return log_smax

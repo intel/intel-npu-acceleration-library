@@ -884,6 +884,33 @@ public:
         return normL2.get();
     }
 
+    /**
+     * @brief Create a new power operation
+     *
+     * @param x1 operation's input node
+     * @param x2 operation's input node of the exponent
+     * @param auto_broadcast auto broadcast specification
+     * @return ov::op::Op*
+     */
+    ov::op::Op* power(ov::op::Op* x1, ov::op::Op* x2, ov::op::AutoBroadcastType auto_broadcast) {
+        auto power = std::make_shared<ov::opset1::Power>(x1->output(0), x2->output(0), auto_broadcast);
+        operations.push_back(power);
+        return power.get();
+    }
+
+    /**
+     * @brief Create a new log softmax operation
+     *
+     * @param input operation's input node
+     * @param axis the axis position on which to calculate the LogSoftmax
+     * @return ov::op::Op*
+     */
+    ov::op::Op* log_softmax(ov::op::Op* input, int64_t axis) {
+        auto log_softmax = std::make_shared<ov::opset5::LogSoftmax>(input->output(0), axis);
+        operations.push_back(log_softmax);
+        return log_softmax.get();
+    }
+
     void result(ov::op::Op* op) {
         auto res = std::make_shared<ov::opset8::Result>(op->output(0));
         results.push_back(res);

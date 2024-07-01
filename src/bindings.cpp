@@ -563,4 +563,14 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* normL2(intel_npu_acceleration
                                                           ov::op::Op* data, ov::op::Op* axes, float eps) {
     return factory->normL2(data, axes, eps);
 }
+
+intel_npu_acceleration_library_DLL_API ov::op::Op* power(intel_npu_acceleration_library::ModelFactory* factory,
+                                                         ov::op::Op* x1, ov::op::Op* x2) {
+    return factory->power(x1, x2, ov::op::AutoBroadcastType::NUMPY);
+}
+
+intel_npu_acceleration_library_DLL_API ov::op::Op* log_softmax(intel_npu_acceleration_library::ModelFactory* factory,
+                                                               ov::op::Op* input, int64_t axis) {
+    return factory->log_softmax(input, axis);
+}
 }

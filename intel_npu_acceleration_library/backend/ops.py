@@ -132,5 +132,7 @@ def get_supported_ops() -> List[SupportedOp]:
         ),
         SupportedOp(name="adaptive_avg_pool", inputs=2),
         SupportedOp(name="adaptive_max_pool", inputs=2),
+        SupportedOp(name="power", inputs=2),
+        SupportedOp(name="log_softmax", inputs=1, parameters=[ctypes.c_int64]),
     ]
     return supported_ops
