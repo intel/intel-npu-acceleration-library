@@ -6,6 +6,7 @@
 from intel_npu_acceleration_library.optimizations import horizontal_fusion_linear
 from transformers.models.llama.modeling_llama import LlamaMLP, LlamaAttention
 from transformers.models.gemma.modeling_gemma import GemmaMLP, GemmaAttention
+from transformers.models.phi3.modeling_phi3 import Phi3MLP
 from neural_compressor.adaptor.torch_utils.model_wrapper import WeightOnlyLinear
 from intel_npu_acceleration_library.quantization import quantize_model
 from intel_npu_acceleration_library.dtypes import int8, int4
@@ -171,6 +172,24 @@ def optimize_llama_attention(
     """
     if isinstance(layer, (LlamaAttention, GemmaAttention)):
         return nn.LlamaAttention.fromTorch(layer)
+    return None
+
+
+@module_optimization
+def optimize_phi3_MLP(
+    name: str, layer: torch.nn.Module
+) -> Union[torch.nn.Module, None]:
+    """Optimize Phi-3 MLP block.
+
+    Args:
+        name (str): Module name
+        layer (torch.nn.Module): Original Module
+
+    Returns:
+        Union[torch.nn.Module, None]: optimized Phi-3 module
+    """
+    if isinstance(layer, Phi3MLP):
+        return nn.Phi3MLP.fromTorch(layer)
     return None
 
 

@@ -5,6 +5,7 @@
 
 from transformers.models.llama.modeling_llama import LlamaForCausalLM, LlamaConfig
 from transformers.models.phi.modeling_phi import PhiConfig, PhiMLP
+from transformers.models.phi3.modeling_phi3 import Phi3Config, Phi3MLP
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from sklearn.metrics import r2_score
 import intel_npu_acceleration_library
@@ -74,5 +75,32 @@ def test_phi2_mlp(seq_len, hidden_size, intermediate_size):
     assert model
 
     out = model(x)
+
+    assert 1 - r2_score(reference.numpy(), out.numpy()) < 0.001
+
+
+@torch.no_grad
+@pytest.mark.parametrize("seq_len", [16])
+@pytest.mark.parametrize("hidden_size", [256, 512])
+@pytest.mark.parametrize("intermediate_size", [512])
+def test_phi3_mlp(seq_len, hidden_size, intermediate_size):
+    conf = Phi3Config.from_pretrained("microsoft/Phi-3-mini-4k-instruct")
+    conf.num_hidden_layers = 1
+    conf.hidden_size = hidden_size
+    conf.intermediate_size = intermediate_size
+
+    mlp = Phi3MLP(conf)
+
+    hidden_states = torch.rand((seq_len, conf.hidden_size)).half()
+
+    reference = mlp(hidden_states.to(torch.float32)).to(torch.float16)
+
+    model = intel_npu_acceleration_library.nn.Phi3MLP.fromTorch(layer=mlp)
+
+    assert model
+
+    out = model(
+        hidden_states, mlp.gate_up_proj.weight.half(), mlp.down_proj.weight.half()
+    )
 
     assert 1 - r2_score(reference.numpy(), out.numpy()) < 0.001
