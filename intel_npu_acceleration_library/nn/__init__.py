@@ -9,9 +9,9 @@ from .conv import Conv2d  # noqa
 from .module import Module  # noqa
 
 try:
-    from .llm import LlamaAttention, PhiMLP  # noqa
+    from .llm import LlamaAttention, PhiMLP, Phi3MLP  # noqa
 
-    llm_modules = ["LlamaAttention", "PhiMLP"]
+    llm_modules = ["LlamaAttention", "PhiMLP", "Phi3MLP"]
 except ModuleNotFoundError:
     # Transformer library is not installed
     llm_modules = []
