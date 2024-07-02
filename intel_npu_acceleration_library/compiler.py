@@ -177,19 +177,20 @@ def optimize_llama_attention(
 
 @module_optimization
 def optimize_phi3_MLP(
-    name: str, layer: torch.nn.Module
+    name: str, layer: torch.nn.Module, activation_fn: torch.nn
 ) -> Union[torch.nn.Module, None]:
     """Optimize Phi-3 MLP block.
 
     Args:
         name (str): Module name
         layer (torch.nn.Module): Original Module
+        activation_fn (torch.nn): Activation function
 
     Returns:
         Union[torch.nn.Module, None]: optimized Phi-3 module
     """
     if isinstance(layer, Phi3MLP):
-        return nn.Phi3MLP.fromTorch(layer)
+        return nn.Phi3MLP.fromTorch(layer, activation_fn)
     return None
 
 

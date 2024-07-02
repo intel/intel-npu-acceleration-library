@@ -11,6 +11,7 @@ from sklearn.metrics import r2_score
 import intel_npu_acceleration_library
 import pytest
 import torch
+import numpy as np
 
 
 @pytest.fixture
@@ -80,7 +81,7 @@ def test_phi2_mlp(seq_len, hidden_size, intermediate_size):
 
 
 @torch.no_grad
-@pytest.mark.parametrize("seq_len", [16])
+@pytest.mark.parametrize("seq_len", [16, 128, 256])
 @pytest.mark.parametrize("hidden_size", [256, 512])
 @pytest.mark.parametrize("intermediate_size", [512])
 def test_phi3_mlp(seq_len, hidden_size, intermediate_size):
@@ -95,12 +96,18 @@ def test_phi3_mlp(seq_len, hidden_size, intermediate_size):
 
     reference = mlp(hidden_states.to(torch.float32)).to(torch.float16)
 
-    model = intel_npu_acceleration_library.nn.Phi3MLP.fromTorch(layer=mlp)
+    model = intel_npu_acceleration_library.nn.Phi3MLP.fromTorch(
+        layer=mlp, activation_fn=torch.nn.functional.silu
+    ).to("npu")
 
     assert model
 
     out = model(
         hidden_states, mlp.gate_up_proj.weight.half(), mlp.down_proj.weight.half()
     )
+
+    assert out.shape == reference.shape, "Output shape mismatch"
+    assert np.isfinite(reference).all(), "Pytorch Reference contains NaN or Inf"
+    assert np.isfinite(out).all(), "NPU output contains NaN or Inf"
 
     assert 1 - r2_score(reference.numpy(), out.numpy()) < 0.001
