@@ -4,12 +4,12 @@
 #
 
 from transformers import AutoTokenizer, TextStreamer
-from intel_npu_acceleration_library import NPUModelForCausalLM, int4
+from intel_npu_acceleration_library import NPUModelForCausalLM, int8
 import time
 
 model_id = "meta-llama/Meta-Llama-3-8B-Instruct"
 
-model = NPUModelForCausalLM.from_pretrained(model_id, dtype=int4, use_cache=True).eval()
+model = NPUModelForCausalLM.from_pretrained(model_id, dtype=int8, use_cache=True).eval()
 tokenizer = AutoTokenizer.from_pretrained(model_id)
 streamer = TextStreamer(tokenizer, skip_special_tokens=True, skip_prompt=True)
 
@@ -58,6 +58,7 @@ tokens_per_second = num_tokens_generated / time_taken
 # Print the tokens per second
 print(f"Tokens per second: {tokens_per_second:.2f}")
 
+"""
 Developer Certificate of Origin
 Version 1.1
 
@@ -93,4 +94,6 @@ By making a contribution to this project, I certify that:
     personal information I submit with it, including my sign-off) is
     maintained indefinitely and may be redistributed consistent with
     this project or the open source license(s) involved.
-    
+
+Signed-off-by: Henry Wang henrywrb@gmail.com
+"""
