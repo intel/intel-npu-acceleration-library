@@ -91,6 +91,22 @@ public:
     }
 
     /**
+     * @brief Create a new linear operation
+     *
+     * @param input matmul lhs input
+     * @param weights matmul rhs input, a.k.a. weights
+     * @param bias matmul bias input
+     * @return ov::op::Op*
+     */
+    ov::op::Op* linear(ov::op::Op* input, ov::op::Op* weights, ov::op::Op* bias) {
+        auto mm_op = matmul(input, weights);
+        if (bias != nullptr) {
+            return eltwise_add(mm_op, bias);
+        }
+        return mm_op;
+    }
+
+    /**
      * @brief Create a new convolution operation
      *
      * @param input convolution input
