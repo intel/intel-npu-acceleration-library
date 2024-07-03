@@ -96,9 +96,7 @@ def test_phi3_mlp(seq_len, hidden_size, intermediate_size):
 
     reference = mlp(hidden_states.to(torch.float32)).to(torch.float16)
 
-    model = intel_npu_acceleration_library.nn.Phi3MLP.fromTorch(
-        layer=mlp, activation_fn=torch.nn.functional.silu
-    ).to("npu")
+    model = intel_npu_acceleration_library.nn.Phi3MLP.fromTorch(layer=mlp).to("npu")
 
     assert model
 

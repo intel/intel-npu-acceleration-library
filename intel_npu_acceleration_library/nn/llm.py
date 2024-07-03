@@ -12,6 +12,7 @@ from transformers import AutoTokenizer
 from intel_npu_acceleration_library.backend.tensor import Tensor
 from intel_npu_acceleration_library.nn import Linear
 from intel_npu_acceleration_library.backend import run_factory, MLP
+from intel_npu_acceleration_library.activations import get_activation
 from functools import partial
 from typing import Optional, List, Generator
 from transformers.cache_utils import Cache
@@ -76,16 +77,15 @@ class PhiMLP(torch.nn.Module):
 class Phi3MLP(torch.nn.Module):
     """Phi-3 MLP operation NPU backend."""
 
-    def __init__(self, config, activation_fn):
+    def __init__(self, config):
         """Initialize Phi-3 MLP operation.
 
         Args:
             config (Phi3Config): Phi-3 MLP configuration
-            activation_fn (torch.nn): Phi-3 MLP activation function
         """
         super().__init__()
         self.config = config
-        self.activation_fn = activation_fn
+        self.activation_fn = config.hidden_act
         self.op_id = str(uuid.uuid4())
 
     def forward(self, hidden_states, gate_up_proj_w, down_proj_w, **kwargs) -> Tensor:
@@ -106,27 +106,25 @@ class Phi3MLP(torch.nn.Module):
         gate = gate_up_states[:, :midpoint]
         up_states = gate_up_states[:, midpoint:]
 
-        up_states = up_states * self.activation_fn(gate)
+        up_states = up_states * get_activation(self.activation_fn)(gate)
 
         return torch.nn.functional.linear(up_states, down_proj_w)
 
     @staticmethod
     def fromTorch(
         layer: torch.nn.Module,
-        activation_fn: torch.nn,
         dtype: torch.dtype = torch.float16,
     ) -> "Phi3MLP":
         """Generate a NPU Phi-3 MLP layer from a transformer one.
 
         Args:
             layer (torch.nn.Module): the original Phi-3 MLP model to run on the NPU
-            activation_fn (torch.nn): the activation function
             dtype (torch.dtype): the desired datatype
 
         Returns:
             Phi3MLP: A NPU Phi-3 MLP layer
         """
-        new_layer = Phi3MLP(config=layer.config, activation_fn=activation_fn)
+        new_layer = Phi3MLP(config=layer.config)
 
         return new_layer
 
