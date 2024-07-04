@@ -309,7 +309,7 @@ def test_float_op(shape, op, side, value):
         else:
             return op_func(a, b)
 
-    x = torch.ones(shape).to(torch.float16)
+    x = torch.rand(shape).to(torch.float16) + 2
     reference = act(x, value)
 
     model = NNFactory()
