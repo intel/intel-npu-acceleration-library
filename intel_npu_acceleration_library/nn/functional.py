@@ -310,7 +310,7 @@ def sign(x: Tensor, out: Optional[Tensor] = None) -> Tensor:
 
 @implements(torch.nn.functional.linear)
 def linear(input: Tensor, weight: Tensor, bias: Optional[Tensor] = None) -> Tensor:
-    """Return the sign of a tensor element-wise.
+    """Apply a linear transformation to the incoming data: y = x * A^T + b.
 
     Args:
         input (Tensor): The input tensor.
@@ -320,7 +320,7 @@ def linear(input: Tensor, weight: Tensor, bias: Optional[Tensor] = None) -> Tens
     Returns:
         Tensor: Output tensor.
     """
-    mm = generate_op([input, weight], "matmul", False, False)
+    mm = generate_op([input, weight], "matmul", False, True)
     if bias is not None:
         return generate_op([mm, bias], "eltwise_add")
     return mm
