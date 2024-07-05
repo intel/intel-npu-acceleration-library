@@ -903,16 +903,16 @@ class Tensor:
         self,
         chunks: int,
         dim: int = 0,
-    ) -> tuple:
+    ) -> Union["Tensor", list]:
         """
         Return the list of tensor chunks.
 
         Args:
-            chunks (int): The number of chunks to return
+            chunks (int): The number of chunks to return.
             dim (int): The dimension along which to split the tensor. Default is 0.
 
         Returns:
-            List: The resulting list of split tensors.
+            Union["Tensor", list]: The resulting list of split tensors or a single tensor.
 
         Raises:
             ValueError: The input chunks value is not valid.
@@ -920,7 +920,7 @@ class Tensor:
         if chunks <= 0:
             raise ValueError("The input chunks value is not valid.")
         if chunks == 1:
-            return (self,)
+            return self
         tensors = []
         remainder = self.shape[dim] % chunks
         chunk_size = self.shape[dim] // chunks + (1 if remainder > 0 else 0)
@@ -934,7 +934,7 @@ class Tensor:
             indexes[dim] = slice(start_idx, end_idx)
             tensors.append(self.__getitem__(tuple(indexes)))
             start_idx = end_idx
-        return tuple(tensors)
+        return tensors
 
     def to(self, dtype: NPUDtype) -> "Tensor":
         """
