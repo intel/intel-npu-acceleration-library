@@ -516,7 +516,7 @@ class Tensor:
         Returns:
             Tensor: The result of the matrix multiplication.
         """
-        return generate_op([self, other], "matmul")
+        return generate_op([self, other], "matmul", False, False)
 
     def acos(self) -> "Tensor":
         """
