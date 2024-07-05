@@ -514,7 +514,7 @@ def test_logsoftmax(batch, hidden_dim, axis):
 @pytest.mark.parametrize("channels", [128, 256])
 @pytest.mark.parametrize("alpha", [0.1, 0.5, 1.0])
 # @pytest.mark.parametrize("beta", [0, 0.5, 1.0])
-def test_addmm(batch, hidden_dim, channels, alpha, beta=1.0):
+def test_addmm(batch, hidden_dim, channels, alpha, beta=1):
     torch.manual_seed(42)
     m1 = torch.rand((1, channels)).to(torch.float16)
     m2 = torch.rand((batch, hidden_dim)).to(torch.float16)

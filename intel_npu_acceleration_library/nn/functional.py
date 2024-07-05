@@ -348,9 +348,7 @@ def addmm(
     Returns:
         Tensor: Output tensor.
     """
-    out = alpha * (mat1 @ mat2)
-    if beta != 0:
-        return beta * input + out
+    out = beta * input + alpha * (mat1 @ mat2)
     return out
 
 
