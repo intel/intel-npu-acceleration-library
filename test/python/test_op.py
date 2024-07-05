@@ -507,3 +507,30 @@ def test_logsoftmax(batch, hidden_dim, axis):
     assert np.isfinite(out).all(), "NPU output contains NaN or Inf"
 
     assert 1 - r2_score(reference, out) < 0.01
+
+
+@pytest.mark.parametrize("batch", [16, 128])
+@pytest.mark.parametrize("hidden_dim", [128, 256])
+@pytest.mark.parametrize("channels", [128, 256])
+@pytest.mark.parametrize("alpha", [0.1, 0.5, 1.0])
+# @pytest.mark.parametrize("beta", [0, 0.5, 1.0])
+def test_addmm(batch, hidden_dim, channels, alpha, beta=1):
+    torch.manual_seed(42)
+    m1 = torch.rand((1, channels)).to(torch.float16)
+    m2 = torch.rand((batch, hidden_dim)).to(torch.float16)
+    m3 = torch.rand((hidden_dim, channels)).to(torch.float16)
+
+    reference = torch.addmm(m1, m2, m3, alpha=alpha, beta=beta).numpy()
+
+    model = NNFactory()
+    par1 = model.parameter(m1.shape, np.float16)
+    par2 = model.parameter(m2.shape, np.float16)
+    par3 = model.parameter(m3.shape, np.float16)
+    out = torch.addmm(par1, par2, par3, alpha=alpha, beta=beta)
+    model.compile()
+
+    assert out.shape == list(reference.shape)
+
+    result = model(m1, m2, m3, alpha=alpha, beta=beta).detach().numpy()
+
+    assert 1 - r2_score(reference.flatten(), result.flatten()) < 0.01

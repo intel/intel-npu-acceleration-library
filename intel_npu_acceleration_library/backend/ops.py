@@ -33,7 +33,7 @@ def get_supported_ops() -> List[SupportedOp]:
     """
     supported_ops = [
         SupportedOp(name="result", inputs=1),
-        SupportedOp(name="matmul", inputs=2),
+        SupportedOp(name="matmul", inputs=2, parameters=[ctypes.c_bool, ctypes.c_bool]),
         SupportedOp(name="eltwise_add", inputs=2),
         SupportedOp(name="eltwise_mul", inputs=2),
         SupportedOp(name="eltwise_div", inputs=2),
