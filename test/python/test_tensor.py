@@ -270,7 +270,6 @@ def test_reduce_operations(batch, hidden_dim, axis, op):
             reference = eval(f"X.{op}(dim=axis)")
     reference = reference.numpy()
 
-    print(X.sum())
     model = NNFactory()
     t1 = model.parameter(X.shape)
     _ = eval(f"t1.{op}()") if axis is None else eval(f"t1.{op}(dim=axis)")
@@ -326,3 +325,37 @@ def test_float_op(shape, op, side, value):
         )
         < 0.001
     )
+
+
+@pytest.mark.parametrize("batch", [16, 128])
+@pytest.mark.parametrize("hidden_dim", [256, 512])
+@pytest.mark.parametrize("chunks", [1, 2, 3, 4])
+@pytest.mark.parametrize("axis", [0, 1, -1, -2])
+def test_chunk_operation(batch, hidden_dim, chunks, axis):
+
+    X = torch.rand((batch, hidden_dim)).to(torch.float16)
+
+    reference = X.chunk(chunks=chunks, dim=axis)
+
+    model = NNFactory()
+    t1 = model.parameter(X.shape)
+    _ = t1.chunk(chunks=chunks, dim=axis)
+    model.compile()
+
+    result = model(X)
+
+    if chunks == 1:
+        assert np.isfinite(
+            reference[0].numpy()
+        ).all(), "Pytorch Reference contains NaN or Inf"
+        assert np.isfinite(result.numpy()).all(), "NPU output contains NaN or Inf"
+        assert 1 - r2_score(reference[0].numpy(), result.numpy()) < 0.01
+    else:
+        for i in range(len(reference)):
+            assert np.isfinite(
+                reference[i].numpy()
+            ).all(), "Pytorch Reference contains NaN or Inf"
+            assert np.isfinite(
+                result[i].numpy()
+            ).all(), "NPU output contains NaN or Inf"
+            assert 1 - r2_score(reference[i].numpy(), result[i].numpy()) < 0.01

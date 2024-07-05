@@ -899,6 +899,43 @@ class Tensor:
             sum = sum.to(dtype)
         return sum
 
+    def chunk(
+        self,
+        chunks: int,
+        dim: int = 0,
+    ) -> Union["Tensor", list]:
+        """
+        Return the list of tensor chunks.
+
+        Args:
+            chunks (int): The number of chunks to return.
+            dim (int): The dimension along which to split the tensor. Default is 0.
+
+        Returns:
+            Union["Tensor", list]: The resulting list of split tensors or a single tensor.
+
+        Raises:
+            ValueError: The input chunks value is not valid.
+        """
+        if chunks <= 0:
+            raise ValueError("The input chunks value is not valid.")
+        if chunks == 1:
+            return self
+        tensors = []
+        remainder = self.shape[dim] % chunks
+        chunk_size = self.shape[dim] // chunks + (1 if remainder > 0 else 0)
+        num_dims = self.dim()
+
+        start_idx = 0
+        for _ in range(chunks):
+            indexes = [slice(None)] * num_dims
+            end_idx = start_idx + chunk_size
+            end_idx = end_idx if end_idx < self.shape[dim] else self.shape[dim]
+            indexes[dim] = slice(start_idx, end_idx)
+            tensors.append(self.__getitem__(tuple(indexes)))
+            start_idx = end_idx
+        return tensors
+
     def to(self, dtype: NPUDtype) -> "Tensor":
         """
         Convert the tensor to the specified data type.
