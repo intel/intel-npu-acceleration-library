@@ -518,7 +518,7 @@ def test_addmm(batch, hidden_dim, channels, alpha, beta=1.0):
     torch.manual_seed(42)
     m1 = torch.rand((1, channels)).to(torch.float16)
     m2 = torch.rand((batch, hidden_dim)).to(torch.float16)
-    m3 = torch.rand((channels, hidden_dim)).to(torch.float16)
+    m3 = torch.rand((hidden_dim, channels)).to(torch.float16)
 
     reference = torch.addmm(m1, m2, m3, alpha=alpha, beta=beta).numpy()
 
