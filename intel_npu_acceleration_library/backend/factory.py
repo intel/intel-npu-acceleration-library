@@ -212,6 +212,27 @@ class NNFactory(BaseNPUBackendWithPrefetch):
         )
 
     @return_tensor
+    def matmul(
+        self,
+        input_node: ctypes._Pointer,
+        weights_node: ctypes._Pointer,
+        trA: bool = False,
+        trB: bool = True,
+    ) -> ctypes._Pointer:
+        """Generate a matrix multiplication layer.
+
+        Args:
+            input_node (ctypes._Pointer): layer input node
+            weights_node (ctypes._Pointer): weights node
+            trA (bool): transpose input node
+            trB (bool): transpose weights node
+
+        Returns:
+            ctypes._Pointer: output node
+        """
+        return backend_lib.matmul(self._mm, input_node, weights_node, trA, trB)
+
+    @return_tensor
     def convolution(
         self,
         input_node: ctypes._Pointer,

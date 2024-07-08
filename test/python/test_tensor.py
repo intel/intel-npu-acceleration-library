@@ -61,7 +61,7 @@ def test_tensor_creation(shape, dtype):
 def test_matmul():
     model = NNFactory()
     tensor = model.parameter([16, 256], np.float16)
-    weights = model.constant(np.ones([128, 256], dtype=np.float16))
+    weights = model.constant(np.ones([256, 128], dtype=np.float16))
 
     out = tensor @ weights
     model.compile()

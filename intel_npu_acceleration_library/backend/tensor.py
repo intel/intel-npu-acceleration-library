@@ -516,7 +516,7 @@ class Tensor:
         Returns:
             Tensor: The result of the matrix multiplication.
         """
-        return generate_op([self, other], "matmul")
+        return generate_op([self, other], "matmul", False, False)
 
     def acos(self) -> "Tensor":
         """
@@ -1037,7 +1037,8 @@ def generate_op(
     ):
         raise ValueError("All tensors must be from the same factory")
 
-    factory = tensors[0].factory
+    # Get the first factory from the tensors
+    factory = [t for t in tensors if isinstance(t, Tensor)][0].factory
 
     # Replace the tensors that are not from the factory with constant tensors if they are coming from pytorch
     tensors = [
