@@ -48,8 +48,8 @@ outputs = model.generate(
 # Measure the end time
 end_time = time.time()
 
-#Calulate the number of tokens generated
-num_tokens_generated = outputs.shape[1] 
+# Calulate the number of tokens generated
+num_tokens_generated = outputs.shape[1]
 
 # Calculate the tokens per second
 time_taken = end_time - start_time
