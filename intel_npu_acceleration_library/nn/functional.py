@@ -310,7 +310,7 @@ def sign(x: Tensor, out: Optional[Tensor] = None) -> Tensor:
 
 @implements(torch.nn.functional.linear)
 def linear(input: Tensor, weight: Tensor, bias: Optional[Tensor] = None) -> Tensor:
-    """Return the sign of a tensor element-wise.
+    """Apply a linear transformation to the incoming data: y = x * A^T + b.
 
     Args:
         input (Tensor): The input tensor.
@@ -320,10 +320,36 @@ def linear(input: Tensor, weight: Tensor, bias: Optional[Tensor] = None) -> Tens
     Returns:
         Tensor: Output tensor.
     """
-    mm = generate_op([input, weight], "matmul")
+    mm = generate_op([input, weight], "matmul", False, True)
     if bias is not None:
         return generate_op([mm, bias], "eltwise_add")
     return mm
+
+
+@implements(torch.addmm)
+def addmm(
+    input: Tensor,
+    mat1: Tensor,
+    mat2: Tensor,
+    beta: float = 1,
+    alpha: float = 1,
+    out: Optional[Tensor] = None,
+) -> Tensor:
+    """Return the addmm of a tensor element-wise.
+
+    Args:
+        input (Tensor): The input tensor.
+        mat1 (Tensor): The first matrix tensor.
+        mat2 (Tensor): The second matrix tensor.
+        beta (float): The beta value. Defaults to 1.
+        alpha (float): The alpha value. Defaults to 1.
+        out (Optional[Tensor], optional): Output tensor. Defaults to None.
+
+    Returns:
+        Tensor: Output tensor.
+    """
+    out = beta * input + alpha * (mat1 @ mat2)
+    return out
 
 
 @implements(torch.nn.functional.scaled_dot_product_attention)
