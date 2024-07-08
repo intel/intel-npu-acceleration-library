@@ -4,6 +4,7 @@
 #
 from intel_npu_acceleration_library.backend import NNFactory, Tensor
 from typing import MutableMapping, Sequence, Any, List
+from torch.profiler import record_function
 import numpy as np
 import torch
 
@@ -249,7 +250,8 @@ class Module(torch.nn.Module):
             # Run the model by replacing the forward method with the factory_forward
             old_forward = self.forward
             self.forward = self.factory_forward  # type: ignore
-            out = super()._call_impl(*args, **kwargs)
+            with record_function(f"npu_{self.__class__.__name__}"):
+                out = super()._call_impl(*args, **kwargs)
 
             # Restore the original forward method
             self.forward = old_forward  # type: ignore
@@ -322,7 +324,8 @@ class NPUModuleWrapper(Module):
         Returns:
             torch.Tensor: The output tensor.
         """
-        return self.module(*args, **kwargs)
+        with record_function(f"npu_{self.module.__class__.__name__}"):
+            return self.module(*args, **kwargs)
 
 
 def convert_to_npu_module(module: torch.nn.Module) -> Module:

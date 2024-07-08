@@ -8,6 +8,7 @@ from transformers.models.phi.modeling_phi import PhiConfig, PhiMLP
 from transformers.models.phi3.modeling_phi3 import Phi3Config, Phi3MLP
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from sklearn.metrics import r2_score
+from torch.profiler import profile, ProfilerActivity
 import intel_npu_acceleration_library
 import pytest
 import torch
@@ -84,7 +85,7 @@ def test_phi2_mlp(seq_len, hidden_size, intermediate_size):
 @pytest.mark.parametrize("seq_len", [16, 128, 256])
 @pytest.mark.parametrize("hidden_size", [256, 512])
 @pytest.mark.parametrize("intermediate_size", [512])
-def test_phi3_mlp(seq_len, hidden_size, intermediate_size):
+def test_phi3_mlp_compile(seq_len, hidden_size, intermediate_size):
     conf = Phi3Config.from_pretrained("microsoft/Phi-3-mini-4k-instruct")
     conf.num_hidden_layers = 1
     conf.hidden_size = hidden_size
@@ -92,20 +93,27 @@ def test_phi3_mlp(seq_len, hidden_size, intermediate_size):
 
     mlp = Phi3MLP(conf)
 
-    hidden_states = torch.rand((seq_len, conf.hidden_size)).half()
+    hidden_states = torch.rand((seq_len, conf.hidden_size))
 
-    reference = mlp(hidden_states.to(torch.float32)).to(torch.float16)
+    reference = mlp(hidden_states.to(torch.float32)).to(torch.float16).detach().numpy()
 
-    model = intel_npu_acceleration_library.nn.Phi3MLP.fromTorch(layer=mlp).to("npu")
+    model = intel_npu_acceleration_library.compile(mlp)
 
     assert model
 
-    out = model(
-        hidden_states, mlp.gate_up_proj.weight.half(), mlp.down_proj.weight.half()
+    with profile(activities=[ProfilerActivity.CPU], record_shapes=True) as prof:
+        out = model(hidden_states)
+
+    print(
+        prof.key_averages(group_by_input_shape=True).table(
+            sort_by="cpu_time_total", row_limit=20
+        )
     )
+
+    out = out.detach().numpy()
 
     assert out.shape == reference.shape, "Output shape mismatch"
     assert np.isfinite(reference).all(), "Pytorch Reference contains NaN or Inf"
     assert np.isfinite(out).all(), "NPU output contains NaN or Inf"
 
-    assert 1 - r2_score(reference.numpy(), out.numpy()) < 0.001
+    assert 1 - r2_score(reference, out) < 0.001

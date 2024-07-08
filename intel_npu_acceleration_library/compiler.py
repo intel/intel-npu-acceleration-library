@@ -10,6 +10,7 @@ from transformers.models.phi3.modeling_phi3 import Phi3MLP
 from neural_compressor.adaptor.torch_utils.model_wrapper import WeightOnlyLinear
 from intel_npu_acceleration_library.quantization import quantize_model
 from intel_npu_acceleration_library.dtypes import int8, int4
+from intel_npu_acceleration_library.nn.module import NPUModuleWrapper
 import intel_npu_acceleration_library.nn as nn
 from torch._dynamo import register_backend
 from typing import Union, Callable, Any
@@ -40,14 +41,18 @@ def compile(
 
     # Prepare and optimize model for NPU
     with torch.no_grad():
-        # General optimizations
-        apply_general_optimizations(model)
+
         if dtype in (int8, int4):
             # Quantize model
             model = quantize_model(model, dtype)
 
         # Model lowering to NPU ops
-        create_npu_kernels(model)
+        if isinstance(model, Phi3MLP):
+            model = model.to("npu")
+        else:
+            # General optimizations
+            apply_general_optimizations(model)
+            create_npu_kernels(model)
 
     if dtype.is_floating_point and training:
         # Set model to evaluation only as quantized training is not supported yet
@@ -97,13 +102,22 @@ def module_optimization(func: Callable) -> torch.nn.Module:
             kwargs (Any): keyword arguments
 
         """
-        for name, layer in model.named_children():
-            new_layer = func(name, layer, *args, **kwargs)
-            if new_layer:
-                model.add_module(name, new_layer)
-                wrapper(new_layer, *args, **kwargs)
-            else:
-                wrapper(layer, *args, **kwargs)
+        if not isinstance(model, NPUModuleWrapper):
+            for name, layer in model.named_children():
+                print(f"MODEL: {model} \n\n")
+                if isinstance(model, Phi3MLP):
+                    new_layer = func(model.__class__.__name__, model, *args, **kwargs)
+                    if new_layer:
+                        model.add_module(model.__class__.__name__, new_layer)
+                else:
+                    new_layer = func(name, layer, *args, **kwargs)
+                    if new_layer:
+                        model.add_module(name, new_layer)
+                        if not isinstance(new_layer, NPUModuleWrapper):
+                            wrapper(new_layer, *args, **kwargs)
+                    else:
+                        if not isinstance(layer, NPUModuleWrapper):
+                            wrapper(layer, *args, **kwargs)
 
     return wrapper
 
@@ -189,8 +203,8 @@ def optimize_phi3_MLP(
     Returns:
         Union[torch.nn.Module, None]: optimized Phi-3 module
     """
-    if isinstance(layer, Phi3MLP):
-        return nn.Phi3MLP.fromTorch(layer)
+    if layer.__class__.__name__ == "Phi3MLP":
+        return layer.to("npu")
     return None
 
 
