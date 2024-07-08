@@ -104,20 +104,14 @@ def module_optimization(func: Callable) -> torch.nn.Module:
         """
         if not isinstance(model, NPUModuleWrapper):
             for name, layer in model.named_children():
-                print(f"MODEL: {model} \n\n")
-                if isinstance(model, Phi3MLP):
-                    new_layer = func(model.__class__.__name__, model, *args, **kwargs)
-                    if new_layer:
-                        model.add_module(model.__class__.__name__, new_layer)
+                new_layer = func(name, layer, *args, **kwargs)
+                if new_layer:
+                    model.add_module(name, new_layer)
+                    if not isinstance(new_layer, NPUModuleWrapper):
+                        wrapper(new_layer, *args, **kwargs)
                 else:
-                    new_layer = func(name, layer, *args, **kwargs)
-                    if new_layer:
-                        model.add_module(name, new_layer)
-                        if not isinstance(new_layer, NPUModuleWrapper):
-                            wrapper(new_layer, *args, **kwargs)
-                    else:
-                        if not isinstance(layer, NPUModuleWrapper):
-                            wrapper(layer, *args, **kwargs)
+                    if not isinstance(layer, NPUModuleWrapper):
+                        wrapper(layer, *args, **kwargs)
 
     return wrapper
 
