@@ -153,8 +153,8 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* constant(intel_npu_accelerati
 }
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* matmul(intel_npu_acceleration_library::ModelFactory* factory,
-                                                          ov::op::Op* in0, ov::op::Op* in1) {
-    return factory->matmul(in0, in1);
+                                                          ov::op::Op* in0, ov::op::Op* in1, bool trA, bool trB) {
+    return factory->matmul(in0, in1, trA, trB);
 }
 
 intel_npu_acceleration_library_DLL_API ov::op::Op* eltwise_add(intel_npu_acceleration_library::ModelFactory* factory,
