@@ -16,6 +16,7 @@ from torch._dynamo import register_backend
 from typing import Union, Callable, Any
 from typing import List
 import torch
+from functools import partial
 
 
 def compile(
@@ -45,6 +46,7 @@ def compile(
         if dtype in (int8, int4):
             # Quantize model
             model = quantize_model(model, dtype)
+            weights_quantization(model)
 
         # Model lowering to NPU ops
         if isinstance(model, Phi3MLP):
@@ -92,6 +94,7 @@ def module_optimization(func: Callable) -> torch.nn.Module:
     Returns:
         torch.nn.Module: optimized module
     """
+    module_optimization.counter = 0  # type: ignore[attr-defined]
 
     def wrapper(model: torch.nn.Module, *args: Any, **kwargs: Any):
         """Recursively apply the optimization function.
@@ -105,7 +108,13 @@ def module_optimization(func: Callable) -> torch.nn.Module:
         if not isinstance(model, NPUModuleWrapper):
             for name, layer in model.named_children():
                 new_layer = func(name, layer, *args, **kwargs)
+                if (func.__name__ == "optimize_phi3_MLP") and (
+                    module_optimization.counter >= 5  # type: ignore[attr-defined]
+                ):
+                    new_layer = None
+
                 if new_layer:
+                    module_optimization.counter += 1  # type: ignore[attr-defined]
                     model.add_module(name, new_layer)
                     if not isinstance(new_layer, NPUModuleWrapper):
                         wrapper(new_layer, *args, **kwargs)
@@ -200,6 +209,55 @@ def optimize_phi3_MLP(
     if layer.__class__.__name__ == "Phi3MLP":
         return layer.to("npu")
     return None
+
+
+@module_optimization
+def weights_quantization(
+    name: str, layer: torch.nn.Module
+) -> Union[torch.nn.Module, None]:
+    """Apply weights quantization.
+
+    Args:
+        name (str): Layer name
+        layer (torch.nn.Module): Original torch.nn.Linear module
+
+    Raises:
+        RuntimeError: unsupported quantization bits
+
+    Returns:
+        None: Returns None
+    """
+    if isinstance(layer, WeightOnlyLinear):
+        if layer.bits == 4:
+            print("This works - int4 !!")
+            layer.forward = partial(forward, layer)
+        elif layer.bits == 8:
+            print("This works - int8 !!")
+            layer.forward = partial(forward, layer)
+        else:
+            raise RuntimeError(f"Unsupported quantization bits: {layer.bits}")
+    return None
+
+
+def forward(self, input):
+    """Override forward method for WeightOnlyLinear class.
+
+    Args:
+        input: Thr input tensor.
+
+    Returns:
+        torch.Tensor: The output tensor.
+    """
+    w = self.qweight.to(torch.float16)
+    # output = torch.nn.functional.linear(input, w, None) * self.scales
+    # if self.bias:
+    #     return output + self.bias
+    output = torch.nn.functional.linear(input.to(w.dtype), w, self.bias) * self.scales
+    if self.bias:
+        output = torch.nn.functional.linear(input, w, self.bias) * self.scales
+    else:
+        output = torch.nn.functional.linear(input, w, None) * self.scales
+    return output
 
 
 @register_backend
