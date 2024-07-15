@@ -42,18 +42,25 @@ def compile(
 
     # Prepare and optimize model for NPU
     with torch.no_grad():
-
-        if dtype in (int8, int4):
-            # Quantize model
-            model = quantize_model(model, dtype)
-            weights_quantization(model)
-
         # Model lowering to NPU ops
         if isinstance(model, Phi3MLP):
+            # Apply optimizations to a single MLP block model
             model = model
+
+            if dtype in (int8, int4):
+                # Quantize model
+                model = quantize_model(model, dtype)
+                weights_quantization(model)
+
         else:
             # General optimizations
             apply_general_optimizations(model)
+
+            if dtype in (int8, int4):
+                # Quantize model
+                model = quantize_model(model, dtype)
+                weights_quantization(model)
+
             create_npu_kernels(model)
 
     if dtype.is_floating_point and training:
@@ -233,7 +240,7 @@ def forward(self, input):
     """Override forward method for WeightOnlyLinear class.
 
     Args:
-        input: Thr input tensor.
+        input: The input tensor.
 
     Returns:
         torch.Tensor: The output tensor.
