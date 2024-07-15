@@ -50,7 +50,7 @@ def compile(
 
         # Model lowering to NPU ops
         if isinstance(model, Phi3MLP):
-            model = model.to("npu")
+            model = model
         else:
             # General optimizations
             apply_general_optimizations(model)
@@ -94,7 +94,6 @@ def module_optimization(func: Callable) -> torch.nn.Module:
     Returns:
         torch.nn.Module: optimized module
     """
-    module_optimization.counter = 0  # type: ignore[attr-defined]
 
     def wrapper(model: torch.nn.Module, *args: Any, **kwargs: Any):
         """Recursively apply the optimization function.
@@ -108,13 +107,8 @@ def module_optimization(func: Callable) -> torch.nn.Module:
         if not isinstance(model, NPUModuleWrapper):
             for name, layer in model.named_children():
                 new_layer = func(name, layer, *args, **kwargs)
-                if (func.__name__ == "optimize_phi3_MLP") and (
-                    module_optimization.counter >= 5  # type: ignore[attr-defined]
-                ):
-                    new_layer = None
 
                 if new_layer:
-                    module_optimization.counter += 1  # type: ignore[attr-defined]
                     model.add_module(name, new_layer)
                     if not isinstance(new_layer, NPUModuleWrapper):
                         wrapper(new_layer, *args, **kwargs)
@@ -207,7 +201,7 @@ def optimize_phi3_MLP(
         Union[torch.nn.Module, None]: optimized Phi-3 module
     """
     if layer.__class__.__name__ == "Phi3MLP":
-        return layer.to("npu")
+        return layer
     return None
 
 
@@ -228,11 +222,7 @@ def weights_quantization(
         None: Returns None
     """
     if isinstance(layer, WeightOnlyLinear):
-        if layer.bits == 4:
-            print("This works - int4 !!")
-            layer.forward = partial(forward, layer)
-        elif layer.bits == 8:
-            print("This works - int8 !!")
+        if (layer.bits == 4) or (layer.bits == 8):
             layer.forward = partial(forward, layer)
         else:
             raise RuntimeError(f"Unsupported quantization bits: {layer.bits}")
@@ -248,15 +238,27 @@ def forward(self, input):
     Returns:
         torch.Tensor: The output tensor.
     """
-    w = self.qweight.to(torch.float16)
-    # output = torch.nn.functional.linear(input, w, None) * self.scales
-    # if self.bias:
-    #     return output + self.bias
-    output = torch.nn.functional.linear(input.to(w.dtype), w, self.bias) * self.scales
+    if self.bits == 4:
+        # Unpack the int4 values
+        lower_int4 = self.qweight & 0x0F
+        lower_int4 = lower_int4 - (lower_int4 & 0x8) * 2
+        upper_int4 = (self.qweight >> 4) & 0x0F
+        upper_int4 = upper_int4 - (upper_int4 & 0x8) * 2
+
+        w = torch.stack((lower_int4, upper_int4), dim=2)
+        w = w.contiguous().view(self.qweight.shape[0], -1)
+
+    elif self.bits == 8:
+        w = self.qweight.view(torch.int8)
+
+    output = (
+        torch.nn.functional.linear(input.to(torch.float16), w.to(torch.float16), None)
+        * self.scales.T
+    )
+
     if self.bias:
-        output = torch.nn.functional.linear(input, w, self.bias) * self.scales
-    else:
-        output = torch.nn.functional.linear(input, w, None) * self.scales
+        return output + self.bias
+
     return output
 
 
