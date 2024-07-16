@@ -96,7 +96,7 @@ def get_backend_dtype(dtype) -> ctypes.c_char_p:
     """
     if dtype in [np.int8, torch.int8]:
         str_dtype = "int8"
-    elif dtype == np.uint8 or dtype == int4:
+    elif dtype in [np.uint8, int4, torch.uint8]:
         # u8 represents packed i4 dtypes
         str_dtype = "int4"
     elif dtype in [np.int16, torch.int16]:
