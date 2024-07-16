@@ -7,6 +7,7 @@ from transformers.models.llama.modeling_llama import LlamaForCausalLM, LlamaConf
 from transformers.models.phi.modeling_phi import PhiConfig, PhiMLP
 from transformers.models.phi3.modeling_phi3 import Phi3Config, Phi3MLP
 from transformers import AutoTokenizer, AutoModelForCausalLM
+from intel_npu_acceleration_library.dtypes import int8, int4
 from sklearn.metrics import r2_score
 from torch.profiler import profile, ProfilerActivity
 import intel_npu_acceleration_library
@@ -85,11 +86,19 @@ def test_phi2_mlp(seq_len, hidden_size, intermediate_size):
 @pytest.mark.parametrize("seq_len", [16, 128, 256])
 @pytest.mark.parametrize("hidden_size", [256, 512])
 @pytest.mark.parametrize("intermediate_size", [512])
-def test_phi3_mlp_compile(seq_len, hidden_size, intermediate_size):
+@pytest.mark.parametrize("dtype", ["float16", "int8", "int4"])
+def test_phi3_mlp_compile(seq_len, hidden_size, intermediate_size, dtype):
     conf = Phi3Config.from_pretrained("microsoft/Phi-3-mini-4k-instruct")
     conf.num_hidden_layers = 1
     conf.hidden_size = hidden_size
     conf.intermediate_size = intermediate_size
+
+    if dtype == "int8":
+        dtype = int8
+    elif dtype == "int4":
+        dtype = int4
+    else:
+        dtype = torch.float16
 
     mlp = Phi3MLP(conf)
 
@@ -97,7 +106,7 @@ def test_phi3_mlp_compile(seq_len, hidden_size, intermediate_size):
 
     reference = mlp(hidden_states.to(torch.float32)).to(torch.float16).detach().numpy()
 
-    model = intel_npu_acceleration_library.compile(mlp)
+    model = intel_npu_acceleration_library.compile(mlp, dtype)
 
     assert model
 
@@ -116,4 +125,7 @@ def test_phi3_mlp_compile(seq_len, hidden_size, intermediate_size):
     assert np.isfinite(reference).all(), "Pytorch Reference contains NaN or Inf"
     assert np.isfinite(out).all(), "NPU output contains NaN or Inf"
 
-    assert 1 - r2_score(reference, out) < 0.001
+    if dtype == int4:
+        assert 1 - r2_score(reference, out) < 0.05
+    else:
+        assert 1 - r2_score(reference, out) < 0.001
