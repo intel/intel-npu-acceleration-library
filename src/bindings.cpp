@@ -8,13 +8,11 @@
 extern "C" {
 
 intel_npu_acceleration_library_DLL_API bool isNPUAvailable() {
-    ov::Core core;
-    return intel_npu_acceleration_library::_isNPUAvailable(core);
+    return intel_npu_acceleration_library::_isNPUAvailable(intel_npu_acceleration_library::core);
 }
 
 intel_npu_acceleration_library_DLL_API uint32_t getNPUDriverVersion() {
-    ov::Core core;
-    return intel_npu_acceleration_library::driver_version(core);
+    return intel_npu_acceleration_library::driver_version(intel_npu_acceleration_library::core);
 }
 
 // ######################## Remote Tensors ########################

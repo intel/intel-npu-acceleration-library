@@ -24,12 +24,6 @@
 namespace intel_npu_acceleration_library {
 
 /**
- * @brief OpenVINO core object
- *
- */
-static ov::Core core;
-
-/**
  * @brief Create a remote tensor
  *
  * @param dtype tensor data type
@@ -82,7 +76,7 @@ protected:
         // set letency hint
         core.set_property(ov::cache_dir("cache"));
         core.set_property(device, ov::hint::performance_mode(ov::hint::PerformanceMode::THROUGHPUT));
-        core.set_property("NPU", ov::log::level(ov::log::Level::DEBUG));
+        // core.set_property("NPU", ov::log::level(ov::log::Level::DEBUG));
         if (device == "NPU") {
             core.set_property(device, intel_npu_acceleration_library::npu_compiler_type("DRIVER"));
             if (profile) {
