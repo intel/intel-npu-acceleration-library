@@ -95,8 +95,6 @@ protected:
         compiled_model = core.compile_model(model, device);
         // Create inference request
         infer_request = compiled_model.create_infer_request();
-        // First inference
-        infer_request.infer();
     }
 
     /**

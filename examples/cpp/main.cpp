@@ -9,7 +9,7 @@ using namespace intel_npu_acceleration_library;
 #include <iostream>
 
 int main() {
-    const size_t batch = 128, inC = 256, outC = 512, N = 1;
+    const size_t batch = 128, inC = 256, outC = 512, N = 10000;
 
     std::cout << "Create a ModelFactory" << std::endl;
     auto factory = std::make_shared<ModelFactory>("NPU");
@@ -30,8 +30,8 @@ int main() {
     factory->compile();
 
     // Save OV model
-    std::cout << "Saving model to matmul.xml" << std::endl;
-    factory->saveModel("matmul.xml");
+    // std::cout << "Saving model to matmul.xml" << std::endl;
+    // factory->saveModel("matmul.xml");
 
     std::cout << "Creating a remote tensor" << std::endl;
     auto input_buffer = context.create_l0_host_tensor(ov::element::f16, {batch, inC}, ov::intel_npu::TensorType::INPUT);
