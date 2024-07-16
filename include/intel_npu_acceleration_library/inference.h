@@ -174,6 +174,42 @@ public:
     }
 
     /**
+     * @brief Create a Remote Tensor object
+     *
+     * @param type element type
+     * @param shape element shape
+     * @param tensor_type element tensor type: INPUT, OUTPUT, BIND
+     * @return auto
+     */
+    auto createRemoteTensor(const ov::element::Type type, const ov::Shape& shape,
+                            const ov::intel_npu::TensorType tensor_type) {
+        ov::intel_npu::level_zero::ZeroContext context = get_context();
+        return context.create_l0_host_tensor(type, shape, tensor_type);
+    }
+
+    /**
+     * @brief Create a Remote Tensor object
+     *
+     * @param idx index of the input tensor
+     * @return auto
+     */
+    auto createRemoteInputTensor(size_t idx) {
+        auto tensor = infer_request.get_input_tensor(idx);
+        return createRemoteTensor(tensor.get_element_type(), tensor.get_shape(), ov::intel_npu::TensorType::INPUT);
+    }
+
+    /**
+     * @brief Create a Remote Tensor object
+     *
+     * @param idx index of the output tensor
+     * @return auto
+     */
+    auto createRemoteOutputTensor(size_t idx) {
+        auto tensor = infer_request.get_output_tensor(idx);
+        return createRemoteTensor(tensor.get_element_type(), tensor.get_shape(), ov::intel_npu::TensorType::OUTPUT);
+    }
+
+    /**
      * @brief Get model input tensor
      *
      * @param idx input tensor index

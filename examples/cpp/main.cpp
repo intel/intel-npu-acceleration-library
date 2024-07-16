@@ -14,8 +14,6 @@ int main() {
     std::cout << "Create a ModelFactory" << std::endl;
     auto factory = std::make_shared<ModelFactory>("NPU");
 
-    auto context = factory->get_context();
-
     // create parameter
     auto input = factory->parameter({batch, inC}, ov::element::f16);
     auto weights = factory->parameter({outC, inC}, ov::element::f16);
@@ -34,12 +32,10 @@ int main() {
     // factory->saveModel("matmul.xml");
 
     std::cout << "Creating a remote tensor" << std::endl;
-    auto input_buffer = context.create_l0_host_tensor(ov::element::f16, {batch, inC}, ov::intel_npu::TensorType::INPUT);
-    auto weights_buffer =
-            context.create_l0_host_tensor(ov::element::f16, {outC, inC}, ov::intel_npu::TensorType::INPUT);
-    auto bias_buffer = context.create_l0_host_tensor(ov::element::f16, {1, outC}, ov::intel_npu::TensorType::INPUT);
-    auto output_buffer =
-            context.create_l0_host_tensor(ov::element::f16, {batch, outC}, ov::intel_npu::TensorType::OUTPUT);
+    auto input_buffer = factory->createRemoteInputTensor(0);
+    auto weights_buffer = factory->createRemoteInputTensor(1);
+    auto bias_buffer = factory->createRemoteInputTensor(2);
+    auto output_buffer = factory->createRemoteOutputTensor(0);
 
     std::memset(input_buffer.get(), 0, input_buffer.get_byte_size());
     std::memset(weights_buffer.get(), 0, weights_buffer.get_byte_size());
