@@ -17,6 +17,25 @@ intel_npu_acceleration_library_DLL_API uint32_t getNPUDriverVersion() {
     return intel_npu_acceleration_library::driver_version(core);
 }
 
+// ######################## Remote Tensors ########################
+
+intel_npu_acceleration_library_DLL_API intel_npu_acceleration_library::Tensor* to_npu(size_t size,
+                                                                                      unsigned int* shape_data,
+                                                                                      char* dtype, void* data) {
+    ov::element::Type_t ov_dtype = intel_npu_acceleration_library::dtype_from_string(std::string(dtype));
+    std::vector<size_t> shape(shape_data, shape_data + size);
+
+    return new intel_npu_acceleration_library::Tensor(ov_dtype, shape, data);
+}
+
+intel_npu_acceleration_library_DLL_API void* remote_tensor_data(intel_npu_acceleration_library::Tensor* rt) {
+    return rt->data();
+}
+
+intel_npu_acceleration_library_DLL_API void del_remote_tensor(intel_npu_acceleration_library::Tensor* rt) {
+    delete rt;
+}
+
 // ######################## Compression ########################
 
 intel_npu_acceleration_library_DLL_API void compressToI4(const int8_t* src, uint8_t* dst, size_t size) {
