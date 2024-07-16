@@ -127,6 +127,14 @@ public:
     }
 
     /**
+     * @brief Get the remote context
+     *
+     */
+    auto get_context() {
+        return core.get_default_context(device).as<ov::intel_npu::level_zero::ZeroContext>();
+    }
+
+    /**
      * @brief Save the model to a local path
      *
      * @param path
@@ -202,6 +210,16 @@ public:
     }
 
     /**
+     * @brief Set the input activations
+     *
+     * @param _X reference to a zero buffer tensor
+     * @param idx input tensor index
+     */
+    void setInputTensor(ov::intel_npu::level_zero::ZeroBufferTensor& _X, size_t idx) {
+        infer_request.set_input_tensor(idx, _X);
+    }
+
+    /**
      * @brief Set the output activations
      *
      * @param _X pointer to the float16 output activation buffer
@@ -211,6 +229,16 @@ public:
         auto tensor = infer_request.get_output_tensor(idx);
         X = ov::Tensor(tensor.get_element_type(), tensor.get_shape(), _X);
         infer_request.set_output_tensor(idx, X);
+    }
+
+    /**
+     * @brief Set the output activations
+     *
+     * @param _X reference to a zero buffer tensor
+     * @param idx output tensor index
+     */
+    void setOutputTensor(ov::intel_npu::level_zero::ZeroBufferTensor& _X, size_t idx) {
+        infer_request.set_output_tensor(idx, _X);
     }
 
     /**
