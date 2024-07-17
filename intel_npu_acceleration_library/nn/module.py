@@ -111,6 +111,7 @@ class Module(torch.nn.Module):
         self._nn_factory_cache: MutableMapping[str, NNFactory] = {}
         self._npu_inference = False
         self.npu_top_level_module = True
+        self.profile = False
 
     def extract_tensors_from_arguments(
         self, args: Sequence[Any]
@@ -171,7 +172,7 @@ class Module(torch.nn.Module):
         Returns:
             NNFactory: The model.
         """
-        model = NNFactory()
+        model = NNFactory(profile=self.profile)
 
         def create_args_from_list(args: Sequence[Any]) -> Sequence[Any]:
             """Create arguments from a list.
