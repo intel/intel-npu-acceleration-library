@@ -105,13 +105,17 @@ def patch_modules(module: torch.nn.Module, model: NNFactory):
 class Module(torch.nn.Module):
     """A PyTorch module that runs on the NPU."""
 
-    def __init__(self) -> None:
-        """Initialize the module."""
+    def __init__(self, profile: bool = False) -> None:
+        """Initialize the module.
+
+        Args:
+            profile (bool): Enable model profiling. Defaults to False.
+        """
         super().__init__()
         self._nn_factory_cache: MutableMapping[str, NNFactory] = {}
         self._npu_inference = False
         self.npu_top_level_module = True
-        self.profile = False
+        self.profile = profile
 
     def extract_tensors_from_arguments(
         self, args: Sequence[Any]
