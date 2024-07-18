@@ -5,6 +5,7 @@
 
 
 import intel_npu_acceleration_library
+from intel_npu_acceleration_library.compiler import CompilerConfig
 from sklearn.metrics import r2_score
 import pytest
 import torch
@@ -71,7 +72,8 @@ def test_conv(
         conv.conv.weight.data *= 128
         y_ref = conv(X)
 
-        npu_conv = intel_npu_acceleration_library.compile(conv, dtype)
+        compiler_conf = CompilerConfig(dtype=dtype)
+        npu_conv = intel_npu_acceleration_library.compile(conv, compiler_conf)
         y = npu_conv(X)
 
         assert y.dtype == y_ref.dtype

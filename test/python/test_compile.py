@@ -4,6 +4,7 @@
 #
 
 from intel_npu_acceleration_library.compiler import compile
+from intel_npu_acceleration_library.compiler import CompilerConfig
 from intel_npu_acceleration_library.dtypes import int4
 from sklearn.metrics import r2_score
 import intel_npu_acceleration_library
@@ -39,7 +40,8 @@ def test_compilation(dtype):
 
     y_ref = model(x).detach()
 
-    compiled_model = compile(model, dtype)
+    compiler_conf = CompilerConfig(dtype=dtype)
+    compiled_model = compile(model, compiler_conf)
 
     assert compiled_model
 
@@ -104,7 +106,8 @@ def test_compile_training(dtype):
 
     model = NN()
 
-    compiled_model = compile(model, dtype, training=True)
+    compiler_conf = CompilerConfig(dtype=dtype, training=True)
+    compiled_model = compile(model, compiler_conf)
 
     for name, layer in compiled_model.named_children():
         if dtype == torch.int8:
@@ -118,7 +121,8 @@ def test_compile_inference(dtype):
 
     model = NN()
 
-    compiled_model = compile(model, dtype)
+    compiler_conf = CompilerConfig(dtype=dtype)
+    compiled_model = compile(model, compiler_conf)
 
     for name, layer in compiled_model.named_children():
         assert layer.training == False

@@ -39,7 +39,8 @@ def tokenizer():
 
 @pytest.mark.parametrize("model_seq_length", [128, 256])
 def test_warm_up(tokenizer, model, model_seq_length):
-    compiled_model = intel_npu_acceleration_library.compile(model)
+    compiler_conf = CompilerConfig()
+    compiled_model = intel_npu_acceleration_library.compile(model, compiler_conf)
     intel_npu_acceleration_library.nn.llm.warm_up_decoder_model(
         tokenizer, compiled_model, model_seq_length
     )
