@@ -112,7 +112,6 @@ def module_optimization(func: Callable) -> torch.nn.Module:
     Returns:
         torch.nn.Module: optimized module
     """
-    module_optimization.counter = 0  # type: ignore[attr-defined]
 
     def wrapper(model: torch.nn.Module, *args: Any, **kwargs: Any):
         """Recursively apply the optimization function.
@@ -126,12 +125,7 @@ def module_optimization(func: Callable) -> torch.nn.Module:
         if not isinstance(model, NPUModuleWrapper):
             for name, layer in model.named_children():
                 new_layer = func(name, layer, *args, **kwargs)
-                if (func.__name__ == "optimize_phi3_MLP") and (
-                    module_optimization.counter >= 5  # type: ignore[attr-defined]
-                ):
-                    new_layer = None
                 if new_layer:
-                    module_optimization.counter += 1  # type: ignore[attr-defined]
                     model.add_module(name, new_layer)
                     if not isinstance(new_layer, NPUModuleWrapper):
                         wrapper(new_layer, *args, **kwargs)

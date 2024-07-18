@@ -7,12 +7,14 @@ from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain.llms import HuggingFacePipeline
 from transformers import AutoTokenizer, pipeline, TextStreamer
+from intel_npu_acceleration_library.compiler import CompilerConfig
 import intel_npu_acceleration_library as npu_lib
 
 model_id = "microsoft/Phi-2"
 
+compiler_conf = CompilerConfig(dtype=npu_lib.int4)
 model = npu_lib.NPUModelForCausalLM.from_pretrained(
-    model_id, use_cache=True, dtype=npu_lib.int4
+    model_id, use_cache=True, config=compiler_conf
 ).eval()
 tokenizer = AutoTokenizer.from_pretrained(model_id, use_default_system_prompt=True)
 streamer = TextStreamer(tokenizer, skip_special_tokens=True, skip_prompt=True)
