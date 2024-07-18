@@ -6,10 +6,9 @@
 from intel_npu_acceleration_library.optimizations import horizontal_fusion_linear
 from transformers.models.llama.modeling_llama import LlamaMLP, LlamaAttention
 from transformers.models.gemma.modeling_gemma import GemmaMLP, GemmaAttention
-from transformers.models.phi3.modeling_phi3 import Phi3MLP
 from neural_compressor.adaptor.torch_utils.model_wrapper import WeightOnlyLinear
 from intel_npu_acceleration_library.quantization import quantize_model
-from intel_npu_acceleration_library.dtypes import int8, int4
+from intel_npu_acceleration_library.dtypes import int8, int4, NPUDtype
 from intel_npu_acceleration_library.nn.module import NPUModuleWrapper
 import intel_npu_acceleration_library.nn as nn
 from torch._dynamo import register_backend
@@ -19,15 +18,33 @@ import torch
 from functools import partial
 
 
-def compile(
-    model: torch.nn.Module, dtype: torch.dtype = torch.float16, training: bool = False
-) -> torch.nn.Module:
+class CompilerConfig:
+    """Configuration class to store the compilation configuration of a model for the NPU."""
+
+    def __init__(
+        self,
+        use_to: bool = False,
+        dtype: Union[torch.dtype, NPUDtype] = torch.float16,
+        training: bool = False,
+    ) -> None:
+        """Initialize the configuration class.
+
+        Args:
+            use_to (bool): Enable model compiling using .to() . Defaults to disabled
+            dtype (Union[torch.dtype, NPUDtype]): The dtype to compile the model with. Defaults to torch.float16
+            training (bool): Enable training. Defaults to disabled
+        """
+        self.use_to = use_to
+        self.dtype = dtype
+        self.training = training
+
+
+def compile(model: torch.nn.Module, config: CompilerConfig) -> torch.nn.Module:
     """Compile a model for the NPU.
 
     Args:
         model (torch.nn.Module): a pytorch nn.Module to compile and optimize for the npu
-        dtype (torch.dtype): the model target datatype, default to torch.float16
-        training (bool): enable training. Default disabled
+        config (CompilerConfig): the compiler configuration
 
     Raises:
         RuntimeError: invalid datatypes
@@ -35,35 +52,29 @@ def compile(
     Returns:
         torch.nn.Module: compiled NPU nn.Module
     """
-    if not (dtype.is_floating_point or dtype in (int8, int4)):
+    if not (config.dtype.is_floating_point or config.dtype in (int8, int4)):
         raise RuntimeError(
-            f"intel-npu-acceleration-library library do not support yet the requeste datatype: {dtype}"
+            f"intel-npu-acceleration-library library do not support yet the requeste datatype: {config.dtype}"
         )
 
     # Prepare and optimize model for NPU
     with torch.no_grad():
         # Model lowering to NPU ops
-        if isinstance(model, Phi3MLP):
-            # Apply optimizations to a single MLP block model
-            model = model
-
-            if dtype in (int8, int4):
-                # Quantize model
-                model = quantize_model(model, dtype)
-                weights_quantization(model)
-
+        if config.use_to:
+            model = model.to("npu")
         else:
             # General optimizations
             apply_general_optimizations(model)
 
-            if dtype in (int8, int4):
-                # Quantize model
-                model = quantize_model(model, dtype)
-                weights_quantization(model)
+        if config.dtype in (int8, int4):
+            # Quantize model
+            model = quantize_model(model, config.dtype)
+            weights_quantization(model)
 
+        if not config.use_to:
             create_npu_kernels(model)
 
-    if dtype.is_floating_point and training:
+    if config.dtype.is_floating_point and config.training:
         # Set model to evaluation only as quantized training is not supported yet
         return model
 
@@ -101,6 +112,7 @@ def module_optimization(func: Callable) -> torch.nn.Module:
     Returns:
         torch.nn.Module: optimized module
     """
+    module_optimization.counter = 0  # type: ignore[attr-defined]
 
     def wrapper(model: torch.nn.Module, *args: Any, **kwargs: Any):
         """Recursively apply the optimization function.
@@ -114,8 +126,12 @@ def module_optimization(func: Callable) -> torch.nn.Module:
         if not isinstance(model, NPUModuleWrapper):
             for name, layer in model.named_children():
                 new_layer = func(name, layer, *args, **kwargs)
-
+                if (func.__name__ == "optimize_phi3_MLP") and (
+                    module_optimization.counter >= 5  # type: ignore[attr-defined]
+                ):
+                    new_layer = None
                 if new_layer:
+                    module_optimization.counter += 1  # type: ignore[attr-defined]
                     model.add_module(name, new_layer)
                     if not isinstance(new_layer, NPUModuleWrapper):
                         wrapper(new_layer, *args, **kwargs)
@@ -208,7 +224,7 @@ def optimize_phi3_MLP(
         Union[torch.nn.Module, None]: optimized Phi-3 module
     """
     if layer.__class__.__name__ == "Phi3MLP":
-        return layer
+        return layer.to("npu")
     return None
 
 
@@ -271,12 +287,15 @@ def forward(self, input):
 
 @register_backend
 def npu(
-    gm: Union[torch.nn.Module, torch.fx.GraphModule], example_inputs: List[torch.Tensor]
+    gm: Union[torch.nn.Module, torch.fx.GraphModule],
+    config: CompilerConfig,
+    example_inputs: List[torch.Tensor],
 ) -> Union[torch.nn.Module, torch.fx.GraphModule]:
     """Implement the custom torch 2.0 compile backend for the NPU.
 
     Args:
         gm (Union[torch.nn.Module, torch.fx.GraphModule]): The torch fx Module
+        config (CompilerConfig): The compiler configuration
         example_inputs (List[torch.Tensor]): A list of example inputs
 
     Returns:
@@ -286,4 +305,4 @@ def npu(
     gm = horizontal_fusion_linear(gm)
 
     # For now compile in fp16
-    return compile(gm)
+    return compile(gm, config)

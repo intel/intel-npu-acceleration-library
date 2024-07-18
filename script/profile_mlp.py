@@ -5,6 +5,7 @@
 
 from transformers.models.phi3.modeling_phi3 import Phi3Config, Phi3MLP
 from intel_npu_acceleration_library.dtypes import int8, int4
+from intel_npu_acceleration_library.compiler import CompilerConfig
 from torch.profiler import profile, ProfilerActivity
 from sklearn.metrics import r2_score
 import intel_npu_acceleration_library
@@ -43,7 +44,8 @@ def main(
         raise RuntimeError(f"Invalid dtype: {dtype}")
 
     # Compile model
-    model = intel_npu_acceleration_library.compile(mlp, dtype)
+    compiler_conf = CompilerConfig(use_to=True, dtype=dtype)
+    model = intel_npu_acceleration_library.compile(mlp, compiler_conf)
     if _profile:
         model.profile = True
 

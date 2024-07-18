@@ -8,6 +8,7 @@ from transformers.models.phi.modeling_phi import PhiConfig, PhiMLP
 from transformers.models.phi3.modeling_phi3 import Phi3Config, Phi3MLP
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from intel_npu_acceleration_library.dtypes import int8, int4
+from intel_npu_acceleration_library.compiler import CompilerConfig
 from sklearn.metrics import r2_score
 from torch.profiler import profile, ProfilerActivity
 import intel_npu_acceleration_library
@@ -106,7 +107,8 @@ def test_phi3_mlp_compile(seq_len, hidden_size, intermediate_size, dtype):
 
     reference = mlp(hidden_states.to(torch.float32)).to(torch.float16).detach().numpy()
 
-    model = intel_npu_acceleration_library.compile(mlp, dtype)
+    compiler_conf = CompilerConfig(use_to=True, dtype=dtype)
+    model = intel_npu_acceleration_library.compile(mlp, compiler_conf)
 
     assert model
 

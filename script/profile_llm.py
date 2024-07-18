@@ -6,6 +6,7 @@
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from intel_npu_acceleration_library.nn.llm import generate_with_static_shape
 from intel_npu_acceleration_library.dtypes import int8, int4
+from intel_npu_acceleration_library.compiler import CompilerConfig
 
 from torch.profiler import profile, ProfilerActivity
 import intel_npu_acceleration_library
@@ -52,7 +53,8 @@ def main(
 
     if not disable_intel_npu_acceleration_library:
         if not compiled:
-            model = intel_npu_acceleration_library.compile(model, dtype)
+            compiler_conf = CompilerConfig(dtype=dtype)
+            model = intel_npu_acceleration_library.compile(model, compiler_conf)
         intel_npu_acceleration_library.nn.llm.warm_up_decoder_model(
             tokenizer, model, context_size
         )
