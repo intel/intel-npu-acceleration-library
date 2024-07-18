@@ -288,14 +288,12 @@ def forward(self, input):
 @register_backend
 def npu(
     gm: Union[torch.nn.Module, torch.fx.GraphModule],
-    config: CompilerConfig,
     example_inputs: List[torch.Tensor],
 ) -> Union[torch.nn.Module, torch.fx.GraphModule]:
     """Implement the custom torch 2.0 compile backend for the NPU.
 
     Args:
         gm (Union[torch.nn.Module, torch.fx.GraphModule]): The torch fx Module
-        config (CompilerConfig): The compiler configuration
         example_inputs (List[torch.Tensor]): A list of example inputs
 
     Returns:
@@ -305,4 +303,5 @@ def npu(
     gm = horizontal_fusion_linear(gm)
 
     # For now compile in fp16
+    config = CompilerConfig()
     return compile(gm, config)
