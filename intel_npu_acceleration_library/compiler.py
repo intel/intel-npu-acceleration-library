@@ -61,7 +61,7 @@ def compile(model: torch.nn.Module, config: CompilerConfig) -> torch.nn.Module:
     with torch.no_grad():
         # Model lowering to NPU ops
         if config.use_to:
-            model = model.to("npu")
+            model = model
         else:
             # General optimizations
             apply_general_optimizations(model)
@@ -224,7 +224,7 @@ def optimize_phi3_MLP(
         Union[torch.nn.Module, None]: optimized Phi-3 module
     """
     if layer.__class__.__name__ == "Phi3MLP":
-        return layer.to("npu")
+        return layer
     return None
 
 

@@ -50,7 +50,10 @@ def test_compilation(tokenizer, decoder_model, dtype):
     prefill = tokenizer("test sentence", return_tensors="pt")["input_ids"].to("cpu")
     y_ref = decoder_model(prefill).logits.detach()
 
-    compiled_model = intel_npu_acceleration_library.compile(decoder_model, dtype=dtype)
+    compiler_conf = CompilerConfig(dtype=dtype)
+    compiled_model = intel_npu_acceleration_library.compile(
+        decoder_model, compiler_conf
+    )
 
     assert compiled_model
 
