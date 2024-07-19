@@ -69,7 +69,8 @@ def compile(model: torch.nn.Module, config: CompilerConfig) -> torch.nn.Module:
         if config.dtype in (int8, int4):
             # Quantize model
             model = quantize_model(model, config.dtype)
-            weights_quantization(model)
+            if config.use_to:
+                weights_quantization(model)
 
         if not config.use_to:
             create_npu_kernels(model)
@@ -89,7 +90,6 @@ def apply_general_optimizations(model: torch.nn.Module):
     """
     apply_horizontal_fusion(model)
     optimize_llama_attention(model)
-    optimize_phi3_MLP(model)
 
 
 def create_npu_kernels(model: torch.nn.Module):
@@ -201,24 +201,6 @@ def optimize_llama_attention(
     """
     if isinstance(layer, (LlamaAttention, GemmaAttention)):
         return nn.LlamaAttention.fromTorch(layer)
-    return None
-
-
-@module_optimization
-def optimize_phi3_MLP(
-    name: str, layer: torch.nn.Module
-) -> Union[torch.nn.Module, None]:
-    """Optimize Phi-3 MLP block.
-
-    Args:
-        name (str): Module name
-        layer (torch.nn.Module): Original Module
-
-    Returns:
-        Union[torch.nn.Module, None]: optimized Phi-3 module
-    """
-    if layer.__class__.__name__ == "Phi3MLP":
-        return layer
     return None
 
 
