@@ -69,8 +69,7 @@ def compile(model: torch.nn.Module, config: CompilerConfig) -> torch.nn.Module:
         if config.dtype in (int8, int4):
             # Quantize model
             model = quantize_model(model, config.dtype)
-            if config.use_to:
-                weights_quantization(model)
+            weights_quantization(model)
 
         if not config.use_to:
             create_npu_kernels(model)
@@ -122,15 +121,21 @@ def module_optimization(func: Callable) -> torch.nn.Module:
             kwargs (Any): keyword arguments
 
         """
-        if not isinstance(model, NPUModuleWrapper):
+        if not isinstance(model, NPUModuleWrapper) or kwargs.get(
+            "ignore_isinstance", False
+        ):
             for name, layer in model.named_children():
                 new_layer = func(name, layer, *args, **kwargs)
                 if new_layer:
                     model.add_module(name, new_layer)
-                    if not isinstance(new_layer, NPUModuleWrapper):
+                    if not isinstance(new_layer, NPUModuleWrapper) or kwargs.get(
+                        "ignore_isinstance", False
+                    ):
                         wrapper(new_layer, *args, **kwargs)
                 else:
-                    if not isinstance(layer, NPUModuleWrapper):
+                    if not isinstance(layer, NPUModuleWrapper) or kwargs.get(
+                        "ignore_isinstance", False
+                    ):
                         wrapper(layer, *args, **kwargs)
 
     return wrapper
@@ -206,13 +211,14 @@ def optimize_llama_attention(
 
 @module_optimization
 def weights_quantization(
-    name: str, layer: torch.nn.Module
+    name: str, layer: torch.nn.Module, ignore_isinstance: bool = True
 ) -> Union[torch.nn.Module, None]:
     """Apply weights quantization.
 
     Args:
         name (str): Layer name
         layer (torch.nn.Module): Original torch.nn.Linear module
+        ignore_isinstance (bool): ignore isinstance check in module_optimization. Defaults to True.
 
     Raises:
         RuntimeError: unsupported quantization bits
