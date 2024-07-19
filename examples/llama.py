@@ -5,11 +5,13 @@
 
 from transformers import AutoTokenizer, TextStreamer
 from intel_npu_acceleration_library import NPUModelForCausalLM, int4
+from intel_npu_acceleration_library.compiler import CompilerConfig
 
 model_id = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
 
+compiler_conf = CompilerConfig(dtype=int4)
 model = NPUModelForCausalLM.from_pretrained(
-    model_id, use_cache=True, dtype=int4, attn_implementation="sdpa"
+    model_id, use_cache=True, config=compiler_conf, attn_implementation="sdpa"
 ).eval()
 tokenizer = AutoTokenizer.from_pretrained(model_id, use_default_system_prompt=True)
 tokenizer.pad_token_id = tokenizer.eos_token_id

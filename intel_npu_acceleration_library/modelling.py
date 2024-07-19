@@ -4,6 +4,7 @@
 #
 from transformers import AutoModel, AutoModelForCausalLM, AutoModelForSeq2SeqLM
 import intel_npu_acceleration_library as npu_lib
+from intel_npu_acceleration_library.compiler import CompilerConfig
 from functools import partialmethod
 from typing import Type, Any, Tuple, Optional
 import hashlib
@@ -62,8 +63,7 @@ class NPUModel:
     @staticmethod
     def from_pretrained(
         model_name_or_path: str,
-        dtype: torch.dtype = torch.float16,
-        training: bool = False,
+        config: CompilerConfig,
         transformers_class: Optional[Type] = None,
         export=True,
         *args: Any,
@@ -73,8 +73,7 @@ class NPUModel:
 
         Args:
             model_name_or_path (str): model name or path
-            dtype (torch.dtype, optional): compilation dtype. Defaults to torch.float16.
-            training (bool, optional): enable training. Defaults to False.
+            config (CompilerConfig): compiler configuration
             transformers_class (Optional[Type], optional): base class to use. Must have a `from_pretrained` method. Defaults to None.
             export (bool, optional): enable the caching of the model. Defaults to True.
             args (Any): positional arguments
@@ -91,18 +90,18 @@ class NPUModel:
             raise RuntimeError(f"Invalid transformer class {type(transformers_class)}")
         # get the model cache dir and path from the name and arguments
         model_dir_path, model_path = get_model_path(
-            model_name_or_path, dtype, training, *args, **kwargs
+            model_name_or_path, config.dtype, config.training, *args, **kwargs
         )
         if os.path.isdir(model_dir_path) and os.path.isfile(model_path):
             # Model already exist so I can load it directly
             return torch.load(model_path)
         else:
             # Model does not exists, so I need to compile it first
-            print(f"Compiling model {model_name_or_path} {dtype} for the NPU")
+            print(f"Compiling model {model_name_or_path} {config.dtype} for the NPU")
             model = transformers_class.from_pretrained(
                 model_name_or_path, *args, **kwargs
             )
-            model = npu_lib.compile(model, dtype, training)
+            model = npu_lib.compile(model, config)
             if export:
                 if kwargs.get("trust_remote_code", False):
                     raise AttributeError(

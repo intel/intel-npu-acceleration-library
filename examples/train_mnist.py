@@ -7,6 +7,7 @@
 import torch
 from torch import nn
 import intel_npu_acceleration_library
+from intel_npu_acceleration_library.compiler import CompilerConfig
 from torch.utils.data import DataLoader
 from torchvision import datasets
 from torchvision.transforms import ToTensor
@@ -90,8 +91,8 @@ def test_loop(dataloader, model, loss_fn):
 
 
 model = NeuralNetwork()
-
-model = intel_npu_acceleration_library.compile(model, torch.float32, training=True)
+compiler_conf = CompilerConfig(dtype=torch.float32, training=True)
+model = intel_npu_acceleration_library.compile(model, compiler_conf)
 
 learning_rate = 1e-3
 batch_size = 64

@@ -38,11 +38,23 @@ optimized_model = torch.compile(model, backend="npu")
 
 In windows torch.compile is not supported yet. So you might want to use the explicit function `intel_npu_acceleration_library.compile`. This is true also if you use a `pytorch` version < 2.0.0
 
+To do this, you just need to call the `compile` function with your model and the compiler configuration `CompilerConfig` to compile and optimize the model for the NPU.
 ```python
 import intel_npu_acceleration_library
-optimized_model = intel_npu_acceleration_library.compile(model, dtype=torch.int8)
+from intel_npu_acceleration_library.compiler import CompilerConfig
+compiler_conf = CompilerConfig(dtype=torch.int8)
+optimized_model = intel_npu_acceleration_library.compile(model, compiler_conf)
 
 # Use the model as usual
+
+```
+
+To compile and optimize a single layer of a model to be pushed to the NPU as one block, you can set `use_to=True` in the the compiler configuration `CompilerConfig`.
+```python
+import intel_npu_acceleration_library
+from intel_npu_acceleration_library.compiler import CompilerConfig
+compiler_conf = CompilerConfig(use_to=True, dtype=torch.int8)
+optimized_block = intel_npu_acceleration_library.compile(single_block, compiler_conf)
 
 ```
 
@@ -52,5 +64,7 @@ It is possible to use Intel® NPU Acceleration Library to train a model. As befo
 
 ```python
 import intel_npu_acceleration_library
-compiled_model = intel_npu_acceleration_library.compile(model, dtype=torch.float32, training=True)
+from intel_npu_acceleration_library.compiler import CompilerConfig
+compiler_conf = CompilerConfig(dtype=torch.float32, training=True)
+compiled_model = intel_npu_acceleration_library.compile(model, compiler_conf)
 ```

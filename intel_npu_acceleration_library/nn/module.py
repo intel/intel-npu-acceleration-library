@@ -4,6 +4,7 @@
 #
 from intel_npu_acceleration_library.backend import NNFactory, Tensor
 from typing import MutableMapping, Sequence, Any, List
+from torch.profiler import record_function
 import numpy as np
 import torch
 
@@ -104,12 +105,17 @@ def patch_modules(module: torch.nn.Module, model: NNFactory):
 class Module(torch.nn.Module):
     """A PyTorch module that runs on the NPU."""
 
-    def __init__(self) -> None:
-        """Initialize the module."""
+    def __init__(self, profile: bool = False) -> None:
+        """Initialize the module.
+
+        Args:
+            profile (bool): Enable model profiling. Defaults to False.
+        """
         super().__init__()
         self._nn_factory_cache: MutableMapping[str, NNFactory] = {}
         self._npu_inference = False
         self.npu_top_level_module = True
+        self.profile = profile
 
     def extract_tensors_from_arguments(
         self, args: Sequence[Any]
@@ -170,7 +176,7 @@ class Module(torch.nn.Module):
         Returns:
             NNFactory: The model.
         """
-        model = NNFactory()
+        model = NNFactory(profile=self.profile)
 
         def create_args_from_list(args: Sequence[Any]) -> Sequence[Any]:
             """Create arguments from a list.
@@ -249,7 +255,8 @@ class Module(torch.nn.Module):
             # Run the model by replacing the forward method with the factory_forward
             old_forward = self.forward
             self.forward = self.factory_forward  # type: ignore
-            out = super()._call_impl(*args, **kwargs)
+            with record_function(f"npu_{self.__class__.__name__}"):
+                out = super()._call_impl(*args, **kwargs)
 
             # Restore the original forward method
             self.forward = old_forward  # type: ignore
@@ -322,7 +329,8 @@ class NPUModuleWrapper(Module):
         Returns:
             torch.Tensor: The output tensor.
         """
-        return self.module(*args, **kwargs)
+        with record_function(f"npu_{self.module.__class__.__name__}"):
+            return self.module(*args, **kwargs)
 
 
 def convert_to_npu_module(module: torch.nn.Module) -> Module:
