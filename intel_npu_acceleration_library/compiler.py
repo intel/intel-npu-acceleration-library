@@ -61,7 +61,7 @@ def compile(model: torch.nn.Module, config: CompilerConfig) -> torch.nn.Module:
     with torch.no_grad():
         # Model lowering to NPU ops
         if config.use_to:
-            model = model
+            model = model.to("npu")
         else:
             # General optimizations
             apply_general_optimizations(model)
