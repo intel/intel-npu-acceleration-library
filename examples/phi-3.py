@@ -5,15 +5,17 @@
 
 import torch
 from transformers import AutoTokenizer, pipeline, TextStreamer
+from intel_npu_acceleration_library.compiler import CompilerConfig
 import intel_npu_acceleration_library as npu_lib
 import warnings
 
 torch.random.manual_seed(0)
 
+compiler_conf = CompilerConfig(dtype=npu_lib.int4)
 model = npu_lib.NPUModelForCausalLM.from_pretrained(
     "microsoft/Phi-3-mini-4k-instruct",
+    config=compiler_conf,
     torch_dtype="auto",
-    dtype=npu_lib.int4,
 )
 
 tokenizer = AutoTokenizer.from_pretrained("microsoft/Phi-3-mini-4k-instruct")

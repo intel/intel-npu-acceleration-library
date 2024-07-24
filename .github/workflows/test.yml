@@ -1,4 +1,5 @@
 name: Test
+permissions: read-all
 
 on:
   workflow_dispatch:

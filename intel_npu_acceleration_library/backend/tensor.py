@@ -948,6 +948,18 @@ class Tensor:
         """
         return generate_op([self], "to", dtype)
 
+    def type(self, dtype: NPUDtype) -> "Tensor":
+        """
+        Convert the tensor to the specified data type.
+
+        Args:
+            dtype (NPUDtype): The data type to convert the tensor to.
+
+        Returns:
+            Tensor: The converted tensor.
+        """
+        return self.to(dtype)
+
     @classmethod
     def __torch_function__(
         cls: Any,
