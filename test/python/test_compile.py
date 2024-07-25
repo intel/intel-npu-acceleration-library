@@ -89,9 +89,7 @@ def test_torch_compile():
     model = NN()
     y_ref = model(x.to(torch.float32)).detach()
 
-    if (
-        sys.platform == "win32" and Version(torch.__version__) < Version("2.2.2")
-    ) or sys.version_info >= (3, 12):
+    if sys.platform == "win32" and Version(torch.__version__) < Version("2.2.2"):
         with pytest.raises(RuntimeError) as e:
             compiled_model = torch.compile(model, backend="npu")
         assert str(e.value) == "Windows not yet supported for torch.compile"
