@@ -15,3 +15,4 @@ To build the custom C++ application using the Intel NPU acceleration Library, fo
 2. Once the build process is complete, you can find the executable file at `build\Release\intel_npu_acceleration_library_example.exe` (on windows)
 
 Make sure you have the necessary dependencies, compiler and libraries installed before building the application.
+

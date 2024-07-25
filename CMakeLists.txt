@@ -115,3 +115,5 @@ target_link_libraries(intel_npu_acceleration_library PRIVATE openvino::runtime)
 if (UNIX)
     set_target_properties(intel_npu_acceleration_library PROPERTIES LINK_FLAGS "-Wl,-rpath,./")
 endif (UNIX)
+
+
