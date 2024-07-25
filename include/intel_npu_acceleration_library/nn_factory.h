@@ -915,6 +915,19 @@ public:
     }
 
     /**
+     * @brief Create a new prelu operation
+     *
+     * @param x1 operation's input node
+     * @param slope operation's slope
+     * @return ov::op::Op*
+     */
+    ov::op::Op* prelu(ov::op::Op* x1, ov::op::Op* slope) {
+        auto power = std::make_shared<ov::op::v0::PRelu>(x1->output(0), slope->output(0));
+        operations.push_back(power);
+        return power.get();
+    }
+
+    /**
      * @brief Create a new log softmax operation
      *
      * @param input operation's input node
