@@ -14,32 +14,32 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
     <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'python/intel_npu_acceleration_library';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -54,23 +54,27 @@
 
   
   
-  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -92,13 +96,8 @@
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
-
-  <div class="pst-async-banner-revealer d-none">
-  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
-</div>
-
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
     </header>
   
 
@@ -122,8 +121,6 @@
         <div class="sidebar-primary-item">
 
   
-    
-  
 
 <a class="navbar-brand logo" href="../index.html">
   
@@ -139,7 +136,7 @@
 
  <script>
  document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
     <span class="search-button__default-text">Search</span>
     <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
@@ -168,12 +165,12 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Python API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Python API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html">intel_npu_acceleration_library.backend package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.nn.html">intel_npu_acceleration_library.nn package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.functional.html">intel_npu_acceleration_library.functional package</a></li>
 </ul>
-</details></li>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../cpp_reference.html">C++ API Reference</a></li>
 </ul>
 
@@ -190,7 +187,7 @@
 
       </div>
       
-      <main id="main-content" class="bd-main" role="main">
+      <main id="main-content" class="bd-main">
         
         
 
@@ -199,14 +196,14 @@
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article d-print-none">
+              <div class="bd-header-article">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</button></div>
+</label></div>
       
     </div>
   
@@ -284,10 +281,10 @@
 
 <script>
 document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script>
@@ -295,14 +292,14 @@ document.write(`
 
 <script>
 document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</button>
+</label>
 </div></div>
       
     </div>
@@ -326,15 +323,55 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subpackages">Subpackages</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-bindings-module">intel_npu_acceleration_library.bindings module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-compiler-module">intel_npu_acceleration_library.compiler module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-compiler-module">intel_npu_acceleration_library.compiler module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compiler.CompilerConfig"><code class="docutils literal notranslate"><span class="pre">CompilerConfig</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compiler.apply_general_optimizations"><code class="docutils literal notranslate"><span class="pre">apply_general_optimizations()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compiler.apply_horizontal_fusion"><code class="docutils literal notranslate"><span class="pre">apply_horizontal_fusion()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compiler.compile"><code class="docutils literal notranslate"><span class="pre">compile()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compiler.create_npu_kernels"><code class="docutils literal notranslate"><span class="pre">create_npu_kernels()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compiler.forward"><code class="docutils literal notranslate"><span class="pre">forward()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compiler.lower_linear"><code class="docutils literal notranslate"><span class="pre">lower_linear()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compiler.module_optimization"><code class="docutils literal notranslate"><span class="pre">module_optimization()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compiler.npu"><code class="docutils literal notranslate"><span class="pre">npu()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compiler.optimize_llama_attention"><code class="docutils literal notranslate"><span class="pre">optimize_llama_attention()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compiler.weights_quantization"><code class="docutils literal notranslate"><span class="pre">weights_quantization()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-optimizations-module">intel_npu_acceleration_library.optimizations module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.optimizations.delattr_recursively"><code class="docutils literal notranslate"><span class="pre">delattr_recursively()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.optimizations.fuse_linear_layers"><code class="docutils literal notranslate"><span class="pre">fuse_linear_layers()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.optimizations.horizontal_fusion_linear"><code class="docutils literal notranslate"><span class="pre">horizontal_fusion_linear()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-quantization-module">intel_npu_acceleration_library.quantization module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-quantization-module">intel_npu_acceleration_library.quantization module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.quantization.compress_to_i4"><code class="docutils literal notranslate"><span class="pre">compress_to_i4()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.quantization.quantize_fit"><code class="docutils literal notranslate"><span class="pre">quantize_fit()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.quantization.quantize_i4_model"><code class="docutils literal notranslate"><span class="pre">quantize_i4_model()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.quantization.quantize_i8_model"><code class="docutils literal notranslate"><span class="pre">quantize_i8_model()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.quantization.quantize_model"><code class="docutils literal notranslate"><span class="pre">quantize_model()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.quantization.quantize_tensor"><code class="docutils literal notranslate"><span class="pre">quantize_tensor()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-intel_npu_acceleration_library">Module contents</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.NPUAutoModel"><code class="docutils literal notranslate"><span class="pre">NPUAutoModel</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.NPUAutoModel.from_pretrained"><code class="docutils literal notranslate"><span class="pre">NPUAutoModel.from_pretrained()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.NPUModel"><code class="docutils literal notranslate"><span class="pre">NPUModel</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.NPUModel.from_pretrained"><code class="docutils literal notranslate"><span class="pre">NPUModel.from_pretrained()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.NPUModelForCausalLM"><code class="docutils literal notranslate"><span class="pre">NPUModelForCausalLM</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.NPUModelForCausalLM.from_pretrained"><code class="docutils literal notranslate"><span class="pre">NPUModelForCausalLM.from_pretrained()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.NPUModelForSeq2SeqLM"><code class="docutils literal notranslate"><span class="pre">NPUModelForSeq2SeqLM</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.NPUModelForSeq2SeqLM.from_pretrained"><code class="docutils literal notranslate"><span class="pre">NPUModelForSeq2SeqLM.from_pretrained()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compile"><code class="docutils literal notranslate"><span class="pre">compile()</span></code></a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -354,29 +391,360 @@ document.write(`
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="intel_npu_acceleration_library.backend.html">intel_npu_acceleration_library.backend package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-base-module">intel_npu_acceleration_library.backend.base module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-factory-module">intel_npu_acceleration_library.backend.factory module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-linear-module">intel_npu_acceleration_library.backend.linear module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-matmul-module">intel_npu_acceleration_library.backend.matmul module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-mlp-module">intel_npu_acceleration_library.backend.mlp module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-qlinear-module">intel_npu_acceleration_library.backend.qlinear module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-qmatmul-module">intel_npu_acceleration_library.backend.qmatmul module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-runtime-module">intel_npu_acceleration_library.backend.runtime module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-base-module">intel_npu_acceleration_library.backend.base module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.base.BaseNPUBackend"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackend</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.base.BaseNPUBackend.save"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackend.save()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.base.BaseNPUBackend.saveCompiledModel"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackend.saveCompiledModel()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackendWithPrefetch</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.add_to_map"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackendWithPrefetch.add_to_map()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.create_parameters"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackendWithPrefetch.create_parameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.load_wt_fn"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackendWithPrefetch.load_wt_fn()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.prefetchWeights"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackendWithPrefetch.prefetchWeights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.setWeights"><code class="docutils literal notranslate"><span class="pre">BaseNPUBackendWithPrefetch.setWeights()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.base.adapt_weight"><code class="docutils literal notranslate"><span class="pre">adapt_weight()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-factory-module">intel_npu_acceleration_library.backend.factory module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory"><code class="docutils literal notranslate"><span class="pre">NNFactory</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.avg_pooling"><code class="docutils literal notranslate"><span class="pre">NNFactory.avg_pooling()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.compile"><code class="docutils literal notranslate"><span class="pre">NNFactory.compile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.concat"><code class="docutils literal notranslate"><span class="pre">NNFactory.concat()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.constant"><code class="docutils literal notranslate"><span class="pre">NNFactory.constant()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.convolution"><code class="docutils literal notranslate"><span class="pre">NNFactory.convolution()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.get_backend_dtype"><code class="docutils literal notranslate"><span class="pre">NNFactory.get_backend_dtype()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.get_tensor_dtype"><code class="docutils literal notranslate"><span class="pre">NNFactory.get_tensor_dtype()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.get_tensor_recursively"><code class="docutils literal notranslate"><span class="pre">NNFactory.get_tensor_recursively()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.get_tensor_shape"><code class="docutils literal notranslate"><span class="pre">NNFactory.get_tensor_shape()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.linear"><code class="docutils literal notranslate"><span class="pre">NNFactory.linear()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.matmul"><code class="docutils literal notranslate"><span class="pre">NNFactory.matmul()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.max_pooling"><code class="docutils literal notranslate"><span class="pre">NNFactory.max_pooling()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.normL2"><code class="docutils literal notranslate"><span class="pre">NNFactory.normL2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.parameter"><code class="docutils literal notranslate"><span class="pre">NNFactory.parameter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.power"><code class="docutils literal notranslate"><span class="pre">NNFactory.power()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.reduce_max"><code class="docutils literal notranslate"><span class="pre">NNFactory.reduce_max()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.reduce_mean"><code class="docutils literal notranslate"><span class="pre">NNFactory.reduce_mean()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.reduce_min"><code class="docutils literal notranslate"><span class="pre">NNFactory.reduce_min()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.reduce_prod"><code class="docutils literal notranslate"><span class="pre">NNFactory.reduce_prod()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.reduce_sum"><code class="docutils literal notranslate"><span class="pre">NNFactory.reduce_sum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.reshape"><code class="docutils literal notranslate"><span class="pre">NNFactory.reshape()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.return_tensor"><code class="docutils literal notranslate"><span class="pre">NNFactory.return_tensor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.run"><code class="docutils literal notranslate"><span class="pre">NNFactory.run()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.set_input_tensor"><code class="docutils literal notranslate"><span class="pre">NNFactory.set_input_tensor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.slice"><code class="docutils literal notranslate"><span class="pre">NNFactory.slice()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.to"><code class="docutils literal notranslate"><span class="pre">NNFactory.to()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.transpose"><code class="docutils literal notranslate"><span class="pre">NNFactory.transpose()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.unsqueeze"><code class="docutils literal notranslate"><span class="pre">NNFactory.unsqueeze()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-linear-module">intel_npu_acceleration_library.backend.linear module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.linear.Linear"><code class="docutils literal notranslate"><span class="pre">Linear</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.linear.Linear.run"><code class="docutils literal notranslate"><span class="pre">Linear.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-matmul-module">intel_npu_acceleration_library.backend.matmul module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.matmul.MatMul"><code class="docutils literal notranslate"><span class="pre">MatMul</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.matmul.MatMul.run"><code class="docutils literal notranslate"><span class="pre">MatMul.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-mlp-module">intel_npu_acceleration_library.backend.mlp module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.mlp.MLP"><code class="docutils literal notranslate"><span class="pre">MLP</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-qlinear-module">intel_npu_acceleration_library.backend.qlinear module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.qlinear.QLinear"><code class="docutils literal notranslate"><span class="pre">QLinear</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.qlinear.QLinear.run"><code class="docutils literal notranslate"><span class="pre">QLinear.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-qmatmul-module">intel_npu_acceleration_library.backend.qmatmul module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.qmatmul.QMatMul"><code class="docutils literal notranslate"><span class="pre">QMatMul</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.qmatmul.QMatMul.run"><code class="docutils literal notranslate"><span class="pre">QMatMul.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-runtime-module">intel_npu_acceleration_library.backend.runtime module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.runtime.adapt_output_tensor"><code class="docutils literal notranslate"><span class="pre">adapt_output_tensor()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.runtime.clear_cache"><code class="docutils literal notranslate"><span class="pre">clear_cache()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.runtime.run_factory"><code class="docutils literal notranslate"><span class="pre">run_factory()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.runtime.run_matmul"><code class="docutils literal notranslate"><span class="pre">run_matmul()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.runtime.set_contiguous"><code class="docutils literal notranslate"><span class="pre">set_contiguous()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#module-intel_npu_acceleration_library.backend">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Convolution"><code class="docutils literal notranslate"><span class="pre">Convolution</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Linear"><code class="docutils literal notranslate"><span class="pre">Linear</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Linear.run"><code class="docutils literal notranslate"><span class="pre">Linear.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.MLP"><code class="docutils literal notranslate"><span class="pre">MLP</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.MatMul"><code class="docutils literal notranslate"><span class="pre">MatMul</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.MatMul.run"><code class="docutils literal notranslate"><span class="pre">MatMul.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory"><code class="docutils literal notranslate"><span class="pre">NNFactory</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.avg_pooling"><code class="docutils literal notranslate"><span class="pre">NNFactory.avg_pooling()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.compile"><code class="docutils literal notranslate"><span class="pre">NNFactory.compile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.concat"><code class="docutils literal notranslate"><span class="pre">NNFactory.concat()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.constant"><code class="docutils literal notranslate"><span class="pre">NNFactory.constant()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.convolution"><code class="docutils literal notranslate"><span class="pre">NNFactory.convolution()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.get_backend_dtype"><code class="docutils literal notranslate"><span class="pre">NNFactory.get_backend_dtype()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.get_tensor_dtype"><code class="docutils literal notranslate"><span class="pre">NNFactory.get_tensor_dtype()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.get_tensor_recursively"><code class="docutils literal notranslate"><span class="pre">NNFactory.get_tensor_recursively()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.get_tensor_shape"><code class="docutils literal notranslate"><span class="pre">NNFactory.get_tensor_shape()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.linear"><code class="docutils literal notranslate"><span class="pre">NNFactory.linear()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.matmul"><code class="docutils literal notranslate"><span class="pre">NNFactory.matmul()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.max_pooling"><code class="docutils literal notranslate"><span class="pre">NNFactory.max_pooling()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.normL2"><code class="docutils literal notranslate"><span class="pre">NNFactory.normL2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.parameter"><code class="docutils literal notranslate"><span class="pre">NNFactory.parameter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.power"><code class="docutils literal notranslate"><span class="pre">NNFactory.power()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.reduce_max"><code class="docutils literal notranslate"><span class="pre">NNFactory.reduce_max()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.reduce_mean"><code class="docutils literal notranslate"><span class="pre">NNFactory.reduce_mean()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.reduce_min"><code class="docutils literal notranslate"><span class="pre">NNFactory.reduce_min()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.reduce_prod"><code class="docutils literal notranslate"><span class="pre">NNFactory.reduce_prod()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.reduce_sum"><code class="docutils literal notranslate"><span class="pre">NNFactory.reduce_sum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.reshape"><code class="docutils literal notranslate"><span class="pre">NNFactory.reshape()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.return_tensor"><code class="docutils literal notranslate"><span class="pre">NNFactory.return_tensor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.run"><code class="docutils literal notranslate"><span class="pre">NNFactory.run()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.set_input_tensor"><code class="docutils literal notranslate"><span class="pre">NNFactory.set_input_tensor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.slice"><code class="docutils literal notranslate"><span class="pre">NNFactory.slice()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.to"><code class="docutils literal notranslate"><span class="pre">NNFactory.to()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.transpose"><code class="docutils literal notranslate"><span class="pre">NNFactory.transpose()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.unsqueeze"><code class="docutils literal notranslate"><span class="pre">NNFactory.unsqueeze()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.QLinear"><code class="docutils literal notranslate"><span class="pre">QLinear</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.QLinear.run"><code class="docutils literal notranslate"><span class="pre">QLinear.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.QMatMul"><code class="docutils literal notranslate"><span class="pre">QMatMul</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.QMatMul.run"><code class="docutils literal notranslate"><span class="pre">QMatMul.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.SDPA"><code class="docutils literal notranslate"><span class="pre">SDPA</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.SDPA.run"><code class="docutils literal notranslate"><span class="pre">SDPA.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.SimpleSDPA"><code class="docutils literal notranslate"><span class="pre">SimpleSDPA</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.SimpleSDPA.run"><code class="docutils literal notranslate"><span class="pre">SimpleSDPA.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor"><code class="docutils literal notranslate"><span class="pre">Tensor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.__add__"><code class="docutils literal notranslate"><span class="pre">Tensor.__add__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.__sub__"><code class="docutils literal notranslate"><span class="pre">Tensor.__sub__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.__mul__"><code class="docutils literal notranslate"><span class="pre">Tensor.__mul__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.__truediv__"><code class="docutils literal notranslate"><span class="pre">Tensor.__truediv__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.__neg__"><code class="docutils literal notranslate"><span class="pre">Tensor.__neg__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.__repr__"><code class="docutils literal notranslate"><span class="pre">Tensor.__repr__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.__str__"><code class="docutils literal notranslate"><span class="pre">Tensor.__str__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.__len__"><code class="docutils literal notranslate"><span class="pre">Tensor.__len__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.T"><code class="docutils literal notranslate"><span class="pre">Tensor.T()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.squeeze"><code class="docutils literal notranslate"><span class="pre">Tensor.squeeze()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.unsqueeze"><code class="docutils literal notranslate"><span class="pre">Tensor.unsqueeze()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.__matmul__"><code class="docutils literal notranslate"><span class="pre">Tensor.__matmul__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.acos"><code class="docutils literal notranslate"><span class="pre">Tensor.acos()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.asin"><code class="docutils literal notranslate"><span class="pre">Tensor.asin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.atan"><code class="docutils literal notranslate"><span class="pre">Tensor.atan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.acosh"><code class="docutils literal notranslate"><span class="pre">Tensor.acosh()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.asinh"><code class="docutils literal notranslate"><span class="pre">Tensor.asinh()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.atanh"><code class="docutils literal notranslate"><span class="pre">Tensor.atanh()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.cosh"><code class="docutils literal notranslate"><span class="pre">Tensor.cosh()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.sinh"><code class="docutils literal notranslate"><span class="pre">Tensor.sinh()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.tanh"><code class="docutils literal notranslate"><span class="pre">Tensor.tanh()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.cos"><code class="docutils literal notranslate"><span class="pre">Tensor.cos()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.sin"><code class="docutils literal notranslate"><span class="pre">Tensor.sin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.tan"><code class="docutils literal notranslate"><span class="pre">Tensor.tan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.ceiling"><code class="docutils literal notranslate"><span class="pre">Tensor.ceiling()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.clamp"><code class="docutils literal notranslate"><span class="pre">Tensor.clamp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.elu"><code class="docutils literal notranslate"><span class="pre">Tensor.elu()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.erf"><code class="docutils literal notranslate"><span class="pre">Tensor.erf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.exp"><code class="docutils literal notranslate"><span class="pre">Tensor.exp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.floor"><code class="docutils literal notranslate"><span class="pre">Tensor.floor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.grn"><code class="docutils literal notranslate"><span class="pre">Tensor.grn()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.hsigmoid"><code class="docutils literal notranslate"><span class="pre">Tensor.hsigmoid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.hswish"><code class="docutils literal notranslate"><span class="pre">Tensor.hswish()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.log"><code class="docutils literal notranslate"><span class="pre">Tensor.log()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.mish"><code class="docutils literal notranslate"><span class="pre">Tensor.mish()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.relu"><code class="docutils literal notranslate"><span class="pre">Tensor.relu()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.round"><code class="docutils literal notranslate"><span class="pre">Tensor.round()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.sigmoid"><code class="docutils literal notranslate"><span class="pre">Tensor.sigmoid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.sign"><code class="docutils literal notranslate"><span class="pre">Tensor.sign()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.softmax"><code class="docutils literal notranslate"><span class="pre">Tensor.softmax()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.softplus"><code class="docutils literal notranslate"><span class="pre">Tensor.softplus()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.sqrt"><code class="docutils literal notranslate"><span class="pre">Tensor.sqrt()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.max"><code class="docutils literal notranslate"><span class="pre">Tensor.max()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.mean"><code class="docutils literal notranslate"><span class="pre">Tensor.mean()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.min"><code class="docutils literal notranslate"><span class="pre">Tensor.min()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.prod"><code class="docutils literal notranslate"><span class="pre">Tensor.prod()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.sum"><code class="docutils literal notranslate"><span class="pre">Tensor.sum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id0"><code class="docutils literal notranslate"><span class="pre">Tensor.T</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id1"><code class="docutils literal notranslate"><span class="pre">Tensor.acos()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id2"><code class="docutils literal notranslate"><span class="pre">Tensor.acosh()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id3"><code class="docutils literal notranslate"><span class="pre">Tensor.asin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id4"><code class="docutils literal notranslate"><span class="pre">Tensor.asinh()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id5"><code class="docutils literal notranslate"><span class="pre">Tensor.atan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id6"><code class="docutils literal notranslate"><span class="pre">Tensor.atanh()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id7"><code class="docutils literal notranslate"><span class="pre">Tensor.ceiling()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.chunk"><code class="docutils literal notranslate"><span class="pre">Tensor.chunk()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id8"><code class="docutils literal notranslate"><span class="pre">Tensor.clamp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id9"><code class="docutils literal notranslate"><span class="pre">Tensor.cos()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id10"><code class="docutils literal notranslate"><span class="pre">Tensor.cosh()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.dim"><code class="docutils literal notranslate"><span class="pre">Tensor.dim()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.dtype"><code class="docutils literal notranslate"><span class="pre">Tensor.dtype</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id11"><code class="docutils literal notranslate"><span class="pre">Tensor.elu()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id12"><code class="docutils literal notranslate"><span class="pre">Tensor.erf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id13"><code class="docutils literal notranslate"><span class="pre">Tensor.exp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.factory"><code class="docutils literal notranslate"><span class="pre">Tensor.factory</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.flatten"><code class="docutils literal notranslate"><span class="pre">Tensor.flatten()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id14"><code class="docutils literal notranslate"><span class="pre">Tensor.floor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id15"><code class="docutils literal notranslate"><span class="pre">Tensor.grn()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id16"><code class="docutils literal notranslate"><span class="pre">Tensor.hsigmoid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id17"><code class="docutils literal notranslate"><span class="pre">Tensor.hswish()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id18"><code class="docutils literal notranslate"><span class="pre">Tensor.log()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id19"><code class="docutils literal notranslate"><span class="pre">Tensor.max()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id20"><code class="docutils literal notranslate"><span class="pre">Tensor.mean()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id21"><code class="docutils literal notranslate"><span class="pre">Tensor.min()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id22"><code class="docutils literal notranslate"><span class="pre">Tensor.mish()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.node"><code class="docutils literal notranslate"><span class="pre">Tensor.node</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.permute"><code class="docutils literal notranslate"><span class="pre">Tensor.permute()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id23"><code class="docutils literal notranslate"><span class="pre">Tensor.prod()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id24"><code class="docutils literal notranslate"><span class="pre">Tensor.relu()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.reshape"><code class="docutils literal notranslate"><span class="pre">Tensor.reshape()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id25"><code class="docutils literal notranslate"><span class="pre">Tensor.round()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.shape"><code class="docutils literal notranslate"><span class="pre">Tensor.shape</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id26"><code class="docutils literal notranslate"><span class="pre">Tensor.sigmoid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id27"><code class="docutils literal notranslate"><span class="pre">Tensor.sign()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id28"><code class="docutils literal notranslate"><span class="pre">Tensor.sin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id29"><code class="docutils literal notranslate"><span class="pre">Tensor.sinh()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.size"><code class="docutils literal notranslate"><span class="pre">Tensor.size()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id30"><code class="docutils literal notranslate"><span class="pre">Tensor.softmax()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id31"><code class="docutils literal notranslate"><span class="pre">Tensor.softplus()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id32"><code class="docutils literal notranslate"><span class="pre">Tensor.sqrt()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id33"><code class="docutils literal notranslate"><span class="pre">Tensor.squeeze()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id34"><code class="docutils literal notranslate"><span class="pre">Tensor.sum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id35"><code class="docutils literal notranslate"><span class="pre">Tensor.tan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id36"><code class="docutils literal notranslate"><span class="pre">Tensor.tanh()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.to"><code class="docutils literal notranslate"><span class="pre">Tensor.to()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.transpose"><code class="docutils literal notranslate"><span class="pre">Tensor.transpose()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.type"><code class="docutils literal notranslate"><span class="pre">Tensor.type()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#id37"><code class="docutils literal notranslate"><span class="pre">Tensor.unsqueeze()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.view"><code class="docutils literal notranslate"><span class="pre">Tensor.view()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.clear_cache"><code class="docutils literal notranslate"><span class="pre">clear_cache()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.get_driver_version"><code class="docutils literal notranslate"><span class="pre">get_driver_version()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.npu_available"><code class="docutils literal notranslate"><span class="pre">npu_available()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.run_factory"><code class="docutils literal notranslate"><span class="pre">run_factory()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.run_matmul"><code class="docutils literal notranslate"><span class="pre">run_matmul()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="intel_npu_acceleration_library.nn.html">intel_npu_acceleration_library.nn package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel-npu-acceleration-library-nn-autograd-module">intel_npu_acceleration_library.nn.autograd module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel-npu-acceleration-library-nn-linear-module">intel_npu_acceleration_library.nn.linear module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel-npu-acceleration-library-nn-llm-module">intel_npu_acceleration_library.nn.llm module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel-npu-acceleration-library-nn-autograd-module">intel_npu_acceleration_library.nn.autograd module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.autograd.AutogradMatMul"><code class="docutils literal notranslate"><span class="pre">AutogradMatMul</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.autograd.AutogradMatMul.backward"><code class="docutils literal notranslate"><span class="pre">AutogradMatMul.backward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.autograd.AutogradMatMul.forward"><code class="docutils literal notranslate"><span class="pre">AutogradMatMul.forward()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel-npu-acceleration-library-nn-linear-module">intel_npu_acceleration_library.nn.linear module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.linear.Linear"><code class="docutils literal notranslate"><span class="pre">Linear</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.linear.Linear.forward"><code class="docutils literal notranslate"><span class="pre">Linear.forward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.linear.Linear.fromTensor"><code class="docutils literal notranslate"><span class="pre">Linear.fromTensor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.linear.Linear.fromTorch"><code class="docutils literal notranslate"><span class="pre">Linear.fromTorch()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.linear.QuantizedLinear"><code class="docutils literal notranslate"><span class="pre">QuantizedLinear</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.linear.QuantizedLinear.forward"><code class="docutils literal notranslate"><span class="pre">QuantizedLinear.forward()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel-npu-acceleration-library-nn-llm-module">intel_npu_acceleration_library.nn.llm module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.FusedLlamaMLP"><code class="docutils literal notranslate"><span class="pre">FusedLlamaMLP</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.FusedLlamaMLP.forward"><code class="docutils literal notranslate"><span class="pre">FusedLlamaMLP.forward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.FusedLlamaMLP.fromTorch"><code class="docutils literal notranslate"><span class="pre">FusedLlamaMLP.fromTorch()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.LlamaAttention"><code class="docutils literal notranslate"><span class="pre">LlamaAttention</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.LlamaAttention.forward"><code class="docutils literal notranslate"><span class="pre">LlamaAttention.forward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.LlamaAttention.fromTorch"><code class="docutils literal notranslate"><span class="pre">LlamaAttention.fromTorch()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.PhiMLP"><code class="docutils literal notranslate"><span class="pre">PhiMLP</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.PhiMLP.forward"><code class="docutils literal notranslate"><span class="pre">PhiMLP.forward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.PhiMLP.fromTorch"><code class="docutils literal notranslate"><span class="pre">PhiMLP.fromTorch()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.generate_with_static_shape"><code class="docutils literal notranslate"><span class="pre">generate_with_static_shape()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.lshift_insert"><code class="docutils literal notranslate"><span class="pre">lshift_insert()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.warm_up_decoder_model"><code class="docutils literal notranslate"><span class="pre">warm_up_decoder_model()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#module-intel_npu_acceleration_library.nn">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Conv2d"><code class="docutils literal notranslate"><span class="pre">Conv2d</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Conv2d.bias"><code class="docutils literal notranslate"><span class="pre">Conv2d.bias</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Conv2d.forward"><code class="docutils literal notranslate"><span class="pre">Conv2d.forward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Conv2d.fromTorch"><code class="docutils literal notranslate"><span class="pre">Conv2d.fromTorch()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Conv2d.weight"><code class="docutils literal notranslate"><span class="pre">Conv2d.weight</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Linear"><code class="docutils literal notranslate"><span class="pre">Linear</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Linear.forward"><code class="docutils literal notranslate"><span class="pre">Linear.forward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Linear.fromTensor"><code class="docutils literal notranslate"><span class="pre">Linear.fromTensor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Linear.fromTorch"><code class="docutils literal notranslate"><span class="pre">Linear.fromTorch()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.LlamaAttention"><code class="docutils literal notranslate"><span class="pre">LlamaAttention</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.LlamaAttention.forward"><code class="docutils literal notranslate"><span class="pre">LlamaAttention.forward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.LlamaAttention.fromTorch"><code class="docutils literal notranslate"><span class="pre">LlamaAttention.fromTorch()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Module"><code class="docutils literal notranslate"><span class="pre">Module</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Module.create_model"><code class="docutils literal notranslate"><span class="pre">Module.create_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Module.extract_tensors_from_arguments"><code class="docutils literal notranslate"><span class="pre">Module.extract_tensors_from_arguments()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Module.factory_forward"><code class="docutils literal notranslate"><span class="pre">Module.factory_forward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Module.forward"><code class="docutils literal notranslate"><span class="pre">Module.forward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Module.to"><code class="docutils literal notranslate"><span class="pre">Module.to()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.PhiMLP"><code class="docutils literal notranslate"><span class="pre">PhiMLP</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.PhiMLP.forward"><code class="docutils literal notranslate"><span class="pre">PhiMLP.forward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.PhiMLP.fromTorch"><code class="docutils literal notranslate"><span class="pre">PhiMLP.fromTorch()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.QuantizedLinear"><code class="docutils literal notranslate"><span class="pre">QuantizedLinear</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.QuantizedLinear.forward"><code class="docutils literal notranslate"><span class="pre">QuantizedLinear.forward()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="intel_npu_acceleration_library.functional.html">intel_npu_acceleration_library.functional package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.functional.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.functional.html#intel-npu-acceleration-library-functional-scaled-dot-product-attention-module">intel_npu_acceleration_library.functional.scaled_dot_product_attention module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.functional.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.functional.html#module-intel_npu_acceleration_library.functional.scaled_dot_product_attention">intel_npu_acceleration_library.functional.scaled_dot_product_attention module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.functional.html#intel_npu_acceleration_library.functional.scaled_dot_product_attention.scaled_dot_product_attention"><code class="docutils literal notranslate"><span class="pre">scaled_dot_product_attention()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.functional.html#module-intel_npu_acceleration_library.functional">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.functional.html#intel_npu_acceleration_library.functional.scaled_dot_product_attention"><code class="docutils literal notranslate"><span class="pre">scaled_dot_product_attention()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -390,6 +758,173 @@ document.write(`
 </section>
 <section id="intel-npu-acceleration-library-compiler-module">
 <h2>intel_npu_acceleration_library.compiler module<a class="headerlink" href="#intel-npu-acceleration-library-compiler-module" title="Link to this heading">#</a></h2>
+<dl class="py class" id="module-intel_npu_acceleration_library.compiler">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.compiler.CompilerConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.compiler.</span></span><span class="sig-name descname"><span class="pre">CompilerConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">use_to</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dtype</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NPUDtype</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">torch.float16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#intel_npu_acceleration_library.compiler.CompilerConfig" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Configuration class to store the compilation configuration of a model for the NPU.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.compiler.apply_general_optimizations">
+<span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.compiler.</span></span><span class="sig-name descname"><span class="pre">apply_general_optimizations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#intel_npu_acceleration_library.compiler.apply_general_optimizations" title="Link to this definition">#</a></dt>
+<dd><p>Apply general optimizations to a torch.nn.Module.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>model</strong> (<em>torch.nn.Module</em>) – a pytorch nn.Module to compile and optimize for the npu</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.compiler.apply_horizontal_fusion">
+<span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.compiler.</span></span><span class="sig-name descname"><span class="pre">apply_horizontal_fusion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#intel_npu_acceleration_library.compiler.apply_horizontal_fusion" title="Link to this definition">#</a></dt>
+<dd><p>Recursively apply the optimization function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>torch.nn.Module</em>) – original module</p></li>
+<li><p><strong>args</strong> (<em>Any</em>) – positional arguments</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>) – keyword arguments</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.compiler.compile">
+<span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.compiler.</span></span><span class="sig-name descname"><span class="pre">compile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#intel_npu_acceleration_library.compiler.CompilerConfig" title="intel_npu_acceleration_library.compiler.CompilerConfig"><span class="pre">CompilerConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Module</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.compiler.compile" title="Link to this definition">#</a></dt>
+<dd><p>Compile a model for the NPU.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>torch.nn.Module</em>) – a pytorch nn.Module to compile and optimize for the npu</p></li>
+<li><p><strong>config</strong> (<a class="reference internal" href="#intel_npu_acceleration_library.compiler.CompilerConfig" title="intel_npu_acceleration_library.compiler.CompilerConfig"><em>CompilerConfig</em></a>) – the compiler configuration</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – invalid datatypes</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>compiled NPU nn.Module</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>torch.nn.Module</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.compiler.create_npu_kernels">
+<span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.compiler.</span></span><span class="sig-name descname"><span class="pre">create_npu_kernels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#intel_npu_acceleration_library.compiler.create_npu_kernels" title="Link to this definition">#</a></dt>
+<dd><p>Create NPU kernels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>model</strong> (<em>torch.nn.Module</em>) – a pytorch nn.Module to compile and optimize for the npu</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.compiler.forward">
+<span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.compiler.</span></span><span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#intel_npu_acceleration_library.compiler.forward" title="Link to this definition">#</a></dt>
+<dd><p>Override forward method for WeightOnlyLinear class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input</strong> – The input tensor.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The output tensor.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.compiler.lower_linear">
+<span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.compiler.</span></span><span class="sig-name descname"><span class="pre">lower_linear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#intel_npu_acceleration_library.compiler.lower_linear" title="Link to this definition">#</a></dt>
+<dd><p>Recursively apply the optimization function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>torch.nn.Module</em>) – original module</p></li>
+<li><p><strong>args</strong> (<em>Any</em>) – positional arguments</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>) – keyword arguments</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.compiler.module_optimization">
+<span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.compiler.</span></span><span class="sig-name descname"><span class="pre">module_optimization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Module</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.compiler.module_optimization" title="Link to this definition">#</a></dt>
+<dd><p>Optimize recursively a torch.nn.Module with a specific function.</p>
+<p>The function <cite>func</cite> get called recursively to every module in the network.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>func</strong> (<em>Callable</em>) – optimization function</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>optimized module</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.Module</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.compiler.npu">
+<span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.compiler.</span></span><span class="sig-name descname"><span class="pre">npu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">GraphModule</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">example_inputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Module</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">GraphModule</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.compiler.npu" title="Link to this definition">#</a></dt>
+<dd><p>Implement the custom torch 2.0 compile backend for the NPU.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gm</strong> (<em>Union</em><em>[</em><em>torch.nn.Module</em><em>, </em><em>torch.fx.GraphModule</em><em>]</em>) – The torch fx Module</p></li>
+<li><p><strong>example_inputs</strong> (<em>List</em><em>[</em><em>torch.Tensor</em><em>]</em>) – A list of example inputs</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The compiled model</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[torch.nn.Module, torch.fx.GraphModule]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.compiler.optimize_llama_attention">
+<span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.compiler.</span></span><span class="sig-name descname"><span class="pre">optimize_llama_attention</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#intel_npu_acceleration_library.compiler.optimize_llama_attention" title="Link to this definition">#</a></dt>
+<dd><p>Recursively apply the optimization function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>torch.nn.Module</em>) – original module</p></li>
+<li><p><strong>args</strong> (<em>Any</em>) – positional arguments</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>) – keyword arguments</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.compiler.weights_quantization">
+<span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.compiler.</span></span><span class="sig-name descname"><span class="pre">weights_quantization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#intel_npu_acceleration_library.compiler.weights_quantization" title="Link to this definition">#</a></dt>
+<dd><p>Recursively apply the optimization function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>torch.nn.Module</em>) – original module</p></li>
+<li><p><strong>args</strong> (<em>Any</em>) – positional arguments</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>) – keyword arguments</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="intel-npu-acceleration-library-optimizations-module">
 <h2>intel_npu_acceleration_library.optimizations module<a class="headerlink" href="#intel-npu-acceleration-library-optimizations-module" title="Link to this heading">#</a></h2>
@@ -400,7 +935,7 @@ document.write(`
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>module</strong> (<em>nn.Module</em>) – the nn.Module</p></li>
+<li><p><strong>module</strong> (<a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Module" title="intel_npu_acceleration_library.nn.Module"><em>nn.Module</em></a>) – the nn.Module</p></li>
 <li><p><strong>target</strong> (<em>str</em>) – the attribute you want to delete</p></li>
 </ul>
 </dd>
@@ -414,8 +949,8 @@ document.write(`
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>model</strong> (<em>nn.Module</em>) – Origianl nn.Module object</p></li>
-<li><p><strong>modules</strong> (<em>Dict</em><em>[</em><em>nn.Linear</em><em>]</em>) – a dictiorany of node name: linear layer</p></li>
+<li><p><strong>model</strong> (<a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Module" title="intel_npu_acceleration_library.nn.Module"><em>nn.Module</em></a>) – Origianl nn.Module object</p></li>
+<li><p><strong>modules</strong> (<em>Dict</em><em>[</em><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Linear" title="intel_npu_acceleration_library.nn.Linear"><em>nn.Linear</em></a><em>]</em>) – a dictiorany of node name: linear layer</p></li>
 <li><p><strong>targets</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – list of layer node names</p></li>
 <li><p><strong>fused_layer_name</strong> (<em>str</em>) – fused layer name</p></li>
 </ul>
@@ -446,9 +981,246 @@ document.write(`
 </section>
 <section id="intel-npu-acceleration-library-quantization-module">
 <h2>intel_npu_acceleration_library.quantization module<a class="headerlink" href="#intel-npu-acceleration-library-quantization-module" title="Link to this heading">#</a></h2>
+<dl class="py function" id="module-intel_npu_acceleration_library.quantization">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.quantization.compress_to_i4">
+<span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.quantization.</span></span><span class="sig-name descname"><span class="pre">compress_to_i4</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.quantization.compress_to_i4" title="Link to this definition">#</a></dt>
+<dd><p>Compresses a given tensor to 4-bit representation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>weights</strong> (<em>torch.Tensor</em>) – The input tensor to be compressed.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The compressed tensor with 4-bit representation.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.quantization.quantize_fit">
+<span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.quantization.</span></span><span class="sig-name descname"><span class="pre">quantize_fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights_dtype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'RTN'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Module</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.quantization.quantize_fit" title="Link to this definition">#</a></dt>
+<dd><p>Quantize a model with a given configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>torch.nn.Module</em>) – The model to quantize</p></li>
+<li><p><strong>weights_dtype</strong> (<em>str</em>) – The datatype for the weights</p></li>
+<li><p><strong>algorithm</strong> (<em>str</em><em>, </em><em>optional</em>) – The quantization algorithm. Defaults to “RTN”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – Quantization error: unsupported datatype</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The quantized model</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>torch.nn.Module</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.quantization.quantize_i4_model">
+<span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.quantization.</span></span><span class="sig-name descname"><span class="pre">quantize_i4_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'RTN'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Module</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.quantization.quantize_i4_model" title="Link to this definition">#</a></dt>
+<dd><p>Quantize a model to 4-bit representation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>torch.nn.Module</em>) – The model to quantize</p></li>
+<li><p><strong>algorithm</strong> (<em>str</em><em>, </em><em>optional</em>) – The quantization algorithm. Defaults to “RTN”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The quantized model</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.Module</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.quantization.quantize_i8_model">
+<span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.quantization.</span></span><span class="sig-name descname"><span class="pre">quantize_i8_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'RTN'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Module</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.quantization.quantize_i8_model" title="Link to this definition">#</a></dt>
+<dd><p>Quantize a model to 8-bit representation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>torch.nn.Module</em>) – The model to quantize</p></li>
+<li><p><strong>algorithm</strong> (<em>str</em><em>, </em><em>optional</em>) – The quantization algorithm. Defaults to “RTN”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The quantized model</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.Module</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.quantization.quantize_model">
+<span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.quantization.</span></span><span class="sig-name descname"><span class="pre">quantize_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">NPUDtype</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Module</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.quantization.quantize_model" title="Link to this definition">#</a></dt>
+<dd><p>Quantize a model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>torch.nn.Module</em>) – The model to quantize</p></li>
+<li><p><strong>dtype</strong> (<em>NPUDtype</em>) – The desired datatype</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – Quantization error: unsupported datatype</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The quantized model</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>torch.nn.Module</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.quantization.quantize_tensor">
+<span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.quantization.</span></span><span class="sig-name descname"><span class="pre">quantize_tensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_max_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(-128,</span> <span class="pre">127)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.quantization.quantize_tensor" title="Link to this definition">#</a></dt>
+<dd><p>Quantize a fp16 tensor symmetrically.</p>
+<p>Produces a quantize tensor (same shape, dtype == <cite>torch.int8</cite>) and a scale tensor (dtype == <a href="#id1"><span class="problematic" id="id2">`</span></a>torch.float16)
+The quantization equation is the following W = S * W_q</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>weight</strong> (<em>torch.Tensor</em>) – The tensor to quantize</p></li>
+<li><p><strong>min_max_range</strong> (<em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – The min and max range for the quantized tensor. Defaults to (-128, 127).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – Error in the quantization step</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Quantized tensor and scale</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple[torch.Tensor, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
+<section id="module-intel_npu_acceleration_library">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-intel_npu_acceleration_library" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.NPUAutoModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.</span></span><span class="sig-name descname"><span class="pre">NPUAutoModel</span></span><a class="headerlink" href="#intel_npu_acceleration_library.NPUAutoModel" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>NPU wrapper for AutoModel.</p>
+<dl class="simple">
+<dt>Attrs:</dt><dd><p>from_pretrained: Load a pretrained model</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.NPUAutoModel.from_pretrained">
+<span class="sig-name descname"><span class="pre">from_pretrained</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config:</span> <span class="pre">~intel_npu_acceleration_library.compiler.CompilerConfig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transformers_class:</span> <span class="pre">~typing.Type</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'transformers.models.auto.modeling_auto.AutoModel'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs:</span> <span class="pre">~typing.Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Module</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.NPUAutoModel.from_pretrained" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.NPUModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.</span></span><span class="sig-name descname"><span class="pre">NPUModel</span></span><a class="headerlink" href="#intel_npu_acceleration_library.NPUModel" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base NPU model class.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.NPUModel.from_pretrained">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_pretrained</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_name_or_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#intel_npu_acceleration_library.compiler.CompilerConfig" title="intel_npu_acceleration_library.compiler.CompilerConfig"><span class="pre">CompilerConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">transformers_class</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Type</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Module</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.NPUModel.from_pretrained" title="Link to this definition">#</a></dt>
+<dd><p>Template for the <cite>from_pretrained</cite> static method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_name_or_path</strong> (<em>str</em>) – model name or path</p></li>
+<li><p><strong>config</strong> (<a class="reference internal" href="#intel_npu_acceleration_library.compiler.CompilerConfig" title="intel_npu_acceleration_library.compiler.CompilerConfig"><em>CompilerConfig</em></a>) – compiler configuration</p></li>
+<li><p><strong>transformers_class</strong> (<em>Optional</em><em>[</em><em>Type</em><em>]</em><em>, </em><em>optional</em>) – base class to use. Must have a <cite>from_pretrained</cite> method. Defaults to None.</p></li>
+<li><p><strong>export</strong> (<em>bool</em><em>, </em><em>optional</em>) – enable the caching of the model. Defaults to True.</p></li>
+<li><p><strong>args</strong> (<em>Any</em>) – positional arguments</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>) – keyword arguments</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>RuntimeError</strong> – Invalid class</p></li>
+<li><p><strong>AttributeError</strong> – Cannot export model with trust_remote_code=True</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>compiled mode</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>torch.nn.Module</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.NPUModelForCausalLM">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.</span></span><span class="sig-name descname"><span class="pre">NPUModelForCausalLM</span></span><a class="headerlink" href="#intel_npu_acceleration_library.NPUModelForCausalLM" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>NPU wrapper for AutoModelForCausalLM.</p>
+<dl class="simple">
+<dt>Attrs:</dt><dd><p>from_pretrained: Load a pretrained model</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.NPUModelForCausalLM.from_pretrained">
+<span class="sig-name descname"><span class="pre">from_pretrained</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config:</span> <span class="pre">~intel_npu_acceleration_library.compiler.CompilerConfig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transformers_class:</span> <span class="pre">~typing.Type</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'transformers.models.auto.modeling_auto.AutoModelForCausalLM'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs:</span> <span class="pre">~typing.Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Module</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.NPUModelForCausalLM.from_pretrained" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.NPUModelForSeq2SeqLM">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.</span></span><span class="sig-name descname"><span class="pre">NPUModelForSeq2SeqLM</span></span><a class="headerlink" href="#intel_npu_acceleration_library.NPUModelForSeq2SeqLM" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>NPU wrapper for AutoModelForSeq2SeqLM.</p>
+<dl class="simple">
+<dt>Attrs:</dt><dd><p>from_pretrained: Load a pretrained model</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.NPUModelForSeq2SeqLM.from_pretrained">
+<span class="sig-name descname"><span class="pre">from_pretrained</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config:</span> <span class="pre">~intel_npu_acceleration_library.compiler.CompilerConfig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transformers_class:</span> <span class="pre">~typing.Type</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'transformers.models.auto.modeling_auto.AutoModelForSeq2SeqLM'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs:</span> <span class="pre">~typing.Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Module</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.NPUModelForSeq2SeqLM.from_pretrained" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="intel_npu_acceleration_library.compile">
+<span class="sig-prename descclassname"><span class="pre">intel_npu_acceleration_library.</span></span><span class="sig-name descname"><span class="pre">compile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#intel_npu_acceleration_library.compiler.CompilerConfig" title="intel_npu_acceleration_library.compiler.CompilerConfig"><span class="pre">CompilerConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Module</span></span></span><a class="headerlink" href="#intel_npu_acceleration_library.compile" title="Link to this definition">#</a></dt>
+<dd><p>Compile a model for the NPU.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>torch.nn.Module</em>) – a pytorch nn.Module to compile and optimize for the npu</p></li>
+<li><p><strong>config</strong> (<a class="reference internal" href="#intel_npu_acceleration_library.compiler.CompilerConfig" title="intel_npu_acceleration_library.compiler.CompilerConfig"><em>CompilerConfig</em></a>) – the compiler configuration</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – invalid datatypes</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>compiled NPU nn.Module</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>torch.nn.Module</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 </section>
 
@@ -460,7 +1232,7 @@ document.write(`
               
               
               
-                <footer class="prev-next-footer d-print-none">
+                <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
     <a class="left-prev"
@@ -500,15 +1272,55 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subpackages">Subpackages</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-bindings-module">intel_npu_acceleration_library.bindings module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-compiler-module">intel_npu_acceleration_library.compiler module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-compiler-module">intel_npu_acceleration_library.compiler module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compiler.CompilerConfig"><code class="docutils literal notranslate"><span class="pre">CompilerConfig</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compiler.apply_general_optimizations"><code class="docutils literal notranslate"><span class="pre">apply_general_optimizations()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compiler.apply_horizontal_fusion"><code class="docutils literal notranslate"><span class="pre">apply_horizontal_fusion()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compiler.compile"><code class="docutils literal notranslate"><span class="pre">compile()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compiler.create_npu_kernels"><code class="docutils literal notranslate"><span class="pre">create_npu_kernels()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compiler.forward"><code class="docutils literal notranslate"><span class="pre">forward()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compiler.lower_linear"><code class="docutils literal notranslate"><span class="pre">lower_linear()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compiler.module_optimization"><code class="docutils literal notranslate"><span class="pre">module_optimization()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compiler.npu"><code class="docutils literal notranslate"><span class="pre">npu()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compiler.optimize_llama_attention"><code class="docutils literal notranslate"><span class="pre">optimize_llama_attention()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compiler.weights_quantization"><code class="docutils literal notranslate"><span class="pre">weights_quantization()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-optimizations-module">intel_npu_acceleration_library.optimizations module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.optimizations.delattr_recursively"><code class="docutils literal notranslate"><span class="pre">delattr_recursively()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.optimizations.fuse_linear_layers"><code class="docutils literal notranslate"><span class="pre">fuse_linear_layers()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.optimizations.horizontal_fusion_linear"><code class="docutils literal notranslate"><span class="pre">horizontal_fusion_linear()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-quantization-module">intel_npu_acceleration_library.quantization module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intel-npu-acceleration-library-quantization-module">intel_npu_acceleration_library.quantization module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.quantization.compress_to_i4"><code class="docutils literal notranslate"><span class="pre">compress_to_i4()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.quantization.quantize_fit"><code class="docutils literal notranslate"><span class="pre">quantize_fit()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.quantization.quantize_i4_model"><code class="docutils literal notranslate"><span class="pre">quantize_i4_model()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.quantization.quantize_i8_model"><code class="docutils literal notranslate"><span class="pre">quantize_i8_model()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.quantization.quantize_model"><code class="docutils literal notranslate"><span class="pre">quantize_model()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.quantization.quantize_tensor"><code class="docutils literal notranslate"><span class="pre">quantize_tensor()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-intel_npu_acceleration_library">Module contents</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.NPUAutoModel"><code class="docutils literal notranslate"><span class="pre">NPUAutoModel</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.NPUAutoModel.from_pretrained"><code class="docutils literal notranslate"><span class="pre">NPUAutoModel.from_pretrained()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.NPUModel"><code class="docutils literal notranslate"><span class="pre">NPUModel</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.NPUModel.from_pretrained"><code class="docutils literal notranslate"><span class="pre">NPUModel.from_pretrained()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.NPUModelForCausalLM"><code class="docutils literal notranslate"><span class="pre">NPUModelForCausalLM</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.NPUModelForCausalLM.from_pretrained"><code class="docutils literal notranslate"><span class="pre">NPUModelForCausalLM.from_pretrained()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.NPUModelForSeq2SeqLM"><code class="docutils literal notranslate"><span class="pre">NPUModelForSeq2SeqLM</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.NPUModelForSeq2SeqLM.from_pretrained"><code class="docutils literal notranslate"><span class="pre">NPUModelForSeq2SeqLM.from_pretrained()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intel_npu_acceleration_library.compile"><code class="docutils literal notranslate"><span class="pre">compile()</span></code></a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
@@ -557,8 +1369,8 @@ By Intel Corporation
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
 
   <footer class="bd-footer">
   </footer>

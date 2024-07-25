@@ -13,32 +13,32 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
     <script src="_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'genindex';</script>
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" />
@@ -51,23 +51,27 @@
 
   
   
-  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -89,13 +93,8 @@
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
-
-  <div class="pst-async-banner-revealer d-none">
-  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
-</div>
-
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
     </header>
   
 
@@ -121,8 +120,6 @@
         <div class="sidebar-primary-item">
 
   
-    
-  
 
 <a class="navbar-brand logo" href="index.html">
   
@@ -138,7 +135,7 @@
 
  <script>
  document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
     <span class="search-button__default-text">Search</span>
     <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
@@ -167,12 +164,12 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="python/intel_npu_acceleration_library.html">Python API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="python/intel_npu_acceleration_library.html">Python API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="python/intel_npu_acceleration_library.backend.html">intel_npu_acceleration_library.backend package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="python/intel_npu_acceleration_library.nn.html">intel_npu_acceleration_library.nn package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="python/intel_npu_acceleration_library.functional.html">intel_npu_acceleration_library.functional package</a></li>
 </ul>
-</details></li>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="cpp_reference.html">C++ API Reference</a></li>
 </ul>
 
@@ -189,7 +186,7 @@
 
       </div>
       
-      <main id="main-content" class="bd-main" role="main">
+      <main id="main-content" class="bd-main">
         
         
 
@@ -198,14 +195,14 @@
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article d-print-none">
+              <div class="bd-header-article">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</button></div>
+</label></div>
       
     </div>
   
@@ -235,10 +232,10 @@
 
 <script>
 document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script>
@@ -246,7 +243,7 @@ document.write(`
 
 <script>
 document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
@@ -280,18 +277,202 @@ document.write(`
 <h1 id="index">Index</h1>
 
 <div class="genindex-jumpbox">
- <a href="#D"><strong>D</strong></a>
+ <a href="#_"><strong>_</strong></a>
+ | <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
  | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
  | <a href="#H"><strong>H</strong></a>
  | <a href="#I"><strong>I</strong></a>
+ | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
  | <a href="#O"><strong>O</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#Q"><strong>Q</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
+ | <a href="#V"><strong>V</strong></a>
+ | <a href="#W"><strong>W</strong></a>
  
 </div>
+<h2 id="_">_</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.__add__">__add__() (intel_npu_acceleration_library.backend.Tensor method)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.__len__">__len__() (intel_npu_acceleration_library.backend.Tensor method)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.__matmul__">__matmul__() (intel_npu_acceleration_library.backend.Tensor method)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.__mul__">__mul__() (intel_npu_acceleration_library.backend.Tensor method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.__neg__">__neg__() (intel_npu_acceleration_library.backend.Tensor method)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.__repr__">__repr__() (intel_npu_acceleration_library.backend.Tensor method)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.__str__">__str__() (intel_npu_acceleration_library.backend.Tensor method)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.__sub__">__sub__() (intel_npu_acceleration_library.backend.Tensor method)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.__truediv__">__truediv__() (intel_npu_acceleration_library.backend.Tensor method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id1">acos() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.acos">[1]</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id2">acosh() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.acosh">[1]</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.runtime.adapt_output_tensor">adapt_output_tensor() (in module intel_npu_acceleration_library.backend.runtime)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.base.adapt_weight">adapt_weight() (in module intel_npu_acceleration_library.backend.base)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.add_to_map">add_to_map() (intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch method)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.html#intel_npu_acceleration_library.compiler.apply_general_optimizations">apply_general_optimizations() (in module intel_npu_acceleration_library.compiler)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.html#intel_npu_acceleration_library.compiler.apply_horizontal_fusion">apply_horizontal_fusion() (in module intel_npu_acceleration_library.compiler)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id3">asin() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.asin">[1]</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id4">asinh() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.asinh">[1]</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id5">atan() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.atan">[1]</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id6">atanh() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.atanh">[1]</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.autograd.AutogradMatMul">AutogradMatMul (class in intel_npu_acceleration_library.nn.autograd)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.avg_pooling">avg_pooling() (intel_npu_acceleration_library.backend.factory.NNFactory method)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.avg_pooling">(intel_npu_acceleration_library.backend.NNFactory method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.autograd.AutogradMatMul.backward">backward() (intel_npu_acceleration_library.nn.autograd.AutogradMatMul static method)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.base.BaseNPUBackend">BaseNPUBackend (class in intel_npu_acceleration_library.backend.base)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch">BaseNPUBackendWithPrefetch (class in intel_npu_acceleration_library.backend.base)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Conv2d.bias">bias (intel_npu_acceleration_library.nn.Conv2d property)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id7">ceiling() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.ceiling">[1]</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.chunk">chunk() (intel_npu_acceleration_library.backend.Tensor method)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id8">clamp() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.clamp">[1]</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.clear_cache">clear_cache() (in module intel_npu_acceleration_library.backend)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.runtime.clear_cache">(in module intel_npu_acceleration_library.backend.runtime)</a>
+</li>
+      </ul></li>
+      <li><a href="python/intel_npu_acceleration_library.html#intel_npu_acceleration_library.compile">compile() (in module intel_npu_acceleration_library)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.html#intel_npu_acceleration_library.compiler.compile">(in module intel_npu_acceleration_library.compiler)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.compile">(intel_npu_acceleration_library.backend.factory.NNFactory method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.compile">(intel_npu_acceleration_library.backend.NNFactory method)</a>
+</li>
+      </ul></li>
+      <li><a href="python/intel_npu_acceleration_library.html#intel_npu_acceleration_library.compiler.CompilerConfig">CompilerConfig (class in intel_npu_acceleration_library.compiler)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.html#intel_npu_acceleration_library.quantization.compress_to_i4">compress_to_i4() (in module intel_npu_acceleration_library.quantization)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.concat">concat() (intel_npu_acceleration_library.backend.factory.NNFactory method)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.concat">(intel_npu_acceleration_library.backend.NNFactory method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.constant">constant() (intel_npu_acceleration_library.backend.factory.NNFactory method)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.constant">(intel_npu_acceleration_library.backend.NNFactory method)</a>
+</li>
+      </ul></li>
+      <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Conv2d">Conv2d (class in intel_npu_acceleration_library.nn)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Convolution">Convolution (class in intel_npu_acceleration_library.backend)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.convolution">convolution() (intel_npu_acceleration_library.backend.factory.NNFactory method)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.convolution">(intel_npu_acceleration_library.backend.NNFactory method)</a>
+</li>
+      </ul></li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id9">cos() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.cos">[1]</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id10">cosh() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.cosh">[1]</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Module.create_model">create_model() (intel_npu_acceleration_library.nn.Module method)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.html#intel_npu_acceleration_library.compiler.create_npu_kernels">create_npu_kernels() (in module intel_npu_acceleration_library.compiler)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.create_parameters">create_parameters() (intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="python/intel_npu_acceleration_library.html#intel_npu_acceleration_library.optimizations.delattr_recursively">delattr_recursively() (in module intel_npu_acceleration_library.optimizations)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.dim">dim() (intel_npu_acceleration_library.backend.Tensor method)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.dtype">dtype (intel_npu_acceleration_library.backend.Tensor property)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id11">elu() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.elu">[1]</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id12">erf() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.erf">[1]</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id13">exp() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.exp">[1]</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Module.extract_tensors_from_arguments">extract_tensors_from_arguments() (intel_npu_acceleration_library.nn.Module method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -299,7 +480,119 @@ document.write(`
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.factory">factory (intel_npu_acceleration_library.backend.Tensor attribute)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Module.factory_forward">factory_forward() (intel_npu_acceleration_library.nn.Module method)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.flatten">flatten() (intel_npu_acceleration_library.backend.Tensor method)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id14">floor() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.floor">[1]</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.html#intel_npu_acceleration_library.compiler.forward">forward() (in module intel_npu_acceleration_library.compiler)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.autograd.AutogradMatMul.forward">(intel_npu_acceleration_library.nn.autograd.AutogradMatMul static method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Conv2d.forward">(intel_npu_acceleration_library.nn.Conv2d method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Linear.forward">(intel_npu_acceleration_library.nn.Linear method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.linear.Linear.forward">(intel_npu_acceleration_library.nn.linear.Linear method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.linear.QuantizedLinear.forward">(intel_npu_acceleration_library.nn.linear.QuantizedLinear method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.LlamaAttention.forward">(intel_npu_acceleration_library.nn.LlamaAttention method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.FusedLlamaMLP.forward">(intel_npu_acceleration_library.nn.llm.FusedLlamaMLP method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.LlamaAttention.forward">(intel_npu_acceleration_library.nn.llm.LlamaAttention method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.PhiMLP.forward">(intel_npu_acceleration_library.nn.llm.PhiMLP method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Module.forward">(intel_npu_acceleration_library.nn.Module method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.PhiMLP.forward">(intel_npu_acceleration_library.nn.PhiMLP method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.QuantizedLinear.forward">(intel_npu_acceleration_library.nn.QuantizedLinear method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.html#intel_npu_acceleration_library.NPUAutoModel.from_pretrained">from_pretrained() (intel_npu_acceleration_library.NPUAutoModel method)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.html#intel_npu_acceleration_library.NPUModel.from_pretrained">(intel_npu_acceleration_library.NPUModel static method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.html#intel_npu_acceleration_library.NPUModelForCausalLM.from_pretrained">(intel_npu_acceleration_library.NPUModelForCausalLM method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.html#intel_npu_acceleration_library.NPUModelForSeq2SeqLM.from_pretrained">(intel_npu_acceleration_library.NPUModelForSeq2SeqLM method)</a>
+</li>
+      </ul></li>
+      <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Linear.fromTensor">fromTensor() (intel_npu_acceleration_library.nn.Linear static method)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.linear.Linear.fromTensor">(intel_npu_acceleration_library.nn.linear.Linear static method)</a>
+</li>
+      </ul></li>
+      <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Conv2d.fromTorch">fromTorch() (intel_npu_acceleration_library.nn.Conv2d static method)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Linear.fromTorch">(intel_npu_acceleration_library.nn.Linear static method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.linear.Linear.fromTorch">(intel_npu_acceleration_library.nn.linear.Linear static method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.LlamaAttention.fromTorch">(intel_npu_acceleration_library.nn.LlamaAttention static method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.FusedLlamaMLP.fromTorch">(intel_npu_acceleration_library.nn.llm.FusedLlamaMLP static method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.LlamaAttention.fromTorch">(intel_npu_acceleration_library.nn.llm.LlamaAttention static method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.PhiMLP.fromTorch">(intel_npu_acceleration_library.nn.llm.PhiMLP static method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.PhiMLP.fromTorch">(intel_npu_acceleration_library.nn.PhiMLP static method)</a>
+</li>
+      </ul></li>
       <li><a href="python/intel_npu_acceleration_library.html#intel_npu_acceleration_library.optimizations.fuse_linear_layers">fuse_linear_layers() (in module intel_npu_acceleration_library.optimizations)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.FusedLlamaMLP">FusedLlamaMLP (class in intel_npu_acceleration_library.nn.llm)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.generate_with_static_shape">generate_with_static_shape() (in module intel_npu_acceleration_library.nn.llm)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.get_backend_dtype">get_backend_dtype() (intel_npu_acceleration_library.backend.factory.NNFactory method)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.get_backend_dtype">(intel_npu_acceleration_library.backend.NNFactory method)</a>
+</li>
+      </ul></li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.get_driver_version">get_driver_version() (in module intel_npu_acceleration_library.backend)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.get_tensor_dtype">get_tensor_dtype() (intel_npu_acceleration_library.backend.factory.NNFactory method)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.get_tensor_dtype">(intel_npu_acceleration_library.backend.NNFactory method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.get_tensor_recursively">get_tensor_recursively() (intel_npu_acceleration_library.backend.factory.NNFactory method)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.get_tensor_recursively">(intel_npu_acceleration_library.backend.NNFactory method)</a>
+</li>
+      </ul></li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.get_tensor_shape">get_tensor_shape() (intel_npu_acceleration_library.backend.factory.NNFactory method)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.get_tensor_shape">(intel_npu_acceleration_library.backend.NNFactory method)</a>
+</li>
+      </ul></li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id15">grn() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.grn">[1]</a>
 </li>
   </ul></td>
 </tr></table>
@@ -310,18 +603,150 @@ document.write(`
       <li><a href="python/intel_npu_acceleration_library.html#intel_npu_acceleration_library.optimizations.horizontal_fusion_linear">horizontal_fusion_linear() (in module intel_npu_acceleration_library.optimizations)</a>
 </li>
   </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id16">hsigmoid() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.hsigmoid">[1]</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id17">hswish() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.hswish">[1]</a>
+</li>
+  </ul></td>
 </tr></table>
 
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    intel_npu_acceleration_library
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.html#module-intel_npu_acceleration_library">module</a>
+</li>
+      </ul></li>
       <li><a href="cpp_reference.html#_CPPv430intel_npu_acceleration_library">intel_npu_acceleration_library (C++ type)</a>
 </li>
+      <li>
+    intel_npu_acceleration_library.backend
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#module-intel_npu_acceleration_library.backend">module</a>
+</li>
+      </ul></li>
+      <li>
+    intel_npu_acceleration_library.backend.base
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#module-intel_npu_acceleration_library.backend.base">module</a>
+</li>
+      </ul></li>
+      <li>
+    intel_npu_acceleration_library.backend.factory
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#module-intel_npu_acceleration_library.backend.factory">module</a>
+</li>
+      </ul></li>
+      <li>
+    intel_npu_acceleration_library.backend.linear
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#module-intel_npu_acceleration_library.backend.linear">module</a>
+</li>
+      </ul></li>
+      <li>
+    intel_npu_acceleration_library.backend.matmul
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#module-intel_npu_acceleration_library.backend.matmul">module</a>
+</li>
+      </ul></li>
+      <li>
+    intel_npu_acceleration_library.backend.mlp
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#module-intel_npu_acceleration_library.backend.mlp">module</a>
+</li>
+      </ul></li>
+      <li>
+    intel_npu_acceleration_library.backend.qlinear
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#module-intel_npu_acceleration_library.backend.qlinear">module</a>
+</li>
+      </ul></li>
+      <li>
+    intel_npu_acceleration_library.backend.qmatmul
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#module-intel_npu_acceleration_library.backend.qmatmul">module</a>
+</li>
+      </ul></li>
+      <li>
+    intel_npu_acceleration_library.backend.runtime
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#module-intel_npu_acceleration_library.backend.runtime">module</a>
+</li>
+      </ul></li>
+      <li>
+    intel_npu_acceleration_library.compiler
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.html#module-intel_npu_acceleration_library.compiler">module</a>
+</li>
+      </ul></li>
+      <li>
+    intel_npu_acceleration_library.functional
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.functional.html#module-intel_npu_acceleration_library.functional">module</a>
+</li>
+      </ul></li>
+      <li>
+    intel_npu_acceleration_library.functional.scaled_dot_product_attention
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.functional.html#module-intel_npu_acceleration_library.functional.scaled_dot_product_attention">module</a>
+</li>
+      </ul></li>
+      <li>
+    intel_npu_acceleration_library.nn
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#module-intel_npu_acceleration_library.nn">module</a>
+</li>
+      </ul></li>
+      <li>
+    intel_npu_acceleration_library.nn.autograd
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#module-intel_npu_acceleration_library.nn.autograd">module</a>
+</li>
+      </ul></li>
+      <li>
+    intel_npu_acceleration_library.nn.linear
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#module-intel_npu_acceleration_library.nn.linear">module</a>
+</li>
+      </ul></li>
+      <li>
+    intel_npu_acceleration_library.nn.llm
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#module-intel_npu_acceleration_library.nn.llm">module</a>
+</li>
+      </ul></li>
       <li>
     intel_npu_acceleration_library.optimizations
 
       <ul>
         <li><a href="python/intel_npu_acceleration_library.html#module-intel_npu_acceleration_library.optimizations">module</a>
+</li>
+      </ul></li>
+      <li>
+    intel_npu_acceleration_library.quantization
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.html#module-intel_npu_acceleration_library.quantization">module</a>
 </li>
       </ul></li>
       <li><a href="cpp_reference.html#_CPPv4N30intel_npu_acceleration_library15_isNPUAvailableERN2ov4CoreE">intel_npu_acceleration_library::_isNPUAvailable (C++ function)</a>
@@ -410,6 +835,8 @@ document.write(`
 </li>
       <li><a href="cpp_reference.html#_CPPv4N30intel_npu_acceleration_library12ModelFactory6matmulEPN2ov2op2OpERPN2ov2op2OpEbb">intel_npu_acceleration_library::ModelFactory::matmul (C++ function)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="cpp_reference.html#_CPPv4N30intel_npu_acceleration_library12ModelFactory11max_poolingEPN2ov2op2OpENSt6vectorI6size_tEENSt6vectorI6size_tEENSt6vectorI6size_tEENSt6vectorI6size_tEEN2ov2op12RoundingTypeEN2ov2op7PadTypeE">intel_npu_acceleration_library::ModelFactory::max_pooling (C++ function)</a>
 </li>
       <li><a href="cpp_reference.html#_CPPv4N30intel_npu_acceleration_library12ModelFactory4mishEPN2ov2op2OpE">intel_npu_acceleration_library::ModelFactory::mish (C++ function)</a>
@@ -446,8 +873,6 @@ document.write(`
 </li>
       <li><a href="cpp_reference.html#_CPPv4N30intel_npu_acceleration_library12ModelFactory7resultsE">intel_npu_acceleration_library::ModelFactory::results (C++ member)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="cpp_reference.html#_CPPv4N30intel_npu_acceleration_library12ModelFactory5roundEPN2ov2op2OpE">intel_npu_acceleration_library::ModelFactory::round (C++ function)</a>
 </li>
       <li><a href="cpp_reference.html#_CPPv4N30intel_npu_acceleration_library12ModelFactory28scaled_dot_product_attentionEPN2ov2op2OpEPN2ov2op2OpEPN2ov2op2OpEPN2ov2op2OpEb">intel_npu_acceleration_library::ModelFactory::scaled_dot_product_attention (C++ function)</a>
@@ -581,23 +1006,469 @@ document.write(`
   </ul></td>
 </tr></table>
 
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Linear">Linear (class in intel_npu_acceleration_library.backend)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.linear.Linear">(class in intel_npu_acceleration_library.backend.linear)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Linear">(class in intel_npu_acceleration_library.nn)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.linear.Linear">(class in intel_npu_acceleration_library.nn.linear)</a>
+</li>
+      </ul></li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.linear">linear() (intel_npu_acceleration_library.backend.factory.NNFactory method)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.linear">(intel_npu_acceleration_library.backend.NNFactory method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.LlamaAttention">LlamaAttention (class in intel_npu_acceleration_library.nn)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.LlamaAttention">(class in intel_npu_acceleration_library.nn.llm)</a>
+</li>
+      </ul></li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.load_wt_fn">load_wt_fn() (intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch method)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id18">log() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.log">[1]</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.html#intel_npu_acceleration_library.compiler.lower_linear">lower_linear() (in module intel_npu_acceleration_library.compiler)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.lshift_insert">lshift_insert() (in module intel_npu_acceleration_library.nn.llm)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.MatMul">MatMul (class in intel_npu_acceleration_library.backend)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.matmul.MatMul">(class in intel_npu_acceleration_library.backend.matmul)</a>
+</li>
+      </ul></li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.matmul">matmul() (intel_npu_acceleration_library.backend.factory.NNFactory method)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.matmul">(intel_npu_acceleration_library.backend.NNFactory method)</a>
+</li>
+      </ul></li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id19">max() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.max">[1]</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.max_pooling">max_pooling() (intel_npu_acceleration_library.backend.factory.NNFactory method)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.max_pooling">(intel_npu_acceleration_library.backend.NNFactory method)</a>
+</li>
+      </ul></li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id20">mean() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.mean">[1]</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id21">min() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.min">[1]</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id22">mish() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.mish">[1]</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.MLP">MLP (class in intel_npu_acceleration_library.backend)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.mlp.MLP">(class in intel_npu_acceleration_library.backend.mlp)</a>
+</li>
+      </ul></li>
       <li>
     module
 
       <ul>
+        <li><a href="python/intel_npu_acceleration_library.html#module-intel_npu_acceleration_library">intel_npu_acceleration_library</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#module-intel_npu_acceleration_library.backend">intel_npu_acceleration_library.backend</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#module-intel_npu_acceleration_library.backend.base">intel_npu_acceleration_library.backend.base</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#module-intel_npu_acceleration_library.backend.factory">intel_npu_acceleration_library.backend.factory</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#module-intel_npu_acceleration_library.backend.linear">intel_npu_acceleration_library.backend.linear</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#module-intel_npu_acceleration_library.backend.matmul">intel_npu_acceleration_library.backend.matmul</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#module-intel_npu_acceleration_library.backend.mlp">intel_npu_acceleration_library.backend.mlp</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#module-intel_npu_acceleration_library.backend.qlinear">intel_npu_acceleration_library.backend.qlinear</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#module-intel_npu_acceleration_library.backend.qmatmul">intel_npu_acceleration_library.backend.qmatmul</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#module-intel_npu_acceleration_library.backend.runtime">intel_npu_acceleration_library.backend.runtime</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.html#module-intel_npu_acceleration_library.compiler">intel_npu_acceleration_library.compiler</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.functional.html#module-intel_npu_acceleration_library.functional">intel_npu_acceleration_library.functional</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.functional.html#module-intel_npu_acceleration_library.functional.scaled_dot_product_attention">intel_npu_acceleration_library.functional.scaled_dot_product_attention</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#module-intel_npu_acceleration_library.nn">intel_npu_acceleration_library.nn</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#module-intel_npu_acceleration_library.nn.autograd">intel_npu_acceleration_library.nn.autograd</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#module-intel_npu_acceleration_library.nn.linear">intel_npu_acceleration_library.nn.linear</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#module-intel_npu_acceleration_library.nn.llm">intel_npu_acceleration_library.nn.llm</a>
+</li>
         <li><a href="python/intel_npu_acceleration_library.html#module-intel_npu_acceleration_library.optimizations">intel_npu_acceleration_library.optimizations</a>
 </li>
+        <li><a href="python/intel_npu_acceleration_library.html#module-intel_npu_acceleration_library.quantization">intel_npu_acceleration_library.quantization</a>
+</li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Module">Module (class in intel_npu_acceleration_library.nn)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.html#intel_npu_acceleration_library.compiler.module_optimization">module_optimization() (in module intel_npu_acceleration_library.compiler)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory">NNFactory (class in intel_npu_acceleration_library.backend)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory">(class in intel_npu_acceleration_library.backend.factory)</a>
+</li>
+      </ul></li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.node">node (intel_npu_acceleration_library.backend.Tensor attribute)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.normL2">normL2() (intel_npu_acceleration_library.backend.factory.NNFactory method)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.normL2">(intel_npu_acceleration_library.backend.NNFactory method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.html#intel_npu_acceleration_library.compiler.npu">npu() (in module intel_npu_acceleration_library.compiler)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.npu_available">npu_available() (in module intel_npu_acceleration_library.backend)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.html#intel_npu_acceleration_library.NPUAutoModel">NPUAutoModel (class in intel_npu_acceleration_library)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.html#intel_npu_acceleration_library.NPUModel">NPUModel (class in intel_npu_acceleration_library)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.html#intel_npu_acceleration_library.NPUModelForCausalLM">NPUModelForCausalLM (class in intel_npu_acceleration_library)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.html#intel_npu_acceleration_library.NPUModelForSeq2SeqLM">NPUModelForSeq2SeqLM (class in intel_npu_acceleration_library)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="O">O</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.html#intel_npu_acceleration_library.compiler.optimize_llama_attention">optimize_llama_attention() (in module intel_npu_acceleration_library.compiler)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="cpp_reference.html#_CPPv46OVNode">OVNode (C++ type)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.parameter">parameter() (intel_npu_acceleration_library.backend.factory.NNFactory method)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.parameter">(intel_npu_acceleration_library.backend.NNFactory method)</a>
+</li>
+      </ul></li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.permute">permute() (intel_npu_acceleration_library.backend.Tensor method)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.PhiMLP">PhiMLP (class in intel_npu_acceleration_library.nn)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.PhiMLP">(class in intel_npu_acceleration_library.nn.llm)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.power">power() (intel_npu_acceleration_library.backend.factory.NNFactory method)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.power">(intel_npu_acceleration_library.backend.NNFactory method)</a>
+</li>
+      </ul></li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.prefetchWeights">prefetchWeights() (intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch method)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id23">prod() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.prod">[1]</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="Q">Q</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.QLinear">QLinear (class in intel_npu_acceleration_library.backend)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.qlinear.QLinear">(class in intel_npu_acceleration_library.backend.qlinear)</a>
+</li>
+      </ul></li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.QMatMul">QMatMul (class in intel_npu_acceleration_library.backend)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.qmatmul.QMatMul">(class in intel_npu_acceleration_library.backend.qmatmul)</a>
+</li>
+      </ul></li>
+      <li><a href="python/intel_npu_acceleration_library.html#intel_npu_acceleration_library.quantization.quantize_fit">quantize_fit() (in module intel_npu_acceleration_library.quantization)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.html#intel_npu_acceleration_library.quantization.quantize_i4_model">quantize_i4_model() (in module intel_npu_acceleration_library.quantization)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.html#intel_npu_acceleration_library.quantization.quantize_i8_model">quantize_i8_model() (in module intel_npu_acceleration_library.quantization)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.html#intel_npu_acceleration_library.quantization.quantize_model">quantize_model() (in module intel_npu_acceleration_library.quantization)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.html#intel_npu_acceleration_library.quantization.quantize_tensor">quantize_tensor() (in module intel_npu_acceleration_library.quantization)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.QuantizedLinear">QuantizedLinear (class in intel_npu_acceleration_library.nn)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.linear.QuantizedLinear">(class in intel_npu_acceleration_library.nn.linear)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.reduce_max">reduce_max() (intel_npu_acceleration_library.backend.factory.NNFactory method)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.reduce_max">(intel_npu_acceleration_library.backend.NNFactory method)</a>
+</li>
+      </ul></li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.reduce_mean">reduce_mean() (intel_npu_acceleration_library.backend.factory.NNFactory method)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.reduce_mean">(intel_npu_acceleration_library.backend.NNFactory method)</a>
+</li>
+      </ul></li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.reduce_min">reduce_min() (intel_npu_acceleration_library.backend.factory.NNFactory method)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.reduce_min">(intel_npu_acceleration_library.backend.NNFactory method)</a>
+</li>
+      </ul></li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.reduce_prod">reduce_prod() (intel_npu_acceleration_library.backend.factory.NNFactory method)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.reduce_prod">(intel_npu_acceleration_library.backend.NNFactory method)</a>
+</li>
+      </ul></li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.reduce_sum">reduce_sum() (intel_npu_acceleration_library.backend.factory.NNFactory method)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.reduce_sum">(intel_npu_acceleration_library.backend.NNFactory method)</a>
+</li>
+      </ul></li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id24">relu() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.relu">[1]</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.reshape">reshape() (intel_npu_acceleration_library.backend.factory.NNFactory method)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.reshape">(intel_npu_acceleration_library.backend.NNFactory method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.reshape">(intel_npu_acceleration_library.backend.Tensor method)</a>
+</li>
+      </ul></li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.return_tensor">return_tensor() (intel_npu_acceleration_library.backend.factory.NNFactory method)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.return_tensor">(intel_npu_acceleration_library.backend.NNFactory method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id25">round() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.round">[1]</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.run">run() (intel_npu_acceleration_library.backend.factory.NNFactory method)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Linear.run">(intel_npu_acceleration_library.backend.Linear method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.linear.Linear.run">(intel_npu_acceleration_library.backend.linear.Linear method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.MatMul.run">(intel_npu_acceleration_library.backend.MatMul method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.matmul.MatMul.run">(intel_npu_acceleration_library.backend.matmul.MatMul method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.run">(intel_npu_acceleration_library.backend.NNFactory method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.QLinear.run">(intel_npu_acceleration_library.backend.QLinear method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.qlinear.QLinear.run">(intel_npu_acceleration_library.backend.qlinear.QLinear method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.QMatMul.run">(intel_npu_acceleration_library.backend.QMatMul method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.qmatmul.QMatMul.run">(intel_npu_acceleration_library.backend.qmatmul.QMatMul method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.SDPA.run">(intel_npu_acceleration_library.backend.SDPA method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.SimpleSDPA.run">(intel_npu_acceleration_library.backend.SimpleSDPA method)</a>
+</li>
+      </ul></li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.run_factory">run_factory() (in module intel_npu_acceleration_library.backend)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.runtime.run_factory">(in module intel_npu_acceleration_library.backend.runtime)</a>
+</li>
+      </ul></li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.run_matmul">run_matmul() (in module intel_npu_acceleration_library.backend)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.runtime.run_matmul">(in module intel_npu_acceleration_library.backend.runtime)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.base.BaseNPUBackend.save">save() (intel_npu_acceleration_library.backend.base.BaseNPUBackend method)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.base.BaseNPUBackend.saveCompiledModel">saveCompiledModel() (intel_npu_acceleration_library.backend.base.BaseNPUBackend method)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.functional.html#intel_npu_acceleration_library.functional.scaled_dot_product_attention">scaled_dot_product_attention() (in module intel_npu_acceleration_library.functional)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.functional.html#intel_npu_acceleration_library.functional.scaled_dot_product_attention.scaled_dot_product_attention">(in module intel_npu_acceleration_library.functional.scaled_dot_product_attention)</a>
+</li>
+      </ul></li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.SDPA">SDPA (class in intel_npu_acceleration_library.backend)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.runtime.set_contiguous">set_contiguous() (in module intel_npu_acceleration_library.backend.runtime)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.set_input_tensor">set_input_tensor() (intel_npu_acceleration_library.backend.factory.NNFactory method)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.set_input_tensor">(intel_npu_acceleration_library.backend.NNFactory method)</a>
+</li>
+      </ul></li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch.setWeights">setWeights() (intel_npu_acceleration_library.backend.base.BaseNPUBackendWithPrefetch method)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.shape">shape (intel_npu_acceleration_library.backend.Tensor property)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id26">sigmoid() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.sigmoid">[1]</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id27">sign() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.sign">[1]</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.SimpleSDPA">SimpleSDPA (class in intel_npu_acceleration_library.backend)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id28">sin() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.sin">[1]</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id29">sinh() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.sinh">[1]</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.size">size() (intel_npu_acceleration_library.backend.Tensor method)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.slice">slice() (intel_npu_acceleration_library.backend.factory.NNFactory method)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.slice">(intel_npu_acceleration_library.backend.NNFactory method)</a>
+</li>
+      </ul></li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id30">softmax() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.softmax">[1]</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id31">softplus() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.softplus">[1]</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id32">sqrt() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.sqrt">[1]</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id33">squeeze() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.squeeze">[1]</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id34">sum() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.sum">[1]</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id0">T (intel_npu_acceleration_library.backend.Tensor property)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.T">T() (intel_npu_acceleration_library.backend.Tensor method)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id35">tan() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.tan">[1]</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#id36">tanh() (intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.tanh">[1]</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor">Tensor (class in intel_npu_acceleration_library.backend)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.to">to() (intel_npu_acceleration_library.backend.factory.NNFactory method)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.to">(intel_npu_acceleration_library.backend.NNFactory method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.to">(intel_npu_acceleration_library.backend.Tensor method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Module.to">(intel_npu_acceleration_library.nn.Module method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.transpose">transpose() (intel_npu_acceleration_library.backend.factory.NNFactory method)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.transpose">(intel_npu_acceleration_library.backend.NNFactory method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.transpose">(intel_npu_acceleration_library.backend.Tensor method)</a>
+</li>
+      </ul></li>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.type">type() (intel_npu_acceleration_library.backend.Tensor method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.factory.NNFactory.unsqueeze">unsqueeze() (intel_npu_acceleration_library.backend.factory.NNFactory method)</a>
+
+      <ul>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.NNFactory.unsqueeze">(intel_npu_acceleration_library.backend.NNFactory method)</a>
+</li>
+        <li><a href="python/intel_npu_acceleration_library.backend.html#id37">(intel_npu_acceleration_library.backend.Tensor method)</a>, <a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.unsqueeze">[1]</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="V">V</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.backend.html#intel_npu_acceleration_library.backend.Tensor.view">view() (intel_npu_acceleration_library.backend.Tensor method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.llm.warm_up_decoder_model">warm_up_decoder_model() (in module intel_npu_acceleration_library.nn.llm)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="python/intel_npu_acceleration_library.nn.html#intel_npu_acceleration_library.nn.Conv2d.weight">weight (intel_npu_acceleration_library.nn.Conv2d property)</a>
+</li>
+      <li><a href="python/intel_npu_acceleration_library.html#intel_npu_acceleration_library.compiler.weights_quantization">weights_quantization() (in module intel_npu_acceleration_library.compiler)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -611,7 +1482,7 @@ document.write(`
               
               
               
-                <footer class="prev-next-footer d-print-none">
+                <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
 </div>
@@ -620,6 +1491,8 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"></div>
               
             
           </div>
@@ -664,8 +1537,8 @@ By Intel Corporation
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
 
   <footer class="bd-footer">
   </footer>

@@ -14,32 +14,32 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
     <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'python/modules';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -52,23 +52,27 @@
 
   
   
-  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -90,13 +94,8 @@
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
-
-  <div class="pst-async-banner-revealer d-none">
-  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
-</div>
-
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
     </header>
   
 
@@ -122,8 +121,6 @@
         <div class="sidebar-primary-item">
 
   
-    
-  
 
 <a class="navbar-brand logo" href="../index.html">
   
@@ -139,7 +136,7 @@
 
  <script>
  document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
     <span class="search-button__default-text">Search</span>
     <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
@@ -168,12 +165,12 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference:</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="intel_npu_acceleration_library.html">Python API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="intel_npu_acceleration_library.html">Python API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.backend.html">intel_npu_acceleration_library.backend package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.nn.html">intel_npu_acceleration_library.nn package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.functional.html">intel_npu_acceleration_library.functional package</a></li>
 </ul>
-</details></li>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../cpp_reference.html">C++ API Reference</a></li>
 </ul>
 
@@ -190,7 +187,7 @@
 
       </div>
       
-      <main id="main-content" class="bd-main" role="main">
+      <main id="main-content" class="bd-main">
         
         
 
@@ -199,14 +196,14 @@
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article d-print-none">
+              <div class="bd-header-article">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</button></div>
+</label></div>
       
     </div>
   
@@ -284,10 +281,10 @@
 
 <script>
 document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script>
@@ -295,7 +292,7 @@ document.write(`
 
 <script>
 document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
@@ -341,7 +338,7 @@ document.write(`
 <li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-qlinear-module">intel_npu_acceleration_library.backend.qlinear module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-qmatmul-module">intel_npu_acceleration_library.backend.qmatmul module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#intel-npu-acceleration-library-backend-runtime-module">intel_npu_acceleration_library.backend.runtime module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#module-contents">Module contents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.backend.html#module-intel_npu_acceleration_library.backend">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.nn.html">intel_npu_acceleration_library.nn package</a><ul>
@@ -349,28 +346,68 @@ document.write(`
 <li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel-npu-acceleration-library-nn-autograd-module">intel_npu_acceleration_library.nn.autograd module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel-npu-acceleration-library-nn-linear-module">intel_npu_acceleration_library.nn.linear module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#intel-npu-acceleration-library-nn-llm-module">intel_npu_acceleration_library.nn.llm module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#module-contents">Module contents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.nn.html#module-intel_npu_acceleration_library.nn">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.functional.html">intel_npu_acceleration_library.functional package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.functional.html#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.functional.html#intel-npu-acceleration-library-functional-scaled-dot-product-attention-module">intel_npu_acceleration_library.functional.scaled_dot_product_attention module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.functional.html#module-contents">Module contents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.functional.html#module-intel_npu_acceleration_library.functional.scaled_dot_product_attention">intel_npu_acceleration_library.functional.scaled_dot_product_attention module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.functional.html#module-intel_npu_acceleration_library.functional">Module contents</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.html#intel-npu-acceleration-library-bindings-module">intel_npu_acceleration_library.bindings module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.html#intel-npu-acceleration-library-compiler-module">intel_npu_acceleration_library.compiler module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.html#intel-npu-acceleration-library-compiler-module">intel_npu_acceleration_library.compiler module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.html#intel_npu_acceleration_library.compiler.CompilerConfig"><code class="docutils literal notranslate"><span class="pre">CompilerConfig</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.html#intel_npu_acceleration_library.compiler.apply_general_optimizations"><code class="docutils literal notranslate"><span class="pre">apply_general_optimizations()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.html#intel_npu_acceleration_library.compiler.apply_horizontal_fusion"><code class="docutils literal notranslate"><span class="pre">apply_horizontal_fusion()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.html#intel_npu_acceleration_library.compiler.compile"><code class="docutils literal notranslate"><span class="pre">compile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.html#intel_npu_acceleration_library.compiler.create_npu_kernels"><code class="docutils literal notranslate"><span class="pre">create_npu_kernels()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.html#intel_npu_acceleration_library.compiler.forward"><code class="docutils literal notranslate"><span class="pre">forward()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.html#intel_npu_acceleration_library.compiler.lower_linear"><code class="docutils literal notranslate"><span class="pre">lower_linear()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.html#intel_npu_acceleration_library.compiler.module_optimization"><code class="docutils literal notranslate"><span class="pre">module_optimization()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.html#intel_npu_acceleration_library.compiler.npu"><code class="docutils literal notranslate"><span class="pre">npu()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.html#intel_npu_acceleration_library.compiler.optimize_llama_attention"><code class="docutils literal notranslate"><span class="pre">optimize_llama_attention()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.html#intel_npu_acceleration_library.compiler.weights_quantization"><code class="docutils literal notranslate"><span class="pre">weights_quantization()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.html#intel-npu-acceleration-library-optimizations-module">intel_npu_acceleration_library.optimizations module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.html#intel_npu_acceleration_library.optimizations.delattr_recursively"><code class="docutils literal notranslate"><span class="pre">delattr_recursively()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.html#intel_npu_acceleration_library.optimizations.fuse_linear_layers"><code class="docutils literal notranslate"><span class="pre">fuse_linear_layers()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.html#intel_npu_acceleration_library.optimizations.horizontal_fusion_linear"><code class="docutils literal notranslate"><span class="pre">horizontal_fusion_linear()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.html#intel-npu-acceleration-library-quantization-module">intel_npu_acceleration_library.quantization module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.html#intel-npu-acceleration-library-quantization-module">intel_npu_acceleration_library.quantization module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.html#intel_npu_acceleration_library.quantization.compress_to_i4"><code class="docutils literal notranslate"><span class="pre">compress_to_i4()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.html#intel_npu_acceleration_library.quantization.quantize_fit"><code class="docutils literal notranslate"><span class="pre">quantize_fit()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.html#intel_npu_acceleration_library.quantization.quantize_i4_model"><code class="docutils literal notranslate"><span class="pre">quantize_i4_model()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.html#intel_npu_acceleration_library.quantization.quantize_i8_model"><code class="docutils literal notranslate"><span class="pre">quantize_i8_model()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.html#intel_npu_acceleration_library.quantization.quantize_model"><code class="docutils literal notranslate"><span class="pre">quantize_model()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.html#intel_npu_acceleration_library.quantization.quantize_tensor"><code class="docutils literal notranslate"><span class="pre">quantize_tensor()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intel_npu_acceleration_library.html#module-intel_npu_acceleration_library">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.html#intel_npu_acceleration_library.NPUAutoModel"><code class="docutils literal notranslate"><span class="pre">NPUAutoModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.html#intel_npu_acceleration_library.NPUAutoModel.from_pretrained"><code class="docutils literal notranslate"><span class="pre">NPUAutoModel.from_pretrained()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.html#intel_npu_acceleration_library.NPUModel"><code class="docutils literal notranslate"><span class="pre">NPUModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.html#intel_npu_acceleration_library.NPUModel.from_pretrained"><code class="docutils literal notranslate"><span class="pre">NPUModel.from_pretrained()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.html#intel_npu_acceleration_library.NPUModelForCausalLM"><code class="docutils literal notranslate"><span class="pre">NPUModelForCausalLM</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.html#intel_npu_acceleration_library.NPUModelForCausalLM.from_pretrained"><code class="docutils literal notranslate"><span class="pre">NPUModelForCausalLM.from_pretrained()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.html#intel_npu_acceleration_library.NPUModelForSeq2SeqLM"><code class="docutils literal notranslate"><span class="pre">NPUModelForSeq2SeqLM</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="intel_npu_acceleration_library.html#intel_npu_acceleration_library.NPUModelForSeq2SeqLM.from_pretrained"><code class="docutils literal notranslate"><span class="pre">NPUModelForSeq2SeqLM.from_pretrained()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="intel_npu_acceleration_library.html#intel_npu_acceleration_library.compile"><code class="docutils literal notranslate"><span class="pre">compile()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -385,7 +422,7 @@ document.write(`
               
               
               
-                <footer class="prev-next-footer d-print-none">
+                <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
 </div>
@@ -394,6 +431,8 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"></div>
               
             
           </div>
@@ -438,8 +477,8 @@ By Intel Corporation
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
 
   <footer class="bd-footer">
   </footer>
