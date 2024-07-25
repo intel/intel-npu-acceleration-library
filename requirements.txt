@@ -1,4 +1,4 @@
 numpy
 torch
-transformers>=4.39.3
+transformers>=4.43.0
 neural-compressor
