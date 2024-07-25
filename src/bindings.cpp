@@ -262,6 +262,11 @@ intel_npu_acceleration_library_DLL_API ov::op::Op* relu(intel_npu_acceleration_l
     return factory->relu(in0);
 }
 
+intel_npu_acceleration_library_DLL_API ov::op::Op* prelu(intel_npu_acceleration_library::ModelFactory* factory,
+                                                         ov::op::Op* in0, ov::op::Op* in1) {
+    return factory->prelu(in0, in1);
+}
+
 intel_npu_acceleration_library_DLL_API ov::op::Op* sigmoid(intel_npu_acceleration_library::ModelFactory* factory,
                                                            ov::op::Op* in0) {
     return factory->sigmoid(in0);
