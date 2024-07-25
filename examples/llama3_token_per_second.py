@@ -56,4 +56,4 @@ time_taken = end_time - start_time
 tokens_per_second = num_tokens_generated / time_taken
 
 # Print the tokens per second
-print(f"Tokens per second: {tokens_per_second:.2f}
+print(f"Tokens per second: {tokens_per_second:.2f}")
