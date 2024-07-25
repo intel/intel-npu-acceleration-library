@@ -5,6 +5,7 @@
 
 
 from intel_npu_acceleration_library import compile
+from intel_npu_acceleration_library.compiler import CompilerConfig
 from sklearn.metrics import r2_score
 import intel_npu_acceleration_library
 import pytest
@@ -41,7 +42,8 @@ if __name__ == "__main__":
         print(
             "Windows do not support torch.compile, fallback to intel_npu_acceleration_library.compile"
         )
-        compiled_model = intel_npu_acceleration_library.compile(model)
+        compiler_conf = CompilerConfig()
+        compiled_model = intel_npu_acceleration_library.compile(model, compiler_conf)
     else:
         compiled_model = torch.compile(model, backend="npu")
 
@@ -49,4 +51,4 @@ if __name__ == "__main__":
     with torch.no_grad():
         y = compiled_model(x)
 
-    print(f"Reference vs actual R2 score: {r2_score(y_ref, y):.2f}")
+    print(f"Reference vs actual R2 score: {r2_score(y_ref.numpy(), y.numpy()):.2f}")

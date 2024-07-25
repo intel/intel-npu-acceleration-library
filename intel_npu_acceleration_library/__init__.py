@@ -7,7 +7,9 @@ from .compiler import compile
 from .dtypes import int4, int8, float16
 from ._version import __version__
 from .modelling import NPUModel, NPUAutoModel, NPUModelForCausalLM, NPUModelForSeq2SeqLM
+from .device import enable_npu_device
 
+enable_npu_device()
 
 __all__ = [
     "compile",

@@ -38,34 +38,21 @@ class Convolution(NNFactory):
         """
         super().__init__(profile, device)
         input = self.parameter(input_shape)
-
-        # Get the number of spatial dimensions
-        n_spatial_dims = len(input_shape) - 2
-
-        if isinstance(strides, int):
-            strides = [strides] * n_spatial_dims
-
-        if isinstance(padding, int):
-            padding_begins = [padding] * n_spatial_dims
-            padding_ends = [padding] * n_spatial_dims
+        weights = self.parameter(weights_shape)
+        if bias is not None:
+            bias_node = self.parameter((1, weights_shape[0], 1, 1))
         else:
-            padding_begins = list(padding)
-            padding_ends = list(padding)
+            bias_node = None
 
-        if isinstance(dilation, int):
-            dilation = [dilation] * n_spatial_dims
-
-        conv = self.convolution(
+        _ = self.convolution(
             input,
-            weights_shape,
-            bias=bias,
+            weights,
+            bias=bias_node,
             strides=strides,
-            padding_begins=padding_begins,
-            padding_ends=padding_ends,
+            padding=padding,
             dilation=dilation,
             groups=groups,
             act_dtype=np.float16,
-            wt_dtype=np.float16,
         )
 
-        self.compile(conv)
+        self.compile()

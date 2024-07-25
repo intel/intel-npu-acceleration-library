@@ -71,10 +71,10 @@ def init_common(lib: ctypes.CDLL):
     lib.saveCompiledModel.argtypes = [handler, ctypes.c_char_p]
 
     # Set input activations
-    lib.set_activation.argtypes = [handler, c_fp16_array, ctypes.c_int]
+    lib.set_activation.argtypes = [handler, ctypes.c_void_p, ctypes.c_int]
 
     # Set outputs activations
-    lib.set_output.argtypes = [handler, c_fp16_array, ctypes.c_int]
+    lib.set_output.argtypes = [handler, ctypes.c_void_p, ctypes.c_int]
 
     # Run a linar layer
     lib.run.argtypes = [handler]
@@ -103,10 +103,44 @@ def init_network_factory(lib: ctypes.CDLL):
 
     lib.setNNFactoryWeights.argtypes = [handler, handler]
 
+    lib.op_shape_size.argtypes = [handler]
+    lib.op_shape_size.restype = ctypes.c_int
+
+    lib.op_shape.argtypes = [handler, ctypes.c_int]
+    lib.op_shape.restype = ctypes.c_int
+
+    lib.op_dtype.argtypes = [handler]
+    lib.op_dtype.restype = ctypes.c_int
+
     lib.parameter.argtypes = [handler, ctypes.c_int, c_u32_array, ctypes.c_char_p]
     lib.parameter.restype = handler
 
-    lib.compile.argtypes = [handler, handler]
+    lib.to.argtypes = [handler, handler, ctypes.c_char_p]
+    lib.to.restype = handler
+
+    lib.constant.argtypes = [
+        handler,
+        ctypes.c_int,
+        c_u32_array,
+        ctypes.c_char_p,
+        ctypes.c_void_p,
+    ]
+    lib.constant.restype = handler
+
+    lib.slice.argtypes = [
+        handler,
+        handler,
+        handler,
+        handler,
+        handler,
+        ctypes.c_int,
+        c_u32_array,
+        ctypes.c_int,
+        c_u32_array,
+    ]
+    lib.slice.restype = handler
+
+    lib.compile.argtypes = [handler]
     lib.compile.restype = handler
 
     lib.get_output_tensor_shape_size.argtypes = [handler, ctypes.c_int]
@@ -129,6 +163,8 @@ def init_network_factory(lib: ctypes.CDLL):
     lib.convolution.argtypes = [
         handler,
         handler,
+        handler,
+        handler,
         ctypes.c_int,
         c_u32_array,
         ctypes.c_int,
@@ -138,13 +174,42 @@ def init_network_factory(lib: ctypes.CDLL):
         ctypes.c_int,
         c_u32_array,
         ctypes.c_int,
-        c_u32_array,
-        ctypes.c_int,
-        ctypes.c_bool,
-        ctypes.c_char_p,
         ctypes.c_char_p,
     ]
     lib.convolution.restype = handler
+
+    lib.avg_pooling.argtypes = [
+        handler,
+        handler,
+        ctypes.c_int,
+        c_u32_array,
+        ctypes.c_int,
+        c_u32_array,
+        ctypes.c_int,
+        c_u32_array,
+        ctypes.c_int,
+        c_u32_array,
+        ctypes.c_bool,
+        ctypes.c_int,
+        ctypes.c_int,
+    ]
+    lib.avg_pooling.restype = handler
+
+    lib.max_pooling.argtypes = [
+        handler,
+        handler,
+        ctypes.c_int,
+        c_u32_array,
+        ctypes.c_int,
+        c_u32_array,
+        ctypes.c_int,
+        c_u32_array,
+        ctypes.c_int,
+        c_u32_array,
+        ctypes.c_int,
+        ctypes.c_int,
+    ]
+    lib.max_pooling.restype = handler
 
     for op in get_supported_ops():
         fn = getattr(lib, op.name)

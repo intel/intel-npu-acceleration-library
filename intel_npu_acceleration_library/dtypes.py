@@ -5,6 +5,7 @@
 
 from dataclasses import dataclass
 from typing import Union
+import numpy as np
 import torch
 
 
@@ -58,6 +59,15 @@ class NPUDtype:
                 and self.min == info.min
                 and self.torch_dtype == value
             )
+        if isinstance(value, type):
+            value = np.dtype(value)
+            if value.kind == "f":
+                info = np.finfo(value)
+            else:
+                info = np.iinfo(value)
+            return (
+                self.bits == info.bits and self.max == info.max and self.min == info.min
+            )
         else:
             return super().__eq__(value)
 
@@ -71,7 +81,42 @@ class NPUDtype:
         return self.name
 
 
-float16 = NPUDtype("fp16", 16, -65504, 65504, torch.float16)
-bfloat16 = NPUDtype("bfloat16", 16, -65504, 65504, torch.float16)
+float16 = NPUDtype(
+    "fp16",
+    16,
+    torch.finfo(torch.float16).min,
+    torch.finfo(torch.float16).max,
+    torch.float16,
+)
+bfloat16 = NPUDtype(
+    "bf16",
+    16,
+    torch.finfo(torch.bfloat16).min,
+    torch.finfo(torch.bfloat16).max,
+    torch.bfloat16,
+)
+float32 = NPUDtype(
+    "fp32",
+    32,
+    torch.finfo(torch.float32).min,
+    torch.finfo(torch.float32).max,
+    torch.float32,
+)
+float64 = NPUDtype(
+    "fp64",
+    64,
+    torch.finfo(torch.float64).min,
+    torch.finfo(torch.float64).max,
+    torch.float64,
+)
 int4 = NPUDtype("int4", 4, -8, 7, torch.int8)
 int8 = NPUDtype("int8", 8, -128, 127, torch.int8)
+int16 = NPUDtype(
+    "int16", 16, torch.iinfo(torch.int16).min, torch.iinfo(torch.int16).max, torch.int16
+)
+int32 = NPUDtype(
+    "int32", 32, torch.iinfo(torch.int32).min, torch.iinfo(torch.int32).max, torch.int32
+)
+int64 = NPUDtype(
+    "int64", 64, torch.iinfo(torch.int64).min, torch.iinfo(torch.int64).max, torch.int64
+)

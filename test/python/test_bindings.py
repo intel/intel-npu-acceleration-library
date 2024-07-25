@@ -39,8 +39,9 @@ def test_factory_bindings(inC, outC, batch, run_op):
     dtype = ctypes.c_char_p("float16".encode())
     p0 = backend_lib.parameter(factory, shape_ptr.size, shape_ptr, dtype)
     linear = backend_lib.linear(factory, p0, outC, inC, False, dtype, dtype)
-    backend_lib.compile(factory, linear)
-    backend_lib.set_output(factory, out, 0)
+    backend_lib.result(factory, linear)
+    backend_lib.compile(factory)
+    backend_lib.set_output(factory, out.ctypes.data_as(ctypes.c_void_p), 0)
 
     # Set parameters
     param = backend_lib.createParameters()
@@ -49,7 +50,7 @@ def test_factory_bindings(inC, outC, batch, run_op):
 
     # run
     if run_op:
-        backend_lib.set_activation(factory, x, 0)
+        backend_lib.set_activation(factory, x.ctypes.data_as(ctypes.c_void_p), 0)
         backend_lib.run(factory)
 
     # Call destuctors for parameters and weights

@@ -35,8 +35,8 @@ class QLinear(NNFactory):
         self.batch = batch
 
         input = self.parameter((self.batch, self.inC))
-        out = self.linear(input, outC, inC, bias=False, wt_dtype=dtype)
-        self.compile(out)
+        _ = self.linear(input, outC, inC, bias=False, wt_dtype=dtype)
+        self.compile()
 
     def run(
         self, X: np.ndarray, W: np.ndarray, scale: np.ndarray, op_id: str
