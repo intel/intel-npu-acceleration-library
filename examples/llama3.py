@@ -5,10 +5,14 @@
 
 from transformers import AutoTokenizer, TextStreamer
 from intel_npu_acceleration_library import NPUModelForCausalLM, int4
+from intel_npu_acceleration_library.compiler import CompilerConfig
 
 model_id = "meta-llama/Meta-Llama-3-8B-Instruct"
 
-model = NPUModelForCausalLM.from_pretrained(model_id, dtype=int4, use_cache=True).eval()
+compiler_conf = CompilerConfig(dtype=int4)
+model = NPUModelForCausalLM.from_pretrained(
+    model_id, use_cache=True, config=compiler_conf
+).eval()
 tokenizer = AutoTokenizer.from_pretrained(model_id)
 streamer = TextStreamer(tokenizer, skip_special_tokens=True, skip_prompt=True)
 

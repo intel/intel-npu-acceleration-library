@@ -6,6 +6,7 @@
 
 from sklearn.metrics import r2_score
 from intel_npu_acceleration_library import compile
+from intel_npu_acceleration_library.compiler import CompilerConfig
 import torch
 import pytest
 import copy
@@ -28,12 +29,14 @@ class NN(torch.nn.Module):
 
 @pytest.fixture
 def model_no_bias():
-    return compile(NN(inc=in_c, outc=out_c, bias=False))
+    compiler_conf = CompilerConfig()
+    return compile(NN(inc=in_c, outc=out_c, bias=False), compiler_conf)
 
 
 @pytest.fixture
 def model():
-    return compile(NN(inc=in_c, outc=out_c, bias=True))
+    compiler_conf = CompilerConfig()
+    return compile(NN(inc=in_c, outc=out_c, bias=True), compiler_conf)
 
 
 def test_parameters(model, model_no_bias):
@@ -48,7 +51,8 @@ def test_gradient():
     cpu_model.load_state_dict(copy.deepcopy(npu_model.state_dict()))
 
     # Compile one of the model on npu
-    compile(npu_model, training=True)
+    compiler_conf = CompilerConfig(training=True)
+    compile(npu_model, compiler_conf)
 
     x = torch.rand([batch, in_c]).half()
     yref = torch.rand([batch, in_c]).half()

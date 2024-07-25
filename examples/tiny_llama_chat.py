@@ -4,6 +4,7 @@
 #
 
 from transformers import pipeline, TextStreamer, set_seed
+from intel_npu_acceleration_library.compiler import CompilerConfig
 import intel_npu_acceleration_library
 import torch
 import os
@@ -15,7 +16,8 @@ pipe = pipeline(
     "text-generation", model=model_id, torch_dtype=torch.bfloat16, device_map="auto"
 )
 print("Compiling the model for NPU...")
-pipe.model = intel_npu_acceleration_library.compile(pipe.model, dtype=torch.int8)
+compiler_conf = CompilerConfig(dtype=torch.int8)
+pipe.model = intel_npu_acceleration_library.compile(pipe.model, compiler_conf)
 
 streamer = TextStreamer(pipe.tokenizer, skip_special_tokens=True, skip_prompt=True)
 

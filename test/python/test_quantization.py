@@ -4,6 +4,7 @@
 #
 
 from sklearn.metrics import r2_score
+from intel_npu_acceleration_library.compiler import CompilerConfig
 import numpy as np
 import intel_npu_acceleration_library
 import pytest
@@ -88,7 +89,9 @@ def test_compiled_quantized(batch, inC, outC):
 
     model = NN(inC, outC)
     y_ref = model(X.to(torch.float32)).detach()
-    compiled_model = intel_npu_acceleration_library.compile(model, torch.int8)
+
+    compiler_conf = CompilerConfig(dtype=torch.int8)
+    compiled_model = intel_npu_acceleration_library.compile(model, compiler_conf)
     assert compiled_model
 
     y1 = compiled_model(X).detach()

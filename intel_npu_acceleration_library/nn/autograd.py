@@ -63,6 +63,7 @@ class AutogradMatMul(torch.autograd.Function):
 
         dl_dx = run_matmul(grad_output, torch.transpose(w, -1, -2))
         dl_dw = run_matmul(
-            torch.transpose(grad_output, -1, -2), torch.transpose(x, -1, -2)
+            torch.transpose(grad_output, -1, -2),
+            torch.transpose(x, -1, -2).to(torch.float16),
         )
         return dl_dx, dl_dw, None

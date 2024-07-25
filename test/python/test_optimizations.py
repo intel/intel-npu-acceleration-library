@@ -7,6 +7,7 @@ from transformers.models.phi.modeling_phi import PhiConfig, PhiMLP
 from transformers.models.llama.modeling_llama import LlamaConfig, LlamaMLP, LlamaModel
 from transformers.models.gemma.modeling_gemma import GemmaConfig, GemmaMLP, GemmaModel
 from intel_npu_acceleration_library.optimizations import horizontal_fusion_linear
+from intel_npu_acceleration_library.compiler import CompilerConfig
 from sklearn.metrics import r2_score
 import torch.nn as nn
 import intel_npu_acceleration_library
@@ -142,7 +143,8 @@ def test_model(model_name, hidden_size, intermediate_size, sequence_length, bias
 
         reference = model(example_input)[0]
 
-        optimized = intel_npu_acceleration_library.compile(model, torch.float16)
+        compiler_conf = CompilerConfig(dtype=torch.float16)
+        optimized = intel_npu_acceleration_library.compile(model, compiler_conf)
 
         output = optimized(example_input)[0]
 
