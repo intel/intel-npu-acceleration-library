@@ -38,9 +38,9 @@ function(get_linux_lsb_release_information)
 endfunction()
 
 set(OV_VERSION_SHORT "nightly")
-set(OV_VERSION "2024.3.0.dev20240524_x86_64")
+set(OV_VERSION "2024.4.0.dev20240715_x86_64")
 set(OV_STORAGE_URL "https://storage.openvinotoolkit.org/repositories/openvino/packages")
-set(OV_NIGHTLY_COMMIT "2024.3.0-15502-66093834e38")
+set(OV_NIGHTLY_COMMIT "2024.4.0-16039-620d2a20c8c")
 
 if (WIN32)
     if(NOT OV_LIBRARY_URL)
