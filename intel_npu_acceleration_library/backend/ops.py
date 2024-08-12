@@ -57,6 +57,7 @@ def get_supported_ops() -> List[SupportedOp]:
         SupportedOp(name="log_act", inputs=1),
         SupportedOp(name="negative", inputs=1),
         SupportedOp(name="relu", inputs=1),
+        SupportedOp(name="prelu", inputs=2),
         SupportedOp(name="sigmoid", inputs=1),
         SupportedOp(name="sign", inputs=1),
         SupportedOp(name="sin_act", inputs=1),
