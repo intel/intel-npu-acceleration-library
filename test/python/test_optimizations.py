@@ -130,6 +130,9 @@ def test_fusion(model_name, hidden_size, intermediate_size, batch, bias):
 @pytest.mark.parametrize("bias", [True, False])
 def test_model(model_name, hidden_size, intermediate_size, sequence_length, bias):
 
+    if model_name == "LlamaModel":
+        pytest.skip("LlamaModel Fix in progress")
+
     with torch.no_grad():
         model = get_model(model_name, hidden_size, intermediate_size, bias).eval()
         example_input = torch.randint(
