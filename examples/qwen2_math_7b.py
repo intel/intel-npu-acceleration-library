@@ -32,9 +32,7 @@ messages = [
 ]
 
 text = tokenizer.apply_chat_template(
-    messages,
-    tokenize=False,
-    add_generation_prompt=True
+    messages, tokenize=False, add_generation_prompt=True
 )
 
 model_inputs = tokenizer([text], return_tensors="pt").to(model.device)
@@ -51,7 +49,8 @@ generated_ids = model.generate(
 )
 
 generated_ids = [
-    output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
+    output_ids[len(input_ids) :]
+    for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
 ]
 
 # Calculate the total number of generated tokens
@@ -74,4 +73,3 @@ tokens_per_second = num_tokens_generated / time_taken
 
 # Print the tokens per second
 print(f"Tokens per second: {tokens_per_second:.2f}")
-
