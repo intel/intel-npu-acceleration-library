@@ -1,7 +1,7 @@
 pytest
 pytest-xdist
 pytest-cov
-scikit-learn <= 1.5.1
+scikit-learn <= 1.5.2
 pre-commit; sys_platform == 'darwin'
 sphinx
 breathe
