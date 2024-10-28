@@ -95,7 +95,7 @@ def test_torch_compile():
         assert str(e.value) == "Windows not yet supported for torch.compile"
     else:
         compiled_model = torch.compile(model, backend="npu")
-        y = compiled_model(x).detach()
+        y = compiled_model(x.to(torch.float32)).detach()
         assert 1 - r2_score(y_ref.numpy(), y.numpy()) < 0.01
 
 
