@@ -443,13 +443,43 @@ def layer_norm(
     """
     axis = input.shape.index(normalized_shape[0])
     ln = generate_op([input], "normL2", axis, eps)
-    if weight:
+    if weight is not None:
         ln = ln * weight
 
-    if bias:
+    if bias is not None:
         ln = ln + bias
 
     return ln
+
+
+@implements(torch.nn.functional.normalize)
+def normalize(
+    input: Tensor,
+    p: float = 2.0,
+    dim: int = 1,
+    eps: float = 1e-12,
+    out: Optional[Tensor] = None,
+) -> Tensor:
+    """Return the normalized tensor.
+
+    Args:
+        input (Tensor): The input tensor.
+        p (float): The power value. Defaults to 2.0.
+        dim (int): The dim to normalize. Defaults to 1.
+        eps (float): The epsilon value. Defaults to 1e-12.
+        out (Optional[Tensor], optional): Output tensor. Defaults to None.
+
+    Raises:
+        NotImplementedError: p != 2 is not supported yet
+
+    Returns:
+        Tensor: Output tensor.
+    """
+    if p != 2:
+        raise NotImplementedError("p != 2 is not supported yet")
+
+    out = generate_op([input], "normL2", dim, eps)
+    return out
 
 
 @implements(torch.ceil)
@@ -814,6 +844,20 @@ def relu(x: Tensor, inplace=False) -> Tensor:
     return out
 
 
+@implements(torch.nn.functional.prelu)
+def prelu(x: Tensor, weight: Tensor) -> Tensor:
+    """Return the parametric relu of a tensor element-wise.
+
+    Args:
+        x (Tensor): The input tensor.
+        weight (Tensor): The weights tensor.
+
+    Returns:
+        Tensor: Output tensor.
+    """
+    return generate_op([x, weight], "prelu")
+
+
 @implements(torch.nn.functional.sigmoid)
 def sigmoid(x: Tensor) -> Tensor:
     """Return the sigmoid of a tensor element-wise.
@@ -955,6 +999,10 @@ def adaptive_avg_pool2d(input: Tensor, output_size: Sequence[int]):
     Returns:
         Tensor: Output tensor.
     """
+    if output_size == 1:
+        return generate_op(
+            [input], "reduce_mean", reduction_axes=[-2, -1], keep_dims=True
+        )
     return generate_op([input, output_size], "adaptive_avg_pool")
 
 
@@ -977,6 +1025,10 @@ def adaptive_max_pool2d(
     """
     if return_indices:
         raise NotImplementedError("return_indices is not supported yet")
+    if output_size == 1:
+        return generate_op(
+            [input], "reduce_max", reduction_axes=[-2, -1], keep_dims=True
+        )
     return generate_op([input, output_size], "adaptive_max_pool")
 
 

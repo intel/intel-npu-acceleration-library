@@ -185,7 +185,7 @@ def _parse_to(super_fn: Any, *args: Any, **kwarg: Any):
     """
     npu_device, args, kwargs = parse_to_arguments(*args, **kwarg)
 
-    device, dtype, non_blocking, convert_to_format = super_fn(*args, *kwargs)
+    device, dtype, non_blocking, convert_to_format = super_fn(*args, **kwargs)
 
     if npu_device:
         device = "npu"
@@ -204,7 +204,7 @@ def new_to(self, *args: Any, **kwargs: Any):
     Returns:
         Tensor or Module: The tensor or module with the tensor(s) moved to the specified device(s).
     """
-    npu_device, args, kwargs = parse_to_arguments(*args, *kwargs)
+    npu_device, args, kwargs = parse_to_arguments(*args, **kwargs)
 
     if npu_device:
         self = convert_to_npu_module(self).to("npu")

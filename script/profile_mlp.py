@@ -20,6 +20,7 @@ def main(
     intermediate_size=512,
     dtype="float16",
     _profile=False,
+    enable_graph_mode=False,
 ):
 
     conf = Phi3Config.from_pretrained("microsoft/Phi-3-mini-4k-instruct")
@@ -44,7 +45,7 @@ def main(
         raise RuntimeError(f"Invalid dtype: {dtype}")
 
     # Compile model
-    compiler_conf = CompilerConfig(use_to=True, dtype=dtype)
+    compiler_conf = CompilerConfig(use_to=enable_graph_mode, dtype=dtype)
     model = intel_npu_acceleration_library.compile(mlp, compiler_conf)
     if _profile:
         model.profile = True
@@ -106,6 +107,12 @@ def define_and_parse_args():
         default=False,
         help="Enable the profiling (default: False)",
     )
+    parser.add_argument(
+        "--enable_graph_mode",
+        action="store_true",
+        default=False,
+        help="Enable graph mode for MLP, otherwise use eager mode (default: False)",
+    )
 
     return parser.parse_args()
 
@@ -123,4 +130,5 @@ if __name__ == "__main__":
         intermediate_size=args.intermediate_size,
         dtype=args.dtype,
         _profile=args.profile,
+        enable_graph_mode=args.enable_graph_mode,
     )
