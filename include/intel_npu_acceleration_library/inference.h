@@ -84,6 +84,7 @@ protected:
         // core.set_property("NPU", ov::log::level(ov::log::Level::DEBUG));
         if (device == "NPU") {
             core.set_property(device, intel_npu_acceleration_library::npu_compiler_type("DRIVER"));
+            core.set_property(device, ov::intel_npu::turbo(true));
             if (profile) {
                 core.set_property(device, ov::enable_profiling(true));
                 core.set_property(device, intel_npu_acceleration_library::npu_parameters(
