@@ -81,6 +81,7 @@ def get_model(model_name, hidden_size, intermediate_size, bias):
         conf.num_hidden_layers = 1
         conf.hidden_size = hidden_size
         conf.intermediate_size = intermediate_size
+        conf.head_dim = conf.hidden_size // conf.num_attention_heads
 
         return LlamaModel(conf)
     elif model_name == "GemmaModel":
@@ -129,9 +130,6 @@ def test_fusion(model_name, hidden_size, intermediate_size, batch, bias):
 @pytest.mark.parametrize("sequence_length", [1, 128])
 @pytest.mark.parametrize("bias", [True, False])
 def test_model(model_name, hidden_size, intermediate_size, sequence_length, bias):
-
-    if model_name == "LlamaModel":
-        pytest.skip("LlamaModel Fix in progress")
 
     with torch.no_grad():
         model = get_model(model_name, hidden_size, intermediate_size, bias).eval()
