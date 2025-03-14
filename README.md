@@ -53,7 +53,7 @@ You can install the packet in your machine with
 You can also install the package on Windows and Linux from source by typing
 
 ```bash
-pip install "intel-npu-acceleration-library @ git+https://github.com/intel/intel-npu-acceleration-library.git"
+pip install "intel-npu-acceleration-library @ git+https://github.com/fernandosilvame/intel-npu-acceleration-library.git"
 ```
 
 To build the package you need a compiler in your system (Visual Studio 2019 suggested for Windows build). MacOS is not yet supported. At the moment only Ubuntu OS is supported for Linux build. If you need a library for your specific OS, please open an [issue](https://github.com/intel/intel-npu-acceleration-library/issues)
